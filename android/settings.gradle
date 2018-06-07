@@ -1,0 +1,3 @@
+rootProject.name = 'mopcon_android_app_2018'
+
+include ':app'
