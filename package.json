@@ -14,11 +14,17 @@
   },
   "devDependencies": {
     "babel-jest": "23.0.1",
+    "babel-plugin-module-resolver": "^3.1.1",
     "babel-preset-react-native": "4.0.0",
     "jest": "23.1.0",
     "react-test-renderer": "16.3.1"
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }
