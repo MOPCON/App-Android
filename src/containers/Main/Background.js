@@ -4,7 +4,7 @@ import {
   Image
 } from 'react-native';
 
-import bgMainPage from '../../../images/bgMainPage.png';
+import bgMainPage from '../../images/bgMainPage.png';
 
 export default class Background extends Component {
   render() {
