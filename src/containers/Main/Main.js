@@ -6,8 +6,8 @@ import {
   Text,
   Image
 } from 'react-native';
-import { darkBlue } from '../../theme';
-import Background from './components/Background';
+import * as theme from '../../theme';
+import Background from './Background';
 import mopconLogo from '../../images/mopconLogo01.png';
 
 export default class Main extends Component {
@@ -29,10 +29,10 @@ export default class Main extends Component {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: darkBlue,
+    backgroundColor: theme.darkBlue,
   },
   content: {
-    marginTop: 82,
+    marginTop: 62,
     flex: 1,
     alignItems: 'center',
   },
