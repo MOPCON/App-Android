@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
 import { Platform, StatusBar, View } from 'react-native';
+import styled from 'styled-components/native';
 import * as theme from '../../theme';
+
+const Container = styled.View`
+  height: ${Platform.OS === 'ios' ? 20 : 0};
+  background-color: ${theme.darkBlue};
+`;
 
 export default class Header extends Component {
   render() {
     return (
-      <View style={styles.header}>
+      <Container>
         <StatusBar
           barStyle="light-content"
           backgroundColor={theme.darkBlue}
         />
-      </View>
+      </Container>
     );
-  }
-}
-
-const styles = {
-  header: {
-    height: Platform.OS === 'ios' ? 20 : 0,
-    backgroundColor: theme.darkBlue
   }
 }
