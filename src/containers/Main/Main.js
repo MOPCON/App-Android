@@ -6,37 +6,42 @@ import {
   Text,
   Image
 } from 'react-native';
+import styled from 'styled-components/native';
 import * as theme from '../../theme';
 import Background from './Background';
 import mopconLogo from '../../images/mopconLogo01.png';
 
+const Container = styled.View`
+  flex: 1;
+  background-color: ${theme.darkBlue};
+`;
+
+const Content = styled.ScrollView.attrs({
+  contentContainerStyle: props => {
+    return {
+      marginTop: 62,
+      flex: 1,
+      alignItems: 'center',
+    }
+  }
+})``;
+
+const LogoContainer = styled.View`
+  margin-bottom: 25;
+`;
+
 export default class Main extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <Container>
         <Background />
-        <ScrollView contentContainerStyle={styles.content}>
-          <View style={styles.mopconLogo}>
+        <Content>
+          <LogoContainer>
             <Image source={mopconLogo}/>
-          </View>
+          </LogoContainer>
           <Text>carousel</Text>
-        </ScrollView>
-      </View>
+        </Content>
+      </Container>
     )
   }
 }
-
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: theme.darkBlue,
-  },
-  content: {
-    marginTop: 62,
-    flex: 1,
-    alignItems: 'center',
-  },
-  mopconLogo: {
-    marginBottom: 25,
-  }
-};

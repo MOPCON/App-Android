@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components/native';
 import {
   View,
   Image
@@ -6,24 +7,22 @@ import {
 
 import bgMainPage from '../../images/bgMainPage.png';
 
+const BgMain = styled.Image`
+  flex: 1;
+  position: absolute;
+  top: 20;
+  left: 0;
+`;
+
+
 export default class Background extends Component {
   render() {
     return (
       <View>
-        <Image
-          style={styles.bgMainPage}
+        <BgMain
           source={bgMainPage}
         />
       </View>
     );
   }
 }
-
-const styles = {
-  bgMainPage: {
-    flex: 1,
-    position: 'absolute',
-    top: 20,
-    left: 0,
-  },
-};
