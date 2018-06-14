@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { aquamarineTwo, scheduleCardTypeColor } from '../../theme/index';
+import { Animated } from 'react-native';
 
 export const TabContainer = styled.View`
   background-color: ${aquamarineTwo};
@@ -10,14 +11,14 @@ export const TabContainer = styled.View`
   position: relative;
 `;
 
-export const TabActiveItem = styled.View`
+export const TabActiveItem = styled(Animated.View)`
   background-color: #004C67;
   border-radius: 6px;
-  width: 50%;
+  width: ${p => p.tabWidth}%;
   height: 100%;
   position: absolute;
   top: 0;
-  left: ${p => p.isFirstDay ? '0' : '50%'};
+  /* transform: translateX(${p => p.activeBarPosition}px); */
   z-index: 1;
 `;
 
@@ -45,5 +46,5 @@ export const TabText = styled.Text`
   font-size: 16px;
   letter-spacing: 0.6px;
   font-family: Roboto-Medium;
-  opacity: ${p => p.isFirstDay ? '1' : '0.5'};
+  opacity: ${p => p.isActive ? '1' : '0.5'};
 `;
