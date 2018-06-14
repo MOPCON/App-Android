@@ -3,8 +3,11 @@ import { ScheduleContainer, ScheduleScrollView } from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import ScheduleTab from '../../components/ScheduleTab/ScheduleTab';
+import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 
 export default class Schedule extends Component {
+  static navigationOptions = ({navigation}) => NavigationOptions(navigation, '議程')
+
   render() {
     return (
       <ScheduleScrollView>

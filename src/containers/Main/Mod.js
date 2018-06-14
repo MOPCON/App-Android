@@ -27,10 +27,10 @@ const Text = styled.Text`
 
 export default class Mod extends Component {
   render() {
-    const { icon, name } = this.props;
+    const { icon, name, navigate } = this.props;
 
     return (
-      <Container>
+      <Container onPress={navigate}>
         <Image source={icon}/>
         <Text>{name}</Text>
       </Container>

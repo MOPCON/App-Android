@@ -72,7 +72,7 @@ export default class Main extends Component {
       'https://unsplash.it/600/?random'
     ],
     mods: [
-      { icon: iconSchedule, name: '議程' },
+      { icon: iconSchedule, name: '議程', screen: 'Schedule' },
       { icon: iconMySchedule, name: '我的行程' },
       { icon: iconUnconference, name: '交流場次' },
       { icon: iconMission, name: '任務' },
@@ -87,6 +87,12 @@ export default class Main extends Component {
     return (
       <CarouselItem  source={{ uri: item }} />
     );
+  }
+
+  navigate = (screen) => {
+    if (screen) {
+      this.props.navigate(screen);
+    }
   }
 
   render() {
@@ -110,7 +116,7 @@ export default class Main extends Component {
           <Content>
             <News />
             <ModContainer>
-              { mods.map(mod => <Mod {...mod} />) }
+              { mods.map(mod => <Mod navigate={() => this.navigate(mod.screen)} {...mod} />) }
             </ModContainer>
           </Content>
         </ScrollContainer>
