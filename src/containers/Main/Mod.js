@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import * as theme from '../../theme';
 
+const width = ((Dimensions.get('window').width) / 2) - 30;
+
 const Container = styled.TouchableOpacity`
-  width: 160;
-  height: 160;
+  width: ${width};
+  height: ${width};
   border: 2px solid ${theme.aquamarine};
   border-radius: 5px;
   padding-top: 37;
