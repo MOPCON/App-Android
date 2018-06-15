@@ -11,6 +11,8 @@ export default (navigation, title) => ({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 20,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   headerLeft: <View />,
   headerRight: (
