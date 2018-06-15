@@ -1,4 +1,4 @@
-export const aquamarine = '#00d1cb';
+export const aquamarine = '#00687d';
 export const aquamarineTwo = '#002E50';
 export const scheduleCardBackground = '#002E50';
 export const scheduleCardTypeColor = '#00d0cb';
