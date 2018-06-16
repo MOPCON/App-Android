@@ -80,7 +80,7 @@ export default class Main extends Component {
             <style.Content>
               <News />
               <style.ModContainer>
-                { mods.map(mod => <Mod navigate={() => this.navigate(mod.screen)} {...mod} />) }
+                { mods.map((mod, index) => <Mod key={`mod_${index}`} navigate={() => this.navigate(mod.screen)} {...mod} />) }
               </style.ModContainer>
             </style.Content>
             <style.TabContainer>
