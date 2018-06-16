@@ -4,9 +4,10 @@ import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import ScheduleTab from '../../components/ScheduleTab/ScheduleTab';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import TextButton from '../../components/Button/TextButton';
 
 export default class Schedule extends Component {
-  static navigationOptions = ({navigation}) => NavigationOptions(navigation, '議程')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, '議程')
 
   render() {
     return (
@@ -39,6 +40,7 @@ export default class Schedule extends Component {
             type="CLOUD"
             name="田哲禹"
             room="R1 : 一廳" />
+          <TextButton text="查看交流場次" align="center" margin={[16, 0, 0, 0]} />
         </ScheduleContainer>
       </ScheduleScrollView>
     )
