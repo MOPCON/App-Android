@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { ScheduleContainer, ScheduleScrollView } from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
-import ScheduleTab from '../../components/ScheduleTab/ScheduleTab';
+import Tab from '../../components/Tab/Tab';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import TextButton from '../../components/Button/TextButton';
+
+const tabs = ['day1', 'day2', 'day3'];
+const defaultActiveTab = 'day2';
 
 export default class Schedule extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, '議程')
@@ -13,7 +16,7 @@ export default class Schedule extends Component {
     return (
       <ScheduleScrollView>
         <ScheduleContainer>
-          <ScheduleTab />
+          <Tab tabs={tabs} defaultActiveTab={defaultActiveTab} />
           <ScheduleHeader time="08:00 ~ 09:00" />
           <ScheduleItem
             title="Innovate width New Technologies on Google Cloud"

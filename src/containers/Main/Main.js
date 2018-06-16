@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-import { Dimensions, Image } from 'react-native';
-import styled from 'styled-components/native';
+import { Dimensions, Image, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import * as theme from '../../theme';
+
+// component
 import Background from './Background';
 import News from './News';
 import Mod from './Mod';
+import Tab from '../../components/Tab/Tab';
+import * as style from './style';
 
+// image
 import mopconLogo from '../../images/mopconLogo01.png';
 import iconSchedule from '../../images/icon/iconSchedule.png';
 import iconMySchedule from '../../images/icon/iconMySchedule.png';
@@ -17,48 +20,8 @@ import iconCommunity from '../../images/icon/iconCommunity.png';
 import iconNews from '../../images/icon/iconNews.png';
 
 const { height, width } = Dimensions.get('window');
-
-const Container = styled.View`
-  flex: 1;
-  background-color: ${theme.darkBlue};
-`;
-
-const ScrollContainer = styled.ScrollView.attrs({
-  contentContainerStyle: props => {
-    return {
-      marginTop: 62,
-      alignItems: 'center',
-      paddingBottom: 60,
-    }
-  }
-})``;
-
-const LogoContainer = styled.View`
-  margin-bottom: 25;
-`;
-
-const CarouselContainer = styled.View`
-  height: 168;
-  margin-bottom: 15;
-`;
-
-const CarouselItem = styled.Image`
-  width: ${width - 80};
-  height: 168;
-`;
-
-const Content = styled.View`
-  width: 100%;
-  padding-left: 20;
-  padding-right: 20;
-`;
-
-const ModContainer = styled.View`
-  width: 100%;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-`;
+const tabs = ['中文', 'English'];
+const defaultActiveTab = '中文';
 
 export default class Main extends Component {
   state = {
@@ -85,7 +48,7 @@ export default class Main extends Component {
 
   renderItem = ({item, index}) => {
     return (
-      <CarouselItem  source={{ uri: item }} />
+      <style.CarouselItem width={width}  source={{ uri: item }} />
     );
   }
 
@@ -99,28 +62,33 @@ export default class Main extends Component {
     const { images, mods } = this.state;
 
     return (
-      <Container>
+      <style.Container>
         <Background />
-        <ScrollContainer>
-          <LogoContainer>
-            <Image source={mopconLogo}/>
-          </LogoContainer>
-          <CarouselContainer>
-            <Carousel
-              sliderWidth={width}
-              itemWidth={width - 80}
-              data={images}
-              renderItem={this.renderItem}
-            />
-          </CarouselContainer>
-          <Content>
-            <News />
-            <ModContainer>
-              { mods.map(mod => <Mod navigate={() => this.navigate(mod.screen)} {...mod} />) }
-            </ModContainer>
-          </Content>
-        </ScrollContainer>
-      </Container>
+        <style.ScrollContainer>
+          <style.ViewContainer>
+            <style.LogoContainer>
+              <Image source={mopconLogo}/>
+            </style.LogoContainer>
+            <style.CarouselContainer>
+              <Carousel
+                sliderWidth={width}
+                itemWidth={width - 80}
+                data={images}
+                renderItem={this.renderItem}
+              />
+            </style.CarouselContainer>
+            <style.Content>
+              <News />
+              <style.ModContainer>
+                { mods.map(mod => <Mod navigate={() => this.navigate(mod.screen)} {...mod} />) }
+              </style.ModContainer>
+            </style.Content>
+            <style.TabContainer>
+              <Tab tabs={tabs} defaultActiveTab={defaultActiveTab} />
+            </style.TabContainer>
+          </style.ViewContainer>
+        </style.ScrollContainer>
+      </style.Container>
     )
   }
 }
