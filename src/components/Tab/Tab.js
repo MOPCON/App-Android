@@ -3,7 +3,7 @@ import { Animated, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 import { TabContainer, TabActiveItem, TouchArea, TextContainer, TabText } from './style';
 
-export default class ScheduleTab extends Component {
+export default class Tab extends Component {
   static propTypes = {
     tabs: PropTypes.arrayOf(PropTypes.string),
     defaultActiveTab: PropTypes.string,
