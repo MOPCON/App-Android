@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Dimensions, Image, View } from 'react-native';
+import { Dimensions, NativeModules, Platform, Image, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import I18n from '../../locales';
 
 // component
 import Background from './Background';
@@ -20,8 +21,21 @@ import iconCommunity from '../../images/icon/iconCommunity.png';
 import iconNews from '../../images/icon/iconNews.png';
 
 const { height, width } = Dimensions.get('window');
-const tabs = ['中文', 'English'];
-const defaultActiveTab = '中文';
+const tabs = [
+  { name: '中文', value: 'zh' },
+  { name: 'English', value: 'en' }
+];
+
+const getLanguageCode = () => {
+  let systemLanguage = 'en';
+  if (Platform.OS === 'android') {
+    systemLanguage = NativeModules.I18nManager.localeIdentifier;
+  } else {
+    systemLanguage = NativeModules.SettingsManager.settings.AppleLocale;
+  }
+  const languageCode = systemLanguage.substring(0, 2);
+  return languageCode;
+}
 
 export default class Main extends Component {
   state = {
@@ -35,15 +49,16 @@ export default class Main extends Component {
       'https://unsplash.it/600/?random'
     ],
     mods: [
-      { icon: iconSchedule, name: '議程', screen: 'Schedule' },
-      { icon: iconMySchedule, name: '我的行程' },
-      { icon: iconUnconference, name: '交流場次', screen: 'UnConf' },
-      { icon: iconMission, name: '任務' },
-      { icon: iconSchedule, name: '贊助廠商' },
-      { icon: iconSpeakers, name: '講者' },
-      { icon: iconCommunity, name: '社群' },
-      { icon: iconNews, name: '最新消息' },
-    ]
+      { icon: iconSchedule, name: 'home.schedule', screen: 'Schedule' },
+      { icon: iconMySchedule, name: 'home.MySchedule' },
+      { icon: iconUnconference, name: 'home.Unconference', screen: 'UnConf' },
+      { icon: iconMission, name:'home.Mission' },
+      { icon: iconSchedule, name: 'home.Sponsors' },
+      { icon: iconSpeakers, name: 'home.Speakers' },
+      { icon: iconCommunity, name: 'home.Community' },
+      { icon: iconNews, name: 'home.News' },
+    ],
+    language: getLanguageCode(),
   }
 
   renderItem = ({ item, index }) => {
@@ -58,8 +73,16 @@ export default class Main extends Component {
     }
   }
 
+  onChangeLanguage = (language) => {
+    I18n.locale = language;
+
+    this.setState({
+      language,
+    });
+  }
+
   render() {
-    const { images, mods } = this.state;
+    const { images, mods, language } = this.state;
 
     return (
       <style.Container>
@@ -84,7 +107,7 @@ export default class Main extends Component {
               </style.ModContainer>
             </style.Content>
             <style.TabContainer>
-              <Tab tabs={tabs} defaultActiveTab={defaultActiveTab} />
+              <Tab tabs={tabs} defaultActiveTab={language} onChange={this.onChangeLanguage}/>
             </style.TabContainer>
           </style.ViewContainer>
         </style.ScrollContainer>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import I18n from '../../locales';
 import * as theme from '../../theme';
 
 export default (navigation, title) => ({
@@ -23,5 +24,5 @@ export default (navigation, title) => ({
       onPress={() => navigation.goBack()}
     />
   ),
-  title,
+  title: I18n.t(title),
 });

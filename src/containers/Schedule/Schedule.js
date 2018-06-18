@@ -6,11 +6,14 @@ import Tab from '../../components/Tab/Tab';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import TextButton from '../../components/Button/TextButton';
 
-const tabs = ['day1', 'day2'];
+const tabs = [
+  { name: 'day1', value: 'day1' },
+  { name: 'day2', value: 'day2' }
+];
 const defaultActiveTab = 'day1';
 
 export default class Schedule extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, '議程')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.schedule')
 
   render() {
     return (

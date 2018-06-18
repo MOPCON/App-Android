@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
+import I18n from '../../locales';
 import * as theme from '../../theme';
 
 const width = ((Dimensions.get('window').width) / 2) - 30;
@@ -38,7 +39,7 @@ export default class Mod extends Component {
     return (
       <Container onPress={navigate}>
         <Image source={icon}/>
-        <Text>{name}</Text>
+        <Text>{I18n.t(name)}</Text>
       </Container>
     );
   }
