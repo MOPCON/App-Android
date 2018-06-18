@@ -8,7 +8,8 @@ const width = ((Dimensions.get('window').width) / 2) - 30;
 const Container = styled.TouchableOpacity`
   width: ${width};
   height: ${width};
-  border: 2px solid ${theme.aquamarine};
+  /* border: 1px solid ${theme.scheduleCardTypeColor}; */
+  border: 1px solid ${theme.modBorder};
   border-radius: 5px;
   padding-top: 37;
   padding-right: 40;
@@ -16,6 +17,7 @@ const Container = styled.TouchableOpacity`
   padding-left: 40;
   margin-bottom: 16;
   align-items: center;
+  background: rgba(2, 208, 203, 0.1);
 `;
 
 const Image = styled.Image`
@@ -23,9 +25,10 @@ const Image = styled.Image`
 `;
 
 const Text = styled.Text`
-  color: ${theme.aquamarine};
-  font-size: 16px;
-  font-weight: bold;
+  color: ${theme.scheduleCardTypeColor};
+  font-size: 15px;
+  font-family: Roboto-Medium;
+  letter-spacing: 0.6px;
 `;
 
 export default class Mod extends Component {
