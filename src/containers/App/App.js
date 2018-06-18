@@ -4,6 +4,7 @@ import { StackNavigator } from 'react-navigation';
 import Header from './Header';
 import Main from '../Main/Main';
 import Schedule from '../Schedule/Schedule';
+import UnConf from '../UnConf/UnConf';
 import * as theme from '../../theme';
 
 class App extends Component {
@@ -20,7 +21,7 @@ class App extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Header />
-        <Main navigate={navigate}/>
+        <Main navigate={navigate} />
       </View>
     );
   }
@@ -28,5 +29,6 @@ class App extends Component {
 
 export default StackNavigator({
   Main: { screen: App },
-  Schedule: { screen: Schedule }
+  Schedule: { screen: Schedule },
+  UnConf: { screen: UnConf },
 });
