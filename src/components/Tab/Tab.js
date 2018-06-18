@@ -5,12 +5,16 @@ import { TabContainer, TabActiveItem, TouchArea, TextContainer, TabText } from '
 
 export default class Tab extends Component {
   static propTypes = {
-    tabs: PropTypes.arrayOf(PropTypes.string),
+    tabs: PropTypes.array,
     defaultActiveTab: PropTypes.string,
     onChange: PropTypes.func,
   }
   static defaultProps = {
-    tabs: ['day1', 'day2', 'day3'],
+    tabs: [
+      { name: 'day1', value: 'day1' },
+      { name: 'day2', value: 'day2' },
+      { name: 'day3', value: 'day3' }
+    ],
     defaultActiveTab: 'day2',
     onChange: () => { },
   }
@@ -27,7 +31,7 @@ export default class Tab extends Component {
     }
   }
   onPressTab = (tab) => {
-    const index = this.state.tabs.findIndex(t => t === tab);
+    const index = this.state.tabs.findIndex(t => t.value === tab.value);
     const length = this.state.tabs.length;
     Animated.timing(
       this.state.activeBarPosition,
@@ -37,12 +41,12 @@ export default class Tab extends Component {
       }
     ).start();
     this.setState({
-      activeTab: tab,
+      activeTab: tab.value,
     });
-    this.props.onChange(tab);
+    this.props.onChange(tab.value);
   }
   onLayout = (e) => {
-    const index = this.state.tabs.findIndex(t => t === this.state.activeTab);
+    const index = this.state.tabs.findIndex(t => t.value === this.state.activeTab);
     const length = this.state.tabs.length;
     this.compWidth = e.nativeEvent.layout.width;
     const activeBarPosition = this.compWidth * index / length;
@@ -58,8 +62,8 @@ export default class Tab extends Component {
         <TextContainer>
           {
             tabs.map(tab => (
-              <TouchArea onPress={() => { this.onPressTab(tab) }} key={`tab_${tab}`}>
-                <TabText isActive={tab === activeTab} >{tab}</TabText>
+              <TouchArea onPress={() => { this.onPressTab(tab) }} key={`tab_${tab.value}`}>
+                <TabText isActive={tab.value === activeTab} >{tab.name}</TabText>
               </TouchArea>
             ))
           }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
+import I18n from '../../locales';
 import * as theme from '../../theme';
 
 const Container = styled.View`
@@ -48,7 +49,7 @@ export default class News extends Component {
   render() {
     return (
       <Container>
-        <Title>最新消息</Title>
+        <Title>{I18n.t('news.title')}</Title>
         <Content>
           <Message>任務遊戲倒數20分鐘!</Message>
           <TouchArea>
