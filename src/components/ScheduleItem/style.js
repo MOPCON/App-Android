@@ -27,6 +27,7 @@ export const Title = styled.Text`
   color: white;
   font-size: 19px;
   font-family: 'Roboto-Regular';
+  margin: ${p => p.paintBG ? '20px 0' : '0'};
 `;
 
 export const Type = styled.Text`

@@ -1,7 +1,6 @@
 import React from 'react';
 import { AppRegistry, UIManager, YellowBox } from 'react-native';
 import App from './src/containers/App/App';
-import Schedule from './src/containers/Schedule/Schedule'
 
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 

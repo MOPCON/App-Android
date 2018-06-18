@@ -12,33 +12,38 @@ import starIconChecked from '../../images/buttonStarChecked.png';
 
 export default class ScheduleItem extends Component {
   static propTypes = {
-    paintBG: PropTypes.bool,
-    title: PropTypes.string,
-    type: PropTypes.string,
-    name: PropTypes.string,
-    room: PropTypes.string,
-    saved: PropTypes.bool,
-    onSave: PropTypes.func,
+    paintBG: PropTypes.bool,  // is relax time ?
+    title: PropTypes.string,  // speak topic
+    type: PropTypes.string,   // topic type string eg. CLOUD
+    name: PropTypes.string,   // speaker name
+    room: PropTypes.string,   // room location string
+    saved: PropTypes.bool,    // saved or not
+    onSave: PropTypes.func,   // when click on save button trigger this function.
+    regular: PropTypes.bool,  // regular conference schedule or not
   }
   onPressSave = () => {
     this.props.onSave();
   }
   render() {
-    const { paintBG, title, type, name, room, saved } = this.props;
+    const { paintBG, title, type, name, room, saved, regular } = this.props;
     return (
       <ScheduleItemContainer paintBG={paintBG}>
         {
-          paintBG ? <Title>{title}</Title> : (
+          paintBG ? <Title paintBG={paintBG}>{title}</Title> : (
             <InnerContainer>
               <Type>{type}</Type>
-              <Title>{title}</Title>
+              <Title paintBG={paintBG}>{title}</Title>
               <Name>{name}</Name>
               <ActionContainer>
                 <GeoIcon source={geoPng} />
                 <Room>{room}</Room>
-                <StarIconTouchable onPress={this.onPressSave}>
-                  <StarIconImg source={saved ? starIconChecked : starIconNormal} />
-                </StarIconTouchable>
+                {
+                  regular && (
+                    <StarIconTouchable onPress={this.onPressSave}>
+                      <StarIconImg source={saved ? starIconChecked : starIconNormal} />
+                    </StarIconTouchable>
+                  )
+                }
               </ActionContainer>
             </InnerContainer>)
         }

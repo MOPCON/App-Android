@@ -37,7 +37,7 @@ export default class Main extends Component {
     mods: [
       { icon: iconSchedule, name: '議程', screen: 'Schedule' },
       { icon: iconMySchedule, name: '我的行程' },
-      { icon: iconUnconference, name: '交流場次' },
+      { icon: iconUnconference, name: '交流場次', screen: 'UnConf' },
       { icon: iconMission, name: '任務' },
       { icon: iconSchedule, name: '贊助廠商' },
       { icon: iconSpeakers, name: '講者' },
@@ -46,9 +46,9 @@ export default class Main extends Component {
     ]
   }
 
-  renderItem = ({item, index}) => {
+  renderItem = ({ item, index }) => {
     return (
-      <style.CarouselItem width={width}  source={{ uri: item }} />
+      <style.CarouselItem width={width} source={{ uri: item }} />
     );
   }
 
@@ -67,7 +67,7 @@ export default class Main extends Component {
         <style.ScrollContainer>
           <style.ViewContainer>
             <style.LogoContainer>
-              <Image source={mopconLogo}/>
+              <Image source={mopconLogo} />
             </style.LogoContainer>
             <style.CarouselContainer>
               <Carousel
@@ -80,7 +80,7 @@ export default class Main extends Component {
             <style.Content>
               <News />
               <style.ModContainer>
-                { mods.map((mod, index) => <Mod key={`mod_${index}`} navigate={() => this.navigate(mod.screen)} {...mod} />) }
+                {mods.map((mod, index) => <Mod key={`mod_${index}`} navigate={() => this.navigate(mod.screen)} {...mod} />)}
               </style.ModContainer>
             </style.Content>
             <style.TabContainer>
