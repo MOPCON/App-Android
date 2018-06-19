@@ -19,7 +19,7 @@ export default (navigation, title) => ({
   headerRight: (
     <Icon
       name="close"
-      style={{color: '#8a8aa1', marginRight: 20}}
+      style={{color: '#8a8aa1', marginRight: 40}}
       size={25}
       onPress={() => navigation.goBack()}
     />
