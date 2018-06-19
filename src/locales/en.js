@@ -11,5 +11,8 @@ export default {
   },
   news: {
     title: 'News',
-  }
+  },
+  scheduleDetail:{
+    title: 'Speech',
+  },
 };

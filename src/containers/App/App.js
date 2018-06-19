@@ -5,6 +5,7 @@ import Header from './Header';
 import Main from '../Main/Main';
 import Schedule from '../Schedule/Schedule';
 import UnConf from '../UnConf/UnConf';
+import ScheduleDetail from '../ScheduleDetail/ScheduleDetail';
 import * as theme from '../../theme';
 
 class App extends Component {
@@ -31,4 +32,5 @@ export default StackNavigator({
   Main: { screen: App },
   Schedule: { screen: Schedule },
   UnConf: { screen: UnConf },
+  ScheduleDetail: { screen: ScheduleDetail },
 });

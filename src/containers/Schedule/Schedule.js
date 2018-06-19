@@ -15,9 +15,13 @@ const defaultActiveTab = 'day1';
 export default class Schedule extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.schedule')
 
+  onPressTitle = () => {
+    this.props.navigation.navigate('ScheduleDetail');
+  }
+
   render() {
     return (
-      <ScheduleScrollView>
+      <ScheduleScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <ScheduleContainer>
           <Tab tabs={tabs} defaultActiveTab={defaultActiveTab} />
           <ScheduleHeader time="08:00 ~ 09:00" />
@@ -25,30 +29,21 @@ export default class Schedule extends Component {
             regular
             title="Innovate width New Technologies on Google Cloud"
             type="CLOUD"
+            onPressTitle={this.onPressTitle}
             name="田哲禹"
             room="R1 : 一廳" />
-          <ScheduleItem
+            <ScheduleItem
             regular
             title="Innovate width New Technologies on Google Cloud"
             type="CLOUD"
+            onPressTitle={this.onPressTitle}
             name="田哲禹"
             room="R1 : 一廳" />
-          <ScheduleItem
+            <ScheduleItem
             regular
             title="Innovate width New Technologies on Google Cloud"
             type="CLOUD"
-            name="田哲禹"
-            room="R1 : 一廳" />
-          <ScheduleItem
-            regular
-            title="Innovate width New Technologies on Google Cloud"
-            type="CLOUD"
-            name="田哲禹"
-            room="R1 : 一廳" />
-          <ScheduleItem
-            regular
-            title="Innovate width New Technologies on Google Cloud"
-            type="CLOUD"
+            onPressTitle={this.onPressTitle}
             name="田哲禹"
             room="R1 : 一廳" />
           <TextButton text="查看交流場次" align="center" margin={[16, 0, 0, 0]} />
