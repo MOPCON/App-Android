@@ -11,10 +11,13 @@ const ButtonTouchable = styled.TouchableOpacity`
   margin-left: ${p => p.margin[3]}px;
 `;
 const ButtonView = styled.View`
-  padding: 8px 14px;
+  padding: ${p => p.hasIcon ? '6px 8px' : '8px 14px'};
   border: 1px solid ${scheduleCardTypeColor};
   border-radius: 4px;
   background-color: ${buttonBackground};
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 const ButtonText = styled.Text`
   font-family: Roboto-Medium;
@@ -22,10 +25,16 @@ const ButtonText = styled.Text`
   font-size: 14px;
   color: ${scheduleCardTypeColor};
 `;
+const ButtonIcon = styled.Image`
+  width: 22px;
+  height: 22px;
+  margin-right: 6px;
+`;
 const Style = {
   ButtonText,
   ButtonTouchable,
   ButtonView,
+  ButtonIcon,
 };
 
 export default class OutlineButton extends React.PureComponent {
@@ -34,6 +43,7 @@ export default class OutlineButton extends React.PureComponent {
     text: PropTypes.string,
     align: PropTypes.string,
     margin: PropTypes.arrayOf(PropTypes.number),
+    iconURI: PropTypes.any,
   }
   static defaultProps = {
     onClick: () => { },
@@ -42,10 +52,13 @@ export default class OutlineButton extends React.PureComponent {
     margin: [16, 0, 16, 0]
   }
   render() {
-    const { onClick, text, align, margin } = this.props;
+    const { onClick, text, align, margin, iconURI } = this.props;
     return (
       <Style.ButtonTouchable onPress={onClick} align={align} margin={margin}>
-        <Style.ButtonView>
+        <Style.ButtonView hasIcon={Boolean(iconURI)}>
+          {
+            iconURI && <Style.ButtonIcon source={iconURI} />
+          }
           <Style.ButtonText>
             {text}
           </Style.ButtonText>
