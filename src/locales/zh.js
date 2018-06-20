@@ -11,5 +11,8 @@ export default {
   },
   news: {
     title: '最新消息',
-  }
+  },
+  scheduleDetail:{
+    title: '演講',
+  },
 };
