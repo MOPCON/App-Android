@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import I18n from '../../locales';
 import * as theme from '../../theme';
 
-const width = ((Dimensions.get('window').width) / 2) - 30;
+const width = ((Dimensions.get('window').width) / 2) - 28;
 
 const Container = styled.TouchableOpacity`
   width: ${width};
@@ -12,17 +12,18 @@ const Container = styled.TouchableOpacity`
   /* border: 1px solid ${theme.scheduleCardTypeColor}; */
   border: 1px solid ${theme.modBorder};
   border-radius: 5px;
-  padding-top: 37;
-  padding-right: 40;
-  padding-bottom: 25;
-  padding-left: 40;
-  margin-bottom: 16;
+  padding-top: 35px;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   background: rgba(2, 208, 203, 0.1);
 `;
 
 const Image = styled.Image`
-  margin-bottom: 19;
+  margin: 0 30px 19px 30px;
 `;
 
 const Text = styled.Text`
@@ -38,8 +39,8 @@ export default class Mod extends Component {
 
     return (
       <Container onPress={navigate}>
-        <Image source={icon}/>
-        <Text>{I18n.t(name)}</Text>
+        <Image source={icon} />
+          <Text>{I18n.t(name)}</Text>
       </Container>
     );
   }
