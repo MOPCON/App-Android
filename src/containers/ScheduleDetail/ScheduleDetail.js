@@ -52,7 +52,7 @@ const Style = {
 };
 
 export default class ScheduleDetail extends React.Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'scheduleDetail.title')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'scheduleDetail.title', 'mode2')
   render() {
     return (
       <Style.SDScrollView contentContainerStyle={{ flexGrow: 1 }}>

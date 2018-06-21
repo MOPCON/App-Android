@@ -3,6 +3,8 @@ import styled from 'styled-components/native';
 import I18n from '../../locales';
 import * as theme from '../../theme';
 
+import iconChevronRightImg from '../../images/icon/iconChevronRight.png';
+
 const Container = styled.View`
   width: 100%;
   border: 1px solid ${theme.modBorder};
@@ -35,7 +37,8 @@ const Message = styled.Text`
 `;
 
 const TouchArea = styled.TouchableOpacity`
-
+  flex-direction: row;
+  align-items: center;
 `;
 
 const MoreText = styled.Text`
@@ -43,6 +46,12 @@ const MoreText = styled.Text`
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 0.3px;
+`;
+
+const RightArrow = styled.Image`
+  width: 7;
+  height: 12;
+  margin-left: 8;
 `;
 
 export default class News extends Component {
@@ -53,7 +62,8 @@ export default class News extends Component {
         <Content>
           <Message>任務遊戲倒數20分鐘!</Message>
           <TouchArea>
-            <MoreText>More ></MoreText>
+            <MoreText>More</MoreText>
+            <RightArrow source={iconChevronRightImg} />
           </TouchArea>
         </Content>
       </Container>

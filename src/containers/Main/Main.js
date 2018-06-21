@@ -16,6 +16,7 @@ import iconSchedule from '../../images/icon/iconSchedule.png';
 import iconMySchedule from '../../images/icon/iconMySchedule.png';
 import iconUnconference from '../../images/icon/iconUnconference.png';
 import iconMission from '../../images/icon/iconMission.png';
+import iconSponsor from '../../images/icon/iconSponsor.png';
 import iconSpeakers from '../../images/icon/iconSpeakers.png';
 import iconCommunity from '../../images/icon/iconCommunity.png';
 import iconNews from '../../images/icon/iconNews.png';
@@ -53,7 +54,7 @@ export default class Main extends Component {
       { icon: iconMySchedule, name: 'home.MySchedule' },
       { icon: iconUnconference, name: 'home.Unconference', screen: 'UnConf' },
       { icon: iconMission, name:'home.Mission' },
-      { icon: iconSchedule, name: 'home.Sponsors' },
+      { icon: iconSponsor, name: 'home.Sponsors' },
       { icon: iconSpeakers, name: 'home.Speakers' },
       { icon: iconCommunity, name: 'home.Community' },
       { icon: iconNews, name: 'home.News' },
