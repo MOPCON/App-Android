@@ -14,8 +14,6 @@ export default (navigation, title, mode = 'mode1') => {
   const options = {
     headerStyle: {
       backgroundColor: theme.darkBlue,
-      borderBottomColor: '#20204c',
-      borderBottomWidth: 2,
     },
     headerTitleStyle: {
       color: '#fff',
@@ -28,6 +26,12 @@ export default (navigation, title, mode = 'mode1') => {
   };
 
   if (mode === 'mode1') {
+    options.headerStyle = {
+      ...options.headerStyle,
+      borderBottomColor: '#20204c',
+      borderBottomWidth: 2,
+    };
+
     options.headerLeft = (
       <View />
     );
