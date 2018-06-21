@@ -13,7 +13,7 @@ const tabs = [
 const defaultActiveTab = 'day1';
 
 export default class Schedule extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.schedule')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.schedule', 'mode1')
 
   onPressTitle = () => {
     this.props.navigation.navigate('ScheduleDetail');
