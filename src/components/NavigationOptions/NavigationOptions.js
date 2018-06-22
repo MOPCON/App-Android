@@ -38,13 +38,14 @@ export default (navigation, title, mode = 'mode1') => {
 
     options.headerRight = (
       <TouchableOpacity
-        style={{width: 24, height: 24, marginRight: 40}}
+        style={{width: 24, height: 24, marginRight: 30}}
         onPress={() => navigation.goBack()}
       >
         <Image source={iconClose}/>
       </TouchableOpacity>
     )
   } else if (mode === 'mode2') {
+
     options.headerLeft = (
       <TouchableOpacity
         style={{width: 24, height: 24, marginLeft: 20}}
@@ -53,6 +54,10 @@ export default (navigation, title, mode = 'mode1') => {
         <Image source={iconLeftArrow}/>
       </TouchableOpacity>
     );
+
+    options.headerRight = (
+      <View style={{marginRight: 30}} />
+    )
   }
 
   return options;
