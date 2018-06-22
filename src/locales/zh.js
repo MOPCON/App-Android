@@ -15,6 +15,9 @@ export default {
   unConf: {
     title: '交流場次',
   },
+  sponsor:{
+    title: '贊助商',
+  },
   scheduleDetail:{
     title: '演講',
   },
