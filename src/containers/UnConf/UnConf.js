@@ -19,11 +19,14 @@ const Style = {
   UnConfContainer, UnConfScrollView
 };
 
-const tabs = ['day1', 'day2'];
+const tabs = [
+  { name: 'day1', value: 'day1' },
+  { name: 'day2', value: 'day2' }
+];
 const defaultActiveTab = 'day1';
 
 export default class UnConf extends React.Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, '交流場次', 'mode1')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'unConf.title', 'mode1')
 
   render() {
     return (

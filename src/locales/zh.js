@@ -12,6 +12,9 @@ export default {
   news: {
     title: '最新消息',
   },
+  unConf: {
+    title: '交流場次',
+  },
   scheduleDetail:{
     title: '演講',
   },
