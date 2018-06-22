@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import { darkBlue, scheduleCardTypeColor } from '../../theme/index';
 
-const width = ((Dimensions.get('window').width) / 2) - 28;
+const width = (Dimensions.get('window').width - (16 * 3)) / 2;
 
 export const SponsorContainer = styled.View`
   background-color: ${darkBlue};
