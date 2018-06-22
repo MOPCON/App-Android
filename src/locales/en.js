@@ -12,6 +12,9 @@ export default {
   news: {
     title: 'News',
   },
+  unConf: {
+    title: 'UnConf',
+  },
   scheduleDetail:{
     title: 'Speech',
   },
