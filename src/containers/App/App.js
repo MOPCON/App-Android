@@ -5,7 +5,9 @@ import Header from './Header';
 import Main from '../Main/Main';
 import Schedule from '../Schedule/Schedule';
 import UnConf from '../UnConf/UnConf';
+import Sponsor from '../Sponsor/Sponsor';
 import ScheduleDetail from '../ScheduleDetail/ScheduleDetail';
+import SponsorDetail from '../SponsorDetail/SponsorDetail';
 import * as theme from '../../theme';
 
 class App extends Component {
@@ -33,4 +35,6 @@ export default StackNavigator({
   Schedule: { screen: Schedule },
   UnConf: { screen: UnConf },
   ScheduleDetail: { screen: ScheduleDetail },
+  Sponsor: { screen: Sponsor },
+  SponsorDetail: { screen: SponsorDetail },
 });

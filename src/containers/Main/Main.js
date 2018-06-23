@@ -54,7 +54,7 @@ export default class Main extends Component {
       { icon: iconMySchedule, name: 'home.MySchedule' },
       { icon: iconUnconference, name: 'home.Unconference', screen: 'UnConf' },
       { icon: iconMission, name:'home.Mission' },
-      { icon: iconSponsor, name: 'home.Sponsors' },
+      { icon: iconSponsor, name: 'home.Sponsors', screen: 'Sponsor' },
       { icon: iconSpeakers, name: 'home.Speakers' },
       { icon: iconCommunity, name: 'home.Community' },
       { icon: iconNews, name: 'home.News' },

@@ -15,6 +15,9 @@ export default {
   unConf: {
     title: 'UnConf',
   },
+  sponsor:{
+    title: 'Sponsor',
+  },
   scheduleDetail:{
     title: 'Speech',
   },
