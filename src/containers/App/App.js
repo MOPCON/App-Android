@@ -9,6 +9,7 @@ import Sponsor from '../Sponsor/Sponsor';
 import ScheduleDetail from '../ScheduleDetail/ScheduleDetail';
 import SponsorDetail from '../SponsorDetail/SponsorDetail';
 import Speaker from '../Speacker/Speaker';
+import SpeakerDetail from '../SpeakerDetail/SpeakerDetail';
 
 import * as theme from '../../theme';
 
@@ -33,11 +34,12 @@ class App extends Component {
 }
 
 export default StackNavigator({
-  Main: { screen: Speaker },
+  Main: { screen: App },
   Schedule: { screen: Schedule },
   UnConf: { screen: UnConf },
   ScheduleDetail: { screen: ScheduleDetail },
   Sponsor: { screen: Sponsor },
   SponsorDetail: { screen: SponsorDetail },
   Speaker: { screen: Speaker },
+  SpeakerDetail: { screen: SpeakerDetail },
 });
