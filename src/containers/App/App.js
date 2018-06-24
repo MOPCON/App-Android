@@ -8,6 +8,8 @@ import UnConf from '../UnConf/UnConf';
 import Sponsor from '../Sponsor/Sponsor';
 import ScheduleDetail from '../ScheduleDetail/ScheduleDetail';
 import SponsorDetail from '../SponsorDetail/SponsorDetail';
+import Speaker from '../Speacker/Speaker';
+
 import * as theme from '../../theme';
 
 class App extends Component {
@@ -37,4 +39,5 @@ export default StackNavigator({
   ScheduleDetail: { screen: ScheduleDetail },
   Sponsor: { screen: Sponsor },
   SponsorDetail: { screen: SponsorDetail },
+  Speaker: { screen: Speaker },
 });

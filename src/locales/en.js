@@ -21,4 +21,7 @@ export default {
   scheduleDetail:{
     title: 'Speech',
   },
+  speaker: {
+    title: 'Speaker',
+  }
 };
