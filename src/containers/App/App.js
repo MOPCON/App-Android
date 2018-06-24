@@ -33,7 +33,7 @@ class App extends Component {
 }
 
 export default StackNavigator({
-  Main: { screen: App },
+  Main: { screen: Speaker },
   Schedule: { screen: Schedule },
   UnConf: { screen: UnConf },
   ScheduleDetail: { screen: ScheduleDetail },

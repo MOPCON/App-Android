@@ -8,3 +8,4 @@ export const red = '#d13232';
 export const peach = '#ffaa7d';
 export const buttonBackground = '#00133C';
 export const modBorder = '#04b7ad'
+export const SpeakerCardBackground = '#002A52';
