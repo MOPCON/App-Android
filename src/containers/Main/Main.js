@@ -57,7 +57,7 @@ export default class Main extends Component {
       { icon: iconSponsor, name: 'home.Sponsors', screen: 'Sponsor' },
       { icon: iconSpeakers, name: 'home.Speakers' },
       { icon: iconCommunity, name: 'home.Community' },
-      { icon: iconNews, name: 'home.News' },
+      { icon: iconNews, name: 'home.News', screen: 'News' },
     ],
     language: getLanguageCode(),
   }
