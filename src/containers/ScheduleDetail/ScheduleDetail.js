@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import Button from '../../components/Button/TextButton';
+import Button from '../../components/Button/Button';
 import { darkBlue, scheduleCardTypeColor } from '../../theme/index';
 import imageURISlide from '../../images/buttonSlide.png';
 import imageURIStarNormal from '../../images/buttonStarNormal.png';

@@ -4,7 +4,7 @@ import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import Tab from '../../components/Tab/Tab';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import TextButton from '../../components/Button/TextButton';
+import Button from '../../components/Button/Button';
 
 const tabs = [
   { name: 'day1', value: 'day1' },
@@ -32,21 +32,21 @@ export default class Schedule extends Component {
             onPressTitle={this.onPressTitle}
             name="田哲禹"
             room="R1 : 一廳" />
-            <ScheduleItem
+          <ScheduleItem
             regular
             title="Innovate width New Technologies on Google Cloud"
             type="CLOUD"
             onPressTitle={this.onPressTitle}
             name="田哲禹"
             room="R1 : 一廳" />
-            <ScheduleItem
+          <ScheduleItem
             regular
             title="Innovate width New Technologies on Google Cloud"
             type="CLOUD"
             onPressTitle={this.onPressTitle}
             name="田哲禹"
             room="R1 : 一廳" />
-          <TextButton text="查看交流場次" align="center" margin={[16, 0, 0, 0]} />
+          <Button text="查看交流場次" align="center" margin={[16, 0, 0, 0]} />
         </ScheduleContainer>
       </ScheduleScrollView>
     )

@@ -6,7 +6,7 @@ import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import Tab from '../../components/Tab/Tab';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import TextButton from '../../components/Button/TextButton';
+import Button from '../../components/Button/Button';
 
 const UnConfContainer = styled.View`
   background-color: ${darkBlue};
@@ -55,7 +55,7 @@ export default class UnConf extends React.Component {
             title="Innovate width New Technologies on Google Cloud"
             name="田哲禹"
             room="R1 : 一廳" />
-          <TextButton text="查看議程" align="center" margin={[16, 0, 0, 0]} />
+          <Button text="查看議程" align="center" margin={[16, 0, 0, 0]} />
         </UnConfContainer>
       </UnConfScrollView>
     );
