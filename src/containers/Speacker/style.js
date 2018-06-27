@@ -16,7 +16,11 @@ export const SpeakerContainer = styled.View`
 
 export const Card = styled.TouchableOpacity`
   width: 100%;
-  height: 144px;
   background: ${SpeakerCardBackground};
   margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px 16px;
 `;
