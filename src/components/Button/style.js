@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { scheduleCardTypeColor, buttonBackground } from '../../theme/index';
+import { scheduleCardTypeColor, buttonBackground, buttonTransparentBackground } from '../../theme/index';
 
 export const ButtonTouchable = styled.TouchableOpacity`
   align-self: ${p => p.align};
@@ -10,7 +10,16 @@ export const ButtonTouchable = styled.TouchableOpacity`
   padding: ${p => p.hasIcon ? '6px 8px' : '8px 14px'};
   border: 1px solid ${scheduleCardTypeColor};
   border-radius: 4px;
-  background-color: ${buttonBackground};
+  background-color: ${p => {
+    switch(p.color) {
+      case 'normal':
+        return buttonBackground;
+      case 'inverse':
+        return buttonTransparentBackground;
+      default:
+        return buttonBackground;
+    }
+  }};
   display: flex;
   flex-direction: row;
   align-items: center;
