@@ -10,6 +10,7 @@ import ScheduleDetail from '../ScheduleDetail/ScheduleDetail';
 import SponsorDetail from '../SponsorDetail/SponsorDetail';
 import Speaker from '../Speacker/Speaker';
 import SpeakerDetail from '../SpeakerDetail/SpeakerDetail';
+import News from '../News/News';
 
 import * as theme from '../../theme';
 
@@ -42,4 +43,5 @@ export default StackNavigator({
   SponsorDetail: { screen: SponsorDetail },
   Speaker: { screen: Speaker },
   SpeakerDetail: { screen: SpeakerDetail },
+  News: { screen: News },
 });
