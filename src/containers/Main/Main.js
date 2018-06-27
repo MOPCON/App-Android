@@ -95,8 +95,11 @@ export default class Main extends Component {
             </Style.LogoContainer>
             <Style.CarouselContainer>
               <Carousel
+                inactiveSlideScale={1}
+                slideStyle={{marginRight: 16}}
                 sliderWidth={width}
                 itemWidth={width - 80}
+                itemHeight={176}
                 data={images}
                 renderItem={this.renderItem}
               />
