@@ -21,4 +21,7 @@ export default {
   scheduleDetail:{
     title: '演講',
   },
+  speaker: {
+    title: '講師',
+  }
 };

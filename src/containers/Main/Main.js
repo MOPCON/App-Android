@@ -8,7 +8,7 @@ import Background from './Background';
 import News from './News';
 import Mod from './Mod';
 import Tab from '../../components/Tab/Tab';
-import * as style from './style';
+import * as Style from './style';
 
 // image
 import mopconLogo from '../../images/mopconLogo01.png';
@@ -55,7 +55,7 @@ export default class Main extends Component {
       { icon: iconUnconference, name: 'home.Unconference', screen: 'UnConf' },
       { icon: iconMission, name:'home.Mission' },
       { icon: iconSponsor, name: 'home.Sponsors', screen: 'Sponsor' },
-      { icon: iconSpeakers, name: 'home.Speakers' },
+      { icon: iconSpeakers, name: 'home.Speakers', screen: 'Speaker' },
       { icon: iconCommunity, name: 'home.Community' },
       { icon: iconNews, name: 'home.News' },
     ],
@@ -64,7 +64,7 @@ export default class Main extends Component {
 
   renderItem = ({ item, index }) => {
     return (
-      <style.CarouselItem width={width} source={{ uri: item }} />
+      <Style.CarouselItem width={width} source={{ uri: item }} />
     );
   }
 
@@ -86,33 +86,33 @@ export default class Main extends Component {
     const { images, mods, language } = this.state;
 
     return (
-      <style.Container>
+      <Style.Container>
         <Background />
-        <style.ScrollContainer>
-          <style.ViewContainer>
-            <style.LogoContainer>
+        <Style.ScrollContainer>
+          <Style.ViewContainer>
+            <Style.LogoContainer>
               <Image source={mopconLogo} />
-            </style.LogoContainer>
-            <style.CarouselContainer>
+            </Style.LogoContainer>
+            <Style.CarouselContainer>
               <Carousel
                 sliderWidth={width}
                 itemWidth={width - 80}
                 data={images}
                 renderItem={this.renderItem}
               />
-            </style.CarouselContainer>
-            <style.Content>
+            </Style.CarouselContainer>
+            <Style.Content>
               <News />
-              <style.ModContainer>
+              <Style.ModContainer>
                 {mods.map((mod, index) => <Mod key={`mod_${index}`} navigate={() => this.navigate(mod.screen)} {...mod} />)}
-              </style.ModContainer>
-            </style.Content>
-            <style.TabContainer>
+              </Style.ModContainer>
+            </Style.Content>
+            <Style.TabContainer>
               <Tab tabs={tabs} defaultActiveTab={language} onChange={this.onChangeLanguage}/>
-            </style.TabContainer>
-          </style.ViewContainer>
-        </style.ScrollContainer>
-      </style.Container>
+            </Style.TabContainer>
+          </Style.ViewContainer>
+        </Style.ScrollContainer>
+      </Style.Container>
     )
   }
 }
