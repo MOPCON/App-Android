@@ -1,27 +1,37 @@
 import styled from 'styled-components/native';
 import { TouchableOpacity } from 'react-native';
 import {
-  modBorder, scheduleCardBackground
+  scheduleCardTypeColor, scheduleCardBackground, inverseBackground,
 } from '../../theme';
 
 
 export const SpeechItemContainer = styled.View`
   padding: 16px;
-  background-color: ${scheduleCardBackground};
+  background-color: ${p => {
+    switch(p.color) {
+      case 'normal':
+        return scheduleCardBackground;
+      case 'inverse':
+        return inverseBackground;
+      default:
+        return scheduleCardBackground;
+    }
+  }};
 `;
 
 export const Title = styled.Text`
-  color: ${modBorder};
-  font-size: 12;
-  line-height: 16;
-  letter-spacing: 2;
-  margin-bottom: 6;
+  color: ${scheduleCardTypeColor};
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
 `;
 
 export const Content = styled.Text`
   color: #fff;
-  font-size: 20;
-  margin-bottom: 16;
+  font-size: 20px;
+  margin-bottom: 16px;
+  font-family: 'Roboto-Regular';
 `;
 
 export const FuncView = styled.View`

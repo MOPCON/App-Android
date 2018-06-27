@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { scheduleCardTypeColor, buttonBackground, buttonTransparentBackground } from '../../theme/index';
+import { scheduleCardTypeColor, buttonBackground, inverseBackground } from '../../theme/index';
 
 export const ButtonTouchable = styled.TouchableOpacity`
   align-self: ${p => p.align};
@@ -15,7 +15,7 @@ export const ButtonTouchable = styled.TouchableOpacity`
       case 'normal':
         return buttonBackground;
       case 'inverse':
-        return buttonTransparentBackground;
+        return inverseBackground;
       default:
         return buttonBackground;
     }
