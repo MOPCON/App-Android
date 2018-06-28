@@ -62,6 +62,10 @@ export default class Main extends Component {
     language: getLanguageCode(),
   }
 
+  componentDidMount() {
+		setTimeout(() => {this.scrollView.scrollTo({x: -30}) }, 100) // scroll view position fix
+	}
+
   renderItem = ({ item, index }) => {
     return (
       <Style.CarouselItem width={width} source={{ uri: item }} />
@@ -93,16 +97,14 @@ export default class Main extends Component {
             <Style.LogoContainer>
               <Image source={mopconLogo} />
             </Style.LogoContainer>
-            <Style.CarouselContainer>
-              <Carousel
-                inactiveSlideScale={1}
-                slideStyle={{marginRight: 16}}
-                sliderWidth={width}
-                itemWidth={width - 80}
-                itemHeight={176}
-                data={images}
-                renderItem={this.renderItem}
-              />
+            <Style.CarouselContainer
+              innerRef={(scrollView) => { this.scrollView = scrollView; }}
+              horizontal= {true}
+              decelerationRate={0}
+              snapToInterval={width}
+              snapToAlignment={"center"}
+            >
+              {images.map(img => <Style.CarouselItem width={width} source={{ uri: img }} /> )}
             </Style.CarouselContainer>
             <Style.Content>
               <News />
