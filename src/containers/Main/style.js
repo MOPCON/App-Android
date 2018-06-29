@@ -24,8 +24,6 @@ export const LogoContainer = styled.View`
 `;
 
 export const CarouselContainer = styled.ScrollView`
-  margin-left: 20px;
-  margin-right: 20px;
   margin-bottom: 16px;
   height: 168px;
 `;

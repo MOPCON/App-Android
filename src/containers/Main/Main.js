@@ -41,19 +41,18 @@ const getLanguageCode = () => {
 export default class Main extends Component {
   state = {
     images: [
-      'https://unsplash.it/300/?random',
-      'https://unsplash.it/350/?random',
-      'https://unsplash.it/400/?random',
-      'https://unsplash.it/450/?random',
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/550/?random',
-      'https://unsplash.it/600/?random'
+      'https://unsplash.it/600/336/?image=1075',
+      'https://unsplash.it/600/336/?image=1076',
+      'https://unsplash.it/600/336/?image=1077',
+      'https://unsplash.it/600/336/?image=1078',
+      'https://unsplash.it/600/336/?image=1079',
+      'https://unsplash.it/600/336/?image=1080',
     ],
     mods: [
       { icon: iconSchedule, name: 'home.schedule', screen: 'Schedule' },
       { icon: iconMySchedule, name: 'home.MySchedule' },
       { icon: iconUnconference, name: 'home.Unconference', screen: 'UnConf' },
-      { icon: iconMission, name:'home.Mission' },
+      { icon: iconMission, name: 'home.Mission' },
       { icon: iconSponsor, name: 'home.Sponsors', screen: 'Sponsor' },
       { icon: iconSpeakers, name: 'home.Speakers', screen: 'Speaker' },
       { icon: iconCommunity, name: 'home.Community' },
@@ -63,8 +62,8 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-		setTimeout(() => {this.scrollView.scrollTo({x: -30}) }, 100) // scroll view position fix
-	}
+    // setTimeout(() => { this.scrollView.scrollTo({ x: -30 }) }, 100) // scroll view position fix
+  }
 
   renderItem = ({ item, index }) => {
     return (
@@ -76,6 +75,19 @@ export default class Main extends Component {
     if (screen) {
       this.props.navigate(screen);
     }
+  }
+
+  onScroll = (e) => {
+    clearTimeout(this.scrollTimeout)
+    const x = e.nativeEvent.contentOffset.x;
+    this.scrollTimeout = setTimeout(this.onScrollEnd.bind(this, x), 250);
+  }
+
+  onScrollEnd = (x) => {
+    const picWidth = width - 80;
+    const round = Math.round(x / picWidth);
+    const offset = (round * picWidth) + (round * 16) - 20;
+    this.scrollView.scrollTo({ x: offset })
   }
 
   onChangeLanguage = (language) => {
@@ -98,13 +110,12 @@ export default class Main extends Component {
               <Image source={mopconLogo} />
             </Style.LogoContainer>
             <Style.CarouselContainer
-              innerRef={(scrollView) => { this.scrollView = scrollView; }}
-              horizontal= {true}
-              decelerationRate={0}
-              snapToInterval={width}
-              snapToAlignment={"center"}
+              innerRef={(e) => { this.scrollView = e; }}
+              horizontal={true}
+              onScroll={this.onScroll}
+              contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}
             >
-              {images.map(img => <Style.CarouselItem width={width} source={{ uri: img }} /> )}
+              {images.map((img, i) => <Style.CarouselItem key={`item_${i}`} width={width} source={{ uri: img }} />)}
             </Style.CarouselContainer>
             <Style.Content>
               <News />
@@ -113,11 +124,11 @@ export default class Main extends Component {
               </Style.ModContainer>
             </Style.Content>
             <Style.TabContainer>
-              <Tab tabs={tabs} defaultActiveTab={language} onChange={this.onChangeLanguage}/>
+              <Tab tabs={tabs} defaultActiveTab={language} onChange={this.onChangeLanguage} />
             </Style.TabContainer>
           </Style.ViewContainer>
         </Style.ScrollContainer>
-      </Style.Container>
+      </Style.Container >
     )
   }
 }
