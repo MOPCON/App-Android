@@ -23,14 +23,15 @@ export const LogoContainer = styled.View`
   margin-bottom: 25;
 `;
 
-export const CarouselContainer = styled.View`
-  height: 168;
-  margin-bottom: 15;
+export const CarouselContainer = styled.ScrollView`
+  margin-bottom: 16px;
+  height: 168px;
 `;
 
 export const CarouselItem = styled.Image`
   width: ${props => props.width - 80};
-  height: 168;
+  height: 100%;
+  margin-right: 16px;
 `;
 
 export const Content = styled.View`
