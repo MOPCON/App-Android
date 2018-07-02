@@ -5,7 +5,7 @@ export default class CommunityBlock extends Component {
   render() {
     return (
       <Style.ScrollView>
-        <Style.CardSmallView>
+        <Style.BlockContainer>
           <Style.CardSmall onPress={this.onClick}>
             <Style.CardImgSmall />
           </Style.CardSmall>
@@ -36,7 +36,7 @@ export default class CommunityBlock extends Component {
           <Style.CardSmall>
             <Style.CardImgSmall />
           </Style.CardSmall>
-        </Style.CardSmallView>
+        </Style.BlockContainer>
       </Style.ScrollView>
     )
   };

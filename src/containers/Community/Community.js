@@ -4,6 +4,7 @@ import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import Tab from '../../components/Tab/Tab';
 import CommunityBlock from './CommunityBlock';
+import VolunteerBlock from './VolunteerBlock';
 
 const tabs = [
   { name: I18n.t('community.tab_community'), value: 'community' },
@@ -19,7 +20,7 @@ export default class Community extends Component {
 
   handleChange = (tab) => {
     this.setState({
-      tab: tab === 'community' ? 'volunteer' : 'community',
+      tab,
     });
   }
 
@@ -34,7 +35,7 @@ export default class Community extends Component {
         {
           tab === 'community'
           ? <CommunityBlock />
-          : <CommunityBlock />
+          : <VolunteerBlock />
         }
       </Style.Container>
     );

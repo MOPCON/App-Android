@@ -17,7 +17,7 @@ export const TabContainer = styled.View`
 export const ScrollView = styled.ScrollView`
 `;
 
-export const CardSmallView = styled.View`
+export const BlockContainer = styled.View`
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
@@ -36,4 +36,40 @@ export const CardSmall = styled.TouchableOpacity`
 `;
 export const CardImgSmall = styled.Image`
 
+`;
+
+export const Card = styled.TouchableOpacity`
+  width: 100%;
+  background: ${theme.SpeakerCardBackground};
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 16px;
+`;
+
+export const CardTitle = styled.Text`
+  color: ${theme.scheduleCardTypeColor};
+  font-size: 20px;
+  margin-bottom: 8px;
+`;
+
+export const CardContent = styled.Text`
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  margin-bottom: 24px;
+`;
+
+export const MemberTitle = styled.Text`
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  margin-bottom: 8px;
+`;
+
+export const MemberContent = styled.Text`
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.3px;
 `;
