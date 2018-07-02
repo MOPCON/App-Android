@@ -23,5 +23,9 @@ export default {
   },
   speaker: {
     title: 'Speaker',
+  },
+  community: {
+    tab_community: 'Community',
+    tab_volunteer: 'Volunteer',
   }
 };
