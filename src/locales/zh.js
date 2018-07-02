@@ -25,7 +25,11 @@ export default {
     title: '講師',
   },
   community: {
+    title: '社群',
     tab_community: '主辦社群',
     tab_volunteer: '志工組織',
+  },
+  communityDetail: {
+    title: '社群'
   }
 };

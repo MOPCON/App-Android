@@ -3,10 +3,12 @@ import * as Style from './style';
 
 export default class CommunityBlock extends Component {
   render() {
+    const { goCommunityDetail } = this.props;
+
     return (
       <Style.ScrollView>
         <Style.BlockContainer>
-          <Style.CardSmall onPress={this.onClick}>
+          <Style.CardSmall onPress={goCommunityDetail}>
             <Style.CardImgSmall />
           </Style.CardSmall>
           <Style.CardSmall>

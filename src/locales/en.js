@@ -25,7 +25,11 @@ export default {
     title: 'Speaker',
   },
   community: {
+    title: 'Community',
     tab_community: 'Community',
     tab_volunteer: 'Volunteer',
+  },
+  communityDetail: {
+    title: 'Community'
   }
 };

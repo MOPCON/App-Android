@@ -12,6 +12,7 @@ import Speaker from '../Speacker/Speaker';
 import SpeakerDetail from '../SpeakerDetail/SpeakerDetail';
 import News from '../News/News';
 import Community from '../Community/Community';
+import CommunityDetail from '../CommunityDetail/CommunityDetail';
 
 import * as theme from '../../theme';
 
@@ -46,4 +47,5 @@ export default StackNavigator({
   SpeakerDetail: { screen: SpeakerDetail },
   News: { screen: News },
   Community: { screen: Community },
+  CommunityDetail: { screen: CommunityDetail },
 });
