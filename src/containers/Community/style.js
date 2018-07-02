@@ -38,7 +38,7 @@ export const CardImgSmall = styled.Image`
 
 `;
 
-export const Card = styled.TouchableOpacity`
+export const Card = styled.View`
   width: 100%;
   background: ${theme.SpeakerCardBackground};
   margin-bottom: 16px;
