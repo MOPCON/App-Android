@@ -6,9 +6,9 @@ import {
 
 
 export const SpeechItemContainer = styled.View`
-  padding: 16px;
+  padding: ${p => p.color === 'inverse' ? 0 : '16px'};
   background-color: ${p => {
-    switch(p.color) {
+    switch (p.color) {
       case 'normal':
         return scheduleCardBackground;
       case 'inverse':

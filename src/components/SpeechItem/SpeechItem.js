@@ -7,7 +7,7 @@ import buttonSlide from '../../images/icon/buttonSlide.png';
 
 export default class SpeakerItem extends Component {
   static defaultProps = {
-    color: "normal"
+    color: 'normal'  // normal or inverse
   }
   render() {
     const { color } = this.props;
