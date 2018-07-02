@@ -15,7 +15,7 @@ export default class OutlineButton extends React.PureComponent {
     text: 'click me',
     align: 'center',
     margin: [16, 0, 16, 0],
-    color: "normal"
+    color: 'normal',  // normal or inverse
   }
   render() {
     const { onClick, text, align, margin, iconURI, color } = this.props;
