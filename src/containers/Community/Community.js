@@ -12,7 +12,7 @@ const tabs = [
 ];
 
 export default class Community extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.Community', 'mode1')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.title', 'mode1')
 
   state = {
     tab: 'community'
@@ -22,6 +22,10 @@ export default class Community extends Component {
     this.setState({
       tab,
     });
+  }
+
+  goCommunityDetail = () => {
+    this.props.navigation.navigate('CommunityDetail');
   }
 
   render() {
@@ -34,7 +38,7 @@ export default class Community extends Component {
         </Style.TabContainer>
         {
           tab === 'community'
-          ? <CommunityBlock />
+          ? <CommunityBlock goCommunityDetail={this.goCommunityDetail}/>
           : <VolunteerBlock />
         }
       </Style.Container>
