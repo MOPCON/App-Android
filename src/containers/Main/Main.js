@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Dimensions, NativeModules, Platform, Image, View } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
 import I18n from '../../locales';
 
 // component
