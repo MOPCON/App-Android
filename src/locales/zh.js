@@ -23,5 +23,9 @@ export default {
   },
   speaker: {
     title: '講師',
+  },
+  community: {
+    tab_community: '主辦社群',
+    tab_volunteer: '志工組織',
   }
 };

@@ -4,7 +4,7 @@ import { Animated } from 'react-native';
 
 export const TabContainer = styled.View`
   background-color: ${aquamarineTwo};
-  height: 34px;
+  height: 36px;
   width: 100%;
   border-radius: 6px;
   margin-bottom: 16px;

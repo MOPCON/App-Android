@@ -11,6 +11,7 @@ import SponsorDetail from '../SponsorDetail/SponsorDetail';
 import Speaker from '../Speacker/Speaker';
 import SpeakerDetail from '../SpeakerDetail/SpeakerDetail';
 import News from '../News/News';
+import Community from '../Community/Community';
 
 import * as theme from '../../theme';
 
@@ -35,7 +36,7 @@ class App extends Component {
 }
 
 export default StackNavigator({
-  Main: { screen: App },
+  Main: { screen: Community },
   Schedule: { screen: Schedule },
   UnConf: { screen: UnConf },
   ScheduleDetail: { screen: ScheduleDetail },
@@ -44,4 +45,5 @@ export default StackNavigator({
   Speaker: { screen: Speaker },
   SpeakerDetail: { screen: SpeakerDetail },
   News: { screen: News },
+  Community: { screen: Community },
 });
