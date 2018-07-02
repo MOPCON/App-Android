@@ -3,6 +3,7 @@ import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import Tab from '../../components/Tab/Tab';
+import CommunityBlock from './CommunityBlock';
 
 const tabs = [
   { name: I18n.t('community.tab_community'), value: 'community' },
@@ -30,6 +31,11 @@ export default class Community extends Component {
         <Style.TabContainer>
           <Tab tabs={tabs} defaultActiveTab={tab} onChange={this.handleChange} />
         </Style.TabContainer>
+        {
+          tab === 'community'
+          ? <CommunityBlock />
+          : <CommunityBlock />
+        }
       </Style.Container>
     );
   }
