@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import firebase from 'react-native-firebase';
 import Header from './Header';
 import Main from '../Main/Main';
 import Schedule from '../Schedule/Schedule';
@@ -21,6 +22,11 @@ class App extends Component {
     },
     title: '',
   };
+
+  async componentDidMount() {
+    const fcmToken = await firebase.messaging().getToken();
+    if (fcmToken) { console.log(`fcmToken:${fcmToken}`); }
+  }
 
   render() {
     const { navigate } = this.props.navigation;
