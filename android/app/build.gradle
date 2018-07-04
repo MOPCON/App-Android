@@ -115,6 +115,14 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
+    signingConfigs {
+        release {
+            storeFile file("Mopcon2018.keystore")
+            storePassword "mopcon2018"
+            keyAlias "Mopcon2018Key-alias"
+            keyPassword "mopcon2018"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
