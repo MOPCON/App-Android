@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Dimensions, NativeModules, Platform, Image, View } from 'react-native';
+import Carousel from 'react-native-snap-carousel';
 import I18n from '../../locales';
 
 // component
@@ -60,10 +61,6 @@ export default class Main extends Component {
     language: getLanguageCode(),
   }
 
-  componentDidMount() {
-    // setTimeout(() => { this.scrollView.scrollTo({ x: -30 }) }, 100) // scroll view position fix
-  }
-
   renderItem = ({ item, index }) => {
     return (
       <Style.CarouselItem width={width} source={{ uri: item }} />
@@ -108,13 +105,14 @@ export default class Main extends Component {
             <Style.LogoContainer>
               <Image source={mopconLogo} />
             </Style.LogoContainer>
-            <Style.CarouselContainer
-              innerRef={(e) => { this.scrollView = e; }}
-              horizontal={true}
-              onScroll={this.onScroll}
-              contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}
-            >
-              {images.map((img, i) => <Style.CarouselItem key={`item_${i}`} width={width} source={{ uri: img }} />)}
+            <Style.CarouselContainer>
+              <Carousel
+                inactiveSlideScale={0.94}
+                sliderWidth={width}
+                itemWidth={width - 40}
+                data={images}
+                renderItem={this.renderItem}
+              />
             </Style.CarouselContainer>
             <Style.Content>
               <News />

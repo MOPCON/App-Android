@@ -29,8 +29,9 @@ export const CarouselContainer = styled.ScrollView`
 `;
 
 export const CarouselItem = styled.Image`
-  width: ${props => props.width - 80};
-  height: 100%;
+  padding: 100px 100px;
+  width: ${props => props.width};
+  height: 168px;
   margin-right: 16px;
 `;
 

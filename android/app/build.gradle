@@ -101,6 +101,7 @@ android {
         applicationId "com.mopcon_android_app_2018"
         minSdkVersion 16
         targetSdkVersion 22
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         ndk {
@@ -145,6 +146,26 @@ android {
 }
 
 dependencies {
+    compile 'com.android.support:multidex:1.0.3'
+    compile(project(':react-native-firebase')) {
+        transitive = false
+    }
+
+    // RNFirebase required dependencies
+    implementation "com.google.firebase:firebase-core:15.0.2"
+    implementation "com.google.android.gms:play-services-base:15.0.0"
+
+    // RNFirebase optional dependencies
+    // implementation "com.google.firebase:firebase-ads:15.0.0"
+    // implementation "com.google.firebase:firebase-auth:15.1.0"
+    // implementation "com.google.firebase:firebase-config:15.0.0"
+    // implementation "com.google.firebase:firebase-database:15.0.0"
+    // implementation "com.google.firebase:firebase-invites:15.0.1"
+    implementation "com.google.firebase:firebase-firestore:16.0.0"
+    implementation "com.google.firebase:firebase-messaging:15.0.2"
+    // implementation "com.google.firebase:firebase-perf:15.1.0"
+    // implementation "com.google.firebase:firebase-storage:15.0.2"
+
     compile project(':react-native-i18n')
     compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])
@@ -158,3 +179,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+apply plugin: 'com.google.gms.google-services'
