@@ -6,40 +6,38 @@ export default class CommunityBlock extends Component {
     const { goCommunityDetail } = this.props;
 
     return (
-      <Style.ScrollView>
-        <Style.BlockContainer>
-          <Style.CardSmall onPress={goCommunityDetail}>
-            <Style.CardImgSmall />
-          </Style.CardSmall>
-          <Style.CardSmall>
-            <Style.CardImgSmall />
-          </Style.CardSmall>
-          <Style.CardSmall>
-            <Style.CardImgSmall />
-          </Style.CardSmall>
-          <Style.CardSmall>
-            <Style.CardImgSmall />
-          </Style.CardSmall>
-          <Style.CardSmall>
-            <Style.CardImgSmall />
-          </Style.CardSmall>
-          <Style.CardSmall>
-            <Style.CardImgSmall />
-          </Style.CardSmall>
-          <Style.CardSmall>
-            <Style.CardImgSmall />
-          </Style.CardSmall>
-          <Style.CardSmall>
-            <Style.CardImgSmall />
-          </Style.CardSmall>
-          <Style.CardSmall>
-            <Style.CardImgSmall />
-          </Style.CardSmall>
-          <Style.CardSmall>
-            <Style.CardImgSmall />
-          </Style.CardSmall>
-        </Style.BlockContainer>
-      </Style.ScrollView>
+      <Style.BlockContainer>
+        <Style.CardSmall onPress={goCommunityDetail}>
+          <Style.CardImgSmall />
+        </Style.CardSmall>
+        <Style.CardSmall>
+          <Style.CardImgSmall />
+        </Style.CardSmall>
+        <Style.CardSmall>
+          <Style.CardImgSmall />
+        </Style.CardSmall>
+        <Style.CardSmall>
+          <Style.CardImgSmall />
+        </Style.CardSmall>
+        <Style.CardSmall>
+          <Style.CardImgSmall />
+        </Style.CardSmall>
+        <Style.CardSmall>
+          <Style.CardImgSmall />
+        </Style.CardSmall>
+        <Style.CardSmall>
+          <Style.CardImgSmall />
+        </Style.CardSmall>
+        <Style.CardSmall>
+          <Style.CardImgSmall />
+        </Style.CardSmall>
+        <Style.CardSmall>
+          <Style.CardImgSmall />
+        </Style.CardSmall>
+        <Style.CardSmall>
+          <Style.CardImgSmall />
+        </Style.CardSmall>
+      </Style.BlockContainer>
     )
   };
 }

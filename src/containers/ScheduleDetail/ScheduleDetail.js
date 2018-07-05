@@ -1,15 +1,14 @@
 import React from 'react';
+import { ScrollView } from 'react-native';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-
 import SpeechItem from '../../components/SpeechItem/SpeechItem';
-
 
 export default class ScheduleDetail extends React.Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'scheduleDetail.title', 'mode2')
   render() {
     return (
-      <Style.SDScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SDContainer>
           <Style.HeaderImage source={{ uri: 'https://picsum.photos/700/1000/?image=1063' }} />
           <Style.IntroContainer>
@@ -21,7 +20,7 @@ export default class ScheduleDetail extends React.Component {
             </Style.DesText>
           </Style.IntroContainer>
         </Style.SDContainer>
-      </Style.SDScrollView>
+      </ScrollView>
     );
   }
 }
