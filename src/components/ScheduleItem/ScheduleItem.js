@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  ScheduleItemContainer, Title, Type,
-  InnerContainer, Name, ActionContainer,
-  Room, GeoIcon, StarIcon, StarIconImg,
-  StarIconTouchable,
-} from './style';
+import * as Style from './style';
 import { TouchableOpacity } from 'react-native';
 import geoPng from '../../images/location.png';
 import starIconNormal from '../../images/buttonStarNormal.png';
@@ -23,38 +18,41 @@ export default class ScheduleItem extends Component {
     regular: PropTypes.bool,  // regular conference schedule or not
     onPressTitle: PropTypes.func,
   }
+
   onPressSave = () => {
     this.props.onSave();
   }
+
   onPressTitle = () => {
     this.props.onPressTitle();
   }
+
   render() {
     const { paintBG, title, type, name, room, saved, regular } = this.props;
     return (
-      <ScheduleItemContainer paintBG={paintBG}>
+      <Style.ScheduleItemContainer paintBG={paintBG}>
         {
-          paintBG ? <Title paintBG={paintBG}>{title}</Title> : (
-            <InnerContainer>
-              <Type>{type}</Type>
+          paintBG ? <Style.Title paintBG={paintBG}>{title}</Style.Title> : (
+            <Style.InnerContainer>
+              <Style.Type>{type}</Style.Type>
               <TouchableOpacity onPress={this.onPressTitle}>
-                <Title paintBG={paintBG}>{title}</Title>
+                <Style.Title paintBG={paintBG}>{title}</Style.Title>
               </TouchableOpacity>
-              <Name>{name}</Name>
-              <ActionContainer>
-                <GeoIcon source={geoPng} />
-                <Room>{room}</Room>
+              <Style.Name>{name}</Style.Name>
+              <Style.ActionContainer>
+                <Style.GeoIcon source={geoPng} />
+                <Style.Room>{room}</Style.Room>
                 {
                   regular && (
-                    <StarIconTouchable onPress={this.onPressSave}>
-                      <StarIconImg source={saved ? starIconChecked : starIconNormal} />
-                    </StarIconTouchable>
+                    <Style.StarIconTouchable onPress={this.onPressSave}>
+                      <Style.StarIconImg source={saved ? starIconChecked : starIconNormal} />
+                    </Style.StarIconTouchable>
                   )
                 }
-              </ActionContainer>
-            </InnerContainer>)
+              </Style.ActionContainer>
+            </Style.InnerContainer>)
         }
-      </ScheduleItemContainer>
+      </Style.ScheduleItemContainer>
     )
   }
 }

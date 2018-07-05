@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollView } from 'react-native';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 
@@ -9,7 +10,7 @@ export default class Sponsor extends React.Component {
   }
   render() {
     return (
-      <Style.SponsorScrollView>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SponsorContainer>
           <Style.TypeText>TONY STARK</Style.TypeText>
           <Style.CardBig onPress={this.onClick}>
@@ -34,7 +35,7 @@ export default class Sponsor extends React.Component {
             </Style.CardSmall>
           </Style.CardSmallView>
         </Style.SponsorContainer>
-      </Style.SponsorScrollView>
+      </ScrollView>
     );
   }
 }

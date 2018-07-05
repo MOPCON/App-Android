@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ScrollView } from 'react-native';
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
@@ -32,16 +33,18 @@ export default class Community extends Component {
     const { tab } = this.state;
 
     return (
-      <Style.Container>
-        <Style.TabContainer>
-          <Tab tabs={tabs} defaultActiveTab={tab} onChange={this.handleChange} />
-        </Style.TabContainer>
-        {
-          tab === 'community'
-          ? <CommunityBlock goCommunityDetail={this.goCommunityDetail}/>
-          : <VolunteerBlock />
-        }
-      </Style.Container>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <Style.Container>
+          <Style.TabContainer>
+            <Tab tabs={tabs} defaultActiveTab={tab} onChange={this.handleChange} />
+          </Style.TabContainer>
+          {
+            tab === 'community'
+              ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} />
+              : <VolunteerBlock />
+          }
+        </Style.Container>
+      </ScrollView>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Animated, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
-import { TabContainer, TabActiveItem, TouchArea, TextContainer, TabText } from './style';
+import * as Style from './style';
 
 export default class Tab extends Component {
   static propTypes = {
@@ -57,18 +57,18 @@ export default class Tab extends Component {
   render() {
     const { tabs, activeTab, activeBarPosition, tabWidth } = this.state;
     return (
-      <TabContainer onLayout={this.onLayout}>
-        <TabActiveItem tabWidth={tabWidth} style={{ transform: [{ translateX: activeBarPosition }] }} />
-        <TextContainer>
+      <Style.TabContainer onLayout={this.onLayout}>
+        <Style.TabActiveItem tabWidth={tabWidth} style={{ transform: [{ translateX: activeBarPosition }] }} />
+        <Style.TextContainer>
           {
             tabs.map(tab => (
-              <TouchArea onPress={() => { this.onPressTab(tab) }} key={`tab_${tab.value}`}>
-                <TabText isActive={tab.value === activeTab} >{tab.name}</TabText>
-              </TouchArea>
+              <Style.TouchArea onPress={() => { this.onPressTab(tab) }} key={`tab_${tab.value}`}>
+                <Style.TabText isActive={tab.value === activeTab} >{tab.name}</Style.TabText>
+              </Style.TouchArea>
             ))
           }
-        </TextContainer>
-      </TabContainer>
+        </Style.TextContainer>
+      </Style.TabContainer>
     )
   }
 }

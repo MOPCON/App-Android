@@ -4,7 +4,7 @@ import { darkBlue, SpeakerCardBackground } from '../../theme/index';
 
 const width = (Dimensions.get('window').width - (16 * 3)) / 2;
 
-export const SpeakerScrollView = styled.ScrollView`
+export const SpeakerContainer = styled.ScrollView`
   padding: 16px;
   background-color: ${darkBlue};
 `;

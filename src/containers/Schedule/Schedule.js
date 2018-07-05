@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { ScheduleContainer, ScheduleScrollView } from './style';
+import { ScrollView } from 'react-native';
+import * as Style from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import Tab from '../../components/Tab/Tab';
@@ -21,8 +22,8 @@ export default class Schedule extends Component {
 
   render() {
     return (
-      <ScheduleScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <ScheduleContainer>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <Style.ScheduleContainer>
           <Tab tabs={tabs} defaultActiveTab={defaultActiveTab} />
           <ScheduleHeader time="08:00 ~ 09:00" />
           <ScheduleItem
@@ -47,8 +48,8 @@ export default class Schedule extends Component {
             name="田哲禹"
             room="R1 : 一廳" />
           <Button text="查看交流場次" align="center" margin={[16, 0, 0, 0]} />
-        </ScheduleContainer>
-      </ScheduleScrollView>
+        </Style.ScheduleContainer>
+      </ScrollView>
     )
   }
 }
