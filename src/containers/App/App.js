@@ -14,6 +14,7 @@ import SpeakerDetail from '../SpeakerDetail/SpeakerDetail';
 import News from '../News/News';
 import Community from '../Community/Community';
 import CommunityDetail from '../CommunityDetail/CommunityDetail';
+import SplashScreen from 'react-native-splash-screen';
 
 import * as theme from '../../theme';
 
@@ -26,6 +27,10 @@ class App extends Component {
   };
 
   async componentDidMount() {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 2000);
+
     const fcmToken = await firebase.messaging().getToken();
     if (fcmToken) { console.log(`fcmToken:${fcmToken}`); }
   }

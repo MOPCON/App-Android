@@ -146,6 +146,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-splash-screen')
     compile 'com.android.support:multidex:1.0.3'
     compile(project(':react-native-firebase')) {
         transitive = false
