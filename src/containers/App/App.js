@@ -27,7 +27,10 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    SplashScreen.hide();
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 2000);
+
     const fcmToken = await firebase.messaging().getToken();
     if (fcmToken) { console.log(`fcmToken:${fcmToken}`); }
   }
