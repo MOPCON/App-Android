@@ -1,0 +1,31 @@
+language: android
+jdk: oraclejdk8
+sudo: required
+android:
+  components:
+    - platform-tools
+    - tools
+    - build-tools-23.0.1
+    - build-tools-27.0.3
+    - android-23
+    - android-26
+    - android-27
+    - extra-android-m2repository
+    - extra-google-google_play_services
+    - extra-google-m2repository
+licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
+before_install:
+  - nvm install 10
+  - node --version
+  - npm i -g yarn react-native-cli
+  - mkdir -p ./android/app/build/intermediates/assets/debug/
+  - openssl aes-256-cbc -K $encrypted_93be7efce2a7_key -iv $encrypted_93be7efce2a7_iv -in ./android/app/google-services.json.enc -out ./android/app/google-services.json -d
+install:
+  - yarn
+script:
+  - react-native bundle --dev false --platform android --entry-file index.js --bundle-output ./android/app/build/intermediates/assets/debug/index.android.bundle --assets-dest ./android/app/build/intermediates/res/merged/debug
+  - cd android && ./gradlew clean
+  - ./gradlew assembleDebug
