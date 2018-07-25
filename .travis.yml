@@ -6,6 +6,7 @@ android:
     - platform-tools
     - tools
     - build-tools-23.0.1
+    - build-tools-27.0.3
     - android-23
     - extra-android-m2repository
     - extra-google-google_play_services
@@ -19,7 +20,6 @@ before_install:
   - node --version
   - npm i -g yarn react-native-cli
   - mkdir -p ./android/app/build/intermediates/assets/debug/
-  - yes | sudo sdkmanager --licenses
 install:
   - yarn
 script:
