@@ -19,6 +19,7 @@ before_install:
   - node --version
   - npm i -g yarn react-native-cli
   - mkdir -p ./android/app/build/intermediates/assets/debug/
+  - yes | sudo sdkmanager --licenses
 install:
   - yarn
 script:
