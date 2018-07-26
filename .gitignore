@@ -57,3 +57,5 @@ buck-out/
 
 #google services json
 google-services.json
+
+android/app/src/main/*
