@@ -50,7 +50,7 @@ class App extends Component {
 }
 
 export default StackNavigator({
-  Main: { screen: QRCode },
+  Main: { screen: App },
   Schedule: { screen: Schedule },
   UnConf: { screen: UnConf },
   ScheduleDetail: { screen: ScheduleDetail },
