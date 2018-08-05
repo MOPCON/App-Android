@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import firebase from 'react-native-firebase';
+import SplashScreen from 'react-native-splash-screen';
 import Header from './Header';
 import Main from '../Main/Main';
 import Schedule from '../Schedule/Schedule';
@@ -14,7 +15,8 @@ import SpeakerDetail from '../SpeakerDetail/SpeakerDetail';
 import News from '../News/News';
 import Community from '../Community/Community';
 import CommunityDetail from '../CommunityDetail/CommunityDetail';
-import SplashScreen from 'react-native-splash-screen';
+import QRCode from '../QRCode/QRCode';
+
 
 import * as theme from '../../theme';
 
@@ -59,4 +61,5 @@ export default StackNavigator({
   News: { screen: News },
   Community: { screen: Community },
   CommunityDetail: { screen: CommunityDetail },
+  QRCode: { screen: QRCode },
 });

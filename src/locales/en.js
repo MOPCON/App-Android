@@ -31,5 +31,8 @@ export default {
   },
   communityDetail: {
     title: 'Community'
+  },
+  qrcode: {
+    title: 'QR Code'
   }
 };
