@@ -1,10 +1,16 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, AsyncStorage } from 'react-native';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 
 export default class Sponsor extends React.Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.title', 'mode1')
+
+  async componentDidMount() {
+    const sponsorText = await AsyncStorage.getItem('sponsor');
+    const sponsor = JSON.parse(sponsorText).payload;
+    this.setState({ sponsor });
+  }
   onClick = () => {
     this.props.navigation.navigate('SponsorDetail');
   }

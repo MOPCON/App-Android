@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Dimensions, NativeModules, Platform, Image, View } from 'react-native';
+import { Dimensions, NativeModules, Platform, Image, View, AsyncStorage } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import SplashScreen from 'react-native-splash-screen';
 import I18n from '../../locales';
 
 // component
@@ -59,6 +60,10 @@ export default class Main extends Component {
       { icon: iconNews, name: 'home.News', screen: 'News' },
     ],
     language: getLanguageCode(),
+  }
+
+  componentDidMount(){
+    SplashScreen.hide();
   }
 
   renderItem = ({ item, index }) => {

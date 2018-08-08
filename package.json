@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-camera": "^1.1.4",
