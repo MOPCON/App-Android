@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import { AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
-import SplashScreen from 'react-native-splash-screen';
 import Header from './Header';
 import Main from '../Main/Main';
 import Schedule from '../Schedule/Schedule';
@@ -16,8 +16,7 @@ import News from '../News/News';
 import Community from '../Community/Community';
 import CommunityDetail from '../CommunityDetail/CommunityDetail';
 import QRCode from '../QRCode/QRCode';
-
-
+import { updateData } from './ApiServices';
 import * as theme from '../../theme';
 
 class App extends Component {
@@ -28,23 +27,46 @@ class App extends Component {
     title: '',
   };
 
-  async componentDidMount() {
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 2000);
+  state = {
+    hasUpdated: false,
+  }
 
-    const fcmToken = await firebase.messaging().getToken();
-    if (fcmToken) { console.log(`fcmToken:${fcmToken}`); }
+  updateData = async () => {
+    const [scheduled, codeOfConduct, speaker, unconf, sponsor, community] = await updateData();
+    await AsyncStorage.setItem('scheduled', scheduled);
+    await AsyncStorage.setItem('codeOfConduct', codeOfConduct);
+    await AsyncStorage.setItem('speaker', speaker);
+    await AsyncStorage.setItem('unconf', unconf);
+    await AsyncStorage.setItem('sponsor', sponsor);
+    await AsyncStorage.setItem('community', community);
+    await AsyncStorage.setItem('updateTime', new Date());
+    this.setState({ hasUpdated: true });
+    return true;
+  }
+
+  // TODO add try catch;
+  async componentDidMount() {
+    firebase.messaging().getToken().then(fcmToken => console.log(`fcmToken:${fcmToken}`));
+    const updateTime = await AsyncStorage.getItem('updateTime');
+    // TODO discuss with andy
+    if(updateTime){
+      this.setState({ hasUpdated: true });
+      console.log('should not update data');
+    } else {
+      console.log('update data');
+      this.updateData();
+    }
   }
 
   render() {
     const { navigate } = this.props.navigation;
-
+    const { hasUpdated } = this.state;
     return (
-      <View style={{ flex: 1 }}>
-        <Header />
-        <Main navigate={navigate} />
-      </View>
+      hasUpdated ?
+        (<View style={{ flex: 1 }}>
+          <Header />
+          <Main navigate={navigate} />
+        </View>) : (<View />)
     );
   }
 }
