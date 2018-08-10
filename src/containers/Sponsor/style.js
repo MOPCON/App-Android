@@ -32,10 +32,10 @@ export const CardSmall = styled.TouchableOpacity`
   align-items: center;
   background: white;
 `;
-export const CardImgSmall = styled.Image`
+export const CardImgSmall = styled.View`
 
 `;
-export const CardImgBig = styled.Image`
+export const CardImgBig = styled.View`
 
 `;
 export const TypeText = styled.Text`
