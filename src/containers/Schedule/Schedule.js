@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView } from 'react-native';
+import { ScrollView, AsyncStorage, View } from 'react-native';
 import * as Style from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
@@ -7,47 +7,74 @@ import Tab from '../../components/Tab/Tab';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import Button from '../../components/Button/Button';
 
-const tabs = [
-  { name: 'day1', value: 'day1' },
-  { name: 'day2', value: 'day2' }
-];
-const defaultActiveTab = 'day1';
-
 export default class Schedule extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.schedule', 'mode1')
+
+  state = {
+    schedule: [],
+    nowScheduleDate: '',
+  }
+
+  async componentDidMount() {
+    const scheduleText = await AsyncStorage.getItem('schedule');
+    const schedule = JSON.parse(scheduleText).payload.agenda;
+    this.setState({
+      schedule,
+      nowScheduleDate: schedule[0].date,
+    });
+  }
+
+  onChangeTab = (date) => {
+    this.setState({ nowScheduleDate: date });
+  }
 
   onPressTitle = () => {
     this.props.navigation.navigate('ScheduleDetail');
   }
 
   render() {
+    const { schedule, nowScheduleDate } = this.state;
+    const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
+    console.log(tabs);
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.ScheduleContainer>
-          <Tab tabs={tabs} defaultActiveTab={defaultActiveTab} />
-          <ScheduleHeader time="08:00 ~ 09:00" />
-          <ScheduleItem
-            regular
-            title="Innovate width New Technologies on Google Cloud"
-            type="CLOUD"
-            onPressTitle={this.onPressTitle}
-            name="田哲禹"
-            room="R1 : 一廳" />
-          <ScheduleItem
-            regular
-            title="Innovate width New Technologies on Google Cloud"
-            type="CLOUD"
-            onPressTitle={this.onPressTitle}
-            name="田哲禹"
-            room="R1 : 一廳" />
-          <ScheduleItem
-            regular
-            title="Innovate width New Technologies on Google Cloud"
-            type="CLOUD"
-            onPressTitle={this.onPressTitle}
-            name="田哲禹"
-            room="R1 : 一廳" />
-          <Button text="查看交流場次" align="center" margin={[16, 0, 0, 0]} />
+          {
+            tabs.length ?
+              <Tab tabs={tabs} defaultActiveTab={nowScheduleDate} onChange={this.onChangeTab} /> :
+              <View />
+          }
+
+          {
+            schedule.map(scheduleData => (
+              <Style.AgendaView
+                key={`schedule${scheduleData.date}`}
+                active={nowScheduleDate === scheduleData.date}>
+                {scheduleData.items.map(itemData => (
+                  <View key={`item${scheduleData.date},${itemData.duration}`}>
+                    <ScheduleHeader time={itemData.duration} />
+                    {
+                      itemData.agendas.map(agenda => (
+                        <ScheduleItem
+                          key={`agenda${agenda.schedule_id}`}
+                          regular
+                          title={agenda.schedule_topic}
+                          type={agenda.type}
+                          onPressTitle={this.onPressTitle}
+                          name={agenda.name}
+                          room={agenda.location} />
+                      ))
+                    }
+                  </View>
+                ))}
+              </Style.AgendaView>
+            ))
+          }
+          {
+            tabs.length ?
+              <Button text="查看交流場次" align="center" margin={[16, 0, 0, 0]} /> :
+              <View />
+          }
         </Style.ScheduleContainer>
       </ScrollView>
     )

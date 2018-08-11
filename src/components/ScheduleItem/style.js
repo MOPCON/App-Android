@@ -21,6 +21,12 @@ export const ActionContainer = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const TitleTouchable = styled.TouchableOpacity`
+  max-width: 100%;
 `;
 
 export const Title = styled.Text`
@@ -47,13 +53,7 @@ export const Name = styled.Text`
   margin: 10px 0;
 `;
 
-export const Room = styled.Text`
-  opacity: 0.6;
-  color: white;
-  font-size: 13px;
-  font-family: 'Roboto-Regular';
-  letter-spacing: 0.3px;
-`;
+
 
 export const Header = styled.View`
   background-color: ${aquamarine};
@@ -68,6 +68,19 @@ export const HeaderText = styled.Text`
   font-size: 16px;
 `;
 
+export const GeoContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const Room = styled.Text`
+  opacity: 0.6;
+  color: white;
+  font-size: 13px;
+  font-family: 'Roboto-Regular';
+  letter-spacing: 0.3px;
+`;
+
 export const GeoIcon = styled.Image`
   width: 16px;
   height: 16px;
@@ -79,5 +92,5 @@ export const StarIconImg = styled.Image`
 `;
 
 export const StarIconTouchable = styled.TouchableOpacity`
-  margin-left: auto;
+  
 `;
