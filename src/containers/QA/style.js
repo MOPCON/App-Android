@@ -22,12 +22,12 @@ export const AnswerContainer = styled.View`
   margin-bottom: 20px;
 `;
 
-export const AnswerButton = styled.View`
+export const AnswerButton = styled.TouchableOpacity`
   width: 50px;
   height: 50px;
   border-radius: 50px;
   border: 2px solid ${scheduleCardTypeColor};
-  background-color: #00214a;
+  background-color: ${p => p.selected ? scheduleCardTypeColor : '#00214a'};
   align-items: center;
   justify-content: center;
   margin-right: 20px;
@@ -35,7 +35,7 @@ export const AnswerButton = styled.View`
 
 export const AnswerButtonText = styled.Text`
   font-size: 20px;
-  color: ${scheduleCardTypeColor};
+  color: ${p => p.selected ? darkBlue : scheduleCardTypeColor};
 `;
 
 export const AnswerText = styled.Text`
