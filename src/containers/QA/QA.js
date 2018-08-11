@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
-import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import * as Style from './style';
+import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import Button from '../../components/Button/Button';
 
 const fakeItems = [
   { value: 'A', text: '書是理想的伴侶，也不免加添他們的煩愁' },
@@ -14,7 +14,10 @@ export default class QA extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'qa.title', 'mode2')
 
   state = {
-    selected: null
+    selected: null,
+    answer: 'A',
+    showResult: false,
+    isCorrect: null,
   }
 
   handleSelect = (value) => {
@@ -23,25 +26,68 @@ export default class QA extends Component {
     });
   }
 
+  handleSubmit = () => {
+    const { selected, answer } = this.state;
+
+    this.setState({
+      showResult: true,
+      isCorrect: selected === answer,
+    });
+  }
+
+  getResult = () => {
+    const { isCorrect } = this.state;
+
+    return isCorrect ? (
+      <Style.ResultContainer>
+        <Style.ResultText>任務完成！獲得</Style.ResultText>
+        <Style.ResultCoin>
+          <Style.ResultCoinText>25</Style.ResultCoinText>
+        </Style.ResultCoin>
+      </Style.ResultContainer>
+    ) : (
+      <Style.ResultContainer>
+        <Style.ResultText>任務失敗！</Style.ResultText>
+      </Style.ResultContainer>
+    );
+  }
+
   render() {
-    const { selected } = this.state;
+    const { selected, answer, showResult } = this.state;
 
     return (
-      <Style.QAContainer>
+      <Style.QAContainer pointerEvents={showResult ? 'none' : 'auto'}>
         <Style.Question>區塊鏈為什麼叫做區塊鏈？</Style.Question>
         {
-          fakeItems.map(i => (
-            <Style.AnswerContainer>
+          fakeItems.map((item, index) => (
+            <Style.AnswerContainer key={`QA_${index}`}>
               <Style.AnswerButton
-                selected={selected === i.value}
-                onPress={() => this.handleSelect( i.value)}
+                selected={selected === item.value}
+                value={item.value}
+                answer={answer}
+                showResult={showResult}
+                onPress={() => this.handleSelect( item.value)}
               >
-                <Style.AnswerButtonText selected={selected ===  i.value}>{ i.value}</Style.AnswerButtonText>
+                <Style.AnswerButtonText selected={selected ===  item.value}>{ item.value}</Style.AnswerButtonText>
               </Style.AnswerButton>
-              <Style.AnswerText>{i.text}</Style.AnswerText>
+              <Style.AnswerText>{item.text}</Style.AnswerText>
             </Style.AnswerContainer>
           ))
         }
+        <Style.FuncContainer>
+          {
+            showResult ? (
+              this.getResult()
+            ) : (
+              <Button
+                color="primary"
+                text="回答"
+                margin={[0, 0, 0, 0]}
+                onClick={this.handleSubmit}
+              />
+            )
+          }
+        </Style.FuncContainer>
       </Style.QAContainer>
     );
   }

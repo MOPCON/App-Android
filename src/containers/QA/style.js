@@ -27,7 +27,13 @@ export const AnswerButton = styled.TouchableOpacity`
   height: 50px;
   border-radius: 50px;
   border: 2px solid ${scheduleCardTypeColor};
-  background-color: ${p => p.selected ? scheduleCardTypeColor : '#00214a'};
+  background: ${p => {
+    if (p.showResult && p.selected) {
+      return p.value === p.answer ? 'green' : 'red';
+    }
+
+    return p.selected ? scheduleCardTypeColor : '#00214a';
+  }};
   align-items: center;
   justify-content: center;
   margin-right: 20px;
@@ -42,5 +48,28 @@ export const AnswerText = styled.Text`
   flex: 1;
   flex-wrap: wrap;
   font-size: 18px;
+  color: white;
+`;
+
+export const FuncContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ResultContainer = styled.View`
+
+`;
+
+export const ResultText = styled.Text`
+  font-size: 20px;
+  color: white;
+`;
+
+export const ResultCoin = styled.View`
+
+`;
+
+export const ResultCoinText = styled.Text`
+  font-size: 50px;
   color: white;
 `;
