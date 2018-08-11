@@ -16,6 +16,7 @@ import News from '../News/News';
 import Community from '../Community/Community';
 import CommunityDetail from '../CommunityDetail/CommunityDetail';
 import QRCode from '../QRCode/QRCode';
+import QA from '../QA/QA';
 import { updateData } from './ApiServices';
 import * as theme from '../../theme';
 
@@ -72,7 +73,7 @@ class App extends Component {
 }
 
 export default StackNavigator({
-  Main: { screen: App },
+  Main: { screen: QA },
   Schedule: { screen: Schedule },
   UnConf: { screen: UnConf },
   ScheduleDetail: { screen: ScheduleDetail },
@@ -84,4 +85,5 @@ export default StackNavigator({
   Community: { screen: Community },
   CommunityDetail: { screen: CommunityDetail },
   QRCode: { screen: QRCode },
+  QA: { screen: QA },
 });

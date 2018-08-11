@@ -34,5 +34,8 @@ export default {
   },
   qrcode: {
     title: 'QR Code'
+  },
+  qa: {
+    title: '問答',
   }
 };
