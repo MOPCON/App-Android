@@ -32,8 +32,8 @@ class App extends Component {
   }
 
   updateData = async () => {
-    const [scheduled, codeOfConduct, speaker, unconf, sponsor, community] = await updateData();
-    await AsyncStorage.setItem('scheduled', scheduled);
+    const [schedule, codeOfConduct, speaker, unconf, sponsor, community] = await updateData();
+    await AsyncStorage.setItem('schedule', schedule);
     await AsyncStorage.setItem('codeOfConduct', codeOfConduct);
     await AsyncStorage.setItem('speaker', speaker);
     await AsyncStorage.setItem('unconf', unconf);
@@ -49,13 +49,14 @@ class App extends Component {
     firebase.messaging().getToken().then(fcmToken => console.log(`fcmToken:${fcmToken}`));
     const updateTime = await AsyncStorage.getItem('updateTime');
     // TODO discuss with andy
-    if(updateTime){
-      this.setState({ hasUpdated: true });
-      console.log('should not update data');
-    } else {
-      console.log('update data');
-      this.updateData();
-    }
+    // if(updateTime){
+    //   this.setState({ hasUpdated: true });
+    //   console.log('should not update data');
+    // } else {
+    //   console.log('update data');
+    //   this.updateData();
+    // }
+    this.updateData();
   }
 
   render() {

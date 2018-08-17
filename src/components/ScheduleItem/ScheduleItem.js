@@ -35,13 +35,15 @@ export default class ScheduleItem extends Component {
           paintBG ? <Style.Title paintBG={paintBG}>{title}</Style.Title> : (
             <Style.InnerContainer>
               <Style.Type>{type}</Style.Type>
-              <TouchableOpacity onPress={this.onPressTitle}>
+              <Style.TitleTouchable onPress={this.onPressTitle}>
                 <Style.Title paintBG={paintBG}>{title}</Style.Title>
-              </TouchableOpacity>
+              </Style.TitleTouchable>
               <Style.Name>{name}</Style.Name>
               <Style.ActionContainer>
-                <Style.GeoIcon source={geoPng} />
-                <Style.Room>{room}</Style.Room>
+                <Style.GeoContainer>
+                  <Style.GeoIcon source={geoPng} />
+                  <Style.Room>{room}</Style.Room>
+                </Style.GeoContainer>
                 {
                   regular && (
                     <Style.StarIconTouchable onPress={this.onPressSave}>
