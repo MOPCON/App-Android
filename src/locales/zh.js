@@ -14,6 +14,7 @@ export default {
   },
   unConf: {
     title: '交流場次',
+    location: '3樓左側'
   },
   sponsor:{
     title: '贊助商',

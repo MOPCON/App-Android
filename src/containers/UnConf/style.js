@@ -7,3 +7,7 @@ export const UnConfContainer = styled.View`
 `;
 
 export const UnConfScrollView = styled.ScrollView``;
+
+export const AgendaView = styled.View`
+  display: ${p => (p.active ? 'flex' : 'none')};
+`;

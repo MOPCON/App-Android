@@ -40,29 +40,35 @@ const getLanguageCode = () => {
 }
 
 export default class Main extends Component {
-  state = {
-    images: [
-      'https://unsplash.it/600/336/?image=1075',
-      'https://unsplash.it/600/336/?image=1076',
-      'https://unsplash.it/600/336/?image=1077',
-      'https://unsplash.it/600/336/?image=1078',
-      'https://unsplash.it/600/336/?image=1079',
-      'https://unsplash.it/600/336/?image=1080',
-    ],
-    mods: [
-      { icon: iconSchedule, name: 'home.schedule', screen: 'Schedule' },
-      { icon: iconMySchedule, name: 'home.MySchedule' },
-      { icon: iconUnconference, name: 'home.Unconference', screen: 'UnConf' },
-      { icon: iconMission, name: 'home.Mission' },
-      { icon: iconSponsor, name: 'home.Sponsors', screen: 'Sponsor' },
-      { icon: iconSpeakers, name: 'home.Speakers', screen: 'Speaker' },
-      { icon: iconCommunity, name: 'home.Community', screen: 'Community' },
-      { icon: iconNews, name: 'home.News', screen: 'News' },
-    ],
-    language: getLanguageCode(),
+
+  constructor(p) {
+    super(p);
+    const language = getLanguageCode();
+    I18n.locale = language;
+    this.state = {
+      images: [
+        'https://unsplash.it/600/336/?image=1075',
+        'https://unsplash.it/600/336/?image=1076',
+        'https://unsplash.it/600/336/?image=1077',
+        'https://unsplash.it/600/336/?image=1078',
+        'https://unsplash.it/600/336/?image=1079',
+        'https://unsplash.it/600/336/?image=1080',
+      ],
+      mods: [
+        { icon: iconSchedule, name: 'home.schedule', screen: 'Schedule' },
+        { icon: iconMySchedule, name: 'home.MySchedule' },
+        { icon: iconUnconference, name: 'home.Unconference', screen: 'UnConf' },
+        { icon: iconMission, name: 'home.Mission' },
+        { icon: iconSponsor, name: 'home.Sponsors', screen: 'Sponsor' },
+        { icon: iconSpeakers, name: 'home.Speakers', screen: 'Speaker' },
+        { icon: iconCommunity, name: 'home.Community', screen: 'Community' },
+        { icon: iconNews, name: 'home.News', screen: 'News' },
+      ],
+      language,
+    };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     SplashScreen.hide();
   }
 
