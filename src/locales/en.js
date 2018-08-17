@@ -14,6 +14,7 @@ export default {
   },
   unConf: {
     title: 'UnConf',
+    location: '3F left'
   },
   sponsor:{
     title: 'Sponsor',
