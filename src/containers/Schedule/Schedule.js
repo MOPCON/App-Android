@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, AsyncStorage, View } from 'react-native';
+import I18n from '../../locales';
 import * as Style from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
@@ -35,7 +36,7 @@ export default class Schedule extends Component {
   render() {
     const { schedule, nowScheduleDate } = this.state;
     const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
-    console.log(tabs);
+    const lang = I18n.locale;
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.ScheduleContainer>
@@ -58,10 +59,10 @@ export default class Schedule extends Component {
                         <ScheduleItem
                           key={`agenda${agenda.schedule_id}`}
                           regular
-                          title={agenda.schedule_topic}
+                          title={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
                           type={agenda.type}
                           onPressTitle={this.onPressTitle}
-                          name={agenda.name}
+                          name={lang === 'zh' ? agenda.name : agenda.name_en}
                           room={agenda.location} />
                       ))
                     }
