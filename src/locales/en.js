@@ -30,9 +30,12 @@ export default {
     tab_volunteer: 'Volunteer',
   },
   communityDetail: {
-    title: 'Community'
+    title: 'Community',
   },
   qrcode: {
-    title: 'QR Code'
+    title: 'QR Code',
+  },
+  qa: {
+    title: 'Q&A',
   }
 };

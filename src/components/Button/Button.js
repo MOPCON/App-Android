@@ -24,7 +24,7 @@ export default class OutlineButton extends React.PureComponent {
         {
           iconURI && <Style.ButtonIcon source={iconURI} />
         }
-        <Style.ButtonText>
+        <Style.ButtonText color={color}>
           {text}
         </Style.ButtonText>
       </Style.ButtonTouchable>

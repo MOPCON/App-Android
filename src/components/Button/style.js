@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { scheduleCardTypeColor, buttonBackground, inverseBackground } from '../../theme/index';
+import { darkBlue, scheduleCardTypeColor, buttonBackground, inverseBackground } from '../../theme/index';
 
 export const ButtonTouchable = styled.TouchableOpacity`
   align-self: ${p => p.align};
@@ -13,9 +13,11 @@ export const ButtonTouchable = styled.TouchableOpacity`
   background-color: ${p => {
     switch(p.color) {
       case 'normal':
-        return buttonBackground;
+        return 'red';
       case 'inverse':
-        return inverseBackground;
+        return 'green';
+      case 'primary':
+        return scheduleCardTypeColor;
       default:
         return buttonBackground;
     }
@@ -28,7 +30,7 @@ export const ButtonText = styled.Text`
   font-family: Roboto-Medium;
   letter-spacing: 1px;
   font-size: 14px;
-  color: ${scheduleCardTypeColor};
+  color: ${p => p.color === 'primary' ? darkBlue : scheduleCardTypeColor};
 `;
 
 export const ButtonIcon = styled.Image`
