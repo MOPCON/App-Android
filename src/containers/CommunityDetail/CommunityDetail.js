@@ -1,23 +1,41 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, AsyncStorage } from 'react-native';
 import * as Style from './style';
+import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import iconFB from '../../images/icon/facebook.png';
 import iconShare from '../../images/icon/group.png';
 
 export default class CommunityDetail extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.Community', 'mode2')
+
+  state = {
+    community: null,
+  }
+
+  async componentDidMount() {
+    const { title } = this.props.navigation.state.params;
+    const communityText = await AsyncStorage.getItem('community');
+    const community = JSON.parse(communityText).payload.find(c => c.title === title);
+
+    this.setState({ community });
+  }
   
   render() {
+    const { community } = this.state;
+    const title = community && (community.title);
+    const info = community && (I18n.locale === 'en' ? community.name_en : community.name);
+
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.Container>
           <Style.Card />
-          <Style.Title>KSDG</Style.Title>
+          <Style.Title>
+            { title }
+          </Style.Title>
           <Style.Content>
-            Kaohsiung Software Developer Group 是高雄從事軟體開發、網路技術開發者一起交流的園地，2012/05首度聚會活動。
-            目前每月舉辦 Meet-up 及 Web Course 各一場，交流主題涵蓋各種軟體技術，歡迎對軟體開發技術有興趣的朋友可以踴躍參與。
-        </Style.Content>
+            { info }
+          </Style.Content>
           <Style.BtnContainer>
             <Style.Btn>
               <Style.BtnImage source={iconFB} />

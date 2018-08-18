@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, AsyncStorage } from 'react-native';
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
@@ -16,7 +16,14 @@ export default class Community extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.title', 'mode1')
 
   state = {
-    tab: 'community'
+    tab: 'community',
+    community: [],
+  }
+
+  async componentDidMount() {
+    const communityText = await AsyncStorage.getItem('community');
+    const community = JSON.parse(communityText).payload;
+    this.setState({ community });
   }
 
   handleChange = (tab) => {
@@ -25,12 +32,12 @@ export default class Community extends Component {
     });
   }
 
-  goCommunityDetail = () => {
-    this.props.navigation.navigate('CommunityDetail');
+  goCommunityDetail = (title) => {
+    this.props.navigation.navigate('CommunityDetail', { title });
   }
 
   render() {
-    const { tab } = this.state;
+    const { tab, community } = this.state;
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -40,7 +47,7 @@ export default class Community extends Component {
           </Style.TabContainer>
           {
             tab === 'community'
-              ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} />
+              ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} community={community} />
               : <VolunteerBlock />
           }
         </Style.Container>
