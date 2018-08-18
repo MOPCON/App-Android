@@ -1,22 +1,45 @@
 import React from 'react'
-import { ScrollView } from 'react-native';
+import { ScrollView, AsyncStorage } from 'react-native';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import I18n from '../../locales';
 import * as Style from './style';
 
 export default class SponsorDetail extends React.Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.title', 'mode2')
 
+  state = {
+    sponsor: null
+  }
+
+  async componentDidMount() {
+    const { sponsorId } = this.props.navigation.state.params;
+    const sponsorText = await AsyncStorage.getItem('sponsor');
+    const sponsor = JSON.parse(sponsorText).payload.find(s => s.id === sponsorId);
+    console.log('sponsorId', sponsorId);
+    console.log('sponsor', sponsor);
+
+    this.setState({ sponsor });
+  }
 
   render() {
+    const { sponsor } = this.state;
+    const name = sponsor && (I18n.locale === 'en' ? sponsor.name_en : sponsor.name);
+    const info = sponsor && (I18n.locale === 'en' ? sponsor.info_en : sponsor.info);
+    const logo = sponsor && sponsor.logo;
+
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SDContainer>
           <Style.CardView>
-            <Style.CardImg />
+            <Style.CardImg
+              source={{ uri: logo }}
+            />
           </Style.CardView>
-          <Style.SponsorName>Google Cloud</Style.SponsorName>
+          <Style.SponsorName>
+            {name}
+          </Style.SponsorName>
           <Style.SponsorDesc>
-            從現今對即時資料運用要求最高的應用，到雲端封存解決方案 Nearline 與 Coldline，Google Cloud Storage 提供的整合式產品能滿足各種不同的可用性需求，重新定義業界對線上儲存空間的期待。 不論是什麼級別的儲存空間，在 API、延遲與速度方面都有穩定一致的表現。瞭解 Google 的基礎架構為何是您存放重要資料的最佳線上雲端儲存空間。
+            {info}
           </Style.SponsorDesc>
         </Style.SDContainer>
       </ScrollView>
