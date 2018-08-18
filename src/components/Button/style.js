@@ -13,9 +13,9 @@ export const ButtonTouchable = styled.TouchableOpacity`
   background-color: ${p => {
     switch(p.color) {
       case 'normal':
-        return 'red';
+        return buttonBackground;
       case 'inverse':
-        return 'green';
+        return inverseBackground;
       case 'primary':
         return scheduleCardTypeColor;
       default:
