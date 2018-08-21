@@ -11,6 +11,7 @@ export const SpeakerScrollView = styled.ScrollView`
 
 export const SpeakerContainer = styled.View`
   background-color: ${darkBlue};
+  height: 100%;
   padding: 16px;
 `;
 
