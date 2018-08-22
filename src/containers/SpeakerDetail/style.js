@@ -10,7 +10,6 @@ export const SpeakerContainer = styled.ScrollView`
 `;
 
 export const ItemContainer = styled.View`
-  height: 100;
   margin-bottom: 24;
 `;
 
