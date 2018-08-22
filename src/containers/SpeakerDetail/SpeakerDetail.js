@@ -30,6 +30,8 @@ export default class SpeakerDetail extends Component {
     const info = speaker && (I18n.locale === 'en' ? speaker.info_en : speaker.info);
     const job = speaker && (speaker.job);
     const picture = speaker && (speaker.picture);
+    const type = speaker && (speaker.type);
+    const topic = speaker && (I18n.locale === 'en' ? speaker.schedule_topic_en : speaker.schedule_topic);
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -44,7 +46,10 @@ export default class SpeakerDetail extends Component {
           <Style.Intro>
             {info}
           </Style.Intro>
-          <SpeechItem />
+          <SpeechItem
+            type={type}
+            topic={topic}
+          />
         </Style.SpeakerContainer>
       </ScrollView>
     );
