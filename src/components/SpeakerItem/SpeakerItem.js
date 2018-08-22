@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
-import I18n from '../../locales';
+import PropTypes from 'prop-types';
 import * as Style from './style';
 
 import { View } from 'react-native';
 
 export default class SpeakerItem extends Component {
+  static propTypes = {
+    name: PropTypes.string,
+    job: PropTypes.string,
+    info: PropTypes.string,
+    picture: PropTypes.string,
+  }
+  static defaultProps = {
+    name: '',
+    job: '',
+    info: '',
+    picture: '',
+  }
   render() {
-    const { speaker } = this.props;
-
-    const name = speaker && (I18n.locale === 'en' ? speaker.name_en : speaker.name);
-    const job = speaker && (speaker.job);
-    const picture = speaker && (speaker.picture);
+    const { name, job, info, picture } = this.props;
 
     return (
       <Style.SpeakerItemContainer>
@@ -23,7 +31,7 @@ export default class SpeakerItem extends Component {
             <Style.Info>{job}</Style.Info>
           </View>
           <View style={{flexDirection:'row'}}>
-            <Style.Info>Google Cloud</Style.Info>
+            <Style.Info>{info}</Style.Info>
           </View>
         </Style.ContentContainer>
       </Style.SpeakerItemContainer>
