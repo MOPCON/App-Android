@@ -1,23 +1,43 @@
 import React from 'react';
+import I18n from '../../locales';
 import { ScrollView } from 'react-native';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import SpeechItem from '../../components/SpeechItem/SpeechItem';
+import SpeakerItem from '../../components/SpeakerItem/SpeakerItem';
 
 export default class ScheduleDetail extends React.Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'scheduleDetail.title', 'mode2')
   render() {
+    const { navigation } = this.props;
+    const lang = I18n.locale;
+    const agenda = navigation.getParam('agenda', {});
+    console.log(agenda);
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SDContainer>
           <Style.HeaderImage source={{ uri: 'https://picsum.photos/700/1000/?image=1063' }} />
           <Style.IntroContainer>
             <Style.SpeechItemContainer>
-              <SpeechItem color="inverse" />
+              <SpeechItem
+                color="inverse"
+                type={agenda.type}
+                topic={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
+              />
             </Style.SpeechItemContainer>
             <Style.DesText>
-              在軟體公司最痛苦的一件事就是看到前人留下來的程式碼像本天書，看也看不懂、改也改不動，跑起來卻健步如飛，不僅一切正常，勝制連重構後的城市都飽得不如就城市順暢。這個 Session 就是要討論有哪些技巧及新法可以避免寫出這樣難讀、難懂也難維護的程式。
+              {
+                lang === 'zh' ? agenda.schedule_info : agenda.schedule_info_en
+              }
             </Style.DesText>
+          </Style.IntroContainer>
+          <Style.IntroContainer>
+            <SpeakerItem
+              name={lang === 'zh' ? agenda.name : agenda.name_en}
+              job={agenda.job}
+              info={lang === 'zh' ? agenda.info : agenda.info_en}
+              picture={agenda.picture}
+            />
           </Style.IntroContainer>
         </Style.SDContainer>
       </ScrollView>
