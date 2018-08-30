@@ -38,5 +38,8 @@ export default {
   },
   qa: {
     title: 'Q&A',
+  },
+  missionTable: {
+    title: 'Mission',
   }
 };
