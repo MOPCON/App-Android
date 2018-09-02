@@ -26,7 +26,7 @@ export const MissionZone = styled.View`
   justify-content: space-between;
 `;
 
-export const Box = styled.View`
+export const Box = styled.TouchableOpacity`
   width: ${props => props.width || width};
   height: ${props => props.height || width};
   border: 1px solid ${modBorder};

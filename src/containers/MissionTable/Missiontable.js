@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import Exchange from './Exchange';
+import Mission from './Mission';
 
 export default class MissionTable extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'missionTable.title', 'mode1')
@@ -18,12 +19,24 @@ export default class MissionTable extends Component {
               </Style.Box>
             </Style.ExchangeZone>
             <Style.MissionZone>
-              <Style.Box></Style.Box>
-              <Style.Box></Style.Box>
-              <Style.Box></Style.Box>
-              <Style.Box></Style.Box>
-              <Style.Box></Style.Box>
-              <Style.Box></Style.Box>
+              <Style.Box>
+                <Mission isLocked title="解鎖倒數" content="01:22:03"></Mission>
+              </Style.Box>
+              <Style.Box>
+                <Mission title="Q&A" content="找到紫色小鴨"></Mission>
+              </Style.Box>
+               <Style.Box>
+                <Mission title="Q&A" content="找到紫色小鴨"></Mission>
+              </Style.Box>
+               <Style.Box>
+                <Mission title="Q&A" content="找到紫色小鴨"></Mission>
+              </Style.Box>
+               <Style.Box>
+                <Mission title="Q&A" content="找到紫色小鴨"></Mission>
+              </Style.Box>
+               <Style.Box>
+                <Mission title="Q&A" content="找到紫色小鴨"></Mission>
+              </Style.Box>
             </Style.MissionZone>
           </View>
         </Style.ScrollContainer>
