@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import Exchange from './Exchange';
 
 export default class MissionTable extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'missionTable.title', 'mode1')
@@ -12,7 +13,9 @@ export default class MissionTable extends Component {
         <Style.ScrollContainer>
           <View>
             <Style.ExchangeZone>
-              <Style.Box width="100%" height="193px"></Style.Box>
+              <Style.Box width="100%" height="193px">
+                <Exchange></Exchange>
+              </Style.Box>
             </Style.ExchangeZone>
             <Style.MissionZone>
               <Style.Box></Style.Box>
