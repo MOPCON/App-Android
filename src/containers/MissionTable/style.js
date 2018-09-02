@@ -29,8 +29,10 @@ export const MissionZone = styled.View`
 export const Box = styled.TouchableOpacity`
   width: ${props => props.width || width};
   height: ${props => props.height || width};
-  border: 1px solid ${modBorder};
+  border: 1px solid ${props => props.disabled ? '#305b76': modBorder};
   border-radius: 8px;
   background-color: #002a51;
   margin-bottom: 16px;
+  position: relative;
 `;
+
