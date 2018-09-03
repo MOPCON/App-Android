@@ -38,5 +38,8 @@ export default {
   },
   qa: {
     title: '問答',
+  },
+  missionTable: {
+    title: '任務中心',
   }
 };
