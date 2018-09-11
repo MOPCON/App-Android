@@ -23,6 +23,7 @@ export default class Community extends Component {
   async componentDidMount() {
     const communityText = await AsyncStorage.getItem('community');
     const community = JSON.parse(communityText).payload;
+
     this.setState({ community });
   }
 
@@ -32,8 +33,8 @@ export default class Community extends Component {
     });
   }
 
-  goCommunityDetail = (title) => {
-    this.props.navigation.navigate('CommunityDetail', { title });
+  goCommunityDetail = (id) => {
+    this.props.navigation.navigate('CommunityDetail', { id });
   }
 
   render() {

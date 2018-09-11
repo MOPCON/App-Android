@@ -9,7 +9,7 @@ export default class CommunityBlock extends Component {
       <Style.BlockContainer>
         {
           community.map(c => (
-            <Style.CardSmall key={`community_${c.title}`} onPress={() => goCommunityDetail(c.title)}>
+            <Style.CardSmall key={`community_${c.id}`} onPress={() => goCommunityDetail(c.id)}>
               <Style.CardImgSmall />
             </Style.CardSmall>
           ))
