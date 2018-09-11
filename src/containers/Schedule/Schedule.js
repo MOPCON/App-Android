@@ -29,8 +29,9 @@ export default class Schedule extends Component {
     this.setState({ nowScheduleDate: date });
   }
 
-  onPressTitle = () => {
-    this.props.navigation.navigate('ScheduleDetail');
+  onPressTitle = (agenda) => () => {
+    this.props.navigation.navigate('ScheduleDetail', { agenda });
+    // console.log('onPressTitle', agenda);
   }
 
   render() {
@@ -61,7 +62,7 @@ export default class Schedule extends Component {
                           regular
                           title={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
                           type={agenda.type}
-                          onPressTitle={this.onPressTitle}
+                          onPressTitle={this.onPressTitle(agenda)}
                           name={lang === 'zh' ? agenda.name : agenda.name_en}
                           room={agenda.location} />
                       ))
