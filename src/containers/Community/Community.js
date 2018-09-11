@@ -7,24 +7,23 @@ import Tab from '../../components/Tab/Tab';
 import CommunityBlock from './CommunityBlock';
 import VolunteerBlock from './VolunteerBlock';
 
-const tabs = [
-  { name: I18n.t('community.tab_community'), value: 'community' },
-  { name: I18n.t('community.tab_volunteer'), value: 'volunteer' }
-];
-
 export default class Community extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.title', 'mode1')
 
   state = {
     tab: 'community',
     community: [],
+    volunteer: [],
   }
 
   async componentDidMount() {
     const communityText = await AsyncStorage.getItem('community');
     const community = JSON.parse(communityText).payload;
 
-    this.setState({ community });
+    const volunteerText = await AsyncStorage.getItem('volunteer');
+    const volunteer = JSON.parse(volunteerText).payload;
+
+    this.setState({ community, volunteer });
   }
 
   handleChange = (tab) => {
@@ -38,7 +37,12 @@ export default class Community extends Component {
   }
 
   render() {
-    const { tab, community } = this.state;
+    const { tab, community, volunteer } = this.state;
+
+    const tabs = [
+      { name: I18n.t('community.tab_community'), value: 'community' },
+      { name: I18n.t('community.tab_volunteer'), value: 'volunteer' }
+    ];
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -49,7 +53,7 @@ export default class Community extends Component {
           {
             tab === 'community'
               ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} community={community} />
-              : <VolunteerBlock />
+              : <VolunteerBlock volunteer={volunteer} />
           }
         </Style.Container>
       </ScrollView>

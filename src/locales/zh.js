@@ -41,5 +41,9 @@ export default {
   },
   missionTable: {
     title: '任務中心',
+  },
+  volunteer: {
+    title: '志工組織',
+    member_title: '成員',
   }
 };

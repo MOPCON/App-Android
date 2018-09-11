@@ -41,5 +41,9 @@ export default {
   },
   missionTable: {
     title: 'Mission',
+  },
+  volunteer: {
+    title: 'Volunteer',
+    member_title: 'Members',
   }
 };
