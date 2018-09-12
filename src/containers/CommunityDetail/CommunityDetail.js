@@ -49,7 +49,6 @@ export default class CommunityDetail extends Component {
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.Container>
-          <Style.Card />
           <Style.Title>
             { title }
           </Style.Title>
