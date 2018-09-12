@@ -43,8 +43,8 @@ export default class CommunityDetail extends Component {
   
   render() {
     const { community } = this.state;
-    const title = community && (community.title);
-    const info = community && (I18n.locale === 'en' ? community.info_en : community.info);
+    const title = this.state.getNestedValue(['community', 'title']);
+    const info = I18n.locale === 'en' ? this.state.getNestedValue(['community', 'info_en']) : this.state.getNestedValue(['community', 'info']);
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

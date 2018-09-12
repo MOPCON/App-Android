@@ -20,6 +20,7 @@ import QA from '../QA/QA';
 import Missiontable from '../MissionTable/Missiontable';
 import { updateData } from './ApiServices';
 import * as theme from '../../theme';
+import '../../utils/extends';
 
 class App extends Component {
   static navigationOptions = {
