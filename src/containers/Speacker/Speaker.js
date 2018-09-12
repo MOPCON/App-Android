@@ -32,7 +32,7 @@ export default class Speaker extends Component {
       const props = {
         name: I18n.locale === 'en' ? s.name_en : s.name,
         job: s.job,
-        // info: I18n.locale === 'en' ? s.info_en : s.info,
+        company: s.company,
         picture: s.picture,
       };
 

@@ -10,7 +10,7 @@ export default class SpeakerDetail extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.title', 'mode2')
 
   state = {
-    speaker: null
+    speaker: {}
   }
 
   async componentDidMount() {
@@ -26,12 +26,13 @@ export default class SpeakerDetail extends Component {
   render() {
     const { speaker } = this.state;
 
-    const name = speaker && (I18n.locale === 'en' ? speaker.name_en : speaker.name);
-    const info = speaker && (I18n.locale === 'en' ? speaker.info_en : speaker.info);
-    const job = speaker && (speaker.job);
-    const picture = speaker && (speaker.picture);
-    const type = speaker && (speaker.type);
-    const topic = speaker && (I18n.locale === 'en' ? speaker.schedule_topic_en : speaker.schedule_topic);
+    const name = I18n.locale === 'en' ? speaker.name_en : speaker.name;
+    const info = I18n.locale === 'en' ? speaker.info_en : speaker.info;
+    const job = speaker.job;
+    const company = speaker.company;
+    const picture = speaker.picture;
+    const type = speaker.type;
+    const topic = I18n.locale === 'en' ? speaker.schedule_topic_en : speaker.schedule_topic;
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -41,6 +42,7 @@ export default class SpeakerDetail extends Component {
               name={name}
               job={job}
               picture={picture}
+              company={company}
             />
           </Style.ItemContainer>
           <Style.Intro>

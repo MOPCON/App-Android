@@ -8,17 +8,17 @@ export default class SpeakerItem extends Component {
   static propTypes = {
     name: PropTypes.string,
     job: PropTypes.string,
-    info: PropTypes.string,
+    company: PropTypes.string,
     picture: PropTypes.string,
   }
   static defaultProps = {
     name: '',
     job: '',
-    info: '',
+    company: '',
     picture: '',
   }
   render() {
-    const { name, job, info, picture } = this.props;
+    const { name, job, company, picture } = this.props;
 
     return (
       <Style.SpeakerItemContainer>
@@ -31,7 +31,7 @@ export default class SpeakerItem extends Component {
             <Style.Info>{job}</Style.Info>
           </View>
           <View style={{flexDirection:'row'}}>
-            <Style.Info>{info}</Style.Info>
+            <Style.Info>{company}</Style.Info>
           </View>
         </Style.ContentContainer>
       </Style.SpeakerItemContainer>

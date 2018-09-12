@@ -35,7 +35,7 @@ export default class ScheduleDetail extends React.Component {
             <SpeakerItem
               name={lang === 'zh' ? agenda.name : agenda.name_en}
               job={agenda.job}
-              info={lang === 'zh' ? agenda.info : agenda.info_en}
+              company={agenda.company}
               picture={agenda.picture}
             />
           </Style.IntroContainer>

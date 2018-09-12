@@ -10,7 +10,7 @@ export default class CommunityDetail extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.Community', 'mode2')
 
   state = {
-    community: null,
+    community: {},
   }
 
   async componentDidMount() {
@@ -43,8 +43,8 @@ export default class CommunityDetail extends Component {
   
   render() {
     const { community } = this.state;
-    const title = this.state.getNestedValue(['community', 'title']);
-    const info = I18n.locale === 'en' ? this.state.getNestedValue(['community', 'info_en']) : this.state.getNestedValue(['community', 'info']);
+    const title = community.title;
+    const info = I18n.locale === 'en' ? community.info_en : community.info;
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

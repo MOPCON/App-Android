@@ -45,5 +45,9 @@ export default {
   volunteer: {
     title: '志工組織',
     member_title: '成員',
+  },
+  speech: {
+    slide: '投影片',
+    schedule: '加入行程',
   }
 };
