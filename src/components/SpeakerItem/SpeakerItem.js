@@ -2,32 +2,37 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from './style';
 
-import { Text } from 'react-native';
+import { View } from 'react-native';
 
 export default class SpeakerItem extends Component {
   static propTypes = {
     name: PropTypes.string,
     job: PropTypes.string,
-    info: PropTypes.string,
+    company: PropTypes.string,
     picture: PropTypes.string,
   }
   static defaultProps = {
     name: '',
     job: '',
-    info: '',
+    company: '',
     picture: '',
   }
   render() {
-    const { name, job, info } = this.props;
+    const { name, job, company, picture } = this.props;
+
     return (
       <Style.SpeakerItemContainer>
         <Style.ImageContainer>
-          <Style.Image></Style.Image>
+          <Style.Image source={{ uri: picture }}></Style.Image>
         </Style.ImageContainer>
         <Style.ContentContainer>
           <Style.Title>{name}</Style.Title>
-          <Style.Info>{job}</Style.Info>
-          <Style.Info>{info}</Style.Info>
+          <View style={{flexDirection:'row'}}>
+            <Style.Info>{job}</Style.Info>
+          </View>
+          <View style={{flexDirection:'row'}}>
+            <Style.Info>{company}</Style.Info>
+          </View>
         </Style.ContentContainer>
       </Style.SpeakerItemContainer>
     );

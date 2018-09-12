@@ -13,10 +13,14 @@ export const ImageContainer = styled.View`
   margin-right: 16px;
 `;
 
-export const Image = styled.Image``;
+export const Image = styled.Image`
+  width: 96px;
+  height: 96px;
+  border-radius: 96px;
+`;
 
 export const ContentContainer = styled.View`
-
+  flex: 1;
 `;
 
 export const Title = styled.Text`
@@ -29,4 +33,6 @@ export const Info = styled.Text`
   color: #fff;
   opacity: 0.6;
   margin-bottom: 4px;
+  flex: 1;
+  flex-wrap: wrap;
 `;

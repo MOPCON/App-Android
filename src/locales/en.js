@@ -45,5 +45,9 @@ export default {
   volunteer: {
     title: 'Volunteer',
     member_title: 'Members',
+  },
+  speech: {
+    slide: 'Slide',
+    schedule: 'Schedule',
   }
 };

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import I18n from '../../locales';
 import * as Style from './style';
 import Button from '../Button/Button';
 
@@ -24,8 +25,8 @@ export default class SpeakerItem extends PureComponent {
         <Style.Title>{type}</Style.Title>
         <Style.Content>{topic}</Style.Content>
         <Style.FuncView>
-          <Button text="加入行程" margin={[0, 8, 0, 0]} iconURI={buttonStarNormal} color="inverse" />
-          <Button text="投影片" margin={[0, 0, 0, 0]} iconURI={buttonSlide} color="inverse" />
+          <Button text={I18n.t('speech.schedule')} margin={[0, 8, 0, 0]} iconURI={buttonStarNormal} color="inverse" />
+          <Button text={I18n.t('speech.slide')} margin={[0, 0, 0, 0]} iconURI={buttonSlide} color="inverse" />
         </Style.FuncView>
       </Style.SpeechItemContainer>
     );
