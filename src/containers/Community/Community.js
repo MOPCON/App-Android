@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, AsyncStorage } from 'react-native';
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
@@ -7,16 +7,23 @@ import Tab from '../../components/Tab/Tab';
 import CommunityBlock from './CommunityBlock';
 import VolunteerBlock from './VolunteerBlock';
 
-const tabs = [
-  { name: I18n.t('community.tab_community'), value: 'community' },
-  { name: I18n.t('community.tab_volunteer'), value: 'volunteer' }
-];
-
 export default class Community extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.title', 'mode1')
 
   state = {
-    tab: 'community'
+    tab: 'community',
+    community: [],
+    volunteer: [],
+  }
+
+  async componentDidMount() {
+    const communityText = await AsyncStorage.getItem('community');
+    const community = JSON.parse(communityText).payload;
+
+    const volunteerText = await AsyncStorage.getItem('volunteer');
+    const volunteer = JSON.parse(volunteerText).payload;
+
+    this.setState({ community, volunteer });
   }
 
   handleChange = (tab) => {
@@ -25,12 +32,17 @@ export default class Community extends Component {
     });
   }
 
-  goCommunityDetail = () => {
-    this.props.navigation.navigate('CommunityDetail');
+  goCommunityDetail = (id) => {
+    this.props.navigation.navigate('CommunityDetail', { id });
   }
 
   render() {
-    const { tab } = this.state;
+    const { tab, community, volunteer } = this.state;
+
+    const tabs = [
+      { name: I18n.t('community.tab_community'), value: 'community' },
+      { name: I18n.t('community.tab_volunteer'), value: 'volunteer' }
+    ];
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -40,8 +52,8 @@ export default class Community extends Component {
           </Style.TabContainer>
           {
             tab === 'community'
-              ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} />
-              : <VolunteerBlock />
+              ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} community={community} />
+              : <VolunteerBlock volunteer={volunteer} />
           }
         </Style.Container>
       </ScrollView>

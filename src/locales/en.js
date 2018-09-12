@@ -38,5 +38,12 @@ export default {
   },
   qa: {
     title: 'Q&A',
+  },
+  missionTable: {
+    title: 'Mission',
+  },
+  volunteer: {
+    title: 'Volunteer',
+    member_title: 'Members',
   }
 };

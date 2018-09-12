@@ -15,8 +15,6 @@ export default class SponsorDetail extends React.Component {
     const { sponsorId } = this.props.navigation.state.params;
     const sponsorText = await AsyncStorage.getItem('sponsor');
     const sponsor = JSON.parse(sponsorText).payload.find(s => s.id === sponsorId);
-    console.log('sponsorId', sponsorId);
-    console.log('sponsor', sponsor);
 
     this.setState({ sponsor });
   }
