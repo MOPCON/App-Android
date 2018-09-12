@@ -20,6 +20,7 @@ import QA from '../QA/QA';
 import Missiontable from '../MissionTable/Missiontable';
 import { updateData } from './ApiServices';
 import * as theme from '../../theme';
+import '../../utils/extends';
 
 class App extends Component {
   static navigationOptions = {
@@ -34,13 +35,14 @@ class App extends Component {
   }
 
   updateData = async () => {
-    const [schedule, codeOfConduct, speaker, unconf, sponsor, community] = await updateData();
+    const [schedule, codeOfConduct, speaker, unconf, sponsor, community, volunteer] = await updateData();
     await AsyncStorage.setItem('schedule', schedule);
     await AsyncStorage.setItem('codeOfConduct', codeOfConduct);
     await AsyncStorage.setItem('speaker', speaker);
     await AsyncStorage.setItem('unconf', unconf);
     await AsyncStorage.setItem('sponsor', sponsor);
     await AsyncStorage.setItem('community', community);
+    await AsyncStorage.setItem('volunteer', volunteer);
     await AsyncStorage.setItem('updateTime', new Date());
     this.setState({ hasUpdated: true });
     return true;
