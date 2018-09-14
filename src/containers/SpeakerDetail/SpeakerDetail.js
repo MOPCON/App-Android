@@ -10,7 +10,8 @@ export default class SpeakerDetail extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.title', 'mode2')
 
   state = {
-    speaker: {}
+    speaker: {},
+    savedSchedule: {},
   }
 
   async componentDidMount() {
@@ -19,12 +20,26 @@ export default class SpeakerDetail extends Component {
     const speaker = JSON.parse(speakerText).payload.find(s => s.speaker_id === speakerId);
     console.log('speakerId', speakerId);
     console.log('speaker', speaker);
+    const savedScheduleText = await AsyncStorage.getItem('savedschedule');
+    let savedSchedule = JSON.parse(savedScheduleText);
+    if (!savedSchedule) { savedSchedule = {}; }
 
-    this.setState({ speaker });
+    this.setState({ speaker, savedSchedule });
+  }
+
+  onSave = () => {
+    debugger;
+    const { schedule_id } = this.state.speaker;
+    const savedSchedule = {
+      ...this.state.savedSchedule,
+    };
+    savedSchedule[schedule_id] = !savedSchedule[schedule_id];
+    this.setState({ savedSchedule });
+    AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
 
   render() {
-    const { speaker } = this.state;
+    const { speaker, savedSchedule } = this.state;
 
     const name = I18n.locale === 'en' ? speaker.name_en : speaker.name;
     const info = I18n.locale === 'en' ? speaker.info_en : speaker.info;
@@ -51,6 +66,9 @@ export default class SpeakerDetail extends Component {
           <SpeechItem
             type={type}
             topic={topic}
+            saved={savedSchedule[speaker.schedule_id]}
+            slide={speaker.slide}
+            onSave={this.onSave}
           />
         </Style.SpeakerContainer>
       </ScrollView>

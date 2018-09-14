@@ -6,10 +6,9 @@ import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import Tab from '../../components/Tab/Tab';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import Button from '../../components/Button/Button';
 
-export default class Schedule extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.schedule', 'mode1')
+export default class MySchedule extends Component {
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.MySchedule', 'mode1')
 
   state = {
     schedule: [],
@@ -20,10 +19,9 @@ export default class Schedule extends Component {
   async componentDidMount() {
     global.qq = AsyncStorage;
     const scheduleText = await AsyncStorage.getItem('schedule');
-    const savedScheduleText = await AsyncStorage.getItem('savedschedule');
     const schedule = JSON.parse(scheduleText).payload.agenda;
+    const savedScheduleText = await AsyncStorage.getItem('savedschedule');
     let savedSchedule = JSON.parse(savedScheduleText);
-    console.log(savedSchedule);
     if (!savedSchedule) { savedSchedule = {}; }
     this.setState({
       schedule,
@@ -64,15 +62,15 @@ export default class Schedule extends Component {
           }
 
           {
-            schedule.map((scheduleData) => (
+            schedule.map((scheduleData, scheduleIndex) => (
               <Style.AgendaView
                 key={`schedule${scheduleData.date}`}
                 active={nowScheduleDate === scheduleData.date}>
-                {scheduleData.items.map((itemData) => (
+                {scheduleData.items.map((itemData, itemIndex) => (
                   <View key={`item${scheduleData.date},${itemData.duration}`}>
                     <ScheduleHeader time={itemData.duration} />
                     {
-                      itemData.agendas.map((agenda) => (
+                      itemData.agendas.filter(agenda => savedSchedule[agenda.schedule_id]).map((agenda, agendaIndex) => (
                         <ScheduleItem
                           key={`agenda${agenda.schedule_id}`}
                           regular
@@ -89,11 +87,6 @@ export default class Schedule extends Component {
                 ))}
               </Style.AgendaView>
             ))
-          }
-          {
-            tabs.length ?
-              <Button text="查看交流場次" align="center" margin={[16, 0, 0, 0]} /> :
-              <View />
           }
         </Style.ScheduleContainer>
       </ScrollView>

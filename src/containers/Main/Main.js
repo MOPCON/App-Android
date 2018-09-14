@@ -56,7 +56,7 @@ export default class Main extends Component {
       ],
       mods: [
         { icon: iconSchedule, name: 'home.schedule', screen: 'Schedule' },
-        { icon: iconMySchedule, name: 'home.MySchedule' },
+        { icon: iconMySchedule, name: 'home.MySchedule', screen: 'MySchedule' },
         { icon: iconUnconference, name: 'home.Unconference', screen: 'UnConf' },
         { icon: iconMission, name: 'home.Mission' },
         { icon: iconSponsor, name: 'home.Sponsors', screen: 'Sponsor' },
