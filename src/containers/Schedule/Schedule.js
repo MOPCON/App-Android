@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { ScrollView, AsyncStorage, View } from 'react-native';
-import produce from 'immer';
 import I18n from '../../locales';
 import * as Style from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
@@ -24,6 +23,7 @@ export default class Schedule extends Component {
     const savedScheduleText = await AsyncStorage.getItem('savedschedule');
     const schedule = JSON.parse(scheduleText).payload.agenda;
     let savedSchedule = JSON.parse(savedScheduleText);
+    console.log(savedSchedule);
     if (!savedSchedule) { savedSchedule = {}; }
     this.setState({
       schedule,
@@ -41,11 +41,11 @@ export default class Schedule extends Component {
     // console.log('onPressTitle', agenda);
   }
 
-  onSave = ({ agendaIndex, itemIndex, scheduleIndex }) => () => {
-    const saved = this.state.savedSchedule.getNestedValue([scheduleIndex, itemIndex, agendaIndex]);
-    const savedSchedule = produce(this.state.savedSchedule, (draft) => {
-      draft.setNestedValue([scheduleIndex, itemIndex, agendaIndex], !saved);
-    });
+  onSave = (schedule_id) => () => {
+    const savedSchedule = {
+      ...this.state.savedSchedule,
+    };
+    savedSchedule[schedule_id] = !savedSchedule[schedule_id];
     this.setState({ savedSchedule });
     AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
@@ -64,15 +64,15 @@ export default class Schedule extends Component {
           }
 
           {
-            schedule.map((scheduleData, scheduleIndex) => (
+            schedule.map((scheduleData) => (
               <Style.AgendaView
                 key={`schedule${scheduleData.date}`}
                 active={nowScheduleDate === scheduleData.date}>
-                {scheduleData.items.map((itemData, itemIndex) => (
+                {scheduleData.items.map((itemData) => (
                   <View key={`item${scheduleData.date},${itemData.duration}`}>
                     <ScheduleHeader time={itemData.duration} />
                     {
-                      itemData.agendas.map((agenda, agendaIndex) => (
+                      itemData.agendas.map((agenda) => (
                         <ScheduleItem
                           key={`agenda${agenda.schedule_id}`}
                           regular
@@ -80,8 +80,8 @@ export default class Schedule extends Component {
                           type={agenda.type}
                           onPressTitle={this.onPressTitle(agenda)}
                           name={lang === 'zh' ? agenda.name : agenda.name_en}
-                          onSave={this.onSave({ agendaIndex, itemIndex, scheduleIndex })}
-                          saved={savedSchedule.getNestedValue([scheduleIndex, itemIndex, agendaIndex])}
+                          onSave={this.onSave(agenda.schedule_id)}
+                          saved={savedSchedule[agenda.schedule_id]}
                           room={agenda.location} />
                       ))
                     }
