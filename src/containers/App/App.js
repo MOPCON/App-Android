@@ -16,6 +16,7 @@ import News from '../News/News';
 import Community from '../Community/Community';
 import CommunityDetail from '../CommunityDetail/CommunityDetail';
 import QRCode from '../QRCode/QRCode';
+import MySchedule from '../MySchedule/MySchedule';
 import QA from '../QA/QA';
 import Missiontable from '../MissionTable/Missiontable';
 import { updateData } from './ApiServices';
@@ -78,6 +79,7 @@ class App extends Component {
 
 export default StackNavigator({
   Main: { screen: App },
+  MySchedule: { screen: MySchedule},
   Schedule: { screen: Schedule },
   UnConf: { screen: UnConf },
   ScheduleDetail: { screen: ScheduleDetail },
