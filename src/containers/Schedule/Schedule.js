@@ -25,9 +25,12 @@ export default class Schedule extends Component {
     let savedSchedule = JSON.parse(savedScheduleText);
     console.log(savedSchedule);
     if (!savedSchedule) { savedSchedule = {}; }
+
+    const nowScheduleDate = this.props.navigation.getNestedValue(['state', 'params', 'nowScheduleDate'])  || schedule[0].date;
+
     this.setState({
       schedule,
-      nowScheduleDate: schedule[0].date,
+      nowScheduleDate,
       savedSchedule,
     });
   }
@@ -51,7 +54,7 @@ export default class Schedule extends Component {
   }
 
   goToUnConf = () => {
-    this.props.navigation.navigate('UnConf');
+    this.props.navigation.navigate('UnConf', { nowUnconfDate: this.state.nowScheduleDate });
   }
 
   render() {
