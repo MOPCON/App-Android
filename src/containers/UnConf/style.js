@@ -4,6 +4,7 @@ import { darkBlue } from '../../theme/index';
 export const UnConfContainer = styled.View`
   background-color: ${darkBlue};
   padding: 16px;
+  flex-grow:1;
 `;
 
 export const UnConfScrollView = styled.ScrollView``;

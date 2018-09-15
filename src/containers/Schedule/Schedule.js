@@ -50,6 +50,10 @@ export default class Schedule extends Component {
     AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
 
+  goToUnConf = () => {
+    this.props.navigation.navigate('UnConf');
+  }
+
   render() {
     const { schedule, nowScheduleDate, savedSchedule } = this.state;
     const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
@@ -92,7 +96,7 @@ export default class Schedule extends Component {
           }
           {
             tabs.length ?
-              <Button text={I18n.t('community.unconference')} align="center" margin={[16, 0, 0, 0]} /> :
+              <Button onClick={this.goToUnConf} text={I18n.t('community.unconference')} align="center" margin={[16, 0, 0, 0]} /> :
               <View />
           }
         </Style.ScheduleContainer>
