@@ -36,6 +36,12 @@ export default class UnConf extends React.Component {
     this.setState({ nowUnconfDate: date });
   }
 
+  goToSchedule = () => {
+    this.props.navigation.navigate('Schedule');
+  }
+
+  onPressTitle = () => { }
+
   render() {
     const { unconf, nowUnconfDate } = this.state;
     const tabs = unconf.map(unconfData => ({ name: unconfData.date, value: unconfData.date }));
@@ -45,11 +51,10 @@ export default class UnConf extends React.Component {
         <Style.UnConfContainer>
 
           {
-            tabs.length ?
-              <Tab tabs={tabs} defaultActiveTab={nowUnconfDate} onChange={this.onChangeTab} /> :
-              <View />
+            tabs.length
+              ? <Tab tabs={tabs} defaultActiveTab={nowUnconfDate} onChange={this.onChangeTab} />
+              : <View />
           }
-
           {
             unconf.map(unconfData => (
               <Style.AgendaView
@@ -68,31 +73,11 @@ export default class UnConf extends React.Component {
               </Style.AgendaView>
             ))
           }
-
-          {/* <Tab tabs={tabs} defaultActiveTab={defaultActiveTab} />
-          <ScheduleHeader time="08:00 ~ 09:00" />
-          <ScheduleItem
-            title="Innovate width New Technologies on Google Cloud"
-            name="田哲禹"
-            room="R1 : 一廳" />
-          <ScheduleItem
-            title="Innovate width New Technologies on Google Cloud"
-            name="田哲禹"
-            room="R1 : 一廳" />
-          <ScheduleHeader time="08:00 ~ 09:00" />
-          <ScheduleItem
-            paintBG
-            title="下午茶" />
-          <ScheduleHeader time="08:00 ~ 09:00" />
-          <ScheduleItem
-            title="Innovate width New Technologies on Google Cloud"
-            name="田哲禹"
-            room="R1 : 一廳" />
-          <ScheduleItem
-            title="Innovate width New Technologies on Google Cloud"
-            name="田哲禹"
-            room="R1 : 一廳" /> */}
-          <Button text={I18n.t('unConf.schedule')} align="center" margin={[16, 0, 0, 0]} />
+          {
+            tabs.length
+              ? <Button onClick={this.goToSchedule} text={I18n.t('unConf.schedule')} align="center" margin={[16, 0, 0, 0]} />
+              : <View />
+          }
         </Style.UnConfContainer>
       </ScrollView>
     );
