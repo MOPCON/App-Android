@@ -11,13 +11,16 @@ export default {
   },
   news: {
     title: '最新消息',
+    link: '訊息連結',
   },
   unConf: {
     title: '交流場次',
-    location: '3樓左側'
+    location: '3樓左側',
+    schedule: '查看議程',
   },
   sponsor:{
     title: '贊助商',
+    special_thanks: '特別感謝',
   },
   scheduleDetail:{
     title: '演講',
@@ -29,6 +32,7 @@ export default {
     title: '社群',
     tab_community: '主辦社群',
     tab_volunteer: '志工組織',
+    unconference: '查看交流場次',
   },
   communityDetail: {
     title: '社群'
@@ -41,6 +45,12 @@ export default {
   },
   missionTable: {
     title: '任務中心',
+    exchange: '兌換',
+    total_dollar: '累計 Mo 幣',
+    capsule_toy: '可兌換扭蛋',
+    success: '挑戰成功',
+    failure: '挑戰失敗',
+    unlock: '解鎖倒數',
   },
   volunteer: {
     title: '志工組織',
@@ -49,5 +59,5 @@ export default {
   speech: {
     slide: '投影片',
     schedule: '加入行程',
-  }
+  },
 };

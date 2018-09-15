@@ -93,7 +93,7 @@ export default class Sponsor extends React.Component {
               ))
             }
           </Style.CardSmallView>
-          <Style.TypeText>特別感謝</Style.TypeText>
+          <Style.TypeText>{I18n.t('sponsor.special_thanks')}</Style.TypeText>
           <Style.CardSmallView>
             {
               sponsor.filter(sponsorData => sponsorData.type === TYPE.LEVEL5).map(sponsorData => (

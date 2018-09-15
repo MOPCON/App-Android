@@ -92,7 +92,7 @@ export default class UnConf extends React.Component {
             title="Innovate width New Technologies on Google Cloud"
             name="田哲禹"
             room="R1 : 一廳" /> */}
-          <Button text="查看議程" align="center" margin={[16, 0, 0, 0]} />
+          <Button text={I18n.t('unConf.schedule')} align="center" margin={[16, 0, 0, 0]} />
         </Style.UnConfContainer>
       </ScrollView>
     );

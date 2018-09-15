@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import {
   modBorder,
 } from '../../theme/index';
+import I18n from '../../locales';
 import iconCoinImg from '../../images/icon/iconCoin.png';
 import iconCapsuleImg from '../../images/icon/iconCapsule.png';
 
@@ -39,7 +40,7 @@ const ButtonText = styled.Text`
 const Zone = styled.View`
   flex: 1;
   height: 100%;
-  padding: 31px;
+  padding: 20px;
 `;
 
 const TopZone = styled.View`
@@ -57,6 +58,7 @@ const RightArrow = styled.Text`
   font-weight: 600;
   height: 100%;
   margin-top: 6px;
+  margin-left: 10px;
 `;
 
 const Text = styled.Text`
@@ -87,7 +89,7 @@ export default class Exchange extends Component {
           <Zone>
             <TopZone>
               <Icon source={iconCoinImg} />
-              <Text>累計 Mo 幣</Text>
+              <Text>{I18n.t('missionTable.total_dollar')}</Text>
             </TopZone>
             <BottomZone>
               <LargeText>9000</LargeText>
@@ -97,7 +99,7 @@ export default class Exchange extends Component {
           <Zone>
             <TopZone>
               <Icon source={iconCapsuleImg} />
-              <Text>可兌換扭蛋</Text>
+              <Text>{I18n.t('missionTable.capsule_toy')}</Text>
             </TopZone>
             <BottomZone>
               <LargeText>50</LargeText>
@@ -105,7 +107,7 @@ export default class Exchange extends Component {
           </Zone>
         </Wallet>
         <Button>
-          <ButtonText>兌換</ButtonText>
+          <ButtonText>{I18n.t('missionTable.exchange')}</ButtonText>
         </Button>
       </Container>
     );
