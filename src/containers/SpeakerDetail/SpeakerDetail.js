@@ -28,7 +28,6 @@ export default class SpeakerDetail extends Component {
   }
 
   onSave = () => {
-    debugger;
     const { schedule_id } = this.state.speaker;
     const savedSchedule = {
       ...this.state.savedSchedule,

@@ -92,7 +92,7 @@ export default class Schedule extends Component {
           }
           {
             tabs.length ?
-              <Button text="查看交流場次" align="center" margin={[16, 0, 0, 0]} /> :
+              <Button text={I18n.t('community.unconference')} align="center" margin={[16, 0, 0, 0]} /> :
               <View />
           }
         </Style.ScheduleContainer>

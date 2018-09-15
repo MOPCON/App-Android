@@ -11,13 +11,16 @@ export default {
   },
   news: {
     title: 'News',
+    link: 'Link',
   },
   unConf: {
     title: 'UnConf',
-    location: '3F left'
+    location: '3F left',
+    schedule: 'Schedule',
   },
   sponsor:{
     title: 'Sponsor',
+    special_thanks: 'Special Thanks',
   },
   scheduleDetail:{
     title: 'Speech',
@@ -29,6 +32,7 @@ export default {
     title: 'Community',
     tab_community: 'Community',
     tab_volunteer: 'Volunteer',
+    unconference: 'Unconference',
   },
   communityDetail: {
     title: 'Community',
@@ -41,6 +45,12 @@ export default {
   },
   missionTable: {
     title: 'Mission',
+    exchange: 'Exchange',
+    total_dollar: 'Total Mo Dollar',
+    capsule_toy: 'Capsule Toy',
+    success: 'Success',
+    failure: 'Failure',
+    unlock: 'Unlock',
   },
   volunteer: {
     title: 'Volunteer',
@@ -49,5 +59,5 @@ export default {
   speech: {
     slide: 'Slide',
     schedule: 'Schedule',
-  }
+  },
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import * as Style from './style';
+import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import Exchange from './Exchange';
 import Mission from './Mission';
@@ -21,7 +22,7 @@ export default class MissionTable extends Component {
             </Style.ExchangeZone>
             <Style.MissionZone>
               <Style.Box>
-                <Mission isLocked title="解鎖倒數" content="01:22:03"></Mission>
+                <Mission isLocked title={I18n.t('missionTable.unlock')} content="01:22:03"></Mission>
               </Style.Box>
               <Style.Box disabled>
                 <Mission title="Q&A" content="找到紫色小鴨"></Mission>

@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import {
   modBorder,
 } from '../../theme/index';
+import I18n from '../../locales';
 import iconSucessImg from '../../images/icon/iconSucess.png';
 import iconFailedImg from '../../images/icon/iconFailed.png';
 
@@ -55,7 +56,7 @@ export default class Mask extends Component {
         <Status>
           <Icon source={ status === '1' ? iconSucessImg : iconFailedImg} />
           <StatusText status={status}>
-            { status === '1' ? '挑戰成功' : '挑戰失敗' }
+            { status === '1' ? I18n.t('missionTable.success') : I18n.t('missionTable.failure') }
           </StatusText>
         </Status>
       </Container>

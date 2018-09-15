@@ -8,7 +8,7 @@ export default class SponsorDetail extends React.Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.title', 'mode2')
 
   state = {
-    sponsor: null
+    sponsor: {}
   }
 
   async componentDidMount() {
@@ -21,9 +21,9 @@ export default class SponsorDetail extends React.Component {
 
   render() {
     const { sponsor } = this.state;
-    const name = sponsor && (I18n.locale === 'en' ? sponsor.name_en : sponsor.name);
-    const info = sponsor && (I18n.locale === 'en' ? sponsor.info_en : sponsor.info);
-    const logo = sponsor && sponsor.logo;
+    const name = I18n.locale === 'en' ? sponsor.name_en : sponsor.name;
+    const info = I18n.locale === 'en' ? sponsor.info_en : sponsor.info;
+    const logo = sponsor.logo;
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
