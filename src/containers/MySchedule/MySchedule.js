@@ -17,10 +17,6 @@ export default class MySchedule extends Component {
     savedSchedule: {},
   }
 
-  componentWillUpdate() {
-    console.log('componentWillUpdate');
-  }
-
   async componentDidMount() {
     global.qq = AsyncStorage;
     const scheduleText = await AsyncStorage.getItem('schedule');
