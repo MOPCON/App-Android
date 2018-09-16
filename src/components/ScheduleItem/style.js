@@ -36,6 +36,13 @@ export const Title = styled.Text`
   margin: ${p => p.paintBG ? '20px 0' : '0'};
 `;
 
+export const NTitle = styled.Text`
+  color: #ccc;
+  font-size: 19px;
+  font-family: 'Roboto-Regular';
+  margin: 20px 0;
+`;
+
 export const Type = styled.Text`
   color: ${scheduleCardTypeColor};
   font-family: 'Roboto-Regular';
@@ -52,8 +59,6 @@ export const Name = styled.Text`
   letter-spacing: 0.3px;
   margin: 10px 0;
 `;
-
-
 
 export const Header = styled.View`
   background-color: ${aquamarine};

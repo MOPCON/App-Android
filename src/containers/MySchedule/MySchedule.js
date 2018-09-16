@@ -4,6 +4,7 @@ import I18n from '../../locales';
 import * as Style from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
+import NoScheduleItem from '../../components/ScheduleItem/NoScheduleItem';
 import Tab from '../../components/Tab/Tab';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 
@@ -14,6 +15,10 @@ export default class MySchedule extends Component {
     schedule: [],
     nowScheduleDate: '',
     savedSchedule: {},
+  }
+
+  componentWillUpdate() {
+    console.log('componentWillUpdate');
   }
 
   async componentDidMount() {
@@ -28,6 +33,14 @@ export default class MySchedule extends Component {
       nowScheduleDate: schedule[0].date,
       savedSchedule,
     });
+  }
+
+  goToSchedule = () => {
+    this.props.navigation.goBack();
+    setTimeout(() => {
+      this.props.navigation.navigate('Schedule', { nowScheduleDate: this.state.nowScheduleDate });
+    }, 400)
+
   }
 
   onChangeTab = (date) => {
@@ -48,10 +61,44 @@ export default class MySchedule extends Component {
     AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
 
-  render() {
-    const { schedule, nowScheduleDate, savedSchedule } = this.state;
-    const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
+  renderSchedule = (agendas) => {
+    const { savedSchedule } = this.state;
     const lang = I18n.locale;
+    if (agendas.length === 1 && agendas[0].schedule_id === null) {
+      const agenda = agendas[0];
+      return (
+        <ScheduleItem
+          key={`agenda${agenda.duration}`}
+          regular
+          paintBG
+          title={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
+          type={agenda.type}
+          onPressTitle={this.onPressTitle(agenda)}
+          name={lang === 'zh' ? agenda.name : agenda.name_en}
+          onSave={() => { }}
+        />
+      )
+    }
+    const newAgendas = agendas.filter(agenda => savedSchedule[agenda.schedule_id]);
+    return newAgendas.length
+      ? (newAgendas.map(agenda => (
+        <ScheduleItem
+          key={`agenda${agenda.schedule_id}`}
+          regular
+          title={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
+          type={agenda.type}
+          onPressTitle={this.onPressTitle(agenda)}
+          name={lang === 'zh' ? agenda.name : agenda.name_en}
+          onSave={this.onSave(agenda.schedule_id)}
+          saved={savedSchedule[agenda.schedule_id]}
+          room={agenda.location} />
+      )))
+      : <NoScheduleItem onClick={this.goToSchedule} />;
+  }
+
+  render() {
+    const { schedule, nowScheduleDate } = this.state;
+    const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.ScheduleContainer>
@@ -70,18 +117,7 @@ export default class MySchedule extends Component {
                   <View key={`item${scheduleData.date},${itemData.duration}`}>
                     <ScheduleHeader time={itemData.duration} />
                     {
-                      itemData.agendas.filter(agenda => savedSchedule[agenda.schedule_id]).map((agenda, agendaIndex) => (
-                        <ScheduleItem
-                          key={`agenda${agenda.schedule_id}`}
-                          regular
-                          title={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
-                          type={agenda.type}
-                          onPressTitle={this.onPressTitle(agenda)}
-                          name={lang === 'zh' ? agenda.name : agenda.name_en}
-                          onSave={this.onSave(agenda.schedule_id)}
-                          saved={savedSchedule[agenda.schedule_id]}
-                          room={agenda.location} />
-                      ))
+                      this.renderSchedule(itemData.agendas)
                     }
                   </View>
                 ))}
