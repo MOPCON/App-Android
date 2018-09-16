@@ -23,7 +23,6 @@ export default class Schedule extends Component {
     const savedScheduleText = await AsyncStorage.getItem('savedschedule');
     const schedule = JSON.parse(scheduleText).payload.agenda;
     let savedSchedule = JSON.parse(savedScheduleText);
-    console.log(savedSchedule);
     if (!savedSchedule) { savedSchedule = {}; }
 
     const nowScheduleDate = this.props.navigation.getNestedValue(['state', 'params', 'nowScheduleDate']) || schedule[0].date;
