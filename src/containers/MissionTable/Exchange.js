@@ -30,6 +30,8 @@ const Button = styled.TouchableOpacity`
   background: ${modBorder};
   align-items: center;
   justify-content: center;
+  border-bottom-left-radius: 8;
+  border-bottom-right-radius: 8;
 `;
 
 const ButtonText = styled.Text`
