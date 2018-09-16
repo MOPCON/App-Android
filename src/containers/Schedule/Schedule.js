@@ -26,7 +26,7 @@ export default class Schedule extends Component {
     console.log(savedSchedule);
     if (!savedSchedule) { savedSchedule = {}; }
 
-    const nowScheduleDate = this.props.navigation.getNestedValue(['state', 'params', 'nowScheduleDate'])  || schedule[0].date;
+    const nowScheduleDate = this.props.navigation.getNestedValue(['state', 'params', 'nowScheduleDate']) || schedule[0].date;
 
     this.setState({
       schedule,
@@ -57,10 +57,23 @@ export default class Schedule extends Component {
     this.props.navigation.navigate('UnConf', { nowUnconfDate: this.state.nowScheduleDate });
   }
 
+  renderScheduleItem = (agenda) => (
+    <ScheduleItem
+      key={`agenda${agenda.schedule_id || agenda.schedule_topic}`}
+      regular
+      paintBG={!Boolean(agenda.schedule_id)}
+      title={I18n.locale === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
+      type={agenda.type}
+      onPressTitle={agenda.schedule_id ? this.onPressTitle(agenda) : () => { }}
+      name={I18n.locale === 'zh' ? agenda.name : agenda.name_en}
+      onSave={this.onSave(agenda.schedule_id)}
+      saved={this.state.savedSchedule[agenda.schedule_id]}
+      room={agenda.location} />
+  )
+
   render() {
-    const { schedule, nowScheduleDate, savedSchedule } = this.state;
+    const { schedule, nowScheduleDate } = this.state;
     const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
-    const lang = I18n.locale;
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.ScheduleContainer>
@@ -79,18 +92,7 @@ export default class Schedule extends Component {
                   <View key={`item${scheduleData.date},${itemData.duration}`}>
                     <ScheduleHeader time={itemData.duration} />
                     {
-                      itemData.agendas.map((agenda) => (
-                        <ScheduleItem
-                          key={`agenda${agenda.schedule_id}`}
-                          regular
-                          title={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
-                          type={agenda.type}
-                          onPressTitle={this.onPressTitle(agenda)}
-                          name={lang === 'zh' ? agenda.name : agenda.name_en}
-                          onSave={this.onSave(agenda.schedule_id)}
-                          saved={savedSchedule[agenda.schedule_id]}
-                          room={agenda.location} />
-                      ))
+                      itemData.agendas.map(this.renderScheduleItem)
                     }
                   </View>
                 ))}
