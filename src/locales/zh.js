@@ -13,6 +13,9 @@ export default {
     title: '最新消息',
     link: '訊息連結',
   },
+  schedule:{
+    noSchedule: '暫無行程'
+  },
   unConf: {
     title: '交流場次',
     location: '3樓左側',
