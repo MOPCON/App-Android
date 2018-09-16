@@ -13,6 +13,9 @@ export default {
     title: 'News',
     link: 'Link',
   },
+  schedule:{
+    noSchedule: 'No Schedule'
+  },
   unConf: {
     title: 'UnConf',
     location: '3F left',

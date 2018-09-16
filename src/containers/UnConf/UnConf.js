@@ -26,7 +26,7 @@ export default class UnConf extends React.Component {
     const unconfText = await AsyncStorage.getItem('schedule');
     const unconf = JSON.parse(unconfText).payload.talk;
     console.log(unconf);
-    const nowUnconfDate = this.props.navigation.getNestedValue(['state', 'params', 'nowUnconfDate'])  || unconf[0].date;
+    const nowUnconfDate = this.props.navigation.getNestedValue(['state', 'params', 'nowUnconfDate']) || unconf[0].date;
 
     this.setState({
       unconf,
@@ -69,7 +69,9 @@ export default class UnConf extends React.Component {
                       title={itemData.topic}
                       onPressTitle={this.onPressTitle}
                       room={I18n.t('unConf.location')}
-                      name={itemData.speaker} />
+                      name={itemData.speaker}
+                      paintBG={itemData.type === 'others'}
+                    />
                   </View>
                 ))}
               </Style.AgendaView>
