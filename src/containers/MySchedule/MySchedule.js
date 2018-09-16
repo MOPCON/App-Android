@@ -39,8 +39,7 @@ export default class MySchedule extends Component {
     this.props.navigation.goBack();
     setTimeout(() => {
       this.props.navigation.navigate('Schedule', { nowScheduleDate: this.state.nowScheduleDate });
-    }, 400)
-
+    }, 0)
   }
 
   onChangeTab = (date) => {
