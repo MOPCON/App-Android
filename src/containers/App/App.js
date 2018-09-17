@@ -36,7 +36,7 @@ class App extends Component {
   }
 
   updateData = async () => {
-    const [schedule, codeOfConduct, speaker, unconf, sponsor, community, volunteer] = await updateData();
+    const [schedule, codeOfConduct, speaker, unconf, sponsor, community, volunteer, carousel] = await updateData();
     await AsyncStorage.setItem('schedule', schedule);
     await AsyncStorage.setItem('codeOfConduct', codeOfConduct);
     await AsyncStorage.setItem('speaker', speaker);
@@ -45,6 +45,7 @@ class App extends Component {
     await AsyncStorage.setItem('community', community);
     await AsyncStorage.setItem('volunteer', volunteer);
     await AsyncStorage.setItem('updateTime', new Date());
+    await AsyncStorage.setItem('carousel', carousel);
     this.setState({ hasUpdated: true });
     return true;
   }

@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
-import { Dimensions, NativeModules, Platform, Image, View, AsyncStorage } from 'react-native';
+import {
+  Dimensions, NativeModules, Platform,
+  Image, View, AsyncStorage, TouchableOpacity,
+  Linking,
+} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import SplashScreen from 'react-native-splash-screen';
 import I18n from '../../locales';
@@ -46,14 +50,7 @@ export default class Main extends Component {
     const language = getLanguageCode();
     I18n.locale = language;
     this.state = {
-      images: [
-        'https://unsplash.it/600/336/?image=1075',
-        'https://unsplash.it/600/336/?image=1076',
-        'https://unsplash.it/600/336/?image=1077',
-        'https://unsplash.it/600/336/?image=1078',
-        'https://unsplash.it/600/336/?image=1079',
-        'https://unsplash.it/600/336/?image=1080',
-      ],
+      carousel: [],
       mods: [
         { icon: iconSchedule, name: 'home.schedule', screen: 'Schedule' },
         { icon: iconMySchedule, name: 'home.MySchedule', screen: 'MySchedule' },
@@ -68,13 +65,21 @@ export default class Main extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const carouselText = await AsyncStorage.getItem('carousel');
+    this.setState({ carousel: JSON.parse(carouselText).payload });
     SplashScreen.hide();
+  }
+
+  openLink = (url) => () => {
+    Linking.openURL(url)
   }
 
   renderItem = ({ item, index }) => {
     return (
-      <Style.CarouselItem width={width} source={{ uri: item }} />
+      <TouchableOpacity onPress={this.openLink(item.link)}>
+        <Style.CarouselItem width={width} source={{ uri: item.banner }} />
+      </TouchableOpacity>
     );
   }
 
@@ -106,7 +111,7 @@ export default class Main extends Component {
   }
 
   render() {
-    const { images, mods, language } = this.state;
+    const { carousel, mods, language } = this.state;
 
     return (
       <Style.Container>
@@ -121,7 +126,7 @@ export default class Main extends Component {
                 inactiveSlideScale={0.94}
                 sliderWidth={width}
                 itemWidth={width - 40}
-                data={images}
+                data={carousel}
                 renderItem={this.renderItem}
               />
             </Style.CarouselContainer>
