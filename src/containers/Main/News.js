@@ -34,6 +34,7 @@ const Message = styled.Text`
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 0.3px;
+  width: 80%;
 `;
 
 const TouchArea = styled.TouchableOpacity`
@@ -55,17 +56,27 @@ const RightArrow = styled.Image`
 `;
 
 export default class News extends Component {
+  renderNews = () => {
+    const { news, toNews } = this.props;
+
+    if (!news.length) return;
+
+    return (
+      <Content>
+        <Message>{news[0].description}</Message>
+        <TouchArea onPress={toNews}>
+          <MoreText>More</MoreText>
+          <RightArrow source={iconChevronRightImg} />
+        </TouchArea>
+      </Content>
+    );
+  }
+
   render() {
     return (
       <Container>
         <Title>{I18n.t('news.title')}</Title>
-        <Content>
-          <Message>任務遊戲倒數20分鐘!</Message>
-          <TouchArea>
-            <MoreText>More</MoreText>
-            <RightArrow source={iconChevronRightImg} />
-          </TouchArea>
-        </Content>
+        { this.renderNews() }
       </Container>
     );
   }

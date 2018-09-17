@@ -51,6 +51,7 @@ export default class Main extends Component {
     I18n.locale = language;
     this.state = {
       carousel: [],
+      news: [],
       mods: [
         { icon: iconSchedule, name: 'home.schedule', screen: 'Schedule' },
         { icon: iconMySchedule, name: 'home.MySchedule', screen: 'MySchedule' },
@@ -67,12 +68,17 @@ export default class Main extends Component {
 
   async componentDidMount() {
     const carouselText = await AsyncStorage.getItem('carousel');
-    this.setState({ carousel: JSON.parse(carouselText).payload });
+    const newsText = await AsyncStorage.getItem('news');
+
+    this.setState({
+      carousel: JSON.parse(carouselText).payload,
+      news: JSON.parse(newsText).payload,
+    });
     SplashScreen.hide();
   }
 
   openLink = (url) => () => {
-    Linking.openURL(url)
+    Linking.openURL(url);
   }
 
   renderItem = ({ item, index }) => {
@@ -111,7 +117,7 @@ export default class Main extends Component {
   }
 
   render() {
-    const { carousel, mods, language } = this.state;
+    const { carousel, mods, language, news } = this.state;
 
     return (
       <Style.Container>
@@ -131,7 +137,7 @@ export default class Main extends Component {
               />
             </Style.CarouselContainer>
             <Style.Content>
-              <News />
+              <News news={news} toNews={() => this.navigate('News')}/>
               <Style.ModContainer>
                 {mods.map((mod, index) => <Mod key={`mod_${index}`} navigate={() => this.navigate(mod.screen)} {...mod} />)}
               </Style.ModContainer>
@@ -141,7 +147,7 @@ export default class Main extends Component {
             </Style.TabContainer>
           </Style.ViewContainer>
         </Style.ScrollContainer>
-      </Style.Container >
+      </Style.Container>
     )
   }
 }
