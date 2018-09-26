@@ -22,6 +22,7 @@ import QA from '../QA/QA';
 import Missiontable from '../MissionTable/Missiontable';
 import { updateData } from './ApiServices';
 import * as theme from '../../theme';
+import apiServices from '../../api/services';
 import '../../utils/extends';
 
 class App extends Component {
@@ -57,11 +58,22 @@ class App extends Component {
     firebase.messaging().getToken().then(fcmToken => console.log(`fcmToken:${fcmToken}`));
 
     const updateTime = await AsyncStorage.getItem('updateTime');
-    const publicKey = await AsyncStorage.getItem('publicKey');
-    if (!publicKey) {
-      const rsaKey = await RSA.generateKeys(4096);
-      AsyncStorage.setItem('publicKey', rsaKey.public);
-      AsyncStorage.setItem('privateKey', rsaKey.private);
+    const public_key = await AsyncStorage.getItem('public_key');
+
+    if (!public_key) {
+      try {
+        const UUID = Array.from(Array(36)).map(d => Math.floor(Math.random() * 36).toString(36)).join('');
+        const rsaKey = await RSA.generateKeys(4096);
+        const result = await apiServices.post('/new-user', { public_key: rsaKey.public, UUID });
+        console.log('asdfasdfasdfasdfasdf');
+        console.log(result);
+        await AsyncStorage.setItem('UUID', UUID);
+        await AsyncStorage.setItem('public_key', rsaKey.public);
+        await AsyncStorage.setItem('private_key', rsaKey.private);
+      } catch (e) {
+        console.error('generate key error', e);
+      }
+
     }
     // TODO discuss with andy
     // if(updateTime){
