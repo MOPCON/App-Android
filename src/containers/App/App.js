@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import { RSA } from 'react-native-rsa-native';
 import { AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
 import Header from './Header';
@@ -54,7 +55,14 @@ class App extends Component {
   // TODO add try catch;
   async componentDidMount() {
     firebase.messaging().getToken().then(fcmToken => console.log(`fcmToken:${fcmToken}`));
+
     const updateTime = await AsyncStorage.getItem('updateTime');
+    const publicKey = await AsyncStorage.getItem('publicKey');
+    if (!publicKey) {
+      const rsaKey = await RSA.generateKeys(4096);
+      AsyncStorage.setItem('publicKey', rsaKey.public);
+      AsyncStorage.setItem('privateKey', rsaKey.private);
+    }
     // TODO discuss with andy
     // if(updateTime){
     //   this.setState({ hasUpdated: true });
@@ -81,7 +89,7 @@ class App extends Component {
 
 export default StackNavigator({
   Main: { screen: App },
-  MySchedule: { screen: MySchedule},
+  MySchedule: { screen: MySchedule },
   Schedule: { screen: Schedule },
   UnConf: { screen: UnConf },
   ScheduleDetail: { screen: ScheduleDetail },
