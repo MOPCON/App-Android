@@ -33,7 +33,8 @@ class ApiServices {
     if (this.data) { options.body = JSON.stringify(this.data); }
     if (this.params) { url = `${url}${this.parseParams()}` }
     console.log(url, options);
-    return await fetch(url, options).then(res => res.json());
+    const result = await fetch(url, options);
+    return await result.json();
   }
 }
 
