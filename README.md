@@ -12,4 +12,4 @@ export keystore_alias="xxx"
 export keystore_alias_password="xxx"
 ```
 
-put keystore into `android/app/mopcon.keystore`
+put keystore into `android/app/release.keystore`
