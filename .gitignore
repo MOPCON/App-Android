@@ -59,3 +59,5 @@ buck-out/
 google-services.json
 
 android/app/src/main/*
+
+secrets.tar
