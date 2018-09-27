@@ -54,9 +54,9 @@ export default class Mask extends Component {
       <Container>
         <EmptyZone />
         <Status>
-          <Icon source={ status === '1' ? iconSucessImg : iconFailedImg} />
+          <Icon source={ status === '2' ? iconSucessImg : iconFailedImg} />
           <StatusText status={status}>
-            { status === '1' ? I18n.t('missionTable.success') : I18n.t('missionTable.failure') }
+            { status === '2' ? I18n.t('missionTable.success') : I18n.t('missionTable.failure') }
           </StatusText>
         </Status>
       </Container>

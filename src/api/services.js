@@ -24,7 +24,7 @@ class ApiServices {
     delete this.params;
     return this.request();
   }
-  request = () => {
+  request = async () => {
     const options = {
       headers: this.headers,
       method: this.method,
@@ -33,7 +33,8 @@ class ApiServices {
     if (this.data) { options.body = JSON.stringify(this.data); }
     if (this.params) { url = `${url}${this.parseParams()}` }
     console.log(url, options);
-    return fetch(url, options);
+    const result = await fetch(url, options);
+    return await result.json();
   }
 }
 
