@@ -7,7 +7,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "android": "react-native run-android",
     "build": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd ./android/ && ./gradlew assembleDebug",
-    "test": "jest"
+    "test": "jest",
+    "build:prd": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd ./android/ && ./gradlew clean assembleRelease"
   },
   "dependencies": {
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",

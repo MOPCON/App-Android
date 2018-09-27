@@ -7,4 +7,9 @@ before coding, please add env variable
 
 ```bash
 export MOPCON_API_URL="https://mopconXXXXXXXX.com/"
+export keystore_password="xxx"
+export keystore_alias="xxx"
+export keystore_alias_password="xxx"
 ```
+
+put keystore into `android/app/mopcon.keystore`
