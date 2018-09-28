@@ -1,4 +1,4 @@
-package com.mopcon_android_app_2018;
+package org.mopcon.session.app;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
@@ -11,7 +11,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "mopcon_android_app_2018";
+        return "MOPCON";
     }
 
     @Override

@@ -7,4 +7,4 @@ YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTIm
 // open layout animation option https://facebook.github.io/react-native/docs/layoutanimation.html
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
-AppRegistry.registerComponent('mopcon_android_app_2018', () => App);
+AppRegistry.registerComponent('MOPCON', () => App);
