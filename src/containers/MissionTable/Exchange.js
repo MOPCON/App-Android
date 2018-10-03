@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import {
   modBorder,
@@ -84,7 +85,14 @@ const Icon = styled.Image`
 
 
 export default class Exchange extends Component {
+  static propTypes = {
+    balance: PropTypes.number,
+  }
+  static defaultProps = {
+    balance: 0,
+  }
   render() {
+    const { balance } = this.props;
     return (
       <Container>
         <Wallet>
@@ -94,7 +102,7 @@ export default class Exchange extends Component {
               <Text>{I18n.t('missionTable.total_dollar')}</Text>
             </TopZone>
             <BottomZone>
-              <LargeText>9000</LargeText>
+              <LargeText>{balance}</LargeText>
             </BottomZone>
           </Zone>
           <RightArrow>→</RightArrow>
