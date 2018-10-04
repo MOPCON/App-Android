@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
@@ -13,11 +13,14 @@ export default class MissionTable extends Component {
 
   state = {
     quizs: [],
+    balance: '0',
   }
 
   async componentDidMount() {
+    const UUID = await AsyncStorage.getItem('UUID');
+    const public_key = await AsyncStorage.getItem('public_key');
+    const {balance} = await apiServices.post('/get-balance', { UUID, public_key });
     const result = await apiServices.get('/get-quiz');
-
     // 之後格式會改
     const quizs = result.reduce((acc, val) => [...acc, ...(val.items || [])], []);
 
@@ -29,6 +32,7 @@ export default class MissionTable extends Component {
       -1 挑戰失敗
     */
     this.setState({
+      balance,
       quizs: [
         ...quizs.filter(o => o.status === '1'),
         ...quizs.filter(o => o.status === '0'),
@@ -39,7 +43,7 @@ export default class MissionTable extends Component {
   }
 
   render() {
-    const { quizs } = this.state;
+    const { quizs, balance } = this.state;
 
     return (
       <Style.MissionContainer>
@@ -47,7 +51,7 @@ export default class MissionTable extends Component {
           <View>
             <Style.ExchangeZone>
               <Style.Box width="100%" height="193px">
-                <Exchange></Exchange>
+                <Exchange balance={balance} />
               </Style.Box>
             </Style.ExchangeZone>
             <Style.MissionZone>

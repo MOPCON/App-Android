@@ -1,3 +1,17 @@
+// To see all the requests in the chrome Dev tools in the network tab.
+XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
+  GLOBAL.originalXMLHttpRequest :
+  GLOBAL.XMLHttpRequest;
+
+// fetch logger
+global._fetch = fetch;
+global.fetch = function (uri, options, ...args) {
+  return global._fetch(uri, options, ...args).then((response) => {
+    console.log('Fetch', { request: { uri, options, ...args }, response });
+    return response;
+  });
+};
+
 const schedule = fetch(`${process.env.MOPCON_API_URL}/schedule`);
 const codeOfConduct = fetch(`${process.env.MOPCON_API_URL}/code-of-conduct`);
 const speaker = fetch(`${process.env.MOPCON_API_URL}/speaker`);
@@ -13,5 +27,5 @@ export const reportApiError = () => {
 }
 
 export const updateData = () => Promise.all([schedule, codeOfConduct, speaker, unconf, sponsor, community, volunteer, carousel, news])
-.then(responseList => responseList.map(response => response.text()))
-.then(promiseList => Promise.all(promiseList));
+  .then(responseList => responseList.map(response => response.text()))
+  .then(promiseList => Promise.all(promiseList));
