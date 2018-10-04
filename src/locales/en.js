@@ -55,6 +55,10 @@ export default {
     failure: 'Failure',
     unlock: 'Unlock',
   },
+  missionDetail: {
+    quiz: 'Q&A',
+    task: 'INTERACTION',
+  },
   volunteer: {
     title: 'Volunteer',
     member_title: 'Members',

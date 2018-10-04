@@ -54,6 +54,10 @@ export default class MissionTable extends Component {
     });
   }
 
+  goMission = (quiz, type) => {
+    this.props.navigation.navigate('MissionDetail', { quiz, type });
+  }
+
   render() {
     const { quizs, balance } = this.state;
 
@@ -83,11 +87,11 @@ export default class MissionTable extends Component {
                   const currentType = TYPE.find(o => o.id === type);
 
                   return (
-                    <Style.Box key={`quiz_${index}`} disabled={disabled}>
+                    <Style.Box key={`quiz_${index}`} disabled={disabled} onPress={() => this.goMission(quiz, currentType.id)}>
                       <Mission title={currentType.text} content={title}></Mission>
                       {
                         disabled && (
-                          <Mask status={status} />
+                          <Mask status={status} goMission={() => this.goMission(quiz, currentType.id)}/>
                         )
                       }
                     </Style.Box>

@@ -7,7 +7,7 @@ import I18n from '../../locales';
 import iconSucessImg from '../../images/icon/iconSucess.png';
 import iconFailedImg from '../../images/icon/iconFailed.png';
 
-const Container = styled.View`
+const Container = styled.TouchableOpacity`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,10 +48,10 @@ const Icon = styled.Image`
 
 export default class Mask extends Component {
   render() {
-    const { status } = this.props;
+    const { status, goMission } = this.props;
 
     return (
-      <Container>
+      <Container onPress={goMission}>
         <EmptyZone />
         <Status>
           <Icon source={ status === '2' ? iconSucessImg : iconFailedImg} />

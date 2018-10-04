@@ -55,6 +55,10 @@ export default {
     failure: '挑戰失敗',
     unlock: '解鎖倒數',
   },
+  missionDetail: {
+    quiz: '問答',
+    task: '廠商互動',
+  },
   volunteer: {
     title: '志工組織',
     member_title: '成員',
