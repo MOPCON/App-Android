@@ -8,6 +8,18 @@ import Mission from './Mission';
 import Mask from './Mask';
 import apiServices from '../../api/services';
 
+const STATUS = {
+  NOT_CHALLANGE: '1',
+  NOT_OPEN: '0',
+  SUCCESS: '2',
+  FAIL: '-1',
+};
+
+const TYPE = [
+  { id: 'task', text: 'INTERACTION' },
+  { id: 'quiz', text: 'Q&A' },
+];
+
 export default class MissionTable extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'missionTable.title', 'mode1')
 
@@ -34,10 +46,10 @@ export default class MissionTable extends Component {
     this.setState({
       balance,
       quizs: [
-        ...quizs.filter(o => o.status === '1'),
-        ...quizs.filter(o => o.status === '0'),
-        ...quizs.filter(o => o.status === '2'),
-        ...quizs.filter(o => o.status === '-1'),
+        ...quizs.filter(o => o.status === STATUS.NOT_CHALLANGE),
+        ...quizs.filter(o => o.status === STATUS.NOT_OPEN),
+        ...quizs.filter(o => o.status === STATUS.SUCCESS),
+        ...quizs.filter(o => o.status === STATUS.FAIL),
       ]
     });
   }
@@ -59,7 +71,7 @@ export default class MissionTable extends Component {
                 quizs.map((quiz, index) => {
                   const { status, type, title } = quiz;
 
-                  if (status === '0') { // 尚未開放挑戰
+                  if (status === STATUS.NOT_OPEN) { // 尚未開放挑戰
                     return (
                       <Style.Box key={`quiz_${index}`}>
                         <Mission isLocked title={I18n.t('missionTable.unlock')} content="01:22:03"></Mission>
@@ -67,11 +79,12 @@ export default class MissionTable extends Component {
                     );
                   }
 
-                  const disabled = (status === '2' || status === '-1');
+                  const disabled = (status === STATUS.SUCCESS || status === STATUS.FAIL);
+                  const currentType = TYPE.find(o => o.id === type);
 
                   return (
                     <Style.Box key={`quiz_${index}`} disabled={disabled}>
-                      <Mission title="Q&A" content={title}></Mission>
+                      <Mission title={currentType.text} content={title}></Mission>
                       {
                         disabled && (
                           <Mask status={status} />
