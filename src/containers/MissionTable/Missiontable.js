@@ -8,7 +8,7 @@ import Mission from './Mission';
 import Mask from './Mask';
 import apiServices from '../../api/services';
 
-const STATUS = {
+export const STATUS = {
   NOT_CHALLANGE: '1',
   NOT_OPEN: '0',
   SUCCESS: '2',
