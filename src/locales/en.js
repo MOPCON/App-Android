@@ -55,7 +55,8 @@ export default {
     failure: 'Failure',
     unlock: 'Unlock',
     submit: 'Submit',
-    failMessage: 'Challange Fail！'
+    successMessage: 'Success！Gain Mo Coin',
+    failMessage: 'Failure！'
   },
   missionDetail: {
     quiz: 'Q&A',

@@ -23,7 +23,6 @@ export default class MissionDetail extends Component {
 
   render() {
     const { quiz, type } = this.state;
-    console.log(quiz, type);
 
     return (
       <Style.MissionContainer>

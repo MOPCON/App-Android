@@ -56,7 +56,7 @@ export const QuizText = styled.Text`
   font-size: 18px;
 `;
 
-export const QuizButton = styled.View`
+export const QuizButton = styled.TouchableOpacity`
   width: 100%;
   height: 60px;
   background: ${modBorder};
@@ -69,6 +69,41 @@ export const QuizButton = styled.View`
 export const QuizButtonText = styled.Text`
   color: #fff;
   font-size: 22px;
+`;
+
+export const QuizSuccess = styled.View`
+  width: 100%;
+  height: 120px;
+  background: #002a51;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const QuizSuccessText = styled.Text`
+  color: ${modBorder};
+  font-size: 14px;
+  margin-bottom: 12px;
+`;
+
+export const QuizReward = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+`;
+
+export const QuizRewardCoin = styled.Image`
+  margin-right: 16px;
+  width: 30px;
+  height: 30px;
+`;
+
+export const QuizRewardText = styled.Text`
+  color: #fff;
+  font-size: 40px;
 `;
 
 export const QuizFail = styled.View`

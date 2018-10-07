@@ -55,7 +55,8 @@ export default {
     failure: '挑戰失敗',
     unlock: '解鎖倒數',
     submit: '提交',
-    failMessage: '挑戰失敗，下回再加油！'
+    successMessage: '挑戰成功！獲得 Mo 幣',
+    failMessage: '挑戰失敗，下回再加油！',
   },
   missionDetail: {
     quiz: '問答',
