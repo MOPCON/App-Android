@@ -54,6 +54,8 @@ export default {
     success: '挑戰成功',
     failure: '挑戰失敗',
     unlock: '解鎖倒數',
+    submit: '提交',
+    failMessage: '挑戰失敗，下回再加油！'
   },
   missionDetail: {
     quiz: '問答',

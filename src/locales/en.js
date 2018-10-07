@@ -54,6 +54,8 @@ export default {
     success: 'Success',
     failure: 'Failure',
     unlock: 'Unlock',
+    submit: 'Submit',
+    failMessage: 'Challange Fail！'
   },
   missionDetail: {
     quiz: 'Q&A',
