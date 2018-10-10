@@ -11,7 +11,7 @@ export const ButtonTouchable = styled.TouchableOpacity`
   border: 1px solid ${scheduleCardTypeColor};
   border-radius: 4px;
   background-color: ${p => {
-    switch(p.color) {
+    switch (p.color) {
       case 'normal':
         return buttonBackground;
       case 'inverse':
@@ -25,12 +25,13 @@ export const ButtonTouchable = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: ${p => p.block ? '100%' : 'auto'};
 `;
 export const ButtonText = styled.Text`
   font-family: Roboto-Medium;
   letter-spacing: 1px;
   font-size: 14px;
-  color: ${p => p.color === 'primary' ? darkBlue : scheduleCardTypeColor};
+  color: ${p => p.color === 'primary' ? 'white' : scheduleCardTypeColor};
 `;
 
 export const ButtonIcon = styled.Image`
