@@ -20,6 +20,7 @@ import QRCode from '../QRCode/QRCode';
 import MySchedule from '../MySchedule/MySchedule';
 import QA from '../QA/QA';
 import Missiontable from '../MissionTable/Missiontable';
+import MissionDetail from '../MissionDetail/MissionDetail';
 import { updateData } from './ApiServices';
 import * as theme from '../../theme';
 import apiServices from '../../api/services';
@@ -115,4 +116,5 @@ export default StackNavigator({
   QRCode: { screen: QRCode },
   QA: { screen: QA },
   Missiontable: { screen: Missiontable },
+  MissionDetail: { screen: MissionDetail },
 });

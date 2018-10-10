@@ -54,6 +54,13 @@ export default {
     success: 'Success',
     failure: 'Failure',
     unlock: 'Unlock',
+    submit: 'Submit',
+    successMessage: 'Success！Gain Mo Coin',
+    failMessage: 'Failure！'
+  },
+  missionDetail: {
+    quiz: 'Q&A',
+    task: 'INTERACTION',
   },
   volunteer: {
     title: 'Volunteer',
