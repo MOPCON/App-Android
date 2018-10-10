@@ -7,6 +7,7 @@ import {
 import I18n from '../../locales';
 import iconCoinImg from '../../images/icon/iconCoin.png';
 import iconCapsuleImg from '../../images/icon/iconCapsule.png';
+import ModalExchange from '../../components/ModalExchange/ModalExchange';
 
 const Container = styled.View`
   display: flex;
@@ -91,8 +92,14 @@ export default class Exchange extends Component {
   static defaultProps = {
     balance: 0,
   }
+  state = {
+    isModalVisible: false,
+  }
+  onCloseModal = () => this.setState({ isModalVisible: false });
+  onOpenModal = () => this.setState({ isModalVisible: true });
   render() {
     const { balance } = this.props;
+    const { isModalVisible } = this.state;
     return (
       <Container>
         <Wallet>
@@ -116,9 +123,10 @@ export default class Exchange extends Component {
             </BottomZone>
           </Zone>
         </Wallet>
-        <Button>
+        <Button onPress={this.onOpenModal}>
           <ButtonText>{I18n.t('missionTable.exchange')}</ButtonText>
         </Button>
+        <ModalExchange visible={isModalVisible} onClose={this.onCloseModal} />
       </Container>
     );
   }
