@@ -7,6 +7,7 @@ import Exchange from './Exchange';
 import Mission from './Mission';
 import Mask from './Mask';
 import apiServices from '../../api/services';
+import { Consumer } from '../../store';
 
 export const STATUS = {
   NOT_CHALLANGE: '1',
@@ -20,12 +21,12 @@ const TYPE = [
   { id: 'quiz', text: 'Q&A' },
 ];
 
+@Consumer('balanceStore')
 export default class MissionTable extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'missionTable.title', 'mode1')
 
   state = {
     quizs: [],
-    balance: '0',
   }
 
   async componentDidMount() {
@@ -43,8 +44,8 @@ export default class MissionTable extends Component {
       2 挑戰成功
       -1 挑戰失敗
     */
+    this.props.context.balanceStore.setBalance(balance);
     this.setState({
-      balance,
       quizs: [
         ...quizs.filter(o => o.status === STATUS.NOT_CHALLANGE),
         ...quizs.filter(o => o.status === STATUS.NOT_OPEN),
@@ -59,7 +60,8 @@ export default class MissionTable extends Component {
   }
 
   render() {
-    const { quizs, balance } = this.state;
+    const { quizs } = this.state;
+    const { count } = this.props.context.balanceStore;
 
     return (
       <Style.MissionContainer>
@@ -67,7 +69,7 @@ export default class MissionTable extends Component {
           <View>
             <Style.ExchangeZone>
               <Style.Box width="100%" height="193px">
-                <Exchange balance={balance} />
+                <Exchange balance={count} />
               </Style.Box>
             </Style.ExchangeZone>
             <Style.MissionZone>

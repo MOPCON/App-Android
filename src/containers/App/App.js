@@ -25,6 +25,7 @@ import { updateData } from './ApiServices';
 import * as theme from '../../theme';
 import apiServices from '../../api/services';
 import '../../utils/extends';
+import Provider from '../../store';
 
 class App extends Component {
   static navigationOptions = {
@@ -91,16 +92,19 @@ class App extends Component {
     const { navigate } = this.props.navigation;
     const { hasUpdated } = this.state;
     return (
-      hasUpdated ?
-        (<View style={{ flex: 1 }}>
+      hasUpdated
+      ? (
+        <View style={{ flex: 1 }}>
           <Header />
           <Main navigate={navigate} />
-        </View>) : (<View />)
+        </View>
+      )
+      : (<View />)
     );
   }
 }
 
-export default StackNavigator({
+const AppWithNav = new StackNavigator({
   Main: { screen: App },
   MySchedule: { screen: MySchedule },
   Schedule: { screen: Schedule },
@@ -118,3 +122,13 @@ export default StackNavigator({
   Missiontable: { screen: Missiontable },
   MissionDetail: { screen: MissionDetail },
 });
+
+export default class extends Component {
+  render() {
+    return (
+      <Provider>
+        <AppWithNav />
+      </Provider>
+    )
+  }
+}

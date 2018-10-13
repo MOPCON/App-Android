@@ -5,7 +5,9 @@ import apiServices from '../../api/services';
 import { STATUS } from '../MissionTable/Missiontable';
 import iconCoinImg from '../../images/icon/iconCoin.png';
 import * as Style from './style';
+import { Consumer } from '../../store';
 
+@Consumer('balanceStore')
 export default class Quiz extends Component {
   state = {
     selected: '',
@@ -15,6 +17,9 @@ export default class Quiz extends Component {
 
   componentDidMount() {
     const { quiz } = this.props;
+
+    // 測試context
+    this.props.context.balanceStore.setBalance(9487);
 
     if (quiz.status === STATUS.SUCCESS || quiz.status === STATUS.FAIL) {
       this.setState({
