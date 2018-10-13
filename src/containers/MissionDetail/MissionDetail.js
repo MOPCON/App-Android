@@ -23,6 +23,7 @@ export default class MissionDetail extends Component {
 
   render() {
     const { quiz, type } = this.state;
+    const { navigation } = this.props;
 
     return (
       <Style.MissionContainer>
@@ -32,7 +33,7 @@ export default class MissionDetail extends Component {
             <Quiz quiz={quiz} />
           )
           : (
-            <QRCode />
+            <QRCode task={quiz} navigation={navigation}/>
           )
         }
       </Style.MissionContainer>

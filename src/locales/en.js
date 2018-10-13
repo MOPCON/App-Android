@@ -56,7 +56,8 @@ export default {
     unlock: 'Unlock',
     submit: 'Submit',
     successMessage: 'Success！Gain Mo Coin',
-    failMessage: 'Failure！'
+    failMessage: 'Failure！',
+    scanQRCode: 'Scan QRCode',
   },
   missionDetail: {
     quiz: 'Q&A',
