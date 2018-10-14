@@ -38,6 +38,8 @@ export default class Provider extends Component {
 
 export const Consumer = (...stores) => (ComposedComponent) => {
   class ConsumerComponent extends Component {
+    static navigationOptions = ComposedComponent.navigationOptions
+
     render() {
       return (
         <myContext.Consumer>
