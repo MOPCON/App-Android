@@ -43,7 +43,7 @@ export default class SpeakerItem extends PureComponent {
             onClick={onSave}
           />
           {
-            slide && (
+            Boolean(slide) && (
               <Button
                 text={I18n.t('speech.slide')}
                 margin={[0, 0, 0, 0]}
