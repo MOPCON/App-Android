@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Dimensions, Text } from 'react-native';
+import produce from 'immer';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import apiServices from '../../api/services';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import { STATUS } from '../MissionTable/Missiontable';
 import { Consumer } from '../../store';
 
-@Consumer('balanceStore')
+@Consumer('balanceStore', 'quizStore')
 export default class QRCode extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'qrcode.title', 'mode2')
 
@@ -28,9 +30,28 @@ export default class QRCode extends Component {
       const result = await apiServices.post('/get-hawker-mission', params);
       
       if (result.is_success) {
-        const { count, setBalance } = this.props.context.balanceStore;
-        setBalance(count + +(result.reward));
-        this.props.navigation.goBack();
+        const {
+          balanceStore: { count, setBalance },
+          quizStore: { quizs, setQuiz },
+        } = this.props.context;
+
+        // 累計Mo數
+        const reward = +(result.reward);
+        setBalance(count + reward);
+
+        // 修改Quiz status
+        const newTask = {
+          ...task,
+          status: STATUS.SUCCESS,
+          reward,
+        }
+
+        const taskIndex = quizs.findIndex(o => o.id === task.id);
+        setQuiz(produce(quizs, (draftState) => {
+          draftState[taskIndex] = newTask;
+        }));
+
+        this.props.navigation.navigate('MissionDetail', { quiz: newTask, type: 'task' });
       }
     }
   }
