@@ -58,6 +58,9 @@ export default {
     successMessage: '挑戰成功！獲得 Mo 幣',
     failMessage: '挑戰失敗，下回再加油！',
     scanQRCode: '掃 QRCode',
+    exchangeCode: '請輸入兌換密碼',
+    exchangeInfo: '您即將兌換',
+    capsules: '個扭蛋',
   },
   missionDetail: {
     quiz: '問答',
@@ -71,4 +74,8 @@ export default {
     slide: '投影片',
     schedule: '加入行程',
   },
+  common: {
+    ok: '確定',
+    close: '取消',
+  }
 };

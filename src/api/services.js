@@ -32,7 +32,7 @@ class ApiServices {
     let urlF = `${process.env.MOPCON_API_URL}${url}`;
     // if (this.data) { options.body = JSON.stringify(this.data); }
     // if (this.params) { url = `${url}${this.parseParams()}` }
-    // console.log(url, options);
+    console.log(urlF, options);
     const result = await fetch(urlF, options);
     return await result.json();
   }

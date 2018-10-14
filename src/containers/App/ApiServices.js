@@ -12,6 +12,7 @@ global.fetch = function (uri, options, ...args) {
   });
 };
 
+console.log(process.env.MOPCON_API_URL);
 const schedule = fetch(`${process.env.MOPCON_API_URL}/schedule`);
 const codeOfConduct = fetch(`${process.env.MOPCON_API_URL}/code-of-conduct`);
 const speaker = fetch(`${process.env.MOPCON_API_URL}/speaker`);

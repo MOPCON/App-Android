@@ -58,6 +58,9 @@ export default {
     successMessage: 'Success！Gain Mo Coin',
     failMessage: 'Failure！',
     scanQRCode: 'Scan QRCode',
+    exchangeCode: 'Please input exhange code.',
+    exchangeInfo: 'You will exchange',
+    capsules: 'capsule(s).',
   },
   missionDetail: {
     quiz: 'Q&A',
@@ -71,4 +74,8 @@ export default {
     slide: 'Slide',
     schedule: 'Schedule',
   },
+  common: {
+    ok: 'OK',
+    close: 'Close',
+  }
 };
