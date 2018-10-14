@@ -29,7 +29,7 @@ export default class SpeakerItem extends PureComponent {
     Linking.openURL(slide);
   }
   render() {
-    const { color, type, topic, saved, onSave } = this.props;
+    const { color, type, topic, saved, onSave, slide } = this.props;
     return (
       <Style.SpeechItemContainer color={color}>
         <Style.Title>{type}</Style.Title>
@@ -42,13 +42,17 @@ export default class SpeakerItem extends PureComponent {
             color="inverse"
             onClick={onSave}
           />
-          <Button
-            text={I18n.t('speech.slide')}
-            margin={[0, 0, 0, 0]}
-            iconURI={buttonSlide}
-            onClick={this.openSlide}
-            color="inverse"
-          />
+          {
+            slide && (
+              <Button
+                text={I18n.t('speech.slide')}
+                margin={[0, 0, 0, 0]}
+                iconURI={buttonSlide}
+                onClick={this.openSlide}
+                color="inverse"
+              />
+            )
+          }
         </Style.FuncView>
       </Style.SpeechItemContainer>
     );
