@@ -87,9 +87,9 @@ export default class Quiz extends Component {
         {
           // 未答題
           (status === STATUS.NOT_CHALLANGE) && (
-            <Style.QuizButton onPress={this.handleSubmit}>
-              <Style.QuizButtonText>{I18n.t('missionTable.submit')}</Style.QuizButtonText>
-            </Style.QuizButton>
+            <Style.Button onPress={this.handleSubmit}>
+              <Style.ButtonText>{I18n.t('missionTable.submit')}</Style.ButtonText>
+            </Style.Button>
           )
         }
         {

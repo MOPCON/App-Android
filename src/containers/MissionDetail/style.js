@@ -56,7 +56,7 @@ export const QuizText = styled.Text`
   font-size: 18px;
 `;
 
-export const QuizButton = styled.TouchableOpacity`
+export const Button = styled.TouchableOpacity`
   width: 100%;
   height: 60px;
   background: ${modBorder};
@@ -66,7 +66,7 @@ export const QuizButton = styled.TouchableOpacity`
   justify-content: center;
 `;
 
-export const QuizButtonText = styled.Text`
+export const ButtonText = styled.Text`
   color: #fff;
   font-size: 22px;
 `;
@@ -124,4 +124,16 @@ export const QuizFailText = styled.Text`
 // QRCode
 export const QRCodeContainer = styled.View`
   
+`;
+
+export const QRCodeTitle = styled.Text`
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 16px;
+`;
+
+export const QRCodeText = styled.Text`
+  color: #b0b0c0;
+  font-size: 14px;
+  margin-bottom: 72px;
 `;

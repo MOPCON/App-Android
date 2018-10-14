@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import { RSA } from 'react-native-rsa-native';
 import { AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
@@ -104,7 +104,7 @@ class App extends Component {
   }
 }
 
-const AppWithNav = new StackNavigator({
+const AppWithNav = new createStackNavigator({
   Main: { screen: App },
   MySchedule: { screen: MySchedule },
   Schedule: { screen: Schedule },
