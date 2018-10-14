@@ -4,6 +4,7 @@ import {
   modBorder,
 } from '../../theme/index';
 import I18n from '../../locales';
+import { STATUS } from '../MissionTable/Missiontable';
 import iconSucessImg from '../../images/icon/iconSucess.png';
 import iconFailedImg from '../../images/icon/iconFailed.png';
 
@@ -36,7 +37,7 @@ const Status = styled.View`
 `;
 
 const StatusText = styled.Text`
-  color: ${props => props.status === '1' ? modBorder : '#d13232'};
+  color: ${props => props.status === STATUS.SUCCESS ? modBorder : '#d13232'};
   font-size: 14px;
 `;
 

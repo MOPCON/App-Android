@@ -8,21 +8,8 @@ import * as Style from './style';
 export default class MissionDetail extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, `missionDetail.${navigation.state.params.type}`, 'mode2')
 
-  state = {
-    quiz: {},
-    type: null,
-  }
-
-  componentDidMount() {
-    const { quiz, type } = this.props.navigation.state.params;
-
-    this.setState({
-      quiz, type,
-    });
-  }
-
   render() {
-    const { quiz, type } = this.state;
+    const { quiz, type } = this.props.navigation.state.params;
     const { navigation } = this.props;
 
     return (

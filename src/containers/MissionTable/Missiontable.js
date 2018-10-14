@@ -21,13 +21,9 @@ const TYPE = [
   { id: 'quiz', text: 'Q&A' },
 ];
 
-@Consumer('balanceStore')
+@Consumer('balanceStore', 'quizStore')
 export default class MissionTable extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'missionTable.title', 'mode1')
-
-  state = {
-    quizs: [],
-  }
 
   async componentDidMount() {
     const UUID = await AsyncStorage.getItem('UUID');
@@ -44,15 +40,14 @@ export default class MissionTable extends Component {
       2 挑戰成功
       -1 挑戰失敗
     */
-    this.props.context.balanceStore.setBalance(balance);
-    this.setState({
-      quizs: [
-        ...quizs.filter(o => o.status === STATUS.NOT_CHALLANGE),
-        ...quizs.filter(o => o.status === STATUS.NOT_OPEN),
-        ...quizs.filter(o => o.status === STATUS.SUCCESS),
-        ...quizs.filter(o => o.status === STATUS.FAIL),
-      ]
-    });
+    const { balanceStore, quizStore } = this.props.context;
+    balanceStore.setBalance(balance);
+    quizStore.setQuiz([
+      ...quizs.filter(o => o.status === STATUS.NOT_CHALLANGE),
+      ...quizs.filter(o => o.status === STATUS.NOT_OPEN),
+      ...quizs.filter(o => o.status === STATUS.SUCCESS),
+      ...quizs.filter(o => o.status === STATUS.FAIL),
+    ]);
   }
 
   goMission = (quiz, type) => {
@@ -60,8 +55,11 @@ export default class MissionTable extends Component {
   }
 
   render() {
-    const { quizs } = this.state;
-    const { count } = this.props.context.balanceStore;
+    const {
+      balanceStore: { count },
+      quizStore: { quizs },
+    } = this.props.context;
+
 
     return (
       <Style.MissionContainer>

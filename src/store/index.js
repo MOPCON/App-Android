@@ -10,11 +10,21 @@ export default class Provider extends Component {
     }));
   }
 
+  setQuiz = (quizs) => {
+    this.setState(state => produce(this.state, (draftState) => {
+      draftState.quizStore.quizs = quizs;
+    }));
+  }
+
   state = {
     balanceStore: {
-      count: 1,
+      count: 0,
       setBalance: this.setBalance
-    }
+    },
+    quizStore: {
+      quizs: [],
+      setQuiz: this.setQuiz
+    },
   }
 
   render() {
