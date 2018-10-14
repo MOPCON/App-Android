@@ -18,6 +18,9 @@ export const InfoContainer = styled.View`
   border-radius: 4px;
   background-color: ${darkBlue};
   padding: 16px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const TextInput = styled.TextInput`
@@ -25,10 +28,27 @@ export const TextInput = styled.TextInput`
   border-bottom-width: 1px;
   border-style: solid;
   color: ${scheduleCardTypeColor};
+  width: 100%;
 `;
 
 export const ButtonsContainer = styled.View`
   display: flex;
   justify-content: center;
   flex-direction: row;
+`;
+
+export const ExchangeText = styled.Text`
+  color: ${scheduleCardTypeColor};
+  font-size: 24px;
+`;
+
+export const ExchangeCoinText = styled.Text`
+  color: white;
+  font-size: 24px;
+`;
+
+export const ExchangePng = styled.Image`
+  width: 50px;
+  height: 50px;
+  margin-bottom: 16px;
 `;

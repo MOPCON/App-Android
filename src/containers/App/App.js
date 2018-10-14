@@ -57,17 +57,15 @@ class App extends Component {
 
   // TODO add try catch;
   async componentDidMount() {
-    firebase.messaging().getToken().then(fcmToken => console.log(`fcmToken:${fcmToken}`));
-
+    const fcmToken = await firebase.messaging().getToken();
     const updateTime = await AsyncStorage.getItem('updateTime');
     const public_key = await AsyncStorage.getItem('public_key');
-
     if (!public_key) {
       try {
         const UUID = Array.from(Array(36)).map(d => Math.floor(Math.random() * 36).toString(36)).join('');
         const rsaKey = await RSA.generateKeys(4096);
-        const result = await apiServices.post('/new-user', { public_key: rsaKey.public, UUID });
         console.log('asdfasdfasdfasdfasdf');
+        const result = await apiServices.post('/new-user', { public_key: rsaKey.public, UUID, fcm_push_token: fcmToken });
         console.log(result);
         await AsyncStorage.setItem('UUID', UUID);
         await AsyncStorage.setItem('public_key', rsaKey.public);
