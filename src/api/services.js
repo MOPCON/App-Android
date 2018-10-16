@@ -1,3 +1,5 @@
+import URLSearchParams from 'url-search-params';
+
 // To see all the requests in the chrome Dev tools in the network tab.
 XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
   GLOBAL.originalXMLHttpRequest :
@@ -11,6 +13,7 @@ global.fetch = function (uri, options, ...args) {
     return response;
   });
 };
+
 
 const parseParams = (p = {}) => {
   const params = new URLSearchParams();
