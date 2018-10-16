@@ -21,7 +21,6 @@ import MySchedule from '../MySchedule/MySchedule';
 import QA from '../QA/QA';
 import Missiontable from '../MissionTable/Missiontable';
 import MissionDetail from '../MissionDetail/MissionDetail';
-import { updateData } from './ApiServices';
 import * as theme from '../../theme';
 import apiServices from '../../api/services';
 import '../../utils/extends';
@@ -40,23 +39,35 @@ class App extends Component {
   }
 
   updateData = async () => {
-    const [schedule, codeOfConduct, speaker, unconf, sponsor, community, volunteer, carousel, news] = await updateData();
-    await AsyncStorage.setItem('schedule', schedule);
-    await AsyncStorage.setItem('codeOfConduct', codeOfConduct);
-    await AsyncStorage.setItem('speaker', speaker);
-    await AsyncStorage.setItem('unconf', unconf);
-    await AsyncStorage.setItem('sponsor', sponsor);
-    await AsyncStorage.setItem('community', community);
-    await AsyncStorage.setItem('volunteer', volunteer);
+    const [schedule, codeOfConduct, speaker, unconf, sponsor, community, volunteer, carousel, news] = await Promise.all([
+      apiServices.get(`/schedule`),
+      apiServices.get(`/code-of-conduct`),
+      apiServices.get(`/speaker`),
+      apiServices.get(`/schedule-unconf`),
+      apiServices.get(`/sponsor`),
+      apiServices.get(`/community`),
+      apiServices.get(`/volunteer`),
+      apiServices.get(`/carousel`),
+      apiServices.get(`/news`),
+    ]);
+
+    await AsyncStorage.setItem('schedule', JSON.stringify(schedule));
+    await AsyncStorage.setItem('codeOfConduct', JSON.stringify(codeOfConduct));
+    await AsyncStorage.setItem('speaker', JSON.stringify(speaker));
+    await AsyncStorage.setItem('unconf', JSON.stringify(unconf));
+    await AsyncStorage.setItem('sponsor', JSON.stringify(sponsor));
+    await AsyncStorage.setItem('community', JSON.stringify(community));
+    await AsyncStorage.setItem('volunteer', JSON.stringify(volunteer));
     await AsyncStorage.setItem('updateTime', new Date());
-    await AsyncStorage.setItem('carousel', carousel);
-    await AsyncStorage.setItem('news', news);
+    await AsyncStorage.setItem('carousel', JSON.stringify(carousel));
+    await AsyncStorage.setItem('news', JSON.stringify(news));
     this.setState({ hasUpdated: true });
     return true;
   }
 
   // TODO add try catch;
   async componentDidMount() {
+    console.log(Platform);
     const fcmToken = await firebase.messaging().getToken();
     const updateTime = await AsyncStorage.getItem('updateTime');
     const public_key = await AsyncStorage.getItem('public_key');
@@ -75,6 +86,11 @@ class App extends Component {
       }
 
     }
+    try {
+      this.updateData();
+    } catch (e) {
+      console.log(e);
+    }
     // TODO discuss with andy
     // if(updateTime){
     //   this.setState({ hasUpdated: true });
@@ -83,7 +99,6 @@ class App extends Component {
     //   console.log('update data');
     //   this.updateData();
     // }
-    this.updateData();
   }
 
   render() {
@@ -91,13 +106,13 @@ class App extends Component {
     const { hasUpdated } = this.state;
     return (
       hasUpdated
-      ? (
-        <View style={{ flex: 1 }}>
-          <Header />
-          <Main navigate={navigate} />
-        </View>
-      )
-      : (<View />)
+        ? (
+          <View style={{ flex: 1 }}>
+            <Header />
+            <Main navigate={navigate} />
+          </View>
+        )
+        : (<View />)
     );
   }
 }
