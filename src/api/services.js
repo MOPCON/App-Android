@@ -1,3 +1,5 @@
+import URLSearchParams from 'url-search-params';
+
 const parseParams = (p = {}) => {
   const params = new URLSearchParams();
   Object.keys(p).forEach(key => params.append(key, p[key]));
