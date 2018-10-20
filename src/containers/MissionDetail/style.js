@@ -36,17 +36,17 @@ export const QuizOption = styled.View`
   width: 32px;
   height: 32px;
   border-radius: 32px;
-  border: 1px solid ${modBorder};
+  border: 1px solid ${props => props.wrong ? '#d63939' : modBorder};
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 5px;
   margin-right: 12px;
-  background: ${props => props.active ? modBorder : darkBlue};
+  background: ${props => props.wrong ? '#d63939' : props.active ? modBorder : darkBlue};
 `;
 
 export const QuizOptionText = styled.Text`
-  color: ${props => props.active ? '#fff' : modBorder};
+  color: ${props => (props.active || props.wrong) ? '#fff' : modBorder};
   font-size: 16px;
   text-align: center;
 `;

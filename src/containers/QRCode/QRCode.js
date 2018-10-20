@@ -5,10 +5,10 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import apiServices from '../../api/services';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import { STATUS } from '../MissionTable/Missiontable';
+import { MISSION_STATUS } from '../../store';
 import { Consumer } from '../../store';
 
-@Consumer('balanceStore', 'quizStore')
+@Consumer('missionStore')
 export default class QRCode extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'qrcode.title', 'mode2')
 
@@ -31,8 +31,7 @@ export default class QRCode extends Component {
       
       if (result.is_success) {
         const {
-          balanceStore: { count, setBalance },
-          quizStore: { quizs, setQuiz },
+          missionStore: { count, setBalance, quizs, setQuiz },
         } = this.props.context;
 
         // 累計Mo數
@@ -42,7 +41,7 @@ export default class QRCode extends Component {
         // 修改Quiz status
         const newTask = {
           ...task,
-          status: STATUS.SUCCESS,
+          status: MISSION_STATUS.SUCCESS,
           reward,
         }
 
