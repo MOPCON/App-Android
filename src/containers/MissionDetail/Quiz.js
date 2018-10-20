@@ -2,30 +2,15 @@ import React, { Component } from 'react';
 import { AsyncStorage, View } from 'react-native';
 import I18n from '../../locales';
 import apiServices from '../../api/services';
-import { STATUS } from '../MissionTable/Missiontable';
 import iconCoinImg from '../../images/icon/iconCoin.png';
+import { MISSION_STATUS } from '../../store';
 import * as Style from './style';
 import { Consumer } from '../../store';
 
-@Consumer('balanceStore')
+@Consumer('missionStore')
 export default class Quiz extends Component {
   state = {
     selected: '',
-    status: STATUS.NOT_CHALLANGE,
-    reward: 0,
-  }
-
-  componentDidMount() {
-    const { quiz } = this.props;
-
-    // 測試context
-    this.props.context.balanceStore.setBalance(9487);
-
-    if (quiz.status === STATUS.SUCCESS || quiz.status === STATUS.FAIL) {
-      this.setState({
-        status: quiz.status
-      });
-    }
   }
 
   handleClick = (option) => {
@@ -35,50 +20,53 @@ export default class Quiz extends Component {
   }
 
   handleSubmit = async () => {
-    const answer = (this.state.selected.charCodeAt(0)) - 65 + 1; // 先轉回index，再加1
+    const { id } = this.props;
+    const { setQuizStatus, setBalance, balance, quizs } = this.props.context.missionStore;
+    const quiz = quizs.find(o => o.id === id);
+
+    const answer = String((this.state.selected.charCodeAt(0)) - 65 + 1); // 先轉回index，再加1
     if (!answer) return;
-    const { quiz } = this.props;
-    const public_key = await AsyncStorage.getItem('public_key');
-    const params = {
-      public_key,
-      id: quiz.id,
-      answer,
-    };
 
-    const result = await apiServices.post('/solve-quiz', params);
-
-    this.setState({
-      status: result.is_success ? STATUS.SUCCESS : STATUS.FAIL,
-      reward: result.reward,
-    });
+    if (answer === quiz.answer) { // 答對
+      setQuizStatus(quiz.id, MISSION_STATUS.SUCCESS);
+      setBalance(balance + quiz.reward);
+    } else {                      // 答錯
+      setQuizStatus(quiz.id, MISSION_STATUS.FAIL, answer);
+    }
   }
 
   render() {
-    const { selected, status, reward } = this.state;
-    const { quiz } = this.props;
+    const { selected } = this.state;
+    const { id } = this.props;
+    const { quizs } = this.props.context.missionStore;
+    const quiz = quizs.find(o => o.id === id);
+
     const answer = +(quiz.answer) - 1; // 選項用index, 所以這邊要扣1
-    const disabled = (status === STATUS.SUCCESS || status === STATUS.FAIL);
+    const disabled = (quiz.status === MISSION_STATUS.SUCCESS || quiz.status === MISSION_STATUS.FAIL);
 
     return (
       <Style.QuizContainer>
         <Style.QuizTitle>{ quiz.title }</Style.QuizTitle>
         <Style.QuizOptionContainer>
           {
-            quiz.options.map((q, i) => {
+            Object.keys(quiz.options).map((key, i) => {
               const option = String.fromCharCode(65 + +(i));
 
               /*
                 情況1: 使用者選擇
                 情況2: 正確或錯誤時，顯示正確答案
               */
-              const active = (option === selected || (disabled && option === String.fromCharCode(65 + answer)));
+              const active = (option === selected
+                || (disabled && option === String.fromCharCode(65 + +(quiz.answer) - 1))); // answer需要-1才是index
+
+              const wrong = quiz.wrongAnswer && (option === String.fromCharCode(65 + +(quiz.wrongAnswer) - 1));
               
               return (
                 <Style.QuizContent disabled={disabled} onPress={() => this.handleClick(option)}>
-                  <Style.QuizOption active={active}>
-                    <Style.QuizOptionText active={active}>{option}</Style.QuizOptionText>
+                  <Style.QuizOption active={active} wrong={wrong}>
+                    <Style.QuizOptionText active={active} wrong={wrong}>{option}</Style.QuizOptionText>
                   </Style.QuizOption>
-                  <Style.QuizText>{q}</Style.QuizText>
+                  <Style.QuizText>{quiz.options[key]}</Style.QuizText>
                 </Style.QuizContent>
               );
             })
@@ -86,7 +74,7 @@ export default class Quiz extends Component {
         </Style.QuizOptionContainer>
         {
           // 未答題
-          (status === STATUS.NOT_CHALLANGE) && (
+          (quiz.status === MISSION_STATUS.NOT_CHALLANGE) && (
             <Style.Button onPress={this.handleSubmit}>
               <Style.ButtonText>{I18n.t('missionTable.submit')}</Style.ButtonText>
             </Style.Button>
@@ -94,19 +82,19 @@ export default class Quiz extends Component {
         }
         {
           // 答對
-          (status === STATUS.SUCCESS) && (
+          (quiz.status === MISSION_STATUS.SUCCESS) && (
             <Style.QuizSuccess>
               <Style.QuizSuccessText>{I18n.t('missionTable.successMessage')}</Style.QuizSuccessText>
               <Style.QuizReward>
                 <Style.QuizRewardCoin source={iconCoinImg} />
-                <Style.QuizRewardText>{reward}</Style.QuizRewardText>
+                <Style.QuizRewardText>{quiz.reward}</Style.QuizRewardText>
               </Style.QuizReward>
             </Style.QuizSuccess>
           )
         }
         {
           // 答錯
-          (status === STATUS.FAIL) && (
+          (quiz.status === MISSION_STATUS.FAIL) && (
             <Style.QuizFail>
               <Style.QuizFailText>{I18n.t('missionTable.failMessage')}</Style.QuizFailText>
             </Style.QuizFail>
