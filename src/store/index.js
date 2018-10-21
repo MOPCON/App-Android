@@ -25,10 +25,12 @@ export default class Provider extends Component {
     const index = this.state.missionStore.quizs.findIndex(o => o.id === id);
 
     if (index !== -1) {
-      const newQuizs = produce(this.state.missionStore.quizs, (quiz) => {
+      let newQuizs = produce(this.state.missionStore.quizs, (quiz) => {
         quiz[index].status = status;
         if (wrongAnswer) quiz[index].wrongAnswer = wrongAnswer;
       });
+
+      newQuizs = this.sortQuizs(newQuizs);
 
       await AsyncStorage.setItem('quizs', JSON.stringify(newQuizs));
 
