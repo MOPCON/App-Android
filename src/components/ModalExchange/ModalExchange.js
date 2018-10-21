@@ -1,13 +1,15 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import apiServices from '../../api/services';
 import PropTypes from 'prop-types';
 import I18n from '../../locales';
 import Button from '../Button/Button';
+import { Consumer } from '../../store';
 import IconPng from '../../images/icon/iconCapsule.png';
 import * as Style from './style';
 
-export default class ModalGameInfo extends React.PureComponent {
+@Consumer('missionStore')
+export default class ModalExchange extends React.PureComponent {
   static propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func,
@@ -30,6 +32,7 @@ export default class ModalGameInfo extends React.PureComponent {
     const regexp = /^(mopcon)(\d{2})$/;
     const testResult = regexp.test(text.toLowerCase());
     if (testResult) {
+      console.log(regexp.exec(text))
       this.setState({
         hasCheckView: true,
         exchangeCapsules: parseInt(regexp.exec(text)[2], 10),
@@ -39,18 +42,24 @@ export default class ModalGameInfo extends React.PureComponent {
 
   onClickExchangewServer = async () => {
     const { exchangeCapsules } = this.state;
-    console.log(exchangeCapsules);
-    await apiServices.post('/buy-gachapon', {
-      UUID: this.UUID,
-      public_key: this.public_key,
-      amount: exchangeCapsules,
-    });
-    this.setState({
-      text: '',
-      hasCheckView: false,
-      exchangeCapsules: 0,
-    });
-    this.props.onClose();
+    const {CAPSULE_RATE, balance, setBalance} =  this.props.context.missionStore;
+    if(Math.floor(balance / CAPSULE_RATE) >= exchangeCapsules){
+      setBalance(balance - (exchangeCapsules * CAPSULE_RATE));
+      this.setState({
+        text: '',
+        hasCheckView: false,
+        exchangeCapsules: 0,
+      });
+      this.props.onClose();
+    } else {
+      Alert.alert('錢不夠');
+      this.setState({
+        text: '',
+        hasCheckView: false,
+        exchangeCapsules: 0,
+      });
+    }
+    
   }
 
   onChangeText = (text) => {
