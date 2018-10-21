@@ -10,7 +10,7 @@ export default class ScheduleItem extends Component {
   static propTypes = {
     paintBG: PropTypes.bool,  // is relax time ?
     title: PropTypes.string,  // speak topic
-    type: PropTypes.string,   // topic type string eg. CLOUD
+    category: PropTypes.string,   // topic category string eg. CLOUD
     name: PropTypes.string,   // speaker name
     room: PropTypes.string,   // room location string
     saved: PropTypes.bool,    // saved or not
@@ -28,13 +28,13 @@ export default class ScheduleItem extends Component {
   }
 
   render() {
-    const { paintBG, title, type, name, room, saved, regular } = this.props;
+    const { paintBG, title, category, name, room, saved, regular } = this.props;
     return (
       <Style.ScheduleItemContainer paintBG={paintBG}>
         {
           paintBG ? <Style.Title paintBG={paintBG}>{title}</Style.Title> : (
             <Style.InnerContainer>
-              <Style.Type>{type}</Style.Type>
+              <Style.Category>{category}</Style.Category>
               <Style.TitleTouchable onPress={this.onPressTitle}>
                 <Style.Title paintBG={paintBG}>{title}</Style.Title>
               </Style.TitleTouchable>

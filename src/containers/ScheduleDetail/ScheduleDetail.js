@@ -43,7 +43,7 @@ export default class ScheduleDetail extends React.Component {
             <Style.SpeechItemContainer>
               <SpeechItem
                 color="inverse"
-                type={agenda.type}
+                category={agenda.category}
                 topic={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
                 saved={savedSchedule[agenda.schedule_id]}
                 onSave={this.onSave(agenda.schedule_id)}

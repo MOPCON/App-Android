@@ -19,6 +19,7 @@ export default class Speaker extends Component {
   async componentDidMount() {
     const speakerText = await AsyncStorage.getItem('speaker');
     const speaker = JSON.parse(speakerText).payload;
+    debugger;
     console.log(speaker);
     this.setState({
       speaker
