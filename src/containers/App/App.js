@@ -67,29 +67,27 @@ class App extends Component {
 
   // TODO add try catch;
   async componentDidMount() {
-    console.log(Platform);
-    const fcmToken = await firebase.messaging().getToken();
-    const updateTime = await AsyncStorage.getItem('updateTime');
-    const public_key = await AsyncStorage.getItem('public_key');
-    if (!public_key) {
-      try {
-        const UUID = Array.from(Array(36)).map(d => Math.floor(Math.random() * 36).toString(36)).join('');
-        const rsaKey = await RSA.generateKeys(4096);
-        console.log('asdfasdfasdfasdfasdf');
-        const result = await apiServices.post('/new-user', { public_key: rsaKey.public, UUID, fcm_push_token: fcmToken });
-        console.log(result);
-        await AsyncStorage.setItem('UUID', UUID);
-        await AsyncStorage.setItem('public_key', rsaKey.public);
-        await AsyncStorage.setItem('private_key', rsaKey.private);
-      } catch (e) {
-        console.error('generate key error', e);
-      }
+    // const fcmToken = await firebase.messaging().getToken();
+    // const updateTime = await AsyncStorage.getItem('updateTime');
+    // const public_key = await AsyncStorage.getItem('public_key');
+    // if (!public_key) {
+    //   try {
+    //     const UUID = Array.from(Array(36)).map(d => Math.floor(Math.random() * 36).toString(36)).join('');
+    //     const rsaKey = await RSA.generateKeys(4096);
+    //     const result = await apiServices.post('/new-user', { public_key: rsaKey.public, UUID, fcm_push_token: fcmToken });
 
-    }
+    //     await AsyncStorage.setItem('UUID', UUID);
+    //     await AsyncStorage.setItem('public_key', rsaKey.public);
+    //     await AsyncStorage.setItem('private_key', rsaKey.private);
+    //   } catch (e) {
+    //     console.error('generate key error', e);
+    //   }
+
+    // }
     try {
       this.updateData();
     } catch (e) {
-      console.log(e);
+      console.log('updateData error', e);
     }
     // TODO discuss with andy
     // if(updateTime){
