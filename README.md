@@ -10,6 +10,7 @@ export MOPCON_API_URL="https://mopconXXXXXXXX.com/"
 export keystore_password="xxx"
 export keystore_alias="xxx"
 export keystore_alias_password="xxx"
+export MOPCON_DES_KEY="xxx"
 ```
 
 put keystore into `android/app/release.keystore`

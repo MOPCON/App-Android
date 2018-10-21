@@ -3,9 +3,8 @@ import { AsyncStorage, View } from 'react-native';
 import I18n from '../../locales';
 import apiServices from '../../api/services';
 import iconCoinImg from '../../images/icon/iconCoin.png';
-import { MISSION_STATUS } from '../../store';
+import { MISSION_STATUS, Consumer } from '../../store';
 import * as Style from './style';
-import { Consumer } from '../../store';
 
 @Consumer('missionStore')
 export default class Quiz extends Component {

@@ -22,7 +22,7 @@ export const QuizTitle = styled.Text`
 `;
 
 export const QuizOptionContainer = styled.View`
-  margin-bottom: 72px;
+  margin-bottom: 20px;
 `;
 
 export const QuizContent = styled.TouchableOpacity`
