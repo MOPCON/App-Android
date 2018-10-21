@@ -3,7 +3,6 @@ import { AsyncStorage } from 'react-native';
 import produce from 'immer';
 import BoothMissionJSON from '../../BoothMission.json';
 import QuizJSON from '../../Quiz.json';
-import { AsyncSubject } from 'rx';
 
 const myContext = createContext();
 
