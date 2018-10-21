@@ -3,7 +3,7 @@ export default {
     schedule: 'Schedule',
     MySchedule: 'My-Schedule',
     Unconference: 'Unconf',
-    Mission: 'Mission',
+    Mission: 'Field Games',
     Sponsors: 'Sponsors',
     Speakers: 'Speakers',
     Community: 'Community',
