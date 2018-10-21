@@ -13,10 +13,14 @@ export const CardView = styled.View`
   background: white;
   border-radius: 10px;
   margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const CardImg = styled.Image`
-
+  width: 132px;
+  height: 132px;
 `;
 
 export const SponsorName = styled.Text`

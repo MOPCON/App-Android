@@ -36,7 +36,8 @@ export const CardImgSmall = styled.View`
 
 `;
 export const CardImgBig = styled.View`
-
+  width: ${width};
+  height: ${width};
 `;
 export const TypeText = styled.Text`
   color: ${scheduleCardTypeColor};
