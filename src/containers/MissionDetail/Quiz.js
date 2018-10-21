@@ -61,7 +61,7 @@ export default class Quiz extends Component {
               const wrong = quiz.wrongAnswer && (option === String.fromCharCode(65 + +(quiz.wrongAnswer) - 1));
               
               return (
-                <Style.QuizContent disabled={disabled} onPress={() => this.handleClick(option)}>
+                <Style.QuizContent key={`quiz${i}`} disabled={disabled} onPress={() => this.handleClick(option)}>
                   <Style.QuizOption active={active} wrong={wrong}>
                     <Style.QuizOptionText active={active} wrong={wrong}>{option}</Style.QuizOptionText>
                   </Style.QuizOption>
@@ -73,7 +73,7 @@ export default class Quiz extends Component {
         </Style.QuizOptionContainer>
         {
           // 未答題
-          (quiz.status === MISSION_STATUS.NOT_CHALLANGE) && (
+          (quiz.status === MISSION_STATUS.NOT_CHALLANGE && Boolean(selected)) && (
             <Style.Button onPress={this.handleSubmit}>
               <Style.ButtonText>{I18n.t('missionTable.submit')}</Style.ButtonText>
             </Style.Button>

@@ -27,7 +27,7 @@ export default class MissionTable extends Component {
     const {
       missionStore: { balance, quizs },
     } = this.props.context;
-
+    console.log(quizs);
     return (
       <Style.MissionContainer>
         <Style.ScrollContainer>
