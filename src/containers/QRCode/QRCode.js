@@ -2,56 +2,39 @@ import React, { Component } from 'react';
 import { AsyncStorage, Dimensions, Text } from 'react-native';
 import produce from 'immer';
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import CryptoJS from 'crypto-js';
 import apiServices from '../../api/services';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import { MISSION_STATUS } from '../../store';
-import { Consumer } from '../../store';
+import { MISSION_STATUS, Consumer } from '../../store';
 
 @Consumer('missionStore')
 export default class QRCode extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'qrcode.title', 'mode2')
 
   onSuccess = async (e) => {
-    const data = JSON.parse(e.data);
+    const data = e.data;
     const { task } = this.props.navigation.state.params;
+    const des_key = process.env.MOPCON_DES_KEY;
 
-    if (data.id && data.token) {
+    const bytes = CryptoJS.DES.decrypt(data, des_key);
+    const id = bytes.toString(CryptoJS.enc.Utf8);
+
+    if (id) {
       // 判斷掃到的id跟題目id是否相同
-      // if (data.id !== task.id) return;
+      if (id !== task.id) return;
 
-      const public_key = await AsyncStorage.getItem('public_key');
-      const params = {
-        public_key,
-        id: data.id,
-        token: data.token,
-      };
+      const {
+        missionStore: { balance, setBalance, quizs, setQuizStatus },
+      } = this.props.context;
 
-      const result = await apiServices.post('/get-hawker-mission', params);
-      
-      if (result.is_success) {
-        const {
-          missionStore: { count, setBalance, quizs, setQuiz },
-        } = this.props.context;
+      // 累計Mo數
+      setBalance(balance + +(task.reward));
 
-        // 累計Mo數
-        const reward = +(result.reward);
-        setBalance(count + reward);
+      // 修改Quiz status
+      setQuizStatus(task.id, MISSION_STATUS.SUCCESS);
 
-        // 修改Quiz status
-        const newTask = {
-          ...task,
-          status: MISSION_STATUS.SUCCESS,
-          reward,
-        }
-
-        const taskIndex = quizs.findIndex(o => o.id === task.id);
-        setQuiz(produce(quizs, (draftState) => {
-          draftState[taskIndex] = newTask;
-        }));
-
-        this.props.navigation.navigate('MissionDetail', { quiz: newTask, type: 'task' });
-      }
+      this.props.navigation.navigate('MissionDetail', { id: task.id, type: 'task' });
     }
   }
 
