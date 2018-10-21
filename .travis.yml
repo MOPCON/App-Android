@@ -31,3 +31,13 @@ install:
   - npm i
 script:
   - npm run build:prd
+before_deploy:
+  - mv ./android/app/build/outputs/apk/release/app-release.apk ./mopcon.apk
+deploy:
+  provider: releases
+  api_key:
+    secure: $github_token
+  file: ./mopcon.apk
+  skip_cleanup: true
+  on:
+    tags: true
