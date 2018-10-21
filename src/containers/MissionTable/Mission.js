@@ -45,10 +45,14 @@ export default class Mission extends Component {
     return (
       <Container>
         <Title>
-          { isLocked && <Icon  source={iconLockedImg} /> }
+          {isLocked && <Icon source={iconLockedImg} />}
           <TitleText>{title}</TitleText>
         </Title>
-        <Content>{content}</Content>
+        <Content>
+          {
+            (content.length > 20) ? `${content.slice(0, 20)}...` : content
+          }
+        </Content>
       </Container>
     );
   }
