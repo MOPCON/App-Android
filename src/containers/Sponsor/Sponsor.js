@@ -89,7 +89,7 @@ export default class Sponsor extends React.Component {
                 <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
                   <Style.CardImgSmall>
                     <Image
-                      style={{ width: 50, height: 50 }}
+                      style={{ width: 132, height: 132 }}
                       source={{ uri: sponsorData.logo }}
                     />
                   </Style.CardImgSmall>
@@ -104,7 +104,7 @@ export default class Sponsor extends React.Component {
                 <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
                   <Style.CardImgSmall>
                     <Image
-                      style={{ width: 50, height: 50 }}
+                      style={{ width: 132, height: 132 }}
                       source={{ uri: sponsorData.logo }}
                     />
                   </Style.CardImgSmall>
@@ -119,7 +119,7 @@ export default class Sponsor extends React.Component {
                 <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
                   <Style.CardImgSmall>
                     <Image
-                      style={{ width: 50, height: 50 }}
+                      style={{ width: 132, height: 132 }}
                       source={{ uri: sponsorData.logo }}
                     />
                   </Style.CardImgSmall>
