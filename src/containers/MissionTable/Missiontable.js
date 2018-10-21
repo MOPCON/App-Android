@@ -7,43 +7,26 @@ import Exchange from './Exchange';
 import Mission from './Mission';
 import Mask from './Mask';
 import apiServices from '../../api/services';
+import { MISSION_STATUS } from '../../store';
+import { Consumer } from '../../store';
 
+const TYPE = [
+  { id: 'task', text: 'INTERACTION' },
+  { id: 'quiz', text: 'Q&A' },
+];
+
+@Consumer('missionStore')
 export default class MissionTable extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'missionTable.title', 'mode1')
 
-  state = {
-    quizs: [],
-    balance: '0',
-  }
-
-  async componentDidMount() {
-    const UUID = await AsyncStorage.getItem('UUID');
-    const public_key = await AsyncStorage.getItem('public_key');
-    const {balance} = await apiServices.post('/get-balance', { UUID, public_key });
-    const result = await apiServices.get('/get-quiz');
-    // 之後格式會改
-    const quizs = result.reduce((acc, val) => [...acc, ...(val.items || [])], []);
-
-    /*
-      status: (按照此順序)
-      1 尚未挑戰
-      0 尚未開放挑戰
-      2 挑戰成功
-      -1 挑戰失敗
-    */
-    this.setState({
-      balance,
-      quizs: [
-        ...quizs.filter(o => o.status === '1'),
-        ...quizs.filter(o => o.status === '0'),
-        ...quizs.filter(o => o.status === '2'),
-        ...quizs.filter(o => o.status === '-1'),
-      ]
-    });
+  goMission = (id, type) => {
+    this.props.navigation.navigate('MissionDetail', { id, type });
   }
 
   render() {
-    const { quizs, balance } = this.state;
+    const {
+      missionStore: { balance, quizs },
+    } = this.props.context;
 
     return (
       <Style.MissionContainer>
@@ -59,22 +42,23 @@ export default class MissionTable extends Component {
                 quizs.map((quiz, index) => {
                   const { status, type, title } = quiz;
 
-                  if (status === '0') { // 尚未開放挑戰
-                    return (
-                      <Style.Box key={`quiz_${index}`}>
-                        <Mission isLocked title={I18n.t('missionTable.unlock')} content="01:22:03"></Mission>
-                      </Style.Box>
-                    );
-                  }
+                  // if (status === MISSION_STATUS.NOT_OPEN) { // 尚未開放挑戰
+                  //   return (
+                  //     <Style.Box key={`quiz_${index}`}>
+                  //       <Mission isLocked title={I18n.t('missionTable.unlock')} content="01:22:03"></Mission>
+                  //     </Style.Box>
+                  //   );
+                  // }
 
-                  const disabled = (status === '2' || status === '-1');
+                  const disabled = (status === MISSION_STATUS.SUCCESS || status === MISSION_STATUS.FAIL);
+                  const currentType = TYPE.find(o => o.id === type);
 
                   return (
-                    <Style.Box key={`quiz_${index}`} disabled={disabled}>
-                      <Mission title="Q&A" content={title}></Mission>
+                    <Style.Box key={`quiz_${index}`} disabled={disabled} onPress={() => this.goMission(quiz.id, currentType.id)}>
+                      <Mission title={currentType.text} content={title}></Mission>
                       {
                         disabled && (
-                          <Mask status={status} />
+                          <Mask status={status} goMission={() => this.goMission(quiz.id, currentType.id)}/>
                         )
                       }
                     </Style.Box>

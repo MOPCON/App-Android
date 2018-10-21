@@ -17,7 +17,9 @@ export default class SpeakerDetail extends Component {
   async componentDidMount() {
     const { speakerId } = this.props.navigation.state.params;
     const speakerText = await AsyncStorage.getItem('speaker');
-    const speaker = JSON.parse(speakerText).payload.find(s => s.speaker_id === speakerId);
+    const spObject = JSON.parse(speakerText).payload;
+    const speakerList = Object.keys(spObject).map(key => spObject[key]);
+    const speaker = speakerList.find(s => s.speaker_id === speakerId);
     console.log('speakerId', speakerId);
     console.log('speaker', speaker);
     const savedScheduleText = await AsyncStorage.getItem('savedschedule');
@@ -45,7 +47,7 @@ export default class SpeakerDetail extends Component {
     const job = speaker.job;
     const company = speaker.company;
     const picture = speaker.picture;
-    const type = speaker.type;
+    const category = speaker.category;
     const topic = I18n.locale === 'en' ? speaker.schedule_topic_en : speaker.schedule_topic;
 
     return (
@@ -63,7 +65,7 @@ export default class SpeakerDetail extends Component {
             {info}
           </Style.Intro>
           <SpeechItem
-            type={type}
+            category={category}
             topic={topic}
             saved={savedSchedule[speaker.schedule_id]}
             slide={speaker.slide}

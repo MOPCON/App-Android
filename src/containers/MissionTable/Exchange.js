@@ -5,8 +5,10 @@ import {
   modBorder,
 } from '../../theme/index';
 import I18n from '../../locales';
+import { Consumer } from '../../store';
 import iconCoinImg from '../../images/icon/iconCoin.png';
 import iconCapsuleImg from '../../images/icon/iconCapsule.png';
+import ModalExchange from '../../components/ModalExchange/ModalExchange';
 
 const Container = styled.View`
   display: flex;
@@ -84,6 +86,7 @@ const Icon = styled.Image`
 `;
 
 
+@Consumer('missionStore')
 export default class Exchange extends Component {
   static propTypes = {
     balance: PropTypes.number,
@@ -91,8 +94,15 @@ export default class Exchange extends Component {
   static defaultProps = {
     balance: 0,
   }
+  state = {
+    isModalVisible: false,
+  }
+  onCloseModal = () => this.setState({ isModalVisible: false });
+  onOpenModal = () => this.setState({ isModalVisible: true });
   render() {
-    const { balance } = this.props;
+    const { balance, context: { missionStore: { CAPSULE_RATE } } } = this.props;
+    console.log(CAPSULE_RATE)
+    const { isModalVisible } = this.state;
     return (
       <Container>
         <Wallet>
@@ -112,13 +122,14 @@ export default class Exchange extends Component {
               <Text>{I18n.t('missionTable.capsule_toy')}</Text>
             </TopZone>
             <BottomZone>
-              <LargeText>50</LargeText>
+              <LargeText>{Math.floor(balance / CAPSULE_RATE)}</LargeText>
             </BottomZone>
           </Zone>
         </Wallet>
-        <Button>
+        <Button onPress={this.onOpenModal}>
           <ButtonText>{I18n.t('missionTable.exchange')}</ButtonText>
         </Button>
+        <ModalExchange visible={isModalVisible} onClose={this.onCloseModal} />
       </Container>
     );
   }

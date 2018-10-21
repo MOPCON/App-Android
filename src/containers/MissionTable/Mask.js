@@ -4,10 +4,11 @@ import {
   modBorder,
 } from '../../theme/index';
 import I18n from '../../locales';
+import { MISSION_STATUS } from '../../store';
 import iconSucessImg from '../../images/icon/iconSucess.png';
 import iconFailedImg from '../../images/icon/iconFailed.png';
 
-const Container = styled.View`
+const Container = styled.TouchableOpacity`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,7 +37,7 @@ const Status = styled.View`
 `;
 
 const StatusText = styled.Text`
-  color: ${props => props.status === '1' ? modBorder : '#d13232'};
+  color: ${props => props.status === MISSION_STATUS.SUCCESS ? modBorder : '#d13232'};
   font-size: 14px;
 `;
 
@@ -48,10 +49,10 @@ const Icon = styled.Image`
 
 export default class Mask extends Component {
   render() {
-    const { status } = this.props;
+    const { status, goMission } = this.props;
 
     return (
-      <Container>
+      <Container onPress={goMission}>
         <EmptyZone />
         <Status>
           <Icon source={ status === '2' ? iconSucessImg : iconFailedImg} />

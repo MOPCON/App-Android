@@ -56,7 +56,7 @@ export default class Main extends Component {
         { icon: iconSchedule, name: 'home.schedule', screen: 'Schedule' },
         { icon: iconMySchedule, name: 'home.MySchedule', screen: 'MySchedule' },
         { icon: iconUnconference, name: 'home.Unconference', screen: 'UnConf' },
-        // { icon: iconMission, name: 'home.Mission', screen: 'Missiontable' },
+        { icon: iconMission, name: 'home.Mission', screen: 'Missiontable' },
         { icon: iconSponsor, name: 'home.Sponsors', screen: 'Sponsor' },
         { icon: iconSpeakers, name: 'home.Speakers', screen: 'Speaker' },
         { icon: iconCommunity, name: 'home.Community', screen: 'Community' },
@@ -74,6 +74,7 @@ export default class Main extends Component {
       carousel: JSON.parse(carouselText).payload,
       news: JSON.parse(newsText).payload,
     });
+
     SplashScreen.hide();
   }
 

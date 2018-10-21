@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import { RSA } from 'react-native-rsa-native';
 import { AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
@@ -20,10 +20,11 @@ import QRCode from '../QRCode/QRCode';
 import MySchedule from '../MySchedule/MySchedule';
 import QA from '../QA/QA';
 import Missiontable from '../MissionTable/Missiontable';
-import { updateData } from './ApiServices';
+import MissionDetail from '../MissionDetail/MissionDetail';
 import * as theme from '../../theme';
 import apiServices from '../../api/services';
 import '../../utils/extends';
+import Provider from '../../store';
 
 class App extends Component {
   static navigationOptions = {
@@ -38,42 +39,55 @@ class App extends Component {
   }
 
   updateData = async () => {
-    const [schedule, codeOfConduct, speaker, unconf, sponsor, community, volunteer, carousel, news] = await updateData();
-    await AsyncStorage.setItem('schedule', schedule);
-    await AsyncStorage.setItem('codeOfConduct', codeOfConduct);
-    await AsyncStorage.setItem('speaker', speaker);
-    await AsyncStorage.setItem('unconf', unconf);
-    await AsyncStorage.setItem('sponsor', sponsor);
-    await AsyncStorage.setItem('community', community);
-    await AsyncStorage.setItem('volunteer', volunteer);
+    const [schedule, codeOfConduct, speaker, unconf, sponsor, community, volunteer, carousel, news] = await Promise.all([
+      apiServices.get(`/schedule`),
+      apiServices.get(`/code-of-conduct`),
+      apiServices.get(`/speaker`),
+      apiServices.get(`/schedule-unconf`),
+      apiServices.get(`/sponsor`),
+      apiServices.get(`/community`),
+      apiServices.get(`/volunteer`),
+      apiServices.get(`/carousel`),
+      apiServices.get(`/news`),
+    ]);
+
+    await AsyncStorage.setItem('schedule', JSON.stringify(schedule));
+    await AsyncStorage.setItem('codeOfConduct', JSON.stringify(codeOfConduct));
+    await AsyncStorage.setItem('speaker', JSON.stringify(speaker));
+    await AsyncStorage.setItem('unconf', JSON.stringify(unconf));
+    await AsyncStorage.setItem('sponsor', JSON.stringify(sponsor));
+    await AsyncStorage.setItem('community', JSON.stringify(community));
+    await AsyncStorage.setItem('volunteer', JSON.stringify(volunteer));
     await AsyncStorage.setItem('updateTime', new Date());
-    await AsyncStorage.setItem('carousel', carousel);
-    await AsyncStorage.setItem('news', news);
+    await AsyncStorage.setItem('carousel', JSON.stringify(carousel));
+    await AsyncStorage.setItem('news', JSON.stringify(news));
     this.setState({ hasUpdated: true });
     return true;
   }
 
   // TODO add try catch;
   async componentDidMount() {
-    firebase.messaging().getToken().then(fcmToken => console.log(`fcmToken:${fcmToken}`));
+    // const fcmToken = await firebase.messaging().getToken();
+    // const updateTime = await AsyncStorage.getItem('updateTime');
+    // const public_key = await AsyncStorage.getItem('public_key');
+    // if (!public_key) {
+    //   try {
+    //     const UUID = Array.from(Array(36)).map(d => Math.floor(Math.random() * 36).toString(36)).join('');
+    //     const rsaKey = await RSA.generateKeys(4096);
+    //     const result = await apiServices.post('/new-user', { public_key: rsaKey.public, UUID, fcm_push_token: fcmToken });
 
-    const updateTime = await AsyncStorage.getItem('updateTime');
-    const public_key = await AsyncStorage.getItem('public_key');
+    //     await AsyncStorage.setItem('UUID', UUID);
+    //     await AsyncStorage.setItem('public_key', rsaKey.public);
+    //     await AsyncStorage.setItem('private_key', rsaKey.private);
+    //   } catch (e) {
+    //     console.error('generate key error', e);
+    //   }
 
-    if (!public_key) {
-      try {
-        const UUID = Array.from(Array(36)).map(d => Math.floor(Math.random() * 36).toString(36)).join('');
-        const rsaKey = await RSA.generateKeys(4096);
-        const result = await apiServices.post('/new-user', { public_key: rsaKey.public, UUID });
-        console.log('asdfasdfasdfasdfasdf');
-        console.log(result);
-        await AsyncStorage.setItem('UUID', UUID);
-        await AsyncStorage.setItem('public_key', rsaKey.public);
-        await AsyncStorage.setItem('private_key', rsaKey.private);
-      } catch (e) {
-        console.error('generate key error', e);
-      }
-
+    // }
+    try {
+      this.updateData();
+    } catch (e) {
+      console.log('updateData error', e);
     }
     // TODO discuss with andy
     // if(updateTime){
@@ -83,23 +97,25 @@ class App extends Component {
     //   console.log('update data');
     //   this.updateData();
     // }
-    this.updateData();
   }
 
   render() {
     const { navigate } = this.props.navigation;
     const { hasUpdated } = this.state;
     return (
-      hasUpdated ?
-        (<View style={{ flex: 1 }}>
-          <Header />
-          <Main navigate={navigate} />
-        </View>) : (<View />)
+      hasUpdated
+        ? (
+          <View style={{ flex: 1 }}>
+            <Header />
+            <Main navigate={navigate} />
+          </View>
+        )
+        : (<View />)
     );
   }
 }
 
-export default StackNavigator({
+const AppWithNav = new createStackNavigator({
   Main: { screen: App },
   MySchedule: { screen: MySchedule },
   Schedule: { screen: Schedule },
@@ -115,4 +131,15 @@ export default StackNavigator({
   QRCode: { screen: QRCode },
   QA: { screen: QA },
   Missiontable: { screen: Missiontable },
+  MissionDetail: { screen: MissionDetail },
 });
+
+export default class extends Component {
+  render() {
+    return (
+      <Provider>
+        <AppWithNav />
+      </Provider>
+    )
+  }
+}

@@ -18,7 +18,8 @@ export default class Speaker extends Component {
 
   async componentDidMount() {
     const speakerText = await AsyncStorage.getItem('speaker');
-    const speaker = JSON.parse(speakerText).payload;
+    const spObject = JSON.parse(speakerText).payload;
+    const speaker = Object.keys(spObject).map(key => spObject[key]);
     console.log(speaker);
     this.setState({
       speaker
@@ -48,7 +49,7 @@ export default class Speaker extends Component {
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SpeakerContainer>
-          { this.renderSpeaker() }
+          {this.renderSpeaker()}
         </Style.SpeakerContainer>
       </ScrollView>
     );

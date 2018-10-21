@@ -14,6 +14,7 @@ const Container = styled.View`
   width: 100%;
   height: 100%;
   position: relative;
+  padding: 20px;
 `;
 
 const Title = styled.View`
@@ -27,7 +28,7 @@ const TitleText = styled.Text`
 `;
 
 const Content = styled.Text`
-  font-size: 22px;
+  font-size: 16px;
   color: #fff;
 `;
 
@@ -44,10 +45,14 @@ export default class Mission extends Component {
     return (
       <Container>
         <Title>
-          { isLocked && <Icon  source={iconLockedImg} /> }
+          {isLocked && <Icon source={iconLockedImg} />}
           <TitleText>{title}</TitleText>
         </Title>
-        <Content>{content}</Content>
+        <Content>
+          {
+            (content.length > 20) ? `${content.slice(0, 20)}...` : content
+          }
+        </Content>
       </Container>
     );
   }

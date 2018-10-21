@@ -43,7 +43,7 @@ export const NTitle = styled.Text`
   margin: 20px 0;
 `;
 
-export const Type = styled.Text`
+export const Category = styled.Text`
   color: ${scheduleCardTypeColor};
   font-family: 'Roboto-Regular';
   font-size: 12px;
