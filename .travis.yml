@@ -24,7 +24,7 @@ before_install:
   - mkdir -p ./android/app/src/main/assets/
   - mkdir -p ./android/app/src/main/res/
   - openssl aes-256-cbc -K $encrypted_f6ba733fe176_key -iv $encrypted_f6ba733fe176_iv -in secrets.tar.enc -out secrets.tar -d
-  - tar xvf ./android/app/secrets.tar
+  - tar xvf ./secrets.tar
   - mv release.keystore ./android/app/
   - mv google-services.json ./android/app/
 install:
