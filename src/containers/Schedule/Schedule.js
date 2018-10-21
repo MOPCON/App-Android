@@ -62,7 +62,7 @@ export default class Schedule extends Component {
       regular
       paintBG={!Boolean(agenda.schedule_id)}
       title={I18n.locale === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
-      type={agenda.type}
+      category={agenda.category}
       onPressTitle={agenda.schedule_id ? this.onPressTitle(agenda) : () => { }}
       name={I18n.locale === 'zh' ? agenda.name : agenda.name_en}
       onSave={this.onSave(agenda.schedule_id)}
@@ -73,6 +73,7 @@ export default class Schedule extends Component {
   render() {
     const { schedule, nowScheduleDate } = this.state;
     const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
+
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.ScheduleContainer>
