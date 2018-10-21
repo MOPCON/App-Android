@@ -3,7 +3,7 @@ export default {
     schedule: '議程',
     MySchedule: '我的行程',
     Unconference: '交流場次',
-    Mission: '任務',
+    Mission: '大地遊戲',
     Sponsors: '贊助廠商',
     Speakers: '講者',
     Community: '社群',

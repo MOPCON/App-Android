@@ -29,13 +29,14 @@ export default class ModalExchange extends React.PureComponent {
 
   onClickExchange = () => {
     const { text } = this.state;
+    const parsedText = text.toLowerCase();
     const regexp = /^(mopcon)(\d{2})$/;
-    const testResult = regexp.test(text.toLowerCase());
+    const testResult = regexp.test(parsedText);
     if (testResult) {
-      console.log(regexp.exec(text))
+      console.log(regexp.exec(parsedText));
       this.setState({
         hasCheckView: true,
-        exchangeCapsules: parseInt(regexp.exec(text)[2], 10),
+        exchangeCapsules: parseInt(regexp.exec(parsedText)[2], 10),
       });
     }
   }
@@ -45,19 +46,10 @@ export default class ModalExchange extends React.PureComponent {
     const {CAPSULE_RATE, balance, setBalance} =  this.props.context.missionStore;
     if(Math.floor(balance / CAPSULE_RATE) >= exchangeCapsules){
       setBalance(balance - (exchangeCapsules * CAPSULE_RATE));
-      this.setState({
-        text: '',
-        hasCheckView: false,
-        exchangeCapsules: 0,
-      });
-      this.props.onClose();
+      this.onClose();
     } else {
       Alert.alert('錢不夠');
-      this.setState({
-        text: '',
-        hasCheckView: false,
-        exchangeCapsules: 0,
-      });
+      this.onClose();
     }
     
   }
@@ -65,6 +57,16 @@ export default class ModalExchange extends React.PureComponent {
   onChangeText = (text) => {
     this.setState({ text });
   }
+
+  onClose = () => {
+    this.setState({
+      text: '',
+      hasCheckView: false,
+      exchangeCapsules: 0,
+    });
+    this.props.onClose();
+  }
+
   render() {
     const { visible, onClose } = this.props;
     const { text, exchangeCapsules, hasCheckView } = this.state;
@@ -85,7 +87,7 @@ export default class ModalExchange extends React.PureComponent {
                     {I18n.t('missionTable.capsules')}
                   </Style.ExchangeText>
                   <Style.ButtonsContainer>
-                    <Button onClick={onClose} text={I18n.t('common.close')} margin={[16, 16, 16, 0]} />
+                    <Button onClick={this.onClose} text={I18n.t('common.close')} margin={[16, 16, 16, 0]} />
                     <Button color="primary" onClick={this.onClickExchangewServer} text={I18n.t('common.ok')} />
                   </Style.ButtonsContainer>
                 </Style.InfoContainer>
@@ -99,7 +101,7 @@ export default class ModalExchange extends React.PureComponent {
                     value={text}
                   />
                   <Style.ButtonsContainer>
-                    <Button onClick={onClose} text={I18n.t('common.close')} margin={[16, 16, 16, 0]} />
+                    <Button onClick={this.onClose} text={I18n.t('common.close')} margin={[16, 16, 16, 0]} />
                     <Button color="primary" onClick={this.onClickExchange} text={I18n.t('common.ok')} />
                   </Style.ButtonsContainer>
                 </Style.InfoContainer>
