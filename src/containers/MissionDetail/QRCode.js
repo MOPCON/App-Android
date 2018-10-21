@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import I18n from '../../locales';
-import { MISSION_STATUS } from '../../store';
+import { MISSION_STATUS, Consumer } from '../../store';
 import iconCoinImg from '../../images/icon/iconCoin.png';
 import * as Style from './style';
 
+@Consumer('missionStore')
 export default class QRCode extends Component {
-  handleSubmit = () => {
-    const { task } = this.props;
-
+  handleSubmit = (task) => {
     this.props.navigation.navigate('QRCode', { task });
   }
 
   render() {
-    const { task } = this.props;
-    console.log('QRCODE');
+    const { id } = this.props;
+    const { quizs } = this.props.context.missionStore;
+    const task = quizs.find(o => o.id === id);
 
     return (
       <Style.QRCodeContainer>
@@ -23,7 +23,7 @@ export default class QRCode extends Component {
         {
           // 未答題
           (task.status === MISSION_STATUS.NOT_CHALLANGE) && (
-            <Style.Button onPress={this.handleSubmit}>
+            <Style.Button onPress={() => this.handleSubmit(task)}>
               <Style.ButtonText>{I18n.t('missionTable.scanQRCode')}</Style.ButtonText>
             </Style.Button>
           )
