@@ -67,7 +67,7 @@ export default class MySchedule extends Component {
           regular
           paintBG
           title={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
-          type={agenda.type}
+          category={agenda.category}
           onPressTitle={this.onPressTitle(agenda)}
           name={lang === 'zh' ? agenda.name : agenda.name_en}
           onSave={() => { }}
@@ -81,7 +81,7 @@ export default class MySchedule extends Component {
           key={`agenda${agenda.schedule_id}`}
           regular
           title={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
-          type={agenda.type}
+          category={agenda.category}
           onPressTitle={this.onPressTitle(agenda)}
           name={lang === 'zh' ? agenda.name : agenda.name_en}
           onSave={this.onSave(agenda.schedule_id)}

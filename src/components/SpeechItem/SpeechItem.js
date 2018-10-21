@@ -11,7 +11,7 @@ import buttonSlide from '../../images/icon/buttonSlide.png';
 
 export default class SpeakerItem extends PureComponent {
   static propTypes = {
-    type: PropTypes.string,
+    category: PropTypes.string,
     topic: PropTypes.string,
     color: PropTypes.oneOf(['normal', 'inverse']),
     saved: PropTypes.bool,
@@ -19,7 +19,7 @@ export default class SpeakerItem extends PureComponent {
     onSave: PropTypes.func,
   }
   static defaultProps = {
-    type: '',
+    category: '',
     topic: '',
     saved: false,
     color: 'normal'  // normal or inverse
@@ -29,10 +29,10 @@ export default class SpeakerItem extends PureComponent {
     Linking.openURL(slide);
   }
   render() {
-    const { color, type, topic, saved, onSave, slide } = this.props;
+    const { color, category, topic, saved, onSave, slide } = this.props;
     return (
       <Style.SpeechItemContainer color={color}>
-        <Style.Title>{type}</Style.Title>
+        <Style.Title>{category}</Style.Title>
         <Style.Content>{topic}</Style.Content>
         <Style.FuncView>
           <Button
