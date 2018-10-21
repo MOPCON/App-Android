@@ -20,12 +20,14 @@ licenses:
 before_install:
   - nvm install 10
   - node --version
-  - npm i -g yarn react-native-cli
+  - npm i -g react-native-cli
   - mkdir -p ./android/app/src/main/assets/
   - mkdir -p ./android/app/src/main/res/
-  - openssl aes-256-cbc -K $encrypted_93be7efce2a7_key -iv $encrypted_93be7efce2a7_iv -in ./android/app/secrets.tar.enc -out ./android/app/secrets.tar -d
-  - tar xvf ./android/app/secrets.tar -C android/app/
+  - openssl aes-256-cbc -K $encrypted_f6ba733fe176_key -iv $encrypted_f6ba733fe176_iv -in secrets.tar.enc -out secrets.tar -d
+  - tar xvf ./android/app/secrets.tar
+  - mv release.keystore ./android/app/
+  - mv google-services.json ./android/app/
 install:
-  - yarn
+  - npm i
 script:
   - npm run build:prd
