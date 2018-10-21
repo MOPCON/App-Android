@@ -50,6 +50,7 @@ export default class Provider extends Component {
 
   state = {
     missionStore: {
+      CAPSULE_RATE: 200,
       balance: 0,
       setBalance: this.setBalance,
 
@@ -97,16 +98,16 @@ export const Consumer = (...stores) => (ComposedComponent) => {
     render() {
       return (
         <myContext.Consumer>
-          { (context) => {
+          {(context) => {
             if (stores.length === 0) return <ComposedComponent context={context} />;
 
             const newContext = Object.keys(context).reduce((acc, key) => {
-              if (stores.includes(key)) return {...acc, [key]: context[key]};
-                return acc;
+              if (stores.includes(key)) return { ...acc, [key]: context[key] };
+              return acc;
             }, {});
 
-            return <ComposedComponent context={newContext} {...this.props}/>;
-           }
+            return <ComposedComponent context={newContext} {...this.props} />;
+          }
           }
         </myContext.Consumer>
       );
