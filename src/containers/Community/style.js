@@ -35,9 +35,8 @@ export const CardSmall = styled.TouchableOpacity`
   background: white;
 `;
 export const CardImgSmall = styled.Image`
-  width: ${width};
-  height: ${width};
-  border-radius: 10px;
+  width: 132;
+  height: 132;
 `;
 
 export const Card = styled.View`
