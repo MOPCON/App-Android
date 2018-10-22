@@ -10,7 +10,7 @@ export const MissionContainer = styled.View`
 `;
 
 // Quiz
-export const QuizContainer = styled.View`
+export const QuizContainer = styled.ScrollView`
 
 `;
 
@@ -54,6 +54,7 @@ export const QuizOptionText = styled.Text`
 export const QuizText = styled.Text`
   color: ${modBorder};
   font-size: 18px;
+  flex: 1;
 `;
 
 export const Button = styled.TouchableOpacity`
@@ -104,6 +105,7 @@ export const QuizRewardCoin = styled.Image`
 export const QuizRewardText = styled.Text`
   color: #fff;
   font-size: 40px;
+  width: 100px;
 `;
 
 export const QuizFail = styled.View`
