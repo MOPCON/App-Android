@@ -34,10 +34,10 @@ script:
 before_deploy:
   - mv ./android/app/build/outputs/apk/release/app-release.apk ./mopcon.apk
 deploy:
+  skip_cleanup: true
   provider: releases
   api_key:
     secure: $github_token
   file: ./mopcon.apk
-  skip_cleanup: true
   on:
     tags: true
