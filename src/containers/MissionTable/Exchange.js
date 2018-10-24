@@ -25,6 +25,7 @@ const Wallet = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  padding-top: 15;
 `;
 
 const Button = styled.TouchableOpacity`
@@ -45,11 +46,14 @@ const ButtonText = styled.Text`
 const Zone = styled.View`
   flex: 1;
   height: 100%;
-  padding: 20px;
+  padding: 15px;
+  align-items: center;
+  justify-content: center;
 `;
 
 const TopZone = styled.View`
   flex-direction: row;
+  width: 100;
 `;
 
 const BottomZone = styled.View`
@@ -59,7 +63,7 @@ const BottomZone = styled.View`
 
 const RightArrow = styled.Text`
   color: #fff;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 600;
   height: 100%;
   margin-top: 6px;
@@ -82,7 +86,7 @@ const LargeText = styled.Text`
 const Icon = styled.Image`
   width: 18;
   height: 18;
-  margin: 0 10px;
+  margin: 0 5px;
 `;
 
 
