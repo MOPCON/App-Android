@@ -28,7 +28,7 @@ export default class Quiz extends Component {
 
     if (answer === quiz.answer) { // 答對
       setQuizStatus(quiz.id, MISSION_STATUS.SUCCESS);
-      setBalance(balance + quiz.reward);
+      setBalance(balance + +(quiz.reward));
     } else {                      // 答錯
       setQuizStatus(quiz.id, MISSION_STATUS.FAIL, answer);
     }
