@@ -19,7 +19,6 @@ const Container = styled.View`
 
 const Title = styled.View`
   flex-direction: row;
-  width: 30;
 `;
 
 const TitleText = styled.Text`
