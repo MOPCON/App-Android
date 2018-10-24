@@ -38,6 +38,5 @@ deploy:
   api_key:
     secure: $github_token
   file: ./mopcon.apk
-  skip_cleanup: true
   on:
     tags: true

@@ -20,7 +20,6 @@ export default class Speaker extends Component {
     const speakerText = await AsyncStorage.getItem('speaker');
     const spObject = JSON.parse(speakerText).payload;
     const speaker = Object.keys(spObject).map(key => spObject[key]);
-    console.log(speaker);
     this.setState({
       speaker
     });

@@ -24,7 +24,6 @@ export default class ModalExchange extends React.PureComponent {
   async componentDidMount() {
     this.UUID = await AsyncStorage.getItem('UUID');
     this.public_key = await AsyncStorage.getItem('public_key');
-    console.log('modal mount');
   }
 
   onClickExchange = () => {
@@ -33,7 +32,6 @@ export default class ModalExchange extends React.PureComponent {
     const regexp = /^(mopcon)(\d{2})$/;
     const testResult = regexp.test(parsedText);
     if (testResult) {
-      console.log(regexp.exec(parsedText));
       this.setState({
         hasCheckView: true,
         exchangeCapsules: parseInt(regexp.exec(parsedText)[2], 10),

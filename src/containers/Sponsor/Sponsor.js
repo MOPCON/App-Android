@@ -26,7 +26,6 @@ export default class Sponsor extends React.Component {
     const sponsorText = await AsyncStorage.getItem('sponsor');
     const sponsor = JSON.parse(sponsorText).payload;
     this.setState({ sponsor });
-    console.log(sponsor);
   }
   onClickImage = (sponsorId) => () => {
     this.props.navigation.navigate('SponsorDetail', { sponsorId });

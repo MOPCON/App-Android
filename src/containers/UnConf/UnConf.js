@@ -25,7 +25,6 @@ export default class UnConf extends React.Component {
   async componentDidMount() {
     const unconfText = await AsyncStorage.getItem('schedule');
     const unconf = JSON.parse(unconfText).payload.talk;
-    console.log(unconf);
     const nowUnconfDate = this.props.navigation.getNestedValue(['state', 'params', 'nowUnconfDate']) || unconf[0].date;
 
     this.setState({
