@@ -44,7 +44,6 @@ export default class MySchedule extends Component {
 
   onPressTitle = (agenda) => () => {
     this.props.navigation.navigate('ScheduleDetail', { agenda });
-    // console.log('onPressTitle', agenda);
   }
 
   onSave = (schedule_id) => () => {

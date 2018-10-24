@@ -20,8 +20,6 @@ export default class SpeakerDetail extends Component {
     const spObject = JSON.parse(speakerText).payload;
     const speakerList = Object.keys(spObject).map(key => spObject[key]);
     const speaker = speakerList.find(s => s.speaker_id === speakerId);
-    console.log('speakerId', speakerId);
-    console.log('speaker', speaker);
     const savedScheduleText = await AsyncStorage.getItem('savedschedule');
     let savedSchedule = JSON.parse(savedScheduleText);
     if (!savedSchedule) { savedSchedule = {}; }
