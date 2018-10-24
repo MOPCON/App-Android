@@ -27,7 +27,6 @@ export default class Sponsor extends React.Component {
     const sponsor = JSON.parse(sponsorText).payload;
     this.setState({ sponsor });
     console.log(sponsor);
-    console.log(I18n.locale)
   }
   onClickImage = (sponsorId) => () => {
     this.props.navigation.navigate('SponsorDetail', { sponsorId });
