@@ -101,7 +101,6 @@ export default class Exchange extends Component {
   onOpenModal = () => this.setState({ isModalVisible: true });
   render() {
     const { balance, context: { missionStore: { CAPSULE_RATE } } } = this.props;
-    console.log(CAPSULE_RATE)
     const { isModalVisible } = this.state;
     return (
       <Container>
