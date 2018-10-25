@@ -3,6 +3,7 @@ import { View, AsyncStorage } from 'react-native';
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
 import Exchange from './Exchange';
 import Mission from './Mission';
 import Mask from './Mask';
@@ -19,6 +20,14 @@ const TYPE = [
 export default class MissionTable extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'missionTable.title', 'mode1')
 
+  state = {
+    modalVisible: true,
+  }
+
+  onCloseModal = () => {
+    this.setState({ modalVisible: false });
+  }
+
   goMission = (id, type) => {
     this.props.navigation.navigate('MissionDetail', { id, type });
   }
@@ -27,6 +36,7 @@ export default class MissionTable extends Component {
     const {
       missionStore: { balance, quizs },
     } = this.props.context;
+    const { modalVisible } = this.state;
     return (
       <Style.MissionContainer>
         <Style.ScrollContainer>
@@ -57,7 +67,7 @@ export default class MissionTable extends Component {
                       <Mission title={currentType.text} content={title}></Mission>
                       {
                         disabled && (
-                          <Mask status={status} goMission={() => this.goMission(quiz.id, currentType.id)}/>
+                          <Mask status={status} goMission={() => this.goMission(quiz.id, currentType.id)} />
                         )
                       }
                     </Style.Box>
@@ -67,6 +77,7 @@ export default class MissionTable extends Component {
             </Style.MissionZone>
           </View>
         </Style.ScrollContainer>
+        <ModalGameInfo visible={modalVisible} onClose={this.onCloseModal} />
       </Style.MissionContainer>
     );
   }
