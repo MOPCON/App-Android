@@ -120,7 +120,7 @@ platform :android do
 
     #changeVersion
     increment_version_code(
-      gradle_file_path: "app/build.gradle",
+      gradle_file_path: "android/app/build.gradle",
     )
 
     changeLog

@@ -103,7 +103,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
         versionCode 20213
-        versionName "2.3.1"
+        versionName "2.3"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
