@@ -1,0 +1,138 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  ENV["MOPCON_API_URL"]="https://mopcon.org/2018/api"
+  ENV["MOPCON_DES_KEY"]="mopcon520"
+
+  lane :changeLog do
+    versionName = android_get_version_name(gradle_file: "android/app/build.gradle")
+    versionCode = android_get_version_code(gradle_file: "android/app/build.gradle")
+    changeLog = read_changelog(
+      changelog_path: './CHANGELOG.md',
+      section_identifier: "[#{versionName}]",
+      excluded_markdown_elements: ['###']
+    )
+    sh(
+      "echo \"#{changeLog}\" > ./metadata/android/zh-TW/changelogs/#{versionCode}.txt"
+    )
+  end
+
+  lane :changeUnreleaseLog do
+    versionCode = android_get_version_code(gradle_file: "android/app/build.gradle")
+    changeLog = read_changelog(
+      changelog_path: './CHANGELOG.md',
+      section_identifier: "[Unreleased]",
+      excluded_markdown_elements: ['###']
+    )
+    sh(
+      "echo \"#{changeLog}\" > ./metadata/android/zh-TW/changelogs/#{versionCode}.txt"
+    )
+  end
+
+  desc "Increment version code"
+  lane :changeVersion do
+    versionName = android_get_version_name
+    versionNameArray = versionName.split('.')
+    newVersionName = ""
+    newVersionName = newVersionName + versionNameArray[0] + "."
+    newVersionName = newVersionName + versionNameArray[1] + "."
+    newVersionName = newVersionName + (versionNameArray[2].to_i+1).to_s
+    # echo(
+    #   message: newVersionName
+    # )
+
+    android_set_version_name(
+      version_name: newVersionName,
+      gradle_file: "android/app/build.gradle" # optional
+    )
+  end
+
+  lane :clean do
+    gradle(task: "clean", project_dir: 'android/')
+    removeDir = File.absolute_path "../android/app/src/main/res/drawable-hdpi"
+    sh("rm", "-rf", removeDir)
+    removeDir1 = File.absolute_path "../android/app/src/main/res/drawable-mdpi"
+    sh("rm", "-rf", removeDir1)
+    removeDir2 = File.absolute_path "../android/app/src/main/res/drawable-xhdpi"
+    sh("rm", "-rf", removeDir2)
+    removeDir3 = File.absolute_path "../android/app/src/main/res/drawable-xxhdpi"
+    sh("rm", "-rf", removeDir3)
+    removeDir4 = File.absolute_path "../android/app/src/main/res/drawable-xxxhdpi"
+    sh("rm", "-rf", removeDir4)
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "clean test assemble")
+  end
+
+  desc 'Build the Android application.'
+  # private_lane :build do
+  lane :build do
+    gradle(task: 'clean', project_dir: 'android/')
+    gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
+  end
+
+  desc "Submit a new Beta"
+  lane :beta do
+    #ensure_git_status_clean
+
+    # mapping_path = File.absolute_path "../android/app/build/outputs/mapping/release/mapping.txt"
+
+    increment_version_code(
+      gradle_file_path: "android/app/build.gradle",
+    )
+
+    changeUnreleaseLog
+    #gradle(task: "clean test assembleRelease")
+    build
+    upload_to_play_store(
+      # mapping: mapping_path,
+      track: 'beta',
+      skip_upload_metadata: false,
+      skip_upload_images: true,
+      skip_upload_screenshots: false
+    )
+  
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    ensure_git_status_clean
+
+    # mapping_path = File.absolute_path "../android/app/build/outputs/mapping/release/mapping.txt"
+
+    #changeVersion
+    increment_version_code(
+      gradle_file_path: "android/app/build.gradle",
+    )
+
+    changeLog
+    #gradle(task: "clean assembleRelease")
+    build
+    upload_to_play_store
+  #   (
+  #     mapping: mapping_path
+  #   )
+  end
+
+  def next_version
+    Time.now.strftime("%Y%m%d%H%M")
+  end
+end

@@ -65,3 +65,10 @@ secrets.tar
 # mission json
 BoothMission.json
 Quiz.json
+/fastlane/report.xml
+/fastlane/README.md
+fastlane/metadata/
+fastlane/api*
+/vendor
+/android/.bundle
+/.bundle

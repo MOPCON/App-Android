@@ -1,0 +1,2 @@
+json_key_file("/Users/mikimoto/workspace/DeepThought/MOPCON2018-Android/fastlane/api-7497234485935061911-625088-5d5b1511ff0d.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("org.mopcon.session.app") # e.g. com.krausefx.app
