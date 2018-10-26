@@ -102,18 +102,24 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 1
-        versionName "1.0"
+        versionCode 20214
+        versionName "2.3"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
     }
     signingConfigs {
         release {
-            storeFile file("release.keystore")
-            storePassword System.getenv("keystore_password")
-            keyAlias System.getenv("keystore_alias")
-            keyPassword System.getenv("keystore_alias_password")
+            // storeFile file("release.keystore")
+            // storePassword System.getenv("keystore_password")
+            // keyAlias System.getenv("keystore_alias")
+            // keyPassword System.getenv("keystore_alias_password")
+            keyAlias 'deepthought'
+            keyPassword 'deepthought'
+            storePassword 'deepthought'
+            v1SigningEnabled true
+            v2SigningEnabled true
+            storeFile file('/Users/mikimoto/workspace/DeepThought/android.jks')
         }
     }
     splits {
