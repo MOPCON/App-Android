@@ -18,6 +18,11 @@ export default class QRCode extends Component {
 
     return (
       <Style.QRCodeContainer>
+        <Style.CardView>
+          <Style.CardImg
+            source={{ uri: task.banner_url }}
+          />
+          </Style.CardView>
         <Style.QRCodeTitle>{ task.title }</Style.QRCodeTitle>
         <Style.QRCodeText>{ task.description }</Style.QRCodeText>
         {
