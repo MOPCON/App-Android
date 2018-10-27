@@ -139,3 +139,19 @@ export const QRCodeText = styled.Text`
   font-size: 14px;
   margin-bottom: 72px;
 `;
+
+export const CardView = styled.View`
+  width: 100%;
+  height: 165px;
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const CardImg = styled.Image`
+  width: 132px;
+  height: 132px;
+`;
