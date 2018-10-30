@@ -46,8 +46,8 @@ platform :android do
   end
 
   desc "Increment version code"
-  lane :changeVersion do
-    versionName = android_get_version_name
+  lane :nextVersion do
+    versionName = android_get_version_name(gradle_file: "android/app/build.gradle")
     versionNameArray = versionName.split('.')
     newVersionName = ""
     newVersionName = newVersionName + versionNameArray[0] + "."
