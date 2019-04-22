@@ -10,4 +10,4 @@ export const buttonBackground = '#00133C';
 export const inverseBackground = 'transparent';
 export const modBorder = '#04b7ad'
 export const SpeakerCardBackground = '#002A52';
-export const header = 'red';
+export const header = 'green';
