@@ -89,3 +89,19 @@ npm run build:prd
     ├── theme               # theme constant
     └── utils
 ```
+
+### Coding Style 
+
+the coding style in follow link, all the developer should follow it.
+
+https://github.com/letmeknowhow/react-native-coding-style
+
+### Git Flow
+
+We use the simplified git-flow to improve team development speed. Unlike the standard git-flow, we don't have a release branch.
+
+![Imgur](https://i.imgur.com/VtzQ17K.png)
+
+When a feature branch is finished, you must submit a **Pull Request** to develop branch.
+
+Don't forget assign your partner to review it.
