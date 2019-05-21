@@ -23,7 +23,7 @@ before_install:
   - npm i -g react-native-cli
   - mkdir -p ./android/app/src/main/assets/
   - mkdir -p ./android/app/src/main/res/
-  - openssl aes-256-cbc -K $encrypted_f6ba733fe176_key -iv $encrypted_f6ba733fe176_iv -in secrets.tar.enc -out secrets.tar -d
+  - openssl des-cbc -d -k $MOPCON_DES_KEY -in secrets.tar.enc -out secrets.tar
   - tar xvf ./secrets.tar
   - mv release.keystore ./android/app/
   - mv google-services.json ./android/app/
