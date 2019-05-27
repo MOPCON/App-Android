@@ -1,5 +1,6 @@
 import React from 'react';
-import { AsyncStorage, Alert } from 'react-native';
+import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import apiServices from '../../api/services';
 import PropTypes from 'prop-types';
 import I18n from '../../locales';

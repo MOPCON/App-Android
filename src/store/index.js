@@ -1,5 +1,5 @@
 import React, { Component, createContext } from 'react';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import produce from 'immer';
 import BoothMissionJSON from '../../BoothMission.json';
 import QuizJSON from '../../Quiz.json';

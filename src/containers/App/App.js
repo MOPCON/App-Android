@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { RSA } from 'react-native-rsa-native';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
 import Header from './Header';
 import Main from '../Main/Main';
@@ -58,7 +58,7 @@ class App extends Component {
       await AsyncStorage.setItem('sponsor', JSON.stringify(sponsor));
       await AsyncStorage.setItem('community', JSON.stringify(community));
       await AsyncStorage.setItem('volunteer', JSON.stringify(volunteer));
-      await AsyncStorage.setItem('updateTime', new Date());
+      // await AsyncStorage.setItem('updateTime', new Date());
       await AsyncStorage.setItem('carousel', JSON.stringify(carousel));
       await AsyncStorage.setItem('news', JSON.stringify(news));
       this.setState({ hasUpdated: true });
