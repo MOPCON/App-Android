@@ -1,14 +1,14 @@
 # App-Android
-MOPCON App for Android
+MOPCON App for Android build by react-native 0.59.8
 
 [![Build Status](https://travis-ci.org/MOPCON/App-Android.svg?branch=master)](https://travis-ci.org/MOPCON/App-Android)
 
 
 ### Install Command and Develop Tool
-this project develop with react-native, so before getting start, we should install [react-native](https://facebook.github.io/react-native/) and [npm](https://nodejs.org/en/) command
+this project develop with react-native, so before getting start, we should install below command and tool.
 
-* react-native recommend v0.56
 * nodejs recommend v10 LTS version
+* jdk8
 * android-studio recommend v3.4.1
 
 ### Environment Variable
@@ -27,14 +27,16 @@ export MOPCON_DES_KEY="xxx"
 the security files was encrypted into `secrets.tar.enc` use follow command to decrypt it.
 
 ```bash
-openssl des-cbc -d -k $MOPCON_DES_KEY -in secrets.tar.enc -out secrets.tar
+sh appcenter-post-clone.sh
+```
 
-# extract tar file.
-tar xvf ./secrets.tar
+If you need to add files into `secrets.tar.enc`, you can follow below command
 
-# move file to correct folder.
-mv release.keystore ./android/app/
-mv google-services.json ./android/app/
+```bash
+# compress multiple files into single tar file.
+tar -czvf secrets.tar aaa.json bbb.json
+# use environment key to encrypt tar file.
+openssl des-cbc -e -k $MOPCON_DES_KEY -in secrets.tar -out secrets.tar.enc
 ```
 
 ### Install Dependencies
@@ -92,7 +94,7 @@ npm run build:prd
 
 ### Coding Style 
 
-the coding style in follow link, all the developer should follow it.
+the coding style in below link, all the developer should follow it.
 
 https://github.com/letmeknowhow/react-native-coding-style
 
