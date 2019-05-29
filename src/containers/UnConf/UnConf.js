@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScrollView, AsyncStorage, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
 import I18n from '../../locales';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';

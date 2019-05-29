@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Dimensions, Text } from 'react-native';
+import { Dimensions, Text } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import produce from 'immer';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import CryptoJS from 'crypto-js';

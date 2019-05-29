@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { AsyncStorage, View } from 'react-native';
+import { View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import I18n from '../../locales';
 import apiServices from '../../api/services';
 import iconCoinImg from '../../images/icon/iconCoin.png';

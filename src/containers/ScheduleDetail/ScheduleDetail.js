@@ -1,6 +1,7 @@
 import React from 'react';
 import I18n from '../../locales';
-import { ScrollView, AsyncStorage } from 'react-native';
+import { ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import SpeechItem from '../../components/SpeechItem/SpeechItem';
