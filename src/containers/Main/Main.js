@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Carousel from 'react-native-snap-carousel';
-// import SplashScreen from 'react-native-splash-screen';
+import SplashScreen from 'react-native-splash-screen';
 import I18n from '../../locales';
 
 // component
@@ -76,7 +76,7 @@ export default class Main extends Component {
       news: JSON.parse(newsText).payload,
     });
 
-    // SplashScreen.hide();
+    SplashScreen.hide();
   }
 
   openLink = (url) => () => {
