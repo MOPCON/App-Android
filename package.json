@@ -1,6 +1,6 @@
 {
   "name": "MOPCON",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -10,11 +10,12 @@
     "build:prd": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd ./android/ && ./gradlew clean assembleRelease"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.4.2",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "crypto-js": "^3.1.9-1",
     "immer": "^1.7.2",
-    "react": "16.4.1",
-    "react-native": "0.56.0",
+    "react": "16.8.3",
+    "react-native": "0.59.0",
     "react-native-camera": "^2.6.0",
     "react-native-firebase": "^4.2.0",
     "react-native-i18n": "^2.0.12",
@@ -28,13 +29,15 @@
     "url-search-params": "^1.1.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "7.0.0-beta.47",
-    "babel-jest": "23.0.1",
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-decorators": "^7.3.4",
+    "@babel/runtime": "^7.3.4",
+    "babel-jest": "^24.4.0",
     "babel-plugin-module-resolver": "^3.1.1",
-    "babel-preset-react-native": "5.0.1",
-    "jest": "23.1.0",
+    "jest": "^24.4.0",
+    "metro-react-native-babel-preset": "^0.53.0",
     "react-native-cli": "^2.0.1",
-    "react-test-renderer": "16.3.1"
+    "react-test-renderer": "16.8.3"
   },
   "jest": {
     "preset": "react-native"

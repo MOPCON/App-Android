@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import {
   Dimensions, NativeModules, Platform,
-  Image, View, AsyncStorage, TouchableOpacity,
+  Image, View, TouchableOpacity,
   Linking,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Carousel from 'react-native-snap-carousel';
 import SplashScreen from 'react-native-splash-screen';
 import I18n from '../../locales';
