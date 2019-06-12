@@ -107,3 +107,23 @@ We use the simplified git-flow to improve team development speed. Unlike the sta
 When a feature branch is finished, you must submit a **Pull Request** to develop branch.
 
 Don't forget assign your partner to review it.
+
+### App Version
+
+The App Version use Semantic Versioning concept.
+
+The Semantic Versioning concept is simple: all versions have 3 digits: x.y.z.
+
+* the first digit is the major version
+* the second digit is the minor version
+* the third digit is the patch version
+
+When you make a new release, you don’t just up a number as you please, but you have rules:
+
+* up the major version when you make incompatible API changes 
+* up the minor version when you add functionality in a backward-compatible manner
+* up the patch version when you make backward-compatible bug fixes
+
+```
+npm version [major|minor|patch] --no-git-tag-version
+```

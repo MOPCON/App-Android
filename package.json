@@ -7,7 +7,8 @@
     "android": "react-native run-android",
     "build": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd ./android/ && ./gradlew assembleDebug",
     "test": "jest",
-    "build:prd": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd ./android/ && ./gradlew clean assembleRelease"
+    "build:prd": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd ./android/ && ./gradlew clean assembleRelease",
+    "postversion": "react-native-version --target android --never-amend"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.4.2",
@@ -37,6 +38,7 @@
     "jest": "^24.4.0",
     "metro-react-native-babel-preset": "^0.53.0",
     "react-native-cli": "^2.0.1",
+    "react-native-version": "^3.1.0",
     "react-test-renderer": "16.8.3"
   },
   "jest": {
