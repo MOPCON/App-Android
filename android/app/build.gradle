@@ -108,7 +108,6 @@ android {
         multiDexEnabled true
         versionCode 20220
         versionName "2.3.6"
-        missingDimensionStrategy 'react-native-camera', 'general'
     }
     signingConfigs {
         release {
@@ -186,4 +185,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
-apply plugin: 'com.google.gms.google-services'
