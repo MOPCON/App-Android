@@ -106,8 +106,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 20220
-        versionName "2.3.6"
+        versionCode 20221
+        versionName "2.3.7"
     }
     signingConfigs {
         release {
