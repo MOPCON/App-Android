@@ -1,6 +1,6 @@
 {
   "name": "MOPCON",
-  "version": "2.3.6",
+  "version": "2.3.7",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -17,7 +17,7 @@
     "immer": "^1.7.2",
     "react": "16.8.3",
     "react-native": "0.59.0",
-    "react-native-camera": "^2.6.0",
+    "react-native-camera": "^1.13.1",
     "react-native-firebase": "^4.2.0",
     "react-native-i18n": "^2.0.12",
     "react-native-qrcode-scanner": "^1.0.1",
