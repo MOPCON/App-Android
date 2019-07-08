@@ -52,7 +52,7 @@ export default class Main extends Component {
     I18n.locale = language;
     this.state = {
       carousel: [],
-      news: [],
+      news: [{}],
       mods: [
         { icon: iconSchedule, name: 'home.schedule', screen: 'Schedule' },
         { icon: iconMySchedule, name: 'home.MySchedule', screen: 'MySchedule' },
@@ -123,7 +123,6 @@ export default class Main extends Component {
 
     return (
       <Style.Container>
-        <Background />
         <Style.ScrollContainer>
           <Style.ViewContainer>
             <Style.LogoContainer>
@@ -140,9 +139,6 @@ export default class Main extends Component {
             </Style.CarouselContainer>
             <Style.Content>
               <News news={news} toNews={() => this.navigate('News')}/>
-              <Style.ModContainer>
-                {mods.map((mod, index) => <Mod key={`mod_${index}`} navigate={() => this.navigate(mod.screen)} {...mod} />)}
-              </Style.ModContainer>
             </Style.Content>
             <Style.TabContainer>
               <Tab tabs={tabs} defaultActiveTab={language} onChange={this.onChangeLanguage} />

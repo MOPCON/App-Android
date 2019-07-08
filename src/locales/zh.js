@@ -12,6 +12,7 @@ export default {
   news: {
     title: '最新消息',
     link: '訊息連結',
+    more: '查看更多',
   },
   schedule:{
     noSchedule: '暫無行程'

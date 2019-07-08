@@ -12,6 +12,7 @@ export default {
   news: {
     title: 'News',
     link: 'Link',
+    more: 'More',
   },
   schedule:{
     noSchedule: 'No Schedule'
