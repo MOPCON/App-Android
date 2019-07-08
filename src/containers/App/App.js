@@ -35,7 +35,7 @@ class App extends Component {
   };
 
   state = {
-    hasUpdated: false,
+    hasUpdated: true,
   }
 
   updateData = async () => {
@@ -73,7 +73,7 @@ class App extends Component {
   // TODO add try catch;
   async componentDidMount() {
     try {
-      this.updateData();
+      // this.updateData();
     } catch (e) { }
   }
 
