@@ -3,6 +3,7 @@ package org.mopcon.session.app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.RNRSA.RNRSAPackage;
 import org.reactnative.camera.RNCameraPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGestureHandlerPackage(),
             new AsyncStoragePackage(),
             new RNRSAPackage(),
             new RNCameraPackage(),

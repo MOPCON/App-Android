@@ -1,13 +1,15 @@
 export default {
   home: {
+    title: 'Home',
     schedule: 'Schedule',
     MySchedule: 'My-Schedule',
     Unconference: 'Unconf',
-    Mission: 'Field Games',
+    Mission: 'Mission',
     Sponsors: 'Sponsors',
     Speakers: 'Speakers',
     Community: 'Community',
     News: 'News',
+    More: 'More',
   },
   news: {
     title: 'News',
@@ -78,5 +80,8 @@ export default {
   common: {
     ok: 'OK',
     close: 'Close',
+  },
+  more: {
+    title: 'More'
   }
 };

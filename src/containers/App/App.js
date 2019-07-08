@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { RSA } from 'react-native-rsa-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
+import I18n from '../../locales';
 import Header from './Header';
 import Main from '../Main/Main';
 import Schedule from '../Schedule/Schedule';
@@ -21,6 +24,7 @@ import MySchedule from '../MySchedule/MySchedule';
 import QA from '../QA/QA';
 import Missiontable from '../MissionTable/Missiontable';
 import MissionDetail from '../MissionDetail/MissionDetail';
+import More from '../More/More';
 import * as theme from '../../theme';
 import apiServices from '../../api/services';
 import '../../utils/extends';
@@ -93,30 +97,65 @@ class App extends Component {
   }
 }
 
-const AppWithNav = new createStackNavigator({
-  Main: { screen: App },
-  MySchedule: { screen: MySchedule },
-  Schedule: { screen: Schedule },
-  UnConf: { screen: UnConf },
-  ScheduleDetail: { screen: ScheduleDetail },
-  Sponsor: { screen: Sponsor },
-  SponsorDetail: { screen: SponsorDetail },
-  Speaker: { screen: Speaker },
-  SpeakerDetail: { screen: SpeakerDetail },
-  News: { screen: News },
-  Community: { screen: Community },
-  CommunityDetail: { screen: CommunityDetail },
-  QRCode: { screen: QRCode },
-  QA: { screen: QA },
-  Missiontable: { screen: Missiontable },
-  MissionDetail: { screen: MissionDetail },
+const genTab = ({component, title, icon}) => ({
+  screen: component,
+  navigationOptions: {
+    tabBarLabel: title,
+    tabBarIcon: ({ tintColor, focused }) => (
+      <Icon size={22} color={focused ? '#00aaf0' : '#fff' } name={icon}/>
+    )
+  }
 });
+
+const BottomNavigation = new createMaterialBottomTabNavigator({
+  Home: genTab({ component: App, title: I18n.t('home.title'), icon: 'rss' }),
+  Schedule: genTab({ component: Schedule, title: I18n.t('home.schedule'), icon: 'rss' }),
+  Mission: genTab({ component: Missiontable, title: I18n.t('home.Mission'), icon: 'rss' }),
+  News: genTab({ component: News, title: I18n.t('home.News'), icon: 'rss' }),
+  More: genTab({ component: More, title: I18n.t('home.More'), icon: 'rss' }),
+}, {
+  initialRouteName: 'Home',
+  barStyle: { backgroundColor: '#0F1821' },
+  activeTintColor: '#00aaf0',
+  inactiveColor: '#fff',
+  shifting: false,
+});
+
+const MyStack = new createStackNavigator({
+  BottomNavigation: {
+    screen: BottomNavigation,
+    navigationOptions: { header: null }
+  },
+}, {
+  initialRouteName: 'BottomNavigation'
+});
+
+const AppContainer = createAppContainer(MyStack);
+
+// const AppWithNav = new createStackNavigator({
+//   Main: { screen: App },
+//   MySchedule: { screen: MySchedule },
+//   Schedule: { screen: Schedule },
+//   UnConf: { screen: UnConf },
+//   ScheduleDetail: { screen: ScheduleDetail },
+//   Sponsor: { screen: Sponsor },
+//   SponsorDetail: { screen: SponsorDetail },
+//   Speaker: { screen: Speaker },
+//   SpeakerDetail: { screen: SpeakerDetail },
+//   News: { screen: News },
+//   Community: { screen: Community },
+//   CommunityDetail: { screen: CommunityDetail },
+//   QRCode: { screen: QRCode },
+//   QA: { screen: QA },
+//   Missiontable: { screen: Missiontable },
+//   MissionDetail: { screen: MissionDetail },
+// });
 
 export default class extends Component {
   render() {
     return (
       <Provider>
-        <AppWithNav />
+        <AppContainer />
       </Provider>
     )
   }
