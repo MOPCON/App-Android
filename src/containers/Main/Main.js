@@ -13,11 +13,11 @@ import I18n from '../../locales';
 import Background from './Background';
 import News from './News';
 import Mod from './Mod';
-import Tab from '../../components/Tab/Tab';
+import LangSelect from '../../components/LangSelect/LangSelect';
 import * as Style from './style';
 
 // image
-import mopconLogo from '../../images/mopconLogo01.png';
+import mopconLogo from '../../images/logo.png';
 import iconSchedule from '../../images/icon/iconSchedule.png';
 import iconMySchedule from '../../images/icon/iconMySchedule.png';
 import iconUnconference from '../../images/icon/iconUnconference.png';
@@ -124,11 +124,17 @@ export default class Main extends Component {
     return (
       <Style.Container>
         <Style.ScrollContainer>
-          <Style.ViewContainer>
+          <Style.Content>
             <Style.LogoContainer>
               <Image source={mopconLogo} />
+              <LangSelect language={language} onChange={this.onChangeLanguage} />
             </Style.LogoContainer>
-            <Style.CarouselContainer>
+            <Style.NewsContainer>
+              <News news={news} toNews={() => this.navigate('News')} />
+            </Style.NewsContainer>
+          </Style.Content>
+
+          {/* <Style.CarouselContainer>
               <Carousel
                 inactiveSlideScale={0.94}
                 sliderWidth={width}
@@ -136,14 +142,7 @@ export default class Main extends Component {
                 data={carousel}
                 renderItem={this.renderItem}
               />
-            </Style.CarouselContainer>
-            <Style.Content>
-              <News news={news} toNews={() => this.navigate('News')}/>
-            </Style.Content>
-            <Style.TabContainer>
-              <Tab tabs={tabs} defaultActiveTab={language} onChange={this.onChangeLanguage} />
-            </Style.TabContainer>
-          </Style.ViewContainer>
+            </Style.CarouselContainer> */}
         </Style.ScrollContainer>
       </Style.Container>
     )

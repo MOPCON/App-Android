@@ -14,19 +14,20 @@ const TitleContainer = styled.View`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 `;
 
 const Title = styled.Text`
   color: white;
-  font-size: 14px;
+  font-size: 16px;
 `;
 
 const Message = styled.Text`
   color: #fff;
+  font-size: 16px;
   background-color: #0C3449;
-  padding: 15px;
-  border-radius: 4px;
+  padding: 20px;
+  border-radius: 6px;
 `;
 
 const TouchArea = styled.TouchableOpacity`
@@ -35,8 +36,8 @@ const TouchArea = styled.TouchableOpacity`
 `;
 
 const MoreText = styled.Text`
-  color: #ccc;
-  font-size: 14px;
+  color: #878787;
+  font-size: 16px;
 `;
 
 const RightArrow = styled.Image`
