@@ -12,6 +12,7 @@ import Background from './Background';
 import News from './News';
 import Mod from './Mod';
 import LangSelect from '../../components/LangSelect/LangSelect';
+import TopicScheduleItem from '../../components/TopicScheduleItem/TopicScheduleITem';
 import * as Style from './style';
 
 // image
@@ -37,7 +38,7 @@ export default class Main extends Component {
     super(p);
 
     this.state = {
-      carousel: [],
+      carousel: [1, 2, 3, 4],
       news: [{}],
       mods: [
         { icon: iconSchedule, name: 'home.schedule', screen: 'Schedule' },
@@ -53,11 +54,9 @@ export default class Main extends Component {
   }
 
   async componentDidMount() {
-    const carouselText = await AsyncStorage.getItem('carousel');
     const newsText = await AsyncStorage.getItem('news');
 
     this.setState({
-      carousel: JSON.parse(carouselText).payload,
       news: JSON.parse(newsText).payload,
     });
 
@@ -71,7 +70,7 @@ export default class Main extends Component {
   renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity onPress={this.openLink(item.link)}>
-        <Style.CarouselItem width={width} source={{ uri: item.banner }} />
+        <TopicScheduleItem />
       </TouchableOpacity>
     );
   }
@@ -111,16 +110,16 @@ export default class Main extends Component {
               <News news={news} toNews={() => this.navigate('News')} />
             </Style.NewsContainer>
           </Style.Content>
-
-          {/* <Style.CarouselContainer>
-              <Carousel
-                inactiveSlideScale={0.94}
-                sliderWidth={width}
-                itemWidth={width - 40}
-                data={carousel}
-                renderItem={this.renderItem}
-              />
-            </Style.CarouselContainer> */}
+          <Style.CarouselTitle>你最想聽的演講要開始了</Style.CarouselTitle>
+          <Style.CarouselContainer>
+            <Carousel
+              inactiveSlideScale={0.94}
+              sliderWidth={width}
+              itemWidth={width - 40}
+              data={carousel}
+              renderItem={this.renderItem}
+            />
+          </Style.CarouselContainer>
         </Style.ScrollContainer>
       </Style.Container>
     )
