@@ -14,6 +14,7 @@ import Background from './Background';
 import News from './News';
 import Mod from './Mod';
 import LangSelect from '../../components/LangSelect/LangSelect';
+import TopicScheduleItem from '../../components/TopicScheduleItem/TopicScheduleITem';
 import * as Style from './style';
 
 // image
@@ -133,7 +134,7 @@ export default class Main extends Component {
               <News news={news} toNews={() => this.navigate('News')} />
             </Style.NewsContainer>
           </Style.Content>
-
+          <TopicScheduleItem />
           {/* <Style.CarouselContainer>
               <Carousel
                 inactiveSlideScale={0.94}
