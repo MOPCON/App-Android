@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Platform, NativeModules } from 'react-native';
 import { createAppContainer, createStackNavigator } from 'react-navigation';
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { RSA } from 'react-native-rsa-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
@@ -25,21 +23,54 @@ import QA from '../QA/QA';
 import Missiontable from '../MissionTable/Missiontable';
 import MissionDetail from '../MissionDetail/MissionDetail';
 import More from '../More/More';
-import * as theme from '../../theme';
+import Page from '../../components/Page/Page';
+import * as Style from './Style';
 import apiServices from '../../api/services';
 import '../../utils/extends';
 import Provider from '../../store';
 
-class App extends Component {
-  static navigationOptions = {
-    headerStyle: {
-      display: 'none'
-    },
-    title: '',
-  };
+import iconHome from '../../images/icon/iconHome.png';
+import iconHomeActive from '../../images/icon/iconHomeActive.png';
+import iconSchedule from '../../images/icon/iconSchedule.png';
+import iconScheduleActive from '../../images/icon/iconScheduleActive.png';
+// import iconMission from '../../images/icon/iconMission.png';
+import iconNews from '../../images/icon/iconNews.png';
+import iconNewsActive from '../../images/icon/iconNewsActive.png';
+import iconMore from '../../images/icon/iconMore.png';
+import iconMoreActive from '../../images/icon/iconMoreActive.png';
 
-  state = {
-    hasUpdated: true,
+const getLanguageCode = () => {
+  let systemLanguage = 'en';
+  if (Platform.OS === 'android') {
+    systemLanguage = NativeModules.I18nManager.localeIdentifier;
+  } else {
+    systemLanguage = NativeModules.SettingsManager.settings.AppleLocale;
+  }
+  const languageCode = systemLanguage.substring(0, 2);
+  return languageCode;
+}
+
+class App extends Component {
+
+  constructor(p) {
+    super(p);
+
+    const language = getLanguageCode();
+    I18n.locale = language;
+    
+    this.state = {
+      hasUpdated: true,
+      language,
+      current: 'HOME',
+    };
+  }
+  
+  onChangeLanguage = (language) => {
+    I18n.locale = language;
+
+    this.setState({
+      language,
+    });
   }
 
   updateData = async () => {
@@ -82,14 +113,73 @@ class App extends Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
-    const { hasUpdated } = this.state;
+    const { hasUpdated, language, current } = this.state;
+    const { navigation } = this.props;
+
+    const TABS = [
+      {
+        key: 'HOME',
+        title: 'home.title',
+        showHeader: false,
+        icon: iconHome,
+        activeIcon: iconHomeActive,
+        component: () => <Main language={language} onChangeLanguage={this.onChangeLanguage}  navigation={navigation} />,
+      },
+      {
+        key: 'SCHEDULE',
+        title: 'home.schedule',
+        showHeader: true,
+        icon: iconSchedule,
+        activeIcon: iconScheduleActive,
+        component: () => <Schedule navigation={navigation} />,
+      },
+      // {
+      //   key: 'MISSION',
+      //   title: 'home.Mission',
+      //   showHeader: true,
+      //   icon: iconMission,
+      //   component: () => <Missiontable navigation={navigation} />,
+      // },
+      {
+        key: 'NEWS',
+        title: 'home.News',
+        showHeader: true,
+        icon: iconNews,
+        activeIcon: iconNewsActive,
+        component: () => <News navigation={navigation} />,
+      },
+      {
+        key: 'MORE',
+        title: 'home.More',
+        showHeader: true,
+        icon: iconMore,
+        activeIcon: iconMoreActive,
+        component: () => <More navigation={navigation} />,
+      },
+    ];
+
+    const matchTab = TABS.find(tab => tab.key === current);
+
     return (
       hasUpdated
         ? (
           <View style={{ flex: 1 }}>
             <Header />
-            <Main navigate={navigate} />
+            <Page title={matchTab.showHeader && matchTab.title}>
+              {matchTab.component()}
+            </Page>
+            <Style.NavBar>
+                {
+                  TABS.map(tab => (
+                    <Style.NavItem onPress={() => this.setState({ current: tab.key })}>
+                      <Style.NavIcon source={current === tab.key ? tab.activeIcon : tab.icon} />
+                      <Style.NavText active={current === tab.key}>
+                        {I18n.t(tab.title)}
+                      </Style.NavText>
+                    </Style.NavItem>
+                  ))
+                }
+              </Style.NavBar>
           </View>
         )
         : (<View />)
@@ -97,37 +187,10 @@ class App extends Component {
   }
 }
 
-const genTab = ({component, title, icon}) => ({
-  screen: component,
-  navigationOptions: {
-    tabBarLabel: title,
-    tabBarIcon: ({ tintColor, focused }) => (
-      <Icon size={22} color={focused ? '#00aaf0' : '#fff' } name={icon}/>
-    )
-  }
-});
-
-const BottomNavigation = new createMaterialBottomTabNavigator({
-  Home: genTab({ component: App, title: I18n.t('home.title'), icon: 'rss' }),
-  Schedule: genTab({ component: Schedule, title: I18n.t('home.schedule'), icon: 'rss' }),
-  Mission: genTab({ component: Missiontable, title: I18n.t('home.Mission'), icon: 'rss' }),
-  News: genTab({ component: News, title: I18n.t('home.News'), icon: 'rss' }),
-  More: genTab({ component: More, title: I18n.t('home.More'), icon: 'rss' }),
-}, {
-  initialRouteName: 'Home',
-  barStyle: { backgroundColor: '#0F1821' },
-  activeTintColor: '#00aaf0',
-  inactiveColor: '#fff',
-  shifting: false,
-});
-
 const MyStack = new createStackNavigator({
-  BottomNavigation: {
-    screen: BottomNavigation,
-    navigationOptions: { header: null }
-  },
+  Main: { screen: App, navigationOptions: { header: null } },
 }, {
-  initialRouteName: 'BottomNavigation'
+  initialRouteName: 'Main'
 });
 
 const AppContainer = createAppContainer(MyStack);

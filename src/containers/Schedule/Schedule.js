@@ -6,12 +6,9 @@ import * as Style from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import Tab from '../../components/Tab/Tab';
-import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import Button from '../../components/Button/Button';
 
 export default class Schedule extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.schedule', 'mode1')
-
   state = {
     schedule: [],
     nowScheduleDate: '',
@@ -75,37 +72,35 @@ export default class Schedule extends Component {
     const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
 
     return (
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Style.ScheduleContainer>
-          {
-            tabs.length ?
-              <Tab tabs={tabs} defaultActiveTab={nowScheduleDate} onChange={this.onChangeTab} /> :
-              <View />
-          }
+      <Style.ScheduleContainer>
+        {
+          tabs.length ?
+            <Tab tabs={tabs} defaultActiveTab={nowScheduleDate} onChange={this.onChangeTab} /> :
+            <View />
+        }
 
-          {
-            schedule.map((scheduleData) => (
-              <Style.AgendaView
-                key={`schedule${scheduleData.date}`}
-                active={nowScheduleDate === scheduleData.date}>
-                {scheduleData.items.map((itemData) => (
-                  <View key={`item${scheduleData.date},${itemData.duration}`}>
-                    <ScheduleHeader time={itemData.duration} />
-                    {
-                      itemData.agendas.map(this.renderScheduleItem)
-                    }
-                  </View>
-                ))}
-              </Style.AgendaView>
-            ))
-          }
-          {
-            tabs.length ?
-              <Button onClick={this.goToUnConf} text={I18n.t('community.unconference')} align="center" margin={[16, 0, 0, 0]} /> :
-              <View />
-          }
-        </Style.ScheduleContainer>
-      </ScrollView>
+        {
+          schedule.map((scheduleData) => (
+            <Style.AgendaView
+              key={`schedule${scheduleData.date}`}
+              active={nowScheduleDate === scheduleData.date}>
+              {scheduleData.items.map((itemData) => (
+                <View key={`item${scheduleData.date},${itemData.duration}`}>
+                  <ScheduleHeader time={itemData.duration} />
+                  {
+                    itemData.agendas.map(this.renderScheduleItem)
+                  }
+                </View>
+              ))}
+            </Style.AgendaView>
+          ))
+        }
+        {
+          tabs.length ?
+            <Button onClick={this.goToUnConf} text={I18n.t('community.unconference')} align="center" margin={[16, 0, 0, 0]} /> :
+            <View />
+        }
+      </Style.ScheduleContainer>
     )
   }
 }

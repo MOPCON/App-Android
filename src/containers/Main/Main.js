@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import {
-  Dimensions, NativeModules, Platform,
-  Image, View, TouchableOpacity,
-  Linking,
+  Dimensions, Image, View, TouchableOpacity, Linking,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Carousel from 'react-native-snap-carousel';
@@ -33,23 +31,11 @@ const tabs = [
   { name: 'English', value: 'en' }
 ];
 
-const getLanguageCode = () => {
-  let systemLanguage = 'en';
-  if (Platform.OS === 'android') {
-    systemLanguage = NativeModules.I18nManager.localeIdentifier;
-  } else {
-    systemLanguage = NativeModules.SettingsManager.settings.AppleLocale;
-  }
-  const languageCode = systemLanguage.substring(0, 2);
-  return languageCode;
-}
-
 export default class Main extends Component {
 
   constructor(p) {
     super(p);
-    const language = getLanguageCode();
-    I18n.locale = language;
+
     this.state = {
       carousel: [],
       news: [{}],
@@ -63,7 +49,6 @@ export default class Main extends Component {
         { icon: iconCommunity, name: 'home.Community', screen: 'Community' },
         { icon: iconNews, name: 'home.News', screen: 'News' },
       ],
-      language,
     };
   }
 
@@ -93,7 +78,7 @@ export default class Main extends Component {
 
   navigate = (screen) => {
     if (screen) {
-      this.props.navigate(screen);
+      this.props.navigation.navigate(screen);
     }
   }
 
@@ -110,16 +95,9 @@ export default class Main extends Component {
     this.scrollView.scrollTo({ x: offset })
   }
 
-  onChangeLanguage = (language) => {
-    I18n.locale = language;
-
-    this.setState({
-      language,
-    });
-  }
-
   render() {
-    const { carousel, mods, language, news } = this.state;
+    const { language, onChangeLanguage } = this.props;
+    const { carousel, mods, news } = this.state;
 
     return (
       <Style.Container>
@@ -127,7 +105,7 @@ export default class Main extends Component {
           <Style.Content>
             <Style.LogoContainer>
               <Image source={mopconLogo} />
-              <LangSelect language={language} onChange={this.onChangeLanguage} />
+              <LangSelect language={language} onChange={onChangeLanguage} />
             </Style.LogoContainer>
             <Style.NewsContainer>
               <News news={news} toNews={() => this.navigate('News')} />
