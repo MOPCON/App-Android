@@ -8,6 +8,7 @@ import geoPng from '../../images/location.png';
 
 const Container = styled.View`
   border: 1px solid #00aaf0;
+  border-radius: 6px;
   padding: 16px 0;
   height: 300px;
 `;
