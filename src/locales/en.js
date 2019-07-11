@@ -17,7 +17,8 @@ export default {
     more: 'More',
   },
   schedule:{
-    noSchedule: 'No Schedule'
+    noSchedule: 'No Schedule',
+    hotTopic: 'You will enjoy this meeting',
   },
   unConf: {
     title: 'UnConf',

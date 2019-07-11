@@ -22,10 +22,6 @@ export const LogoContainer = styled.View`
   align-items: center;
 `;
 
-export const CarouselContainer = styled.ScrollView`
-  margin-bottom: 16px;
-`;
-
 export const NewsContainer = styled.View`
   margin-bottom: 32px;
 `;
@@ -52,11 +48,4 @@ export const ModContainer = styled.View`
 
 export const TabContainer = styled.View`
   width: 50%;
-`;
-
-export const CarouselTitle = styled.Text`
-  color: white;
-  font-size: 16px;
-  margin-bottom: 16px;
-  padding: 0 20px;
 `;

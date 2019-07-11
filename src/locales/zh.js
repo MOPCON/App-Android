@@ -17,7 +17,8 @@ export default {
     more: '查看更多',
   },
   schedule:{
-    noSchedule: '暫無行程'
+    noSchedule: '暫無行程',
+    hotTopic: '你最想聽的演講要開始了',
   },
   unConf: {
     title: '交流場次',
