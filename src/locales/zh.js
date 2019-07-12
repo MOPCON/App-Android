@@ -1,20 +1,24 @@
 export default {
   home: {
+    title: '首頁',
     schedule: '議程',
     MySchedule: '我的行程',
     Unconference: '交流場次',
-    Mission: '大地遊戲',
+    Mission: '任務',
     Sponsors: '贊助廠商',
     Speakers: '講者',
     Community: '社群',
     News: '最新消息',
+    More: '更多',
   },
   news: {
     title: '最新消息',
     link: '訊息連結',
+    more: '查看更多',
   },
   schedule:{
-    noSchedule: '暫無行程'
+    noSchedule: '暫無行程',
+    hotTopic: '你最想聽的演講要開始了',
   },
   unConf: {
     title: '交流場次',
@@ -77,5 +81,8 @@ export default {
   common: {
     ok: '確定',
     close: '取消',
+  },
+  more: {
+    title: '更多選項'
   }
 };

@@ -9,23 +9,21 @@ export const Container = styled.View`
 export const ScrollContainer = styled.ScrollView.attrs({
   contentContainerStyle: props => {
     return {
-      paddingTop: 62,
+      paddingTop: 10,
     }
   }
 })``;
 
-export const ViewContainer = styled.View`
+export const LogoContainer = styled.View`
   width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 30px;
   align-items: center;
 `;
 
-export const LogoContainer = styled.View`
-  margin-bottom: 25;
-`;
-
-export const CarouselContainer = styled.ScrollView`
-  margin-bottom: 16px;
-  height: 168px;
+export const NewsContainer = styled.View`
+  margin-bottom: 32px;
 `;
 
 export const CarouselItem = styled.Image`

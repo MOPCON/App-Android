@@ -3,6 +3,7 @@ package org.mopcon.session.app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.RNRSA.RNRSAPackage;
 import org.reactnative.camera.RNCameraPackage;
@@ -10,7 +11,6 @@ import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -31,14 +31,14 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGestureHandlerPackage(),
             new AsyncStoragePackage(),
             new RNRSAPackage(),
             new RNCameraPackage(),
             new SplashScreenReactPackage(),
             new RNFirebasePackage(),
             new RNFirebaseMessagingPackage(),
-            new RNI18nPackage(),
-            new VectorIconsPackage()
+            new RNI18nPackage()
       );
     }
 
