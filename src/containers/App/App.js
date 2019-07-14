@@ -189,30 +189,24 @@ class App extends Component {
 
 const MyStack = new createStackNavigator({
   Main: { screen: App, navigationOptions: { header: null } },
+  ScheduleDetail: { screen: ScheduleDetail },
+  MySchedule: { screen: MySchedule },
+  UnConf: { screen: UnConf },
+  ScheduleDetail: { screen: ScheduleDetail },
+  Sponsor: { screen: Sponsor },
+  SponsorDetail: { screen: SponsorDetail },
+  Speaker: { screen: Speaker },
+  SpeakerDetail: { screen: SpeakerDetail },
+  Community: { screen: Community },
+  CommunityDetail: { screen: CommunityDetail },
+  QRCode: { screen: QRCode },
+  QA: { screen: QA },
+  // MissionDetail: { screen: MissionDetail },
 }, {
   initialRouteName: 'Main'
 });
 
 const AppContainer = createAppContainer(MyStack);
-
-// const AppWithNav = new createStackNavigator({
-//   Main: { screen: App },
-//   MySchedule: { screen: MySchedule },
-//   Schedule: { screen: Schedule },
-//   UnConf: { screen: UnConf },
-//   ScheduleDetail: { screen: ScheduleDetail },
-//   Sponsor: { screen: Sponsor },
-//   SponsorDetail: { screen: SponsorDetail },
-//   Speaker: { screen: Speaker },
-//   SpeakerDetail: { screen: SpeakerDetail },
-//   News: { screen: News },
-//   Community: { screen: Community },
-//   CommunityDetail: { screen: CommunityDetail },
-//   QRCode: { screen: QRCode },
-//   QA: { screen: QA },
-//   Missiontable: { screen: Missiontable },
-//   MissionDetail: { screen: MissionDetail },
-// });
 
 export default class extends Component {
   render() {
