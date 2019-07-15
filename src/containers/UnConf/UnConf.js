@@ -16,7 +16,7 @@ const tabs = [
 const defaultActiveTab = 'day1';
 
 export default class UnConf extends React.Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'unConf.title', 'mode1')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'unConf.title', 'mode2')
 
   state = {
     unconf: [],

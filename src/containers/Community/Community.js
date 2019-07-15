@@ -9,7 +9,7 @@ import CommunityBlock from './CommunityBlock';
 import VolunteerBlock from './VolunteerBlock';
 
 export default class Community extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.title', 'mode1')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.title', 'mode2')
 
   state = {
     tab: 'community',
