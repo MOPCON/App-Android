@@ -6,6 +6,7 @@ import * as Style from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import Tab from '../../components/Tab/Tab';
+import TabDate from '../../components/TabDate/TabDate';
 import Button from '../../components/Button/Button';
 
 export default class Schedule extends Component {
@@ -75,7 +76,7 @@ export default class Schedule extends Component {
       <Style.ScheduleContainer>
         {
           tabs.length ?
-            <Tab tabs={tabs} defaultActiveTab={nowScheduleDate} onChange={this.onChangeTab} /> :
+            <TabDate tabs={tabs} defaultActiveTab={nowScheduleDate} onChange={this.onChangeTab} /> :
             <View />
         }
 
