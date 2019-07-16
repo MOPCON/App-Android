@@ -58,16 +58,17 @@ export default class Tab extends Component {
     const { tabs, activeTab, activeBarPosition, tabWidth } = this.state;
     return (
       <Style.TabContainer onLayout={this.onLayout}>
-        <Style.TabActiveItem tabWidth={tabWidth} style={{ transform: [{ translateX: activeBarPosition }] }} />
-        <Style.TextContainer>
-          {
-            tabs.map(tab => (
-              <Style.TouchArea onPress={() => { this.onPressTab(tab) }} key={`tab_${tab.value}`}>
-                <Style.TabText isActive={tab.value === activeTab} >{tab.name}</Style.TabText>
-              </Style.TouchArea>
-            ))
-          }
-        </Style.TextContainer>
+        {
+          tabs.map(tab => (
+            <Style.TouchArea
+              onPress={() => { this.onPressTab(tab) }}
+              key={`tab_${tab.value}`}
+              isActive={tab.value === activeTab}
+            >
+              <Style.TabText isActive={tab.value === activeTab} >{tab.name}</Style.TabText>
+            </Style.TouchArea>
+          ))
+        }
       </Style.TabContainer>
     )
   }

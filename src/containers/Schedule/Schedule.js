@@ -14,6 +14,7 @@ export default class Schedule extends Component {
     schedule: [],
     nowScheduleDate: '',
     savedSchedule: {},
+    nowCategory: 'all',
   }
 
   async componentDidMount() {
@@ -68,10 +69,15 @@ export default class Schedule extends Component {
       room={agenda.location} />
   )
 
-  render() {
-    const { schedule, nowScheduleDate } = this.state;
-    const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
+  onChangeCategory = nowCategory => this.setState({ nowCategory })
 
+  render() {
+    const { schedule, nowScheduleDate, nowCategory } = this.state;
+    const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
+    const categoryTabs = [
+      { name: I18n.t('schedule.allSchedule'), value: 'all' },
+      { name: I18n.t('schedule.favoriteSchedule'), value: 'favorite' },
+    ];
     return (
       <Style.ScheduleContainer>
         {
@@ -79,6 +85,8 @@ export default class Schedule extends Component {
             <TabDate tabs={tabs} defaultActiveTab={nowScheduleDate} onChange={this.onChangeTab} /> :
             <View />
         }
+
+        <Tab tabs={categoryTabs} defaultActiveTab={nowCategory} onChange={this.onChangeCategory} />
 
         {
           schedule.map((scheduleData) => (
