@@ -40,10 +40,12 @@ export default class ScheduleItem extends Component {
               </Style.TitleTouchable>
               <Style.Name>{name}</Style.Name>
               <Style.ActionContainer>
-                <Style.GeoContainer>
-                  <Style.GeoIcon source={geoPng} />
-                  <Style.Room>{room}</Style.Room>
-                </Style.GeoContainer>
+                {
+                  // <Style.GeoContainer>
+                  //   <Style.GeoIcon source={geoPng} />
+                  //   <Style.Room>{room}</Style.Room>
+                  // </Style.GeoContainer>
+                }
                 {
                   regular && (
                     <Style.StarIconTouchable onPress={this.onPressSave}>

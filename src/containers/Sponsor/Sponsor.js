@@ -16,7 +16,7 @@ const TYPE = {
 }
 
 export default class Sponsor extends React.Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.title', 'mode1')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.title', 'mode2')
 
   state = {
     language: I18n.locale,
