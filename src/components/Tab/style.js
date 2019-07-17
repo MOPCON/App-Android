@@ -3,34 +3,13 @@ import { aquamarineTwo, scheduleCardTypeColor } from '../../theme/index';
 import { Animated } from 'react-native';
 
 export const TabContainer = styled.View`
-  background-color: ${aquamarineTwo};
-  height: 36px;
+  height: 28px;
   width: 100%;
-  border-radius: 6px;
+  border-radius: 4px;
   margin-bottom: 16px;
   position: relative;
-`;
-
-export const TabActiveItem = styled(Animated.View)`
-  background-color: #004C67;
-  border-radius: 6px;
-  width: ${p => p.tabWidth}%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  /* transform: translateX(${p => p.activeBarPosition}px); */
-  z-index: 1;
-`;
-
-export const TextContainer = styled.View`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  display: flex;
   flex-direction: row;
+  border: 1px solid #00aaf0;
 `;
 
 export const TouchArea = styled.TouchableOpacity`
@@ -39,12 +18,12 @@ export const TouchArea = styled.TouchableOpacity`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: ${p => p.isActive ? '#00aaf0' : 'transparent'};
 `;
 
 export const TabText = styled.Text`
-  color: ${scheduleCardTypeColor};
-  font-size: 16px;
+  color: ${p => (p.isActive ? 'white' : '#00aaf0')};
+  font-size: 12px;
   letter-spacing: 0.6px;
   font-family: Roboto-Medium;
-  opacity: ${p => p.isActive ? '1' : '0.5'};
 `;

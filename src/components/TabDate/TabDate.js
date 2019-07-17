@@ -1,7 +1,58 @@
 import React, { Component } from 'react';
 import { Animated, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
-import * as Style from './style';
+import styled from 'styled-components/native';
+import { aquamarineTwo, scheduleCardTypeColor } from '../../theme/index';
+
+const TabContainer = styled.View`
+  height: 50px;
+  width: 100%;
+  margin-bottom: 16px;
+  position: relative;
+`;
+
+const TabActiveItem = styled(Animated.View)`
+  width: ${p => p.tabWidth}%;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  /* transform: translateX(${p => p.activeBarPosition}px); */
+  z-index: 1;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const TabActiveItemInner = styled.View`
+  width: 80px;
+  background-color: #00aaf0;
+  height: 1px;
+`;
+
+const TextContainer = styled.View`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+`;
+
+const TouchArea = styled.TouchableOpacity`
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TabText = styled.Text`
+  color: white;
+  font-size: 16px;
+  font-weight: 100;
+  letter-spacing: 0.6px;
+`;
 
 export default class Tab extends Component {
   static propTypes = {
@@ -57,19 +108,20 @@ export default class Tab extends Component {
   render() {
     const { tabs, activeTab, activeBarPosition, tabWidth } = this.state;
     return (
-      <Style.TabContainer onLayout={this.onLayout}>
-        {
-          tabs.map(tab => (
-            <Style.TouchArea
-              onPress={() => { this.onPressTab(tab) }}
-              key={`tab_${tab.value}`}
-              isActive={tab.value === activeTab}
-            >
-              <Style.TabText isActive={tab.value === activeTab} >{tab.name}</Style.TabText>
-            </Style.TouchArea>
-          ))
-        }
-      </Style.TabContainer>
+      <TabContainer onLayout={this.onLayout}>
+        <TabActiveItem tabWidth={tabWidth} style={{ transform: [{ translateX: activeBarPosition }] }} >
+          <TabActiveItemInner />
+        </TabActiveItem>
+        <TextContainer>
+          {
+            tabs.map(tab => (
+              <TouchArea onPress={() => { this.onPressTab(tab) }} key={`tab_${tab.value}`}>
+                <TabText isActive={tab.value === activeTab} >{tab.name}</TabText>
+              </TouchArea>
+            ))
+          }
+        </TextContainer>
+      </TabContainer>
     )
   }
 }

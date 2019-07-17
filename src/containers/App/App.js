@@ -61,7 +61,7 @@ class App extends Component {
     this.state = {
       hasUpdated: true,
       language,
-      current: 'HOME',
+      current: 'SCHEDULE',
     };
   }
   
