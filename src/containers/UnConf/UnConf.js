@@ -3,9 +3,10 @@ import { ScrollView, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
 import I18n from '../../locales';
+import ScheduleView from '../../components/ScheduleItem/ScheduleView';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
-import Tab from '../../components/Tab/Tab';
+import TabDate from '../../components/TabDate/TabDate';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import Button from '../../components/Button/Button';
 
@@ -54,7 +55,7 @@ export default class UnConf extends React.Component {
 
           {
             tabs.length
-              ? <Tab tabs={tabs} defaultActiveTab={nowUnconfDate} onChange={this.onChangeTab} />
+              ? <TabDate tabs={tabs} defaultActiveTab={nowUnconfDate} onChange={this.onChangeTab} />
               : <View />
           }
           {
@@ -63,7 +64,7 @@ export default class UnConf extends React.Component {
                 key={`schedule${unconfData.date}`}
                 active={nowUnconfDate === unconfData.date}>
                 {unconfData.items.map(itemData => (
-                  <View key={`item${unconfData.date},${itemData.duration}`}>
+                  <ScheduleView key={`item${unconfData.date},${itemData.duration}`}>
                     <ScheduleHeader time={itemData.duration} />
                     <ScheduleItem
                       title={itemData.topic}
@@ -72,7 +73,7 @@ export default class UnConf extends React.Component {
                       name={itemData.speaker}
                       paintBG={itemData.type === 'others'}
                     />
-                  </View>
+                  </ScheduleView>
                 ))}
               </Style.AgendaView>
             ))
