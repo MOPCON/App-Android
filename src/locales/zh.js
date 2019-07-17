@@ -6,7 +6,7 @@ export default {
     Unconference: '交流場次',
     Mission: '任務',
     Sponsors: '贊助廠商',
-    Speakers: '講者',
+    Speakers: '講者介紹',
     Community: '社群',
     News: '最新消息',
     More: '更多',
@@ -35,7 +35,7 @@ export default {
     title: '演講',
   },
   speaker: {
-    title: '講師',
+    title: '講者介紹',
   },
   community: {
     title: '社群',
