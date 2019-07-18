@@ -36,6 +36,9 @@ export default {
   },
   speaker: {
     title: 'Speaker',
+    about: 'About',
+    more: 'more',
+    speech: 'Speech',
   },
   community: {
     title: 'Community',

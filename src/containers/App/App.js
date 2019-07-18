@@ -12,7 +12,7 @@ import UnConf from '../UnConf/UnConf';
 import Sponsor from '../Sponsor/Sponsor';
 import ScheduleDetail from '../ScheduleDetail/ScheduleDetail';
 import SponsorDetail from '../SponsorDetail/SponsorDetail';
-import Speaker from '../Speacker/Speaker';
+import Speaker from '../Speaker/Speaker';
 import SpeakerDetail from '../SpeakerDetail/SpeakerDetail';
 import News from '../News/News';
 import Community from '../Community/Community';
@@ -61,7 +61,7 @@ class App extends Component {
     this.state = {
       hasUpdated: true,
       language,
-      current: 'SCHEDULE',
+      current: 'HOME',
     };
   }
   

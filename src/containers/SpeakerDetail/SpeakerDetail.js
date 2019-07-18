@@ -3,8 +3,11 @@ import { ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import SpeakerItem from '../../components/SpeakerItem/SpeakerItem';
-import SpeechItem from '../../components/SpeechItem/SpeechItem';
+
+import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
+import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
+import ScheduleView from '../../components/ScheduleItem/ScheduleView';
+// import SpeechItem from '../../components/SpeechItem/SpeechItem';
 import * as Style from './style';
 
 export default class SpeakerDetail extends Component {
@@ -13,6 +16,7 @@ export default class SpeakerDetail extends Component {
   state = {
     speaker: {},
     savedSchedule: {},
+    isReadMore: false,
   }
 
   async componentDidMount() {
@@ -39,7 +43,7 @@ export default class SpeakerDetail extends Component {
   }
 
   render() {
-    const { speaker, savedSchedule } = this.state;
+    const { speaker, savedSchedule, isReadMore } = this.state;
 
     const name = I18n.locale === 'en' ? speaker.name_en : speaker.name;
     const info = I18n.locale === 'en' ? speaker.info_en : speaker.info;
@@ -49,27 +53,56 @@ export default class SpeakerDetail extends Component {
     const category = speaker.category;
     const topic = I18n.locale === 'en' ? speaker.schedule_topic_en : speaker.schedule_topic;
 
+    const introProps = isReadMore ? {} : { numberOfLines: 3 };
+
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SpeakerContainer>
           <Style.ItemContainer>
-            <SpeakerItem
-              name={name}
-              job={job}
-              picture={picture}
-              company={company}
-            />
+            <Style.SpeakerPicture source={{ uri: picture }} />
+            <Style.InfoView>
+              <Style.SpeakerText>{name}</Style.SpeakerText>
+              <Style.SpeakerText>{job} @ {company}</Style.SpeakerText>
+            </Style.InfoView>
           </Style.ItemContainer>
-          <Style.Intro>
+
+          <Style.Header>
+            <Style.SpeakerText>{I18n.t('speaker.about')}</Style.SpeakerText>
+            <Style.ReadMoreView onPress={() => this.setState({ isReadMore: true })}>
+              <Style.ReadMoreText>{I18n.t('speaker.more')}</Style.ReadMoreText>
+            </Style.ReadMoreView>
+          </Style.Header>
+          <Style.Intro {...introProps}>
             {info}
           </Style.Intro>
-          <SpeechItem
-            category={category}
-            topic={topic}
-            saved={savedSchedule[speaker.schedule_id]}
-            slide={speaker.slide}
-            onSave={this.onSave}
-          />
+          {
+            // <SpeechItem
+            //   category={category}
+            //   topic={topic}
+            //   saved={savedSchedule[speaker.schedule_id]}
+            //   slide={speaker.slide}
+            //   onSave={this.onSave}
+            // />
+          }
+
+          <Style.Header>
+            <Style.SpeakerText>{I18n.t('speaker.speech')}</Style.SpeakerText>
+          </Style.Header>
+          <ScheduleView key={`speaker_${speaker.schedule_id || topic}`}>
+            <ScheduleHeader
+              // time={agenda.duration}
+              onSave={this.onSave}
+              saved={savedSchedule[speaker.schedule_id]}
+            />
+            <ScheduleItem
+              regular
+              title={topic}
+              category={category}
+              onPressTitle={() => { }}
+              name={name}
+              // room={agenda.location}
+            />
+          </ScheduleView>
         </Style.SpeakerContainer>
       </ScrollView>
     );
