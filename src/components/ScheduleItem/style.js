@@ -24,6 +24,7 @@ export const ActionContainer = styled.View`
 
 export const TitleTouchable = styled.TouchableOpacity`
   max-width: 100%;
+  margin-bottom: 16px;
 `;
 
 export const Title = styled.Text`
@@ -59,6 +60,9 @@ export const Name = styled.Text`
 
 export const Header = styled.View`
   width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 16px;
 `;
 
 export const HeaderText = styled.Text`
