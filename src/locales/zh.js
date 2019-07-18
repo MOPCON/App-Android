@@ -36,6 +36,9 @@ export default {
   },
   speaker: {
     title: '講者介紹',
+    about: '關於講者',
+    more: '閱讀全部',
+    speech: '演講場次',
   },
   community: {
     title: '社群',

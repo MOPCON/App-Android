@@ -8,6 +8,7 @@ import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import TabDate from '../../components/TabDate/TabDate';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import CommonScheduleItem from '../../components/ScheduleItem/CommonScheduleItem';
 import Button from '../../components/Button/Button';
 
 const tabs = [
@@ -64,16 +65,21 @@ export default class UnConf extends React.Component {
                 key={`schedule${unconfData.date}`}
                 active={nowUnconfDate === unconfData.date}>
                 {unconfData.items.map(itemData => (
-                  <ScheduleView key={`item${unconfData.date},${itemData.duration}`}>
-                    <ScheduleHeader time={itemData.duration} />
-                    <ScheduleItem
-                      title={itemData.topic}
-                      onPressTitle={this.onPressTitle}
-                      room={I18n.t('unConf.location')}
-                      name={itemData.speaker}
-                      paintBG={itemData.type === 'others'}
-                    />
-                  </ScheduleView>
+                  itemData.type === 'topic' ? (
+                    <ScheduleView key={`item${unconfData.date},${itemData.duration}`}>
+                      <ScheduleHeader time={itemData.duration} />
+                      <ScheduleItem
+                        title={itemData.topic}
+                        onPressTitle={this.onPressTitle}
+                        room={I18n.t('unConf.location')}
+                        name={itemData.speaker}
+                        paintBG={itemData.type === 'others'}
+                      />
+                    </ScheduleView>
+                  ) : (
+                    <CommonScheduleItem title={itemData.topic} time={itemData.duration} />
+                  )
+                  
                 ))}
               </Style.AgendaView>
             ))
