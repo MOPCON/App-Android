@@ -60,10 +60,10 @@ export default class Schedule extends Component {
   }
 
   renderScheduleItem = (agenda) => {
+    const { savedSchedule, nowCategory } = this.state;
     const title = I18n.locale === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en;
     const paintBG = !Boolean(agenda.schedule_id);
-    if (paintBG) { return (<CommonScheduleItem title={title} time={agenda.duration} />); }
-    return (
+    const scheduleItem = (
       <ScheduleView key={`agenda${agenda.schedule_id || agenda.schedule_topic}`}>
         <ScheduleHeader
           time={agenda.duration}
@@ -79,6 +79,14 @@ export default class Schedule extends Component {
           room={agenda.location} />
       </ScheduleView>
     );
+    if (paintBG) { return (<CommonScheduleItem title={title} time={agenda.duration} />); }
+    if (
+      (nowCategory === 'favorite' && savedSchedule[agenda.schedule_id])
+      || nowCategory === 'all'
+    ) {
+      return scheduleItem;
+    }
+    return null;
   }
 
   onChangeCategory = nowCategory => this.setState({ nowCategory })
