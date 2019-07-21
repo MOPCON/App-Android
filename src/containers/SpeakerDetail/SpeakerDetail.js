@@ -32,6 +32,10 @@ export default class SpeakerDetail extends Component {
     this.setState({ speaker, savedSchedule });
   }
 
+  onPressTitle = (agenda) => () => {
+    this.props.navigation.navigate('ScheduleDetail', { agenda });
+  }
+
   onSave = () => {
     const { schedule_id } = this.state.speaker;
     const savedSchedule = {
@@ -98,7 +102,7 @@ export default class SpeakerDetail extends Component {
               regular
               title={topic}
               category={category}
-              onPressTitle={() => { }}
+              onPressTitle={speaker.schedule_id ? this.onPressTitle(speaker) : () => { }}
               name={name}
               // room={agenda.location}
             />
