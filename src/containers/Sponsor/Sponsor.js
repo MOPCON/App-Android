@@ -1,9 +1,10 @@
-import React from 'react';
-import { ScrollView, Image } from 'react-native';
+import React, { Fragment } from 'react';
+import { ScrollView, Text } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import I18n from '../../locales';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import { objectTypeAnnotation } from '@babel/types';
 
 const TYPE = {
   BW: 'Bruce Wayne',
@@ -32,115 +33,29 @@ export default class Sponsor extends React.Component {
     this.props.navigation.navigate('SponsorDetail', { sponsorId });
   }
   render() {
-    const { sponsor } = this.state;
+    const { sponsor, language} = this.state;
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SponsorContainer>
-          <Style.TypeText>{TYPE.BW}</Style.TypeText>
-          <Style.CardSmallView>
-            {
-              sponsor.filter(sponsorData => sponsorData.type === TYPE.BW).map(sponsorData => (
-                <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
-                  <Style.CardImgSmall>
-                    <Image
-                      style={{ width: 132, height: 132 }}
-                      source={{ uri: sponsorData.logo }}
-                    />
-                  </Style.CardImgSmall>
-                </Style.CardSmall>
-              ))
-            }
-          </Style.CardSmallView>
-          <Style.TypeText>{TYPE.HACKER}</Style.TypeText>
-          <Style.CardSmallView>
-            {
-              sponsor.filter(sponsorData => sponsorData.type === TYPE.HACKER).map(sponsorData => (
-                <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
-                  <Style.CardImgSmall>
-                    <Image
-                      style={{ width: 132, height: 132 }}
-                      source={{ uri: sponsorData.logo }}
-                    />
-                  </Style.CardImgSmall>
-                </Style.CardSmall>
-              ))
-            }
-          </Style.CardSmallView>
-          <Style.TypeText>{TYPE.GEEK}</Style.TypeText>
-          <Style.CardSmallView>
-            {
-              sponsor.filter(sponsorData => sponsorData.type === TYPE.GEEK).map(sponsorData => (
-                <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
-                  <Style.CardImgSmall>
-                    <Image
-                      style={{ width: 132, height: 132 }}
-                      source={{ uri: sponsorData.logo }}
-                    />
-                  </Style.CardImgSmall>
-                </Style.CardSmall>
-              ))
-            }
-          </Style.CardSmallView>
-          <Style.TypeText>{TYPE.DEV}</Style.TypeText>
-          <Style.CardSmallView>
-            {
-              sponsor.filter(sponsorData => sponsorData.type === TYPE.DEV).map(sponsorData => (
-                <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
-                  <Style.CardImgSmall>
-                    <Image
-                      style={{ width: 132, height: 132 }}
-                      source={{ uri: sponsorData.logo }}
-                    />
-                  </Style.CardImgSmall>
-                </Style.CardSmall>
-              ))
-            }
-          </Style.CardSmallView>
-          <Style.TypeText>{TYPE.TUT}</Style.TypeText>
-          <Style.CardSmallView>
-            {
-              sponsor.filter(sponsorData => sponsorData.type === TYPE.TUT).map(sponsorData => (
-                <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
-                  <Style.CardImgSmall>
-                    <Image
-                      style={{ width: 132, height: 132 }}
-                      source={{ uri: sponsorData.logo }}
-                    />
-                  </Style.CardImgSmall>
-                </Style.CardSmall>
-              ))
-            }
-          </Style.CardSmallView>
-          <Style.TypeText>{TYPE.TXS}</Style.TypeText>
-          <Style.CardSmallView>
-            {
-              sponsor.filter(sponsorData => sponsorData.type === TYPE.TXS).map(sponsorData => (
-                <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
-                  <Style.CardImgSmall>
-                    <Image
-                      style={{ width: 132, height: 132 }}
-                      source={{ uri: sponsorData.logo }}
-                    />
-                  </Style.CardImgSmall>
-                </Style.CardSmall>
-              ))
-            }
-          </Style.CardSmallView>
-          <Style.TypeText>{TYPE.HLP}</Style.TypeText>
-          <Style.CardSmallView>
-            {
-              sponsor.filter(sponsorData => sponsorData.type === TYPE.HLP).map(sponsorData => (
-                <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
-                  <Style.CardImgSmall>
-                    <Image
-                      style={{ width: 132, height: 132 }}
-                      source={{ uri: sponsorData.logo }}
-                    />
-                  </Style.CardImgSmall>
-                </Style.CardSmall>
-              ))
-            }
-          </Style.CardSmallView>
+          {Object.keys(TYPE).map(key => (
+            <Fragment>
+              <Style.TypeText>{TYPE[key]}</Style.TypeText>
+              <Style.CardSmallView>
+                {
+                  sponsor.filter(sponsorData => sponsorData.type === TYPE[key]).map(sponsorData => (
+                    <Style.CardSmall onPress={this.onClickImage(sponsorData.id)} key={`sponsor${sponsorData.id}`}>
+                      <Style.CardImgSmall>
+                        <Style.CardImg source={{ uri: sponsorData.logo }} />
+                      </Style.CardImgSmall>
+                      <Style.CardText>
+                        {language === 'zh' ? sponsorData.name : sponsorData.name_en}
+                      </Style.CardText>
+                    </Style.CardSmall>
+                  ))
+                }
+              </Style.CardSmallView>
+            </Fragment>
+          ))}
         </Style.SponsorContainer>
       </ScrollView>
     );
