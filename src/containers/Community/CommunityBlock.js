@@ -13,6 +13,7 @@ export default class CommunityBlock extends Component {
               <Style.CardImgSmall
                 source={{ uri: c.logo }}
               />
+              <Style.CardText>{c.title}</Style.CardText>
             </Style.CardSmall>
           ))
         }
