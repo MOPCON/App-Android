@@ -77,3 +77,40 @@ export const MemberContent = styled.Text`
   line-height: 22px;
   letter-spacing: 0.3px;
 `;
+
+export const JoinContainer = styled.View`
+  flex: 1;
+  border-top-color: #fff;
+  border-top-width: 1px;
+  padding: 50px;
+  background-color: ${theme.darkBlue};
+  align-items: center;
+`;
+
+export const JoinImage = styled.Image`
+  width: 97;
+  height: 92;
+  margin-bottom: 20;
+`;
+
+export const JoinText = styled.Text`
+  color: #ff4392;
+  font-size: 20px;
+  margin-bottom: 30px;
+`;
+
+export const FollowView = styled.TouchableOpacity`
+
+`;
+
+export const FollowImage = styled.Image`
+  width: 178;
+  height: 62;
+  margin-bottom: 40px;
+`;
+
+export const FollowText = styled.Text`
+  color: #fff;
+  font-size: 15px;
+  line-height: 24px;
+`;
