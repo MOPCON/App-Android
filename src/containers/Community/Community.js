@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import Tab from '../../components/Tab/Tab';
+import TabDate from '../../components/TabDate/TabDate';
 import CommunityBlock from './CommunityBlock';
 import VolunteerBlock from './VolunteerBlock';
 
@@ -49,7 +49,7 @@ export default class Community extends Component {
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.Container>
           <Style.TabContainer>
-            <Tab tabs={tabs} defaultActiveTab={tab} onChange={this.handleChange} />
+            <TabDate tabs={tabs} defaultActiveTab={tab} onChange={this.handleChange} />
           </Style.TabContainer>
           {
             tab === 'community'

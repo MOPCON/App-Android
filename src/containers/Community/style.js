@@ -26,17 +26,20 @@ export const BlockContainer = styled.View`
 
 export const CardSmall = styled.TouchableOpacity`
   width: ${width};
-  height: ${width};
-  border-radius: 10px;
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  background: white;
+  margin-bottom: 30px;
 `;
 export const CardImgSmall = styled.Image`
-  width: 132;
-  height: 132;
+  width: 80;
+  height: 80;
+  border-radius: 80;
+  margin-bottom: 10px;
+  background: #fff;
+`;
+
+export const CardText = styled.Text`
+  color: #fff;
+  font-size: 16px;
 `;
 
 export const Card = styled.View`

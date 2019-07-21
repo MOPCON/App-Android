@@ -40,6 +40,7 @@ export const CardImg = styled.Image`
   width: 80;
   height: 80;
   border-radius: 80;
+  background: #fff;
 `;
 
 export const CardImgBig = styled.View`
