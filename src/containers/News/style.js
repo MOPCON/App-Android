@@ -10,28 +10,34 @@ export const NewsContainer = styled.View`
 `;
 
 export const NewsCardView = styled.View`
-  background: ${scheduleCardBackground};
-  padding: 16px;
+  border: 1px solid #00aaf0;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
   display: flex;
   flex-direction: column;
 `;
 
+export const NewsTimeContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 export const NewsTimeText = styled.Text`
-  color: ${scheduleCardTypeColor};
-  font-size: 12px;
-  margin-bottom: 8px;
+  color: #00aaf0;
+  font-size: 20px;
+  margin-bottom: 16px;
 `;
 
 export const NewsCardTitleText = styled.Text`
   color: white;
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 8px;
 `;
 
 export const NewsCardDescText = styled.Text`
-  font-size: 14px;
+  font-size: 16px;
   line-height: 22px;
   letter-spacing: 0.3px;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 16px;
+  color: #878787;
 `;
