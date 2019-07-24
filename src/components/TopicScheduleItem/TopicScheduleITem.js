@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import iconStarNormal from '../../images/icon/buttonStarNormal.png'
+import iconStarNormal from '../../images/buttonStarNormal.png'
 import tempImg from '../../images/temp.jpg'
 import geoPng from '../../images/location.png';
 
@@ -19,6 +19,7 @@ const HeaderContainer = styled.View`
   align-content: center;
   justify-content: space-between;
   margin-bottom: 16px;
+  align-items: center;
 `;
 
 const Time = styled.Text`

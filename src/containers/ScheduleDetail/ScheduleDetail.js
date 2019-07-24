@@ -4,8 +4,8 @@ import { ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import SpeechItem from '../../components/SpeechItem/SpeechItem';
-import SpeakerItem from '../../components/SpeakerItem/SpeakerItem';
+import starIconNormal from '../../images/buttonStarNormal.png';
+import starIconChecked from '../../images/buttonStarChecked.png';
 
 export default class ScheduleDetail extends React.Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'scheduleDetail.title', 'mode2')
@@ -42,13 +42,20 @@ export default class ScheduleDetail extends React.Component {
         <Style.SDContainer>
           <Style.IntroContainer>
             <Style.SpeechItemContainer>
-              <SpeechItem
-                color="inverse"
-                category={agenda.category}
-                topic={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
-                saved={savedSchedule[agenda.schedule_id]}
-                onSave={this.onSave(agenda.schedule_id)}
-              />
+              <Style.Title>
+                {lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
+              </Style.Title>
+            </Style.SpeechItemContainer>
+            <Style.SpeechItemContainer>
+              <Style.Row>
+                <Style.JobText>{lang === 'zh' ? agenda.name : agenda.name_en}</Style.JobText>
+              </Style.Row>
+              <Style.RowSpace>
+                <Style.JobText>{`${agenda.job}@${agenda.company}`}</Style.JobText>
+                <Style.StarIconTouchable onPress={this.onSave(agenda.schedule_id)}>
+                  <Style.StarIconImg source={savedSchedule[agenda.schedule_id] ? starIconChecked : starIconNormal} />
+                </Style.StarIconTouchable>
+              </Style.RowSpace>
             </Style.SpeechItemContainer>
             <Style.DesText>
               {
@@ -56,16 +63,30 @@ export default class ScheduleDetail extends React.Component {
               }
             </Style.DesText>
           </Style.IntroContainer>
-          <Style.IntroContainer>
-            <SpeakerItem
-              name={lang === 'zh' ? agenda.name : agenda.name_en}
-              job={agenda.job}
-              company={agenda.company}
-              picture={agenda.picture}
-            />
-          </Style.IntroContainer>
         </Style.SDContainer>
       </ScrollView>
     );
   }
 }
+
+/*
+
+<SpeechItem
+  color="inverse"
+  category={agenda.category}
+  topic={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
+  saved={savedSchedule[agenda.schedule_id]}
+  onSave={this.onSave(agenda.schedule_id)}
+/>
+
+<Style.IntroContainer>
+  <SpeakerItem
+    name={lang === 'zh' ? agenda.name : agenda.name_en}
+    job={agenda.job}
+    company={agenda.company}
+    picture={agenda.picture}
+  />
+</Style.IntroContainer>
+
+
+*/

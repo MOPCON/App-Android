@@ -18,7 +18,7 @@ export const LogoContainer = styled.View`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
   align-items: center;
 `;
 
