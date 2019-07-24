@@ -67,7 +67,7 @@ export default class Main extends Component {
         <Style.ScrollContainer>
           <Style.Content>
             <Style.LogoContainer>
-              <Image source={mopconLogo} />
+              <Image style={{ width: 200, height: 40 }} resizeMode="contain" source={mopconLogo} />
               <LangSelect language={language} onChange={onChangeLanguage} />
             </Style.LogoContainer>
             <Style.NewsContainer>
