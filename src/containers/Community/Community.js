@@ -40,6 +40,10 @@ export default class Community extends Component {
     this.props.navigation.navigate('CommunityDetail', { id });
   }
 
+  goVolunteerDetail = (id) => {
+    this.props.navigation.navigate('VolunteerDetail', { id });
+  }
+
   goFB = (url) => {
     Linking.openURL('https://www.facebook.com/mopcon');
   }
@@ -61,7 +65,7 @@ export default class Community extends Component {
           {
             tab === 'community'
               ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} community={community} />
-              : <VolunteerBlock volunteer={volunteer} />
+              : <VolunteerBlock goVolunteerDetail={this.goVolunteerDetail} volunteer={volunteer} />
           }
         </Style.Container>
         <Style.JoinContainer>

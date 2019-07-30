@@ -17,6 +17,7 @@ import SpeakerDetail from '../SpeakerDetail/SpeakerDetail';
 import News from '../News/News';
 import Community from '../Community/Community';
 import CommunityDetail from '../CommunityDetail/CommunityDetail';
+import VolunteerDetail from '../VolunteerDetail/VolunteerDetail';
 import QRCode from '../QRCode/QRCode';
 import MySchedule from '../MySchedule/MySchedule';
 import QA from '../QA/QA';
@@ -199,6 +200,7 @@ const MyStack = new createStackNavigator({
   SpeakerDetail: { screen: SpeakerDetail },
   Community: { screen: Community },
   CommunityDetail: { screen: CommunityDetail },
+  VolunteerDetail: { screen: VolunteerDetail },
   QRCode: { screen: QRCode },
   QA: { screen: QA },
   // MissionDetail: { screen: MissionDetail },

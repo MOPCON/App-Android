@@ -14,7 +14,7 @@ import avatarRecord from '../../images/avatar/avatarRecord.png';
 import avatarVideo from '../../images/avatar/avatarVideo.png';
 import avatarField from '../../images/avatar/avatarField.png';
 
-const AVATAR = {
+export const AVATAR = {
   1: avatarAgenda,
   2: avatarAdministrative,
   3: avatarSession,
@@ -30,13 +30,13 @@ const AVATAR = {
 
 export default class VolunteerBlock extends Component {
   render() {
-    const { volunteer } = this.props;
+    const { goVolunteerDetail, volunteer } = this.props;
 
     return (
       <Style.BlockContainer>
         {
           volunteer.map(v => (
-            <Style.CardSmall key={`community_${v.id}`}>
+            <Style.CardSmall key={`community_${v.id}`} onPress={() => goVolunteerDetail(v.id)}>
               <Style.CardImgSmall
                 style={{ backgroundColor: 'transparent' }}
                 source={AVATAR[v.id]}
