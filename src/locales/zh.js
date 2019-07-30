@@ -48,8 +48,10 @@ export default {
     tab_community: '主辦社群',
     tab_volunteer: '志工組織',
     community_info: '社群資訊',
+    volunteer_info: '志工資訊',
     unconference: '查看交流場次',
     more: '了解更多',
+    member: '成員',
   },
   communityDetail: {
     title: '社群'

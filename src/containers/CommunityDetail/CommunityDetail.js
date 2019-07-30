@@ -4,8 +4,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import iconFB from '../../images/icon/facebook.png';
-import iconShare from '../../images/icon/group.png';
 
 export default class CommunityDetail extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.community_info', 'mode2')
