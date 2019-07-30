@@ -1,12 +1,10 @@
 import React from 'react';
 import {
-  Dimensions, TouchableOpacity, Linking
+  Dimensions, TouchableOpacity,
 } from 'react-native';
-import I18n from '../../locales';
 import Carousel from 'react-native-snap-carousel';
 import styled from 'styled-components/native';
-import TopicScheduleItem from '../TopicScheduleItem/TopicScheduleITem';
-
+import img from '../../images/topic.png';
 
 const { width } = Dimensions.get('window');
 
@@ -14,30 +12,25 @@ export const CarouselContainer = styled.ScrollView`
   margin-bottom: 16px;
 `;
 
-export const CarouselTitle = styled.Text`
-  color: white;
-  font-size: 16px;
-  margin-bottom: 16px;
-  padding: 0 20px;
+export const Img = styled.Image`
+  height: 85px;
+  width: 100%;
+  border-radius: 6px;
 `;
-
-const openLink = (url) => () => {
-  Linking.openURL(url);
-}
 
 const renderItem = ({ item }) => {
   return (
-    <TouchableOpacity onPress={openLink(item.link)}>
-      <TopicScheduleItem />
+    <TouchableOpacity>
+      <Img source={img} resizeMode="cover"/>
     </TouchableOpacity>
   );
-}
+};
 
-const TopicCarousel = () => {
+const TopicImageCarousel = () => {
   const carousel = [1, 2, 3, 4];
   return (
     <React.Fragment>
-      <CarouselTitle>{I18n.t('schedule.hotTopic')}</CarouselTitle>
+      
       <CarouselContainer>
         <Carousel
           inactiveSlideScale={0.94}
@@ -51,4 +44,4 @@ const TopicCarousel = () => {
   );
 };
 
-export default TopicCarousel;
+export default TopicImageCarousel;
