@@ -33,7 +33,7 @@ const renderItem = ({ item }) => {
   );
 }
 
-const TopicCarousel = () => {
+const TopicScheduleCarousel = () => {
   const carousel = [1, 2, 3, 4];
   return (
     <React.Fragment>
@@ -51,4 +51,4 @@ const TopicCarousel = () => {
   );
 };
 
-export default TopicCarousel;
+export default TopicScheduleCarousel;
