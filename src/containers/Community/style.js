@@ -12,6 +12,7 @@ export const Container = styled.View`
 
 export const TabContainer = styled.View`
   width: 100%;
+  margin-bottom: 45px;
 `;
 
 export const ScrollView = styled.ScrollView`

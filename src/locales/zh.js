@@ -47,7 +47,9 @@ export default {
     title: '社群',
     tab_community: '主辦社群',
     tab_volunteer: '志工組織',
+    community_info: '社群資訊',
     unconference: '查看交流場次',
+    more: '了解更多',
   },
   communityDetail: {
     title: '社群'

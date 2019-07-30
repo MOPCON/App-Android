@@ -47,7 +47,9 @@ export default {
     title: 'Community',
     tab_community: 'Community',
     tab_volunteer: 'Volunteer',
+    community_info: 'Community',
     unconference: 'Unconference',
+    more: 'More',
   },
   communityDetail: {
     title: 'Community',

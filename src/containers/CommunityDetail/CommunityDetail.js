@@ -8,7 +8,7 @@ import iconFB from '../../images/icon/facebook.png';
 import iconShare from '../../images/icon/group.png';
 
 export default class CommunityDetail extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'home.Community', 'mode2')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.community_info', 'mode2')
 
   state = {
     community: {},
@@ -22,23 +22,17 @@ export default class CommunityDetail extends Component {
     this.setState({ community });
   }
 
-  linkBtn = (key) => {
+  linkBtn = () => {
     if (!this.state.community) return;
-    if (!this.state.community[key]) return;
 
-    let icon = '';
-    switch(key) {
-      case 'facebook':
-        icon = iconFB;
-        break;
-      case 'other_links':
-        icon = iconShare;
-        break;
-    }
+    const url = this.state.community.facebook || this.state.community.other_links;
+
+    if (!url) return;
+
     return (
-      <Style.Btn onPress={() => { Linking.openURL(this.state.community[key]) }}>
-        <Style.BtnImage source={icon}/>
-      </Style.Btn>
+      <Style.MoreButton onPress={() => { Linking.openURL(url) }}>
+        <Style.MoreText>{I18n.t('community.more')}</Style.MoreText>
+      </Style.MoreButton>
     );
   }
   
@@ -50,16 +44,16 @@ export default class CommunityDetail extends Component {
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.Container>
+          <Style.logo
+            source={{ uri: community.logo }}
+          />
           <Style.Title>
             { title }
           </Style.Title>
           <Style.Content>
             { info }
           </Style.Content>
-          <Style.BtnContainer>
-            { this.linkBtn('facebook') }
-            { this.linkBtn('other_links') }
-          </Style.BtnContainer>
+          { this.linkBtn() }
         </Style.Container>
       </ScrollView>
     );
