@@ -10,31 +10,27 @@ export const SpeakerContainer = styled.ScrollView`
 `;
 
 export const ItemContainer = styled.View`
-  position: relative;
-  margin-bottom: 24;
+  align-items: center;
+  margin-top: 33px;
+  margin-bottom: 33px;
 `;
 
 // resize-mode: stretch;
 export const SpeakerPicture = styled.Image`
-  width: ${Dimensions.get('window').width};
-  height: 180px;
-`;
-
-export const InfoView = styled.View`
-  width: 100%;
-  height: 70px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background: #0c344a;
-  opacity: 0.8;
-  align-items: center;
-  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 80px;
+  margin-bottom: 8px;
 `;
 
 export const SpeakerText = styled.Text`
   font-size: 16px;
   color: #fff;
+`;
+
+export const TitleText = styled.Text`
+  font-size: 13px;
+  color: #878787;
 `;
 
 export const Header = styled.View`
@@ -57,8 +53,5 @@ export const Intro = styled.Text`
   font-size: 16;
   letter-spacing: 1;
   line-height: 24;
-  margin-bottom: 28;
-  padding-bottom: 40;
-  border-bottom-width: 1px;
-  border-bottom-color: #878787;
+  margin-bottom: 40;
 `;

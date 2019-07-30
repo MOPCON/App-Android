@@ -64,15 +64,13 @@ export default class SpeakerDetail extends Component {
         <Style.SpeakerContainer>
           <Style.ItemContainer>
             <Style.SpeakerPicture source={{ uri: picture }} />
-            <Style.InfoView>
-              <Style.SpeakerText>{name}</Style.SpeakerText>
-              <Style.SpeakerText>{job} @ {company}</Style.SpeakerText>
-            </Style.InfoView>
+            <Style.SpeakerText>{name}</Style.SpeakerText>
+            <Style.TitleText>{job} @ {company}</Style.TitleText>
           </Style.ItemContainer>
 
           <Style.Header>
             <Style.SpeakerText>{I18n.t('speaker.about')}</Style.SpeakerText>
-            <Style.ReadMoreView onPress={() => this.setState({ isReadMore: true })}>
+            <Style.ReadMoreView onPress={() => this.setState({ isReadMore: !this.state.isReadMore })}>
               <Style.ReadMoreText>{I18n.t('speaker.more')}</Style.ReadMoreText>
             </Style.ReadMoreView>
           </Style.Header>
@@ -89,9 +87,6 @@ export default class SpeakerDetail extends Component {
             // />
           }
 
-          <Style.Header>
-            <Style.SpeakerText>{I18n.t('speaker.speech')}</Style.SpeakerText>
-          </Style.Header>
           <ScheduleView key={`speaker_${speaker.schedule_id || topic}`}>
             <ScheduleHeader
               // time={agenda.duration}
