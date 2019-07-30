@@ -29,13 +29,16 @@ export default {
   },
   sponsor:{
     title: 'Sponsor',
+    info: 'Sponsor',
     special_thanks: 'Special Thanks',
+    more: 'More',
   },
   scheduleDetail:{
     title: 'Speech',
   },
   speaker: {
     title: 'Speaker',
+    list: 'Speaker',
     about: 'About',
     more: 'more',
     speech: 'Speech',

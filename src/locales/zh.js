@@ -28,14 +28,17 @@ export default {
     schedule: '查看議程',
   },
   sponsor:{
-    title: '贊助商',
+    title: '贊助廠商',
+    info: '贊助廠商資訊',
     special_thanks: '特別感謝',
+    more: '了解更多',
   },
   scheduleDetail:{
     title: '演講',
   },
   speaker: {
     title: '講者介紹',
+    list: '講者列表',
     about: '關於講者',
     more: '閱讀全部',
     speech: '演講場次',
