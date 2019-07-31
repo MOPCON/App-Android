@@ -1,12 +1,12 @@
 import React from 'react'
-import { ScrollView } from 'react-native';
+import { ScrollView, Linking } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import I18n from '../../locales';
 import * as Style from './style';
 
 export default class SponsorDetail extends React.Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.title', 'mode2')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.info', 'mode2')
 
   state = {
     sponsor: {}
@@ -19,6 +19,12 @@ export default class SponsorDetail extends React.Component {
 
     this.setState({ sponsor });
   }
+
+
+  openLink = (url) => {
+    Linking.openURL(url);
+  }
+
 
   render() {
     const { sponsor } = this.state;
@@ -40,6 +46,9 @@ export default class SponsorDetail extends React.Component {
           <Style.SponsorDesc>
             {info}
           </Style.SponsorDesc>
+          <Style.MoreButton onPress={() => this.openLink(sponsor.website)}>
+            <Style.MoreText>{I18n.t('sponsor.more')}</Style.MoreText>
+          </Style.MoreButton>
         </Style.SDContainer>
       </ScrollView>
     );

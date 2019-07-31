@@ -28,14 +28,17 @@ export default {
     schedule: '查看議程',
   },
   sponsor:{
-    title: '贊助商',
+    title: '贊助廠商',
+    info: '贊助廠商資訊',
     special_thanks: '特別感謝',
+    more: '了解更多',
   },
   scheduleDetail:{
     title: '演講',
   },
   speaker: {
     title: '講者介紹',
+    list: '講者列表',
     about: '關於講者',
     more: '閱讀全部',
     speech: '演講場次',
@@ -44,7 +47,11 @@ export default {
     title: '社群',
     tab_community: '主辦社群',
     tab_volunteer: '志工組織',
+    community_info: '社群資訊',
+    volunteer_info: '志工資訊',
     unconference: '查看交流場次',
+    more: '了解更多',
+    member: '成員',
   },
   communityDetail: {
     title: '社群'

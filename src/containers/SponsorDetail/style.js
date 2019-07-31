@@ -5,13 +5,10 @@ export const SDContainer = styled.View`
   background-color: ${darkBlue};
   padding: 16px;
   flex-grow:1;
+  align-items: center;
 `;
 
 export const CardView = styled.View`
-  width: 100%;
-  height: 165px;
-  background: white;
-  border-radius: 10px;
   margin-bottom: 24px;
   display: flex;
   justify-content: center;
@@ -19,12 +16,12 @@ export const CardView = styled.View`
 `;
 
 export const CardImg = styled.Image`
-  width: 132px;
-  height: 132px;
+  width: 80px;
+  height: 80px;
+  border-radius: 80px;
 `;
 
 export const SponsorName = styled.Text`
-  color: ${scheduleCardTypeColor};
   font-family: 'Roboto-Medium';
   font-size: 16px;
   letter-spacing: 2.7px;
@@ -39,5 +36,19 @@ export const SponsorDesc = styled.Text`
   line-height: 22px;
   text-align: justify;
   letter-spacing: 0.3px;
-  margin-bottom: 16px;
+  margin-bottom: 70px;
+`;
+
+export const MoreButton = styled.TouchableOpacity`
+  width: 172px;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 13px 40px;
+  border: 1px solid #00aaf0;
+  border-radius: 6px;
+`;
+
+export const MoreText = styled.Text`
+  font-size: 16px;
+  color: #00aaf0;
 `;

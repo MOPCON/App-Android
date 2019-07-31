@@ -7,7 +7,7 @@ import NavigationOptions from '../../components/NavigationOptions/NavigationOpti
 import SpeakerItem from '../../components/SpeakerItem/SpeakerItem';
 
 export default class Speaker extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.title', 'mode2')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.list', 'mode2')
 
   state = {
     speaker: []

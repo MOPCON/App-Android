@@ -7,7 +7,8 @@ import SplashScreen from 'react-native-splash-screen';
 // component
 import News from './News';
 import LangSelect from '../../components/LangSelect/LangSelect';
-import TopicCarousel from '../../components/TopicCarousel/TopicCarousel';
+import TopicScheduleCarousel from '../../components/TopicScheduleCarousel/TopicScheduleCarousel';
+import TopicImageCarousel from '../../components/TopicImageCarousel/TopicImageCarousel';
 import * as Style from './style';
 
 // image
@@ -70,11 +71,14 @@ export default class Main extends Component {
               <Image style={{ width: 200, height: 40 }} resizeMode="contain" source={mopconLogo} />
               <LangSelect language={language} onChange={onChangeLanguage} />
             </Style.LogoContainer>
+          </Style.Content>
+          <TopicImageCarousel />
+          <Style.Content>
             <Style.NewsContainer>
               <News news={news} toNews={() => this.navigate('News')} />
             </Style.NewsContainer>
           </Style.Content>
-          <TopicCarousel />
+          <TopicScheduleCarousel />
         </Style.ScrollContainer>
       </Style.Container>
     )
