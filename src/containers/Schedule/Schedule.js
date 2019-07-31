@@ -11,11 +11,11 @@ import CommonScheduleItem from '../../components/ScheduleItem/CommonScheduleItem
 
 import Tab from '../../components/Tab/Tab';
 import TabDate from '../../components/TabDate/TabDate';
-import Button from '../../components/Button/Button';
 
 export default class Schedule extends Component {
   state = {
     schedule: [],
+    unconf: [],
     nowScheduleDate: '',
     savedSchedule: {},
     nowCategory: 'all',
@@ -26,12 +26,14 @@ export default class Schedule extends Component {
     const scheduleText = await AsyncStorage.getItem('schedule');
     const savedScheduleText = await AsyncStorage.getItem('savedschedule');
     const schedule = JSON.parse(scheduleText).payload.agenda;
+    const unconf = JSON.parse(scheduleText).payload.talk;
     let savedSchedule = JSON.parse(savedScheduleText);
     if (!savedSchedule) { savedSchedule = {}; }
 
     const nowScheduleDate = this.props.navigation.getNestedValue(['state', 'params', 'nowScheduleDate']) || schedule[0].date;
     console.log(schedule);
     this.setState({
+      unconf,
       schedule,
       nowScheduleDate,
       savedSchedule,
@@ -91,46 +93,78 @@ export default class Schedule extends Component {
 
   onChangeCategory = nowCategory => this.setState({ nowCategory })
 
+  renderSchedule = () => {
+    const { schedule, nowScheduleDate } = this.state;
+    return schedule.map((scheduleData) => (
+      <Style.AgendaView
+        key={`schedule${scheduleData.date}`}
+        active={nowScheduleDate === scheduleData.date}>
+        {scheduleData.items.map((itemData) => (
+          <View key={`item${scheduleData.date},${itemData.duration}`}>
+            {
+              itemData.agendas.map(this.renderScheduleItem)
+            }
+          </View>
+        ))}
+      </Style.AgendaView>
+    ))
+  }
+
+  renderUnconf = () => {
+    const { unconf, nowScheduleDate } = this.state;
+    return unconf.map(unconfData => (
+      <Style.AgendaView
+        key={`schedule${unconfData.date}`}
+        active={nowScheduleDate === unconfData.date}>
+        {unconfData.items.map(itemData => (
+          itemData.type === 'topic' ? (
+            <ScheduleView key={`item${unconfData.date},${itemData.duration}`}>
+              <ScheduleHeader time={itemData.duration} />
+              <ScheduleItem
+                title={itemData.topic}
+                onPressTitle={this.onPressTitle}
+                room={I18n.t('unConf.location')}
+                name={itemData.speaker}
+                paintBG={itemData.type === 'others'}
+              />
+            </ScheduleView>
+          ) : (
+              <CommonScheduleItem title={itemData.topic} time={itemData.duration} />
+            )
+
+        ))}
+      </Style.AgendaView>
+    ))
+  }
+
   render() {
     const { schedule, nowScheduleDate, nowCategory } = this.state;
     const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
     const categoryTabs = [
       { name: I18n.t('schedule.allSchedule'), value: 'all' },
       { name: I18n.t('schedule.favoriteSchedule'), value: 'favorite' },
+      { name: I18n.t('unConf.title'), value: 'unconf' },
     ];
     return (
       <Style.ScheduleContainer>
         {
-          tabs.length ?
-            <TabDate tabs={tabs} defaultActiveTab={nowScheduleDate} onChange={this.onChangeTab} /> :
-            <View />
+          tabs.length
+            ? <TabDate tabs={tabs} defaultActiveTab={nowScheduleDate} onChange={this.onChangeTab} />
+            : <View />
         }
 
-        <Tab tabs={categoryTabs} defaultActiveTab={nowCategory} onChange={this.onChangeCategory} />
+        {
+          tabs.length
+            ? <Tab tabs={categoryTabs} defaultActiveTab={nowCategory} onChange={this.onChangeCategory} />
+            : <View />
+        }
 
         {
-          schedule.map((scheduleData) => (
-            <Style.AgendaView
-              key={`schedule${scheduleData.date}`}
-              active={nowScheduleDate === scheduleData.date}>
-              {scheduleData.items.map((itemData) => (
-                <View key={`item${scheduleData.date},${itemData.duration}`}>
-                  {
-                    itemData.agendas.map(this.renderScheduleItem)
-                  }
-                </View>
-              ))}
-            </Style.AgendaView>
-          ))
+          nowCategory === 'unconf'
+            ? this.renderUnconf()
+            : this.renderSchedule()
         }
       </Style.ScheduleContainer>
     )
   }
 }
-
-
-// {
-//   tabs.length ?
-//     <Button onClick={this.goToUnConf} text={I18n.t('community.unconference')} align="center" margin={[16, 0, 0, 0]} /> :
-//     <View />
-// }

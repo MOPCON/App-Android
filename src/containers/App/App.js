@@ -108,7 +108,7 @@ class App extends Component {
   // TODO add try catch;
   async componentDidMount() {
     try {
-      // this.updateData();
+      this.updateData();
     } catch (e) { }
   }
 
