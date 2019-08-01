@@ -41,22 +41,18 @@ export default class ScheduleDetail extends React.Component {
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SDContainer>
           <Style.IntroContainer>
+            <Style.SpeakerContainer>
+              <Style.SpeakerImg source={{ uri: agenda.picture }} />
+              <Style.NameText>{lang === 'zh' ? agenda.name : agenda.name_en}</Style.NameText>
+              <Style.JobText>{`${agenda.job}@${agenda.company}`}</Style.JobText>
+            </Style.SpeakerContainer>
             <Style.SpeechItemContainer>
               <Style.Title>
                 {lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
               </Style.Title>
+              <Style.CategoryText>{agenda.category}</Style.CategoryText>
             </Style.SpeechItemContainer>
-            <Style.SpeechItemContainer>
-              <Style.Row>
-                <Style.JobText>{lang === 'zh' ? agenda.name : agenda.name_en}</Style.JobText>
-              </Style.Row>
-              <Style.RowSpace>
-                <Style.JobText>{`${agenda.job}@${agenda.company}`}</Style.JobText>
-                <Style.StarIconTouchable onPress={this.onSave(agenda.schedule_id)}>
-                  <Style.StarIconImg source={savedSchedule[agenda.schedule_id] ? starIconChecked : starIconNormal} />
-                </Style.StarIconTouchable>
-              </Style.RowSpace>
-            </Style.SpeechItemContainer>
+            <Style.Line />
             <Style.DesText>
               {
                 lang === 'zh' ? agenda.schedule_info : agenda.schedule_info_en
@@ -70,6 +66,13 @@ export default class ScheduleDetail extends React.Component {
 }
 
 /*
+
+
+
+<Style.StarIconTouchable onPress={this.onSave(agenda.schedule_id)}>
+                  <Style.StarIconImg source={savedSchedule[agenda.schedule_id] ? starIconChecked : starIconNormal} />
+                </Style.StarIconTouchable>
+
 
 <SpeechItem
   color="inverse"

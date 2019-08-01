@@ -24,17 +24,22 @@ export const DesText = styled.Text`
 `;
 
 export const SpeechItemContainer = styled.View`
-  margin-bottom: 16px;
 `;
 
 export const Title = styled.Text`
   color: white;
   font-size: 18px;
+  margin-bottom: 16px;
 `;
 
 export const JobText = styled.Text`
-  font-size: 16px;
+  font-size: 12px;
   color: #878787;
+`;
+
+export const NameText = styled.Text`
+  font-size: 16px;
+  color: white;
 `;
 
 export const Row = styled.View`
@@ -55,3 +60,26 @@ export const StarIconImg = styled.Image`
 export const StarIconTouchable = styled.TouchableOpacity`
   
 `;
+
+export const SpeakerImg = styled.Image`
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
+`;
+
+export const SpeakerContainer = styled.View`
+  align-items: center;
+  margin: 24px 0;
+`;
+
+export const CategoryText = styled.Text`
+  font-size: 12px;
+  color: #00aaf0;
+`;
+
+export const Line = styled.View`
+  width: 100%;
+  height: 0px;
+  border: 1px solid #878787;
+  margin: 40px 0;
+`
