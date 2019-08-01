@@ -44,8 +44,13 @@ export default class Schedule extends Component {
     this.setState({ nowScheduleDate: date });
   }
 
-  onPressTitle = (agenda) => () => {
-    this.props.navigation.navigate('ScheduleDetail', { agenda });
+  onPressTitle = (agenda, mode) => () => {
+    const params = { agenda };
+
+    if (mode === 'schedule') {
+      params.saved = this.state.savedSchedule[agenda.schedule_id];
+    }
+    this.props.navigation.navigate('ScheduleDetail', params);
   }
 
   onSave = (schedule_id) => () => {
@@ -76,7 +81,7 @@ export default class Schedule extends Component {
           regular
           title={title}
           category={agenda.category}
-          onPressTitle={agenda.schedule_id ? this.onPressTitle(agenda) : () => { }}
+          onPressTitle={agenda.schedule_id ? this.onPressTitle(agenda, 'schedule') : () => { }}
           name={I18n.locale === 'zh' ? agenda.name : agenda.name_en}
           room={agenda.location} />
       </ScheduleView>

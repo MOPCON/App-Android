@@ -5,6 +5,8 @@ import * as theme from '../../theme';
 
 import iconClose from '../../images/icon/iconClose.png';
 import iconLeftArrow from '../../images/icon/iconLeftArrow.png';
+import starIconNormal from '../../images/buttonStarNormal.png';
+import starIconChecked from '../../images/buttonStarChecked.png';
 
 /**
  * mode1: 左方無back button，右方 close button
@@ -50,9 +52,19 @@ export default (navigation, title, mode = 'mode1') => {
         <Image source={iconLeftArrow}/>
       </TouchableOpacity>
     );
+    
+    let showSaved = false;
+
+    if (navigation.state.params) {
+      showSaved = Object.keys(navigation.state.params).indexOf('saved') !== -1;
+    }
 
     options.headerRight = (
-      <View style={{marginRight: 30}} />
+      showSaved ? (
+        <Image style={{ marginRight: 20 }} source={navigation.state.params.saved ? starIconChecked : starIconNormal} />
+      ) : (
+        <View style={{marginRight: 30}} />
+      )
     )
   }
 
