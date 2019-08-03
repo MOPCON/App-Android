@@ -45,7 +45,8 @@ export default class Schedule extends Component {
   }
 
   onPressTitle = (agenda) => () => {
-    this.props.navigation.navigate('ScheduleDetail', { agenda });
+    const savedStatus = this.state.savedSchedule[agenda.schedule_id];
+    this.props.navigation.navigate('ScheduleDetail', { agenda, savedStatus, onSave: this.onSave });
   }
 
   onSave = (schedule_id) => () => {
