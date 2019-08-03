@@ -8,33 +8,28 @@ import starIconNormal from '../../images/buttonStarNormal.png';
 import starIconChecked from '../../images/buttonStarChecked.png';
 
 export default class ScheduleDetail extends React.Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'scheduleDetail.title', 'mode2')
-
-  state = {
-    savedSchedule: {},
+  static navigationOptions = ({ navigation }) => {
+    const options = NavigationOptions(navigation, 'scheduleDetail.title', 'mode2');
+    const agenda = navigation.getParam('agenda', {});
+    const savedStatus = navigation.getParam('savedStatus', {});
+    const onSave = navigation.getParam('onSave', () => { });
+    const onPress = () => {
+      onSave(agenda.schedule_id)();
+      navigation.setParams({ savedStatus: !savedStatus });
+    }
+    options.headerRight = (
+      <Style.StarIconTouchable onPress={onPress}>
+        <Style.StarIconImg source={savedStatus ? starIconChecked : starIconNormal} />
+      </Style.StarIconTouchable>
+    );
+    return options;
   }
 
   async componentDidMount() {
-    const savedScheduleText = await AsyncStorage.getItem('savedschedule');
-    let savedSchedule = JSON.parse(savedScheduleText);
-    if (!savedSchedule) { savedSchedule = {}; }
-    this.setState({
-      savedSchedule,
-    });
-  }
-
-  onSave = (schedule_id) => () => {
-    const savedSchedule = {
-      ...this.state.savedSchedule,
-    };
-    savedSchedule[schedule_id] = !savedSchedule[schedule_id];
-    this.setState({ savedSchedule });
-    AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
 
   render() {
     const { navigation } = this.props;
-    const { savedSchedule } = this.state;
     const lang = I18n.locale;
     const agenda = navigation.getParam('agenda', {});
     return (
