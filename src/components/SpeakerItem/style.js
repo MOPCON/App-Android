@@ -28,11 +28,12 @@ export const Title = styled.Text`
   color: #fff;
   margin-bottom: 8px;
 `;
+
 export const Info = styled.Text`
   font-size: 16px;
   color: #fff;
   opacity: 0.6;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   flex: 1;
   flex-wrap: wrap;
 `;

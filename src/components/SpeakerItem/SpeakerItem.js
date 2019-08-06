@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as Style from './style';
+import TagBlock from '../TagBlock/TagBlock';
 
-import { View } from 'react-native';
+import * as Style from './style';
 
 export default class SpeakerItem extends Component {
   static propTypes = {
@@ -27,12 +27,8 @@ export default class SpeakerItem extends Component {
         </Style.ImageContainer>
         <Style.ContentContainer>
           <Style.Title>{name}</Style.Title>
-          <View style={{flexDirection:'row'}}>
-            <Style.Info>{job}</Style.Info>
-          </View>
-          <View style={{flexDirection:'row'}}>
-            <Style.Info>{company}</Style.Info>
-          </View>
+          <Style.Info>{job} @ {company}</Style.Info>
+          <TagBlock />
         </Style.ContentContainer>
       </Style.SpeakerItemContainer>
     );

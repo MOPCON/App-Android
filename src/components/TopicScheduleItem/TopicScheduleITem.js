@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
+import TagBlock from '../TagBlock/TagBlock';
 import iconStarNormal from '../../images/buttonStarNormal.png'
 import tempImg from '../../images/temp.jpg'
 import geoPng from '../../images/location.png';
@@ -9,12 +10,10 @@ import geoPng from '../../images/location.png';
 const Container = styled.View`
   border: 1px solid #00aaf0;
   border-radius: 6px;
-  padding: 16px 0;
-  height: 300px;
+  padding: 16px 20px;
 `;
 
 const HeaderContainer = styled.View`
-  padding: 0 20px;
   flex-direction: row;
   align-content: center;
   justify-content: space-between;
@@ -36,7 +35,6 @@ const MainImage = styled.Image`
 `;
 
 const TitleContainer = styled.View`
-  padding: 0 20px;
   margin-bottom: 16px;
 `;
 
@@ -46,7 +44,6 @@ const TitleText = styled.Text`
 `;
 
 const FooterContainer = styled.View`
-  padding: 0 20px;
   flex-direction: row;
 `;
 
@@ -75,10 +72,14 @@ const TopicScheduleItem = () => {
         <Time>10:15 - 11:00</Time>
         <FavImg source={iconStarNormal} />
       </HeaderContainer>
-      <MainImage source={tempImg} resizeMode="cover" />
+      {
+        // 看UI似乎是拿掉了
+        // <MainImage source={tempImg} resizeMode="cover" />
+      }
       <TitleContainer>
         <TitleText>這是演講主題 - 聊聊你不知道的兩岸創業及產品運營那些事</TitleText>
       </TitleContainer>
+      <TagBlock />
       <FooterContainer>
         <Speaker>田哲禹</Speaker>
         <LocationContainer>

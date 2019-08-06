@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from './style';
 import geoPng from '../../images/location.png';
+import TagBlock from '../TagBlock/TagBlock';
 
 
 export default class ScheduleItem extends Component {
@@ -29,6 +30,7 @@ export default class ScheduleItem extends Component {
               <Style.TitleTouchable onPress={this.onPressTitle}>
                 <Style.Title paintBG={paintBG}>{title}</Style.Title>
               </Style.TitleTouchable>
+              <TagBlock />
               <Style.ActionContainer>
                 <Style.Name>{name}</Style.Name>
                 {
