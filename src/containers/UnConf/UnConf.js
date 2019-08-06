@@ -74,6 +74,7 @@ export default class UnConf extends React.Component {
                         room={I18n.t('unConf.location')}
                         name={itemData.speaker}
                         paintBG={itemData.type === 'others'}
+                        tags={[]}
                       />
                     </ScheduleView>
                   ) : (
