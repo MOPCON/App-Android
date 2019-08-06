@@ -39,13 +39,15 @@ const TagBlock = (props) => {
   const { tags } = props;
 
   return (
-    <Container>
-      {
-        tags.map(tag => (
-          <Tag tag={tag}><TagText>{TAG[tag].text}</TagText></Tag>
-        ))
-      }
-    </Container>
+    tags.length > 0 && (
+      <Container>
+        {
+          tags.map(tag => (
+            <Tag tag={tag}><TagText>{TAG[tag].text}</TagText></Tag>
+          ))
+        }
+      </Container>
+    )
   );
 };
 
