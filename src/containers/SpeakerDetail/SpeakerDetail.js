@@ -8,6 +8,9 @@ import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import ScheduleView from '../../components/ScheduleItem/ScheduleView';
 // import SpeechItem from '../../components/SpeechItem/SpeechItem';
+import iconFB from '../../images/icon/iconFB.png';
+import iconGithub from '../../images/icon/iconGithub.png';
+import iconIG from '../../images/icon/iconIG.png';
 import * as Style from './style';
 
 export default class SpeakerDetail extends Component {
@@ -66,6 +69,11 @@ export default class SpeakerDetail extends Component {
             <Style.SpeakerPicture source={{ uri: picture }} />
             <Style.SpeakerText>{name}</Style.SpeakerText>
             <Style.TitleText>{job} @ {company}</Style.TitleText>
+            <Style.IconContainer>
+              <Style.Icon source={iconFB} />
+              <Style.Icon source={iconGithub} />
+              <Style.Icon source={iconIG} />
+            </Style.IconContainer>
           </Style.ItemContainer>
 
           <Style.Header>

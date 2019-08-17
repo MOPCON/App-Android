@@ -31,6 +31,7 @@ export const SpeakerText = styled.Text`
 export const TitleText = styled.Text`
   font-size: 13px;
   color: #878787;
+  margin-bottom: 16px;
 `;
 
 export const Header = styled.View`
@@ -54,4 +55,16 @@ export const Intro = styled.Text`
   letter-spacing: 1;
   line-height: 24;
   margin-bottom: 40;
+`;
+
+export const IconContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+`;
+
+export const Icon = styled.Image`
+  width: 18px;
+  height: 18px;
+  margin: 0 10px;
 `;
