@@ -5,6 +5,7 @@ export default {
     MySchedule: 'My-Schedule',
     Unconference: 'Unconf',
     Mission: 'Mission',
+    Game: 'Game',
     Sponsors: 'Sponsors',
     Speakers: 'Speakers',
     Community: 'Community',
@@ -77,6 +78,9 @@ export default {
     exchangeCode: 'Please input exhange code.',
     exchangeInfo: 'You will exchange',
     capsules: 'capsule(s).',
+  },
+  game: {
+    title: 'Game',
   },
   missionDetail: {
     quiz: 'Q&A',

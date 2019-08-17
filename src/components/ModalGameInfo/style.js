@@ -13,41 +13,48 @@ export const BodyContainer = styled.View`
 `;
 
 export const InfoContainer = styled.View`
-  width: 340px;
+  width: 90%;
   height: auto;
-  border: 2px solid ${scheduleCardTypeColor};
-  border-radius: 4px;
-  background-color: ${darkBlue};
-  padding: 16px;
+  border-radius: 20px;
+  background-color: #0b425e;
+  padding: 48px 30px 24px 30px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const InfoTitle = styled.Text`
-  color: ${scheduleCardTypeColor};
-  font-size: 30px;
+  color: #fff;
+  font-size: 22px;
   text-align: center;
   margin-bottom: 16px;
 `;
 
 export const InfoDesc = styled.Text`
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 30px;
-  margin-bottom: 16px;
+  margin-bottom: 60px;
 `;
 
 export const Touch = styled.TouchableOpacity`
 `;
 
 export const Btn = styled.View`
+  width: 170px;
   height: 60px;
-  width: 100%;
   background-color: ${scheduleCardTypeColor};
   justify-content: center;
   align-items: center;
-  border-radius: 3px;
+  border-radius: 6px;
 `;
 
 export const BtnText = styled.Text`
   font-size: 20px;
   color: white;
+`;
+
+export const WelcomeImage = styled.Image`
+  width: 100px;
+  height: 100px;
+  margin-bottom: 24px;
 `;
