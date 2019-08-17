@@ -14,3 +14,24 @@ export const GameContainer = styled.View`
 
 export const ScrollContainer = styled.ScrollView`
 `;
+
+export const ProfileContainer = styled.View`
+  margin: 20px 0 30px 0;
+  flex-direction: row;
+`;
+
+export const UserIcon = styled.Image`
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+`;
+
+export const TotalText = styled.Text`
+  color: #fff;
+  font-size: 20px;
+`;
+
+export const ScoreText = styled.Text`
+  color: #fff;
+  font-size: 32px;
+`;

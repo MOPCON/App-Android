@@ -81,6 +81,8 @@ export default {
   },
   game: {
     title: 'Game',
+    total_score: 'Total Score',
+    my_reward: 'Reward',
   },
   missionDetail: {
     quiz: 'Q&A',

@@ -81,6 +81,8 @@ export default {
   },
   game: {
     title: '遊戲',
+    total_score: '累積分數',
+    my_reward: '我的獎勵',
   },
   missionDetail: {
     quiz: '問答',

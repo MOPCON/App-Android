@@ -31,7 +31,7 @@ export const ButtonText = styled.Text`
   font-family: Roboto-Medium;
   letter-spacing: 1px;
   font-size: 14px;
-  color: ${p => p.color === 'primary' ? 'white' : scheduleCardTypeColor};
+  color: white;
 `;
 
 export const ButtonIcon = styled.Image`
