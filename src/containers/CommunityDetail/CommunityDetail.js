@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, Linking } from 'react-native';
+import apiService from '../../api/services';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
 import I18n from '../../locales';
@@ -12,12 +13,17 @@ export default class CommunityDetail extends Component {
     community: {},
   }
 
-  async componentDidMount() {
-    const { id } = this.props.navigation.state.params;
-    const communityText = await AsyncStorage.getItem('community');
-    const community = JSON.parse(communityText).payload.find(c => c.id === id);
-
+  getDetail = async (url) => {
+    const { data: community } = await apiService.get(url);
     this.setState({ community });
+  }
+
+  async componentDidMount() {
+    const { url } = this.props.navigation.state.params;
+    // const communityText = await AsyncStorage.getItem('community');
+    // const community = JSON.parse(communityText).payload.find(c => c.id === id);
+    // this.setState({ community });
+    this.getDetail(url);
   }
 
   linkBtn = () => {
@@ -33,25 +39,24 @@ export default class CommunityDetail extends Component {
       </Style.MoreButton>
     );
   }
-  
+
   render() {
     const { community } = this.state;
-    const title = community.title;
-    const info = I18n.locale === 'en' ? community.info_en : community.info;
+    // const info = I18n.locale === 'en' ? community.info_en : community.info;
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.Container>
           <Style.logo
-            source={{ uri: community.logo }}
+            source={{ uri: community.photo }}
           />
           <Style.Title>
-            { title }
+            {community.name}
           </Style.Title>
           <Style.Content>
-            { info }
+            {community.introducion}
           </Style.Content>
-          { this.linkBtn() }
+          {this.linkBtn()}
         </Style.Container>
       </ScrollView>
     );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, Linking } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import apiServices from '../../api/services'
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
@@ -17,17 +18,16 @@ export default class Community extends Component {
   state = {
     tab: 'community',
     community: [],
-    volunteer: [],
+    participant: [],
   }
 
-  async componentDidMount() {
-    const communityText = await AsyncStorage.getItem('community');
-    const community = JSON.parse(communityText).payload;
+  getData = async () => {
+    const { data: { community, participant } } = await apiServices.get('/community');
+    this.setState({ community, participant });
+  }
 
-    const volunteerText = await AsyncStorage.getItem('volunteer');
-    const volunteer = JSON.parse(volunteerText).payload;
-
-    this.setState({ community, volunteer });
+  componentDidMount() {
+    this.getData();
   }
 
   handleChange = (tab) => {
@@ -37,11 +37,11 @@ export default class Community extends Component {
   }
 
   goCommunityDetail = (id) => {
-    this.props.navigation.navigate('CommunityDetail', { id });
+    this.props.navigation.navigate('CommunityDetail', { url: `/community/organizer/${id}` });
   }
 
   goVolunteerDetail = (id) => {
-    this.props.navigation.navigate('VolunteerDetail', { id });
+    this.props.navigation.navigate('VolunteerDetail', { url: `/community/participant/${id}` });
   }
 
   goFB = (url) => {

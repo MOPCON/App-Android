@@ -44,12 +44,11 @@ export default class Main extends Component {
   }
 
   async componentDidMount() {
-    const newsText = await AsyncStorage.getItem('news');
+    // const newsText = await AsyncStorage.getItem('news');
 
-    this.setState({
-      news: JSON.parse(newsText).payload,
-    });
-
+    // this.setState({
+    //   news: JSON.parse(newsText).payload,
+    // });
     SplashScreen.hide();
   }
 

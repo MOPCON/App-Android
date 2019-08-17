@@ -11,9 +11,9 @@ export default class CommunityBlock extends Component {
           community.map(c => (
             <Style.CardSmall key={`community_${c.id}`} onPress={() => goCommunityDetail(c.id)}>
               <Style.CardImgSmall
-                source={{ uri: c.logo }}
+                source={{ uri: c.photo }}
               />
-              <Style.CardText>{c.title}</Style.CardText>
+              <Style.CardText>{c.name}</Style.CardText>
             </Style.CardSmall>
           ))
         }

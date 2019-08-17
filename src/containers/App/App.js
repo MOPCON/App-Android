@@ -4,6 +4,7 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 import { RSA } from 'react-native-rsa-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
+import SplashScreen from 'react-native-splash-screen';
 import I18n from '../../locales';
 import Header from './Header';
 import Main from '../Main/Main';
@@ -39,6 +40,9 @@ import iconNews from '../../images/icon/iconNews.png';
 import iconNewsActive from '../../images/icon/iconNewsActive.png';
 import iconMore from '../../images/icon/iconMore.png';
 import iconMoreActive from '../../images/icon/iconMoreActive.png';
+
+
+SplashScreen.hide();
 
 const getLanguageCode = () => {
   let systemLanguage = 'en';
@@ -106,10 +110,16 @@ class App extends Component {
     }
   }
 
+  initialData = async() => {
+    const data = await apiServices.get('/initial');
+    console.log(data);
+  }
+
   // TODO add try catch;
   async componentDidMount() {
     try {
       // this.updateData();
+      this.initialData();
     } catch (e) { }
   }
 
@@ -205,7 +215,7 @@ const MyStack = new createStackNavigator({
   QA: { screen: QA },
   // MissionDetail: { screen: MissionDetail },
 }, {
-  initialRouteName: 'Main'
+  initialRouteName: 'Community'
 });
 
 const AppContainer = createAppContainer(MyStack);
