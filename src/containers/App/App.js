@@ -215,7 +215,7 @@ const MyStack = new createStackNavigator({
   QA: { screen: QA },
   // MissionDetail: { screen: MissionDetail },
 }, {
-  initialRouteName: 'Community'
+  initialRouteName: 'Sponsor'
 });
 
 const AppContainer = createAppContainer(MyStack);
