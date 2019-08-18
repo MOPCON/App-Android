@@ -24,6 +24,7 @@ import QA from '../QA/QA';
 // import Missiontable from '../MissionTable/Missiontable';
 // import MissionDetail from '../MissionDetail/MissionDetail';
 import Game from '../Game/Game';
+import Reward from '../Reward/Reward';
 import More from '../More/More';
 import Page from '../../components/Page/Page';
 import * as Style from './Style';
@@ -196,7 +197,6 @@ const MyStack = new createStackNavigator({
   ScheduleDetail: { screen: ScheduleDetail },
   MySchedule: { screen: MySchedule },
   UnConf: { screen: UnConf },
-  ScheduleDetail: { screen: ScheduleDetail },
   Sponsor: { screen: Sponsor },
   SponsorDetail: { screen: SponsorDetail },
   Speaker: { screen: Speaker },
@@ -206,6 +206,7 @@ const MyStack = new createStackNavigator({
   VolunteerDetail: { screen: VolunteerDetail },
   QRCode: { screen: QRCode },
   QA: { screen: QA },
+  Reward: { screen: Reward },
   // MissionDetail: { screen: MissionDetail },
 }, {
   initialRouteName: 'Main'

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import apiServices from '../../api/services';
 import PropTypes from 'prop-types';
 import I18n from '../../locales';
 import Button from '../Button/Button';
 import { Consumer } from '../../store';
-import IconPng from '../../images/icon/iconCapsule.png';
+import iconExchange from '../../images/icon/iconExchange.png';
 import * as Style from './style';
 
 @Consumer('missionStore')
@@ -79,7 +79,7 @@ export default class ModalExchange extends React.PureComponent {
             hasCheckView
               ? (
                 <Style.InfoContainer>
-                  <Style.ExchangePng source={IconPng} />
+                  <Style.ExchangePng source={iconExchange} />
                   <Style.ExchangeText>
                     {I18n.t('missionTable.exchangeInfo')}
                     <Style.ExchangeCoinText>{exchangeCapsules}</Style.ExchangeCoinText>
@@ -93,15 +93,21 @@ export default class ModalExchange extends React.PureComponent {
               )
               : (
                 <Style.InfoContainer>
+                  <Style.ExchangePng source={iconExchange} />
+                  <Style.ExchangeTitle>輸入兌換密碼</Style.ExchangeTitle>
                   <Style.TextInput
-                    placeholder={I18n.t('missionTable.exchangeCode')}
-                    placeholderTextColor="#00d0cb"
+                    // placeholder={I18n.t('missionTable.exchangeCode')}
+                    // placeholderTextColor="#00d0cb"
                     onChangeText={this.onChangeText}
                     value={text}
                   />
                   <Style.ButtonsContainer>
-                    <Button onClick={this.onClose} text={I18n.t('common.close')} margin={[16, 16, 16, 0]} />
-                    <Button color="primary" onClick={this.onClickExchange} text={I18n.t('common.ok')} />
+                    <View style={{ width: 100, height: 50, marginRight: 60 }}>
+                      <Button block color="primary" onClick={this.onClickExchange} text={I18n.t('common.ok')} />
+                    </View>
+                    <View style={{ width: 100, height: 50 }}>
+                      <Button block color="inverse" onClick={this.onClose} text={I18n.t('common.close')} margin={[16, 16, 16, 0]} />
+                    </View>
                   </Style.ButtonsContainer>
                 </Style.InfoContainer>
               )

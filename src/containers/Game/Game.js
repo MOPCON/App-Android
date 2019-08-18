@@ -98,6 +98,10 @@ export default class Game extends Component {
     this.setState({ modalRewardVisible: false });
   }
 
+  goReward = () => {
+    this.props.navigation.navigate('Reward');
+  }
+
   render() {
     const { modalWelcomeVisible, modalRewardVisible, score } = this.state;
 
@@ -110,7 +114,7 @@ export default class Game extends Component {
               <Style.UserIcon source={avatarUser} />
               <View style={{ justifyContent: 'space-around' }}>
                 <Style.TotalText>{I18n.t('game.total_score')}</Style.TotalText>
-                <Button onClick={() => {}} color="inverse" text={I18n.t('game.my_reward')} margin={[0, 0, 0, 0]} />
+                <Button onClick={this.goReward} color="inverse" text={I18n.t('game.my_reward')} margin={[0, 0, 0, 0]} />
               </View>
               <View style={{ flex: 1, alignItems: 'flex-end' }}>
                 <Style.ScoreText>{score}</Style.ScoreText>

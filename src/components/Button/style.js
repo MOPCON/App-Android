@@ -25,6 +25,7 @@ export const ButtonTouchable = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   width: ${p => p.block ? '100%' : 'auto'};
   opacity: ${p => p.disabled ? '0.5' : '1'};
 `;
