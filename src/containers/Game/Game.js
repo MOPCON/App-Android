@@ -4,6 +4,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 import I18n from '../../locales';
 import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
+import ModalReward from '../../components/ModalReward/ModalReward';
 import Button from '../../components/Button/Button';
 import GameBlock from './GameBlock';
 import avatarUser from '../../images/avatar/avatarUser.png';
@@ -76,7 +77,8 @@ export default class Game extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'game.title', 'mode1')
 
   state = {
-    modalVisible: false,
+    modalWelcomeVisible: false,
+    modalRewardVisible: false,
     score: 1,
   }
 
@@ -84,12 +86,20 @@ export default class Game extends Component {
     SplashScreen.hide();
   }
 
-  onCloseModal = () => {
-    this.setState({ modalVisible: false });
+  onCloseModalWelcome = () => {
+    this.setState({ modalWelcomeVisible: false });
+  }
+
+  onOpenModalReward = () => {
+    this.setState({ modalRewardVisible: true });
+  }
+
+  onCloseModalReward = () => {
+    this.setState({ modalRewardVisible: false });
   }
 
   render() {
-    const { modalVisible, score } = this.state;
+    const { modalWelcomeVisible, modalRewardVisible, score } = this.state;
 
     return (
       <Style.GameContainer>
@@ -112,14 +122,20 @@ export default class Game extends Component {
               <Style.ProgressText>{score}/8</Style.ProgressText>
             </View>
             {
-              DATA.map(data => <GameBlock {...data} />)
+              DATA.map(data => <GameBlock {...data} onOpenModalReward={this.onOpenModalReward} />)
             }
           </View>
         </Style.ScrollContainer>
 
         {
-          modalVisible && (
-            <ModalGameInfo visible={modalVisible} onClose={this.onCloseModal} />
+          modalWelcomeVisible && (
+            <ModalGameInfo visible={modalWelcomeVisible} onClose={this.onCloseModalWelcome} />
+          )
+        }
+
+        {
+          modalRewardVisible && (
+            <ModalReward visible={modalRewardVisible} onClose={this.onCloseModalReward} />
           )
         }
       </Style.GameContainer>

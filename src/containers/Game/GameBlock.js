@@ -47,7 +47,7 @@ const RewardTip = styled.Text`
 `;
 
 const GameBlock = (props) => {
-  const { mode, name, score, completed } = props;
+  const { mode, name, score, completed, onOpenModalReward } = props;
 
   return (
     <Container mode={mode} completed={completed} disabled={mode === 'reward'}>
@@ -67,7 +67,7 @@ const GameBlock = (props) => {
               <StageText>領取獎勵</StageText>
               <RewardTip>需完成所有任務</RewardTip>
             </View>
-            <Button disabled={!completed} color="primary" onClick={() => {}} text="領取獎勵" margin={[0, 0, 0, 0]} />
+            <Button disabled={!completed} color="primary" onClick={onOpenModalReward} text="領取獎勵" margin={[0, 0, 0, 0]} />
           </StageContainer>
         )
       }
