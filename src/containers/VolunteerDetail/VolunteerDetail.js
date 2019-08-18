@@ -16,7 +16,6 @@ export default class VolunteerDetail extends Component {
 
   getVolunteerDetail = async (url) => {
     const { data: volunteer } = await apiServices.get(url);
-    console.log(volunteer);
     this.setState({ volunteer })
   }
 
