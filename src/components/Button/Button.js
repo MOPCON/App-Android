@@ -16,11 +16,12 @@ export default class OutlineButton extends React.PureComponent {
     align: 'center',
     margin: [16, 0, 16, 0],
     color: 'normal',  // normal or inverse
+    disabled: false,
   }
   render() {
-    const { onClick, text, align, margin, iconURI, color } = this.props;
+    const { onClick, text, align, margin, iconURI, color, disabled } = this.props;
     return (
-      <Style.ButtonTouchable hasIcon={Boolean(iconURI)} onPress={onClick} align={align} margin={margin} color={color}>
+      <Style.ButtonTouchable disabled={disabled} hasIcon={Boolean(iconURI)} onPress={onClick} align={align} margin={margin} color={color}>
         {
           iconURI && <Style.ButtonIcon source={iconURI} />
         }

@@ -5,8 +5,72 @@ import SplashScreen from 'react-native-splash-screen';
 import I18n from '../../locales';
 import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
 import Button from '../../components/Button/Button';
+import GameBlock from './GameBlock';
 import avatarUser from '../../images/avatar/avatarUser.png';
 import * as Style from './style';
+
+const DATA = [
+  {
+    id: 1,
+    mode: 'game',
+    name: '第一關',
+    score: 1,
+    completed: true,
+  },
+  {
+    id: 2,
+    mode: 'game',
+    name: '第二關',
+    score: 1,
+    completed: false,
+  },
+  {
+    id: 3,
+    mode: 'game',
+    name: '第三關',
+    score: 1,
+    completed: false,
+  },
+  {
+    id: 4,
+    mode: 'game',
+    name: '第四關',
+    score: 1,
+    completed: false,
+  },
+  {
+    id: 5,
+    mode: 'game',
+    name: '第五關',
+    score: 1,
+    completed: false,
+  },
+  {
+    id: 6,
+    mode: 'game',
+    name: '第六關',
+    score: 1,
+    completed: false,
+  },
+  {
+    id: 7,
+    mode: 'game',
+    name: '第七關',
+    score: 1,
+    completed: false,
+  },
+  {
+    id: 8,
+    mode: 'game',
+    name: '第八關',
+    score: 1,
+    completed: false,
+  },
+  {
+    mode: 'reward',
+    completed: false,
+  }
+]
 
 export default class Game extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'game.title', 'mode1')
@@ -43,10 +107,13 @@ export default class Game extends Component {
               </View>
             </Style.ProfileContainer>
            {/** 關卡 */}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
               <Style.ProgressTitleText>{I18n.t('game.progress')}</Style.ProgressTitleText>
               <Style.ProgressText>{score}/8</Style.ProgressText>
             </View>
+            {
+              DATA.map(data => <GameBlock {...data} />)
+            }
           </View>
         </Style.ScrollContainer>
 

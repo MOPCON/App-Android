@@ -26,6 +26,7 @@ export const ButtonTouchable = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   width: ${p => p.block ? '100%' : 'auto'};
+  opacity: ${p => p.disabled ? '0.5' : '1'};
 `;
 export const ButtonText = styled.Text`
   font-family: Roboto-Medium;
