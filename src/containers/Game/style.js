@@ -35,3 +35,13 @@ export const ScoreText = styled.Text`
   color: #fff;
   font-size: 32px;
 `;
+
+export const ProgressTitleText = styled.Text`
+  color: #fff;
+  font-size: 20px;
+`;
+
+export const ProgressText = styled.Text`
+  color: #fff;
+  font-size: 16px;
+`;

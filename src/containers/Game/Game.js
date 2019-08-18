@@ -31,6 +31,7 @@ export default class Game extends Component {
       <Style.GameContainer>
         <Style.ScrollContainer>
           <View>
+            {/** 上方頭像、分數 */}
             <Style.ProfileContainer>
               <Style.UserIcon source={avatarUser} />
               <View style={{ justifyContent: 'space-around' }}>
@@ -41,6 +42,11 @@ export default class Game extends Component {
                 <Style.ScoreText>{score}</Style.ScoreText>
               </View>
             </Style.ProfileContainer>
+           {/** 關卡 */}
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Style.ProgressTitleText>{I18n.t('game.progress')}</Style.ProgressTitleText>
+              <Style.ProgressText>{score}/8</Style.ProgressText>
+            </View>
           </View>
         </Style.ScrollContainer>
 
