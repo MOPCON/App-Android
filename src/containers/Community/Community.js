@@ -18,12 +18,13 @@ export default class Community extends Component {
   state = {
     tab: 'community',
     community: [],
-    participant: [],
+    volunteer: [],
   }
 
   getData = async () => {
-    const { data: { community, participant } } = await apiServices.get('/community');
-    this.setState({ community, participant });
+    const { data: { community } } = await apiServices.get('/community');
+    const { data: { volunteer } } = await apiServices.get('/volunteer');
+    this.setState({ community, volunteer });
   }
 
   componentDidMount() {
@@ -41,7 +42,7 @@ export default class Community extends Component {
   }
 
   goVolunteerDetail = (id) => {
-    this.props.navigation.navigate('VolunteerDetail', { url: `/community/participant/${id}` });
+    this.props.navigation.navigate('VolunteerDetail', { url: `/volunteer/${id}`, id });
   }
 
   goFB = (url) => {

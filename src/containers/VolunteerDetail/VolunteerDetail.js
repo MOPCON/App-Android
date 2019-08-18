@@ -5,43 +5,50 @@ import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import { AVATAR } from '../Community/VolunteerBlock';
+import apiServices from '../../api/services';
 
 export default class VolunteerDetail extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.volunteer_info', 'mode2')
 
   state = {
-    volunteer: {},
+    volunteer: { members: [] },
   }
 
-  async componentDidMount() {
-    const { id } = this.props.navigation.state.params;
-    const volunteerText = await AsyncStorage.getItem('volunteer');
-    const volunteer = JSON.parse(volunteerText).payload.find(c => c.id === id);
-
-    this.setState({ volunteer });
+  getVolunteerDetail = async (url) => {
+    const { data: volunteer } = await apiServices.get(url);
+    console.log(volunteer);
+    this.setState({ volunteer })
   }
-  
+
+  componentDidMount() {
+    const { url, id } = this.props.navigation.state.params;
+    // const volunteerText = await AsyncStorage.getItem('volunteer');
+    // const volunteer = JSON.parse(volunteerText).payload.find(c => c.id === id);
+
+    // this.setState({ volunteer });
+    this.getVolunteerDetail(url);
+  }
+
   render() {
     const { volunteer } = this.state;
-    const groupname = I18n.locale === 'en' ? volunteer.groupname_en : volunteer.groupname;
-    const info = I18n.locale === 'en' ? volunteer.info_en : volunteer.info;
+    const { id } = this.props.navigation.state.params;
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.Container>
           <Style.logo
-            source={AVATAR[volunteer.id]}
+            source={AVATAR[id]}
           />
           <Style.Title>
-            { groupname }
+            {volunteer.name}
           </Style.Title>
           <Style.Content>
-            { info }
+            {volunteer.introducion}
           </Style.Content>
           <View style={{ flex: 1 }}>
             <Style.MemberText>{I18n.t('community.member')}</Style.MemberText>
             <Style.MemberText>
-              {(volunteer.memberlist || '').split(',').map(m => m.trim()).join(' ， ')}
+              {volunteer.members.map(m => m.trim()).join(' ， ')}
             </Style.MemberText>
           </View>
         </Style.Container>
