@@ -24,6 +24,7 @@ import QA from '../QA/QA';
 // import Missiontable from '../MissionTable/Missiontable';
 // import MissionDetail from '../MissionDetail/MissionDetail';
 import Game from '../Game/Game';
+import GameDetail from '../GameDetail/GameDetail';
 import Reward from '../Reward/Reward';
 import More from '../More/More';
 import Page from '../../components/Page/Page';
@@ -207,6 +208,7 @@ const MyStack = new createStackNavigator({
   QRCode: { screen: QRCode },
   QA: { screen: QA },
   Reward: { screen: Reward },
+  GameDetail: { screen: GameDetail },
   // MissionDetail: { screen: MissionDetail },
 }, {
   initialRouteName: 'Main'

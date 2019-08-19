@@ -85,6 +85,10 @@ export default {
     my_reward: '我的獎勵',
     progress: '破關進度',
   },
+  gameDetail: {
+    title: '關卡',
+    scan: '掃描 QR Code',
+  },
   missionDetail: {
     quiz: '問答',
     task: '廠商互動',

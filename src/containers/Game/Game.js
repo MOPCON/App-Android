@@ -111,6 +111,7 @@ export default class Game extends Component {
   }
 
   render() {
+    const { navigation } = this.props;
     const { modalWelcomeVisible, modalRewardVisible, score } = this.state;
 
     return (
@@ -134,7 +135,7 @@ export default class Game extends Component {
               <Style.ProgressText>{score}/8</Style.ProgressText>
             </View>
             {
-              DATA.map(data => <GameBlock {...data} onOpenModalReward={this.onOpenModalReward} />)
+              DATA.map(data => <GameBlock {...data} navigation={navigation} onOpenModalReward={this.onOpenModalReward} />)
             }
           </View>
         </Style.ScrollContainer>

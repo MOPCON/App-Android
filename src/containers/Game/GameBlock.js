@@ -47,10 +47,15 @@ const RewardTip = styled.Text`
 `;
 
 const GameBlock = (props) => {
-  const { mode, name, score, completed, onOpenModalReward } = props;
+  const { mode, name, score, completed, onOpenModalReward, navigation, id } = props;
 
   return (
-    <Container mode={mode} completed={completed} disabled={mode === 'reward'}>
+    <Container
+      mode={mode}
+      completed={completed}
+      disabled={mode === 'reward'}
+      onPress={() => navigation.navigate('GameDetail', { id })}
+    >
       <CheckIcon source={completed ? iconCheckActive : iconCheck} />
       {
         mode === 'game' && (

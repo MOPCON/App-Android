@@ -85,6 +85,10 @@ export default {
     my_reward: 'Reward',
     progress: 'Progress',
   },
+  gameDetail: {
+    title: 'Stage',
+    scan: 'Scan QR Code',
+  },
   missionDetail: {
     quiz: 'Q&A',
     task: 'INTERACTION',
