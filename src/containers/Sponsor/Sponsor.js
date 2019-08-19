@@ -13,9 +13,9 @@ const TYPE = {
   HACKER: { name: 'Hacker', id: 'hacker' },
   GEEK: { name: 'Geek', id: 'geek' },
   DEV: { name: 'Developer', id: 'developer' },
-  TUT: { name: '教育贊助', id: '???' },
-  TXS: { name: '特別感謝', id: 'special_thanks' },
   HLP: { name: '協辦單位', id: 'special_cooperation' },
+  TXS: { name: '特別感謝', id: 'special_thanks' },
+  TUT: { name: '教育贊助', id: 'education' },
 }
 
 export default class Sponsor extends React.Component {
@@ -38,8 +38,8 @@ export default class Sponsor extends React.Component {
     // this.setState({ sponsor });
     this.getSponsors();
   }
-  onClickImage = (sponsorData) => () => {
-    this.props.navigation.navigate('SponsorDetail', { sponsorData });
+  onClickImage = (sponsorDetail) => () => {
+    this.props.navigation.navigate('SponsorDetail', { sponsorDetail });
   }
 
   render() {
@@ -50,7 +50,7 @@ export default class Sponsor extends React.Component {
           {Object.keys(TYPE).map(key => (
             Array.isArray(sponsor[TYPE[key].id]) && Boolean(sponsor[TYPE[key].id].length)
               ? (
-                <Fragment>
+                <Fragment key={TYPE[key].id}>
                   <Style.TypeText>{TYPE[key].name}</Style.TypeText>
                   <Style.CardSmallView>
                     {

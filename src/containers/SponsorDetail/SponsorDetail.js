@@ -13,11 +13,11 @@ export default class SponsorDetail extends React.Component {
   }
 
   async componentDidMount() {
-    const { sponsorId } = this.props.navigation.state.params;
-    const sponsorText = await AsyncStorage.getItem('sponsor');
-    const sponsor = JSON.parse(sponsorText).payload.find(s => s.id === sponsorId);
+    // const { sponsorDetail } = this.props.navigation.state.params;
+    // const sponsorText = await AsyncStorage.getItem('sponsor');
+    // const sponsor = JSON.parse(sponsorText).payload.find(s => s.id === sponsorId);
 
-    this.setState({ sponsor });
+    // this.setState({ sponsor });
   }
 
 
@@ -27,10 +27,10 @@ export default class SponsorDetail extends React.Component {
 
 
   render() {
-    const { sponsor } = this.state;
-    const name = I18n.locale === 'en' ? sponsor.name_en : sponsor.name;
-    const info = I18n.locale === 'en' ? sponsor.info_en : sponsor.info;
-    const logo = sponsor.logo;
+    const { sponsorDetail } = this.props.navigation.state.params;
+    const name = I18n.locale === 'en' ? sponsorDetail.sponsor_en : sponsorDetail.sponsor;
+    const info = I18n.locale === 'en' ? sponsorDetail.about_us_en : sponsorDetail.about_us;
+    const logo = sponsorDetail.logo_path;
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -46,7 +46,7 @@ export default class SponsorDetail extends React.Component {
           <Style.SponsorDesc>
             {info}
           </Style.SponsorDesc>
-          <Style.MoreButton onPress={() => this.openLink(sponsor.website)}>
+          <Style.MoreButton onPress={() => this.openLink(sponsorDetail.understand_more)}>
             <Style.MoreText>{I18n.t('sponsor.more')}</Style.MoreText>
           </Style.MoreButton>
         </Style.SDContainer>
