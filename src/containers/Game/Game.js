@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import I18n from '../../locales';
 import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
@@ -82,8 +83,15 @@ export default class Game extends Component {
     score: 1,
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     SplashScreen.hide();
+
+    const hasPlayed = await AsyncStorage.getItem('hasPlayed');
+
+    // 第一次進入遊戲才會出現
+    this.setState({
+      modalWelcomeVisible: !hasPlayed,
+    });
   }
 
   onCloseModalWelcome = () => {
@@ -133,7 +141,13 @@ export default class Game extends Component {
 
         {
           modalWelcomeVisible && (
-            <ModalGameInfo visible={modalWelcomeVisible} onClose={this.onCloseModalWelcome} />
+            <ModalGameInfo
+              visible={modalWelcomeVisible}
+              onClose={async () => {
+                this.onCloseModalWelcome();
+                await AsyncStorage.setItem('hasPlayed', JSON.stringify(true));
+              }}
+            />
           )
         }
 
