@@ -22,8 +22,11 @@ import VolunteerDetail from '../VolunteerDetail/VolunteerDetail';
 import QRCode from '../QRCode/QRCode';
 import MySchedule from '../MySchedule/MySchedule';
 import QA from '../QA/QA';
-import Missiontable from '../MissionTable/Missiontable';
-import MissionDetail from '../MissionDetail/MissionDetail';
+// import Missiontable from '../MissionTable/Missiontable';
+// import MissionDetail from '../MissionDetail/MissionDetail';
+import Game from '../Game/Game';
+import GameDetail from '../GameDetail/GameDetail';
+import Reward from '../Reward/Reward';
 import More from '../More/More';
 import Page from '../../components/Page/Page';
 import * as Style from './Style';
@@ -35,7 +38,8 @@ import iconHome from '../../images/icon/iconHome.png';
 import iconHomeActive from '../../images/icon/iconHomeActive.png';
 import iconSchedule from '../../images/icon/iconSchedule.png';
 import iconScheduleActive from '../../images/icon/iconScheduleActive.png';
-// import iconMission from '../../images/icon/iconMission.png';
+import iconGame from '../../images/icon/iconGame.png';
+import iconGameActive from '../../images/icon/iconGameActive.png';
 import iconNews from '../../images/icon/iconNews.png';
 import iconNewsActive from '../../images/icon/iconNewsActive.png';
 import iconMore from '../../images/icon/iconMore.png';
@@ -66,7 +70,7 @@ class App extends Component {
     this.state = {
       hasUpdated: true,
       language,
-      current: 'HOME',
+      current: 'GAME',
     };
   }
 
@@ -111,13 +115,14 @@ class App extends Component {
         activeIcon: iconScheduleActive,
         component: () => <Schedule navigation={navigation} />,
       },
-      // {
-      //   key: 'MISSION',
-      //   title: 'home.Mission',
-      //   showHeader: true,
-      //   icon: iconMission,
-      //   component: () => <Missiontable navigation={navigation} />,
-      // },
+      {
+        key: 'GAME',
+        title: 'home.Game',
+        showHeader: true,
+        icon: iconGame,
+        activeIcon: iconGameActive,
+        component: () => <Game navigation={navigation} />,
+      },
       {
         key: 'NEWS',
         title: 'home.News',
@@ -170,7 +175,6 @@ const MyStack = new createStackNavigator({
   ScheduleDetail: { screen: ScheduleDetail },
   MySchedule: { screen: MySchedule },
   UnConf: { screen: UnConf },
-  ScheduleDetail: { screen: ScheduleDetail },
   Sponsor: { screen: Sponsor },
   SponsorDetail: { screen: SponsorDetail },
   Speaker: { screen: Speaker },
@@ -180,6 +184,8 @@ const MyStack = new createStackNavigator({
   VolunteerDetail: { screen: VolunteerDetail },
   QRCode: { screen: QRCode },
   QA: { screen: QA },
+  Reward: { screen: Reward },
+  GameDetail: { screen: GameDetail },
   // MissionDetail: { screen: MissionDetail },
 }, {
     initialRouteName: 'Sponsor'

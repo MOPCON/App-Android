@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import iconWelcome from '../../images/icon/iconWelcome.png';
+import iconReward from '../../images/icon/iconReward.png';
 import * as Style from './style';
 
-export default class ModalGameInfo extends React.PureComponent {
+export default class ModalReward extends React.PureComponent {
   static propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func,
@@ -18,12 +18,13 @@ export default class ModalGameInfo extends React.PureComponent {
         onRequestClose={onClose}>
         <Style.BodyContainer>
           <Style.InfoContainer>
-            <Style.WelcomeImage source={iconWelcome} />
-            <Style.InfoTitle>歡迎加入</Style.InfoTitle>
-            <Style.InfoDesc>歡迎來到Mopcon闖關大進擊，透過達成各關卡任務，將有神祕大獎等著你</Style.InfoDesc>
+            <Style.RewardImage source={iconReward} />
+            <Style.InfoTitle>獲得獎勵</Style.InfoTitle>
+            <Style.InfoDesc>{`恭喜獲得 {nnn}!`}</Style.InfoDesc>
+            <Style.InfoDesc>您可在我的獎勵中查詢兌換說明</Style.InfoDesc>
             <Style.Touch onPress={onClose}>
               <Style.Btn>
-                <Style.BtnText>開始遊戲</Style.BtnText>
+                <Style.BtnText>確定</Style.BtnText>
               </Style.Btn>
             </Style.Touch>
           </Style.InfoContainer>
