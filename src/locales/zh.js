@@ -5,6 +5,7 @@ export default {
     MySchedule: '我的行程',
     Unconference: '交流場次',
     Mission: '任務',
+    Game: '遊戲',
     Sponsors: '贊助廠商',
     Speakers: '講者介紹',
     Community: '社群',
@@ -77,6 +78,16 @@ export default {
     exchangeCode: '請輸入兌換密碼',
     exchangeInfo: '您即將兌換',
     capsules: '個扭蛋',
+  },
+  game: {
+    title: '遊戲',
+    total_score: '累積分數',
+    my_reward: '我的獎勵',
+    progress: '破關進度',
+  },
+  gameDetail: {
+    title: '關卡',
+    scan: '掃描 QR Code',
   },
   missionDetail: {
     quiz: '問答',

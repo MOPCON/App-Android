@@ -53,7 +53,7 @@ export const BtnText = styled.Text`
   color: white;
 `;
 
-export const WelcomeImage = styled.Image`
+export const FinishImage = styled.Image`
   width: 100px;
   height: 100px;
   margin-bottom: 24px;
