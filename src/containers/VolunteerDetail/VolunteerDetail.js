@@ -42,7 +42,7 @@ export default class VolunteerDetail extends Component {
             {volunteer.name}
           </Style.Title>
           <Style.Content>
-            {volunteer.introducion}
+            {volunteer.introduction}
           </Style.Content>
           <View style={{ flex: 1 }}>
             <Style.MemberText>{I18n.t('community.member')}</Style.MemberText>

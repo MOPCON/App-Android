@@ -188,7 +188,7 @@ const MyStack = new createStackNavigator({
   GameDetail: { screen: GameDetail },
   // MissionDetail: { screen: MissionDetail },
 }, {
-    initialRouteName: 'Sponsor'
+    initialRouteName: 'Main'
   });
 
 const AppContainer = createAppContainer(MyStack);
