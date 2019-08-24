@@ -17,14 +17,16 @@ export default class Community extends Component {
 
   state = {
     tab: 'community',
-    community: [],
-    volunteer: [],
+    community: [], // 主辦社群
+    participant: [], // 協辦社群
+    volunteer: [], // 志工
   }
 
   getData = async () => {
-    const { data: { community } } = await apiServices.get('/community');
-    const { data: { volunteer } } = await apiServices.get('/volunteer');
-    this.setState({ community, volunteer });
+    const [{ data: { community, participant } }, { data: { volunteer } }] = await Promise.all([apiServices.get('/community'), apiServices.get('/volunteer')])
+    // const { data: { community, participant } } = await apiServices.get('/community');
+    // const { data: { volunteer } } = await apiServices.get('/volunteer');
+    this.setState({ community, volunteer, participant });
   }
 
   componentDidMount() {
@@ -50,7 +52,7 @@ export default class Community extends Component {
   }
 
   render() {
-    const { tab, community, volunteer } = this.state;
+    const { tab, community, volunteer, participant } = this.state;
 
     const tabs = [
       { name: I18n.t('community.tab_community'), value: 'community' },
@@ -65,7 +67,7 @@ export default class Community extends Component {
           </Style.TabContainer>
           {
             tab === 'community'
-              ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} community={community} />
+              ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} community={community} participant={participant} />
               : <VolunteerBlock goVolunteerDetail={this.goVolunteerDetail} volunteer={volunteer} />
           }
         </Style.Container>

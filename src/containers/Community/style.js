@@ -12,7 +12,7 @@ export const Container = styled.View`
 
 export const TabContainer = styled.View`
   width: 100%;
-  margin-bottom: 45px;
+  margin-bottom: 20px;
 `;
 
 export const ScrollView = styled.ScrollView`
@@ -114,4 +114,10 @@ export const FollowText = styled.Text`
   color: #fff;
   font-size: 15px;
   line-height: 24px;
+`;
+
+export const CommunitySubTitle = styled.Text`
+  color: #878787;
+  font-size: 14px;
+  margin-bottom: 20px;
 `;

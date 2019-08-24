@@ -51,6 +51,7 @@ export default {
     community_info: '社群資訊',
     volunteer_info: '志工資訊',
     unconference: '查看交流場次',
+    participant: '參與社群',
     more: '了解更多',
     member: '成員',
   },

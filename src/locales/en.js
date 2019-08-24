@@ -51,6 +51,7 @@ export default {
     community_info: 'Community',
     volunteer_info: 'Volunteer',
     unconference: 'Unconference',
+    participant: 'Participant',
     more: 'More',
     member: 'Member',
   },
