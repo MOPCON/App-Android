@@ -3,18 +3,15 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const TAG = {
-  BLOCKCHAIN: {
+  tags_tech: {
     color: '#01aaf0',
-    text: 'Blockchain',
   },
-  DESIGN: {
-    color: '#ff4492',
-    text: 'Design',
-  },
-  IOT: {
+  tags_design: {
     color: '#98ce02',
-    text: 'IoT',
-  }
+  },
+  tags_other: {
+    color: '#ff4492',
+  },
 };
 
 const Container = styled.View`
@@ -39,11 +36,13 @@ const TagBlock = (props) => {
   const { tags } = props;
 
   return (
-    tags.length > 0 && (
+    Object.keys(tags).length > 0 && (
       <Container>
         {
-          tags.map(tag => (
-            <Tag tag={tag}><TagText>{TAG[tag].text}</TagText></Tag>
+          Object.keys(tags).map(key => (
+            tags[key].map(tag => (
+              <Tag tag={key}><TagText>{tag}</TagText></Tag>
+            ))
           ))
         }
       </Container>

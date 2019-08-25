@@ -70,7 +70,7 @@ class App extends Component {
     this.state = {
       hasUpdated: true,
       language,
-      current: 'GAME',
+      current: 'SCHEDULE',
     };
   }
 

@@ -22,6 +22,7 @@ export default class ScheduleItem extends Component {
 
   render() {
     const { paintBG, title, category, name, room, regular, tags } = this.props;
+
     return (
       <Style.ScheduleItemContainer paintBG={paintBG}>
         {
