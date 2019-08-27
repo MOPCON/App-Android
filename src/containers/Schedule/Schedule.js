@@ -65,16 +65,16 @@ export default class Schedule extends Component {
     this.setState({ nowScheduleDate: date });
   }
 
-  onPressTitle = (agenda) => () => {
-    const savedStatus = this.state.savedSchedule[agenda.schedule_id];
-    this.props.navigation.navigate('ScheduleDetail', { agenda, savedStatus, onSave: this.onSave });
+  onPressTitle = (session_id) => () => {
+    const savedStatus = this.state.savedSchedule[session_id];
+    this.props.navigation.navigate('ScheduleDetail', { session_id, savedStatus, onSave: this.onSave });
   }
 
-  onSave = (schedule_id) => () => {
+  onSave = (session_id) => () => {
     const savedSchedule = {
       ...this.state.savedSchedule,
     };
-    savedSchedule[schedule_id] = !savedSchedule[schedule_id];
+    savedSchedule[session_id] = !savedSchedule[session_id];
     this.setState({ savedSchedule });
     AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
@@ -115,7 +115,7 @@ export default class Schedule extends Component {
           <ScheduleItem
             regular
             title={I18n.locale === 'zh' ? item.topic : item.topic_e}
-            onPressTitle={item.session_id ? this.onPressTitle(agenda) : () => { }}
+            onPressTitle={item.session_id ? this.onPressTitle(item.session_id) : () => { }}
             name={I18n.locale === 'zh' ? item.name : item.name_e}
             room={key !== 'All' && `${item.room}: ${item.location}`}
             tags={{ tags_tech: item.tags_tech, tags_design: item.tags_design, tags_other: item.tags_other }}
