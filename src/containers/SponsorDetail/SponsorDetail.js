@@ -1,9 +1,13 @@
 import React from 'react'
 import { ScrollView, Linking } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import I18n from '../../locales';
 import * as Style from './style';
+
+const normalizeScheduleData = (originScheduleData) => ({
+  ...originScheduleData,
+  
+});
 
 export default class SponsorDetail extends React.Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.info', 'mode2')
@@ -12,24 +16,14 @@ export default class SponsorDetail extends React.Component {
     sponsor: {}
   }
 
-  async componentDidMount() {
-    // const { sponsorDetail } = this.props.navigation.state.params;
-    // const sponsorText = await AsyncStorage.getItem('sponsor');
-    // const sponsor = JSON.parse(sponsorText).payload.find(s => s.id === sponsorId);
-
-    // this.setState({ sponsor });
-  }
-
-
   openLink = (url) => {
     Linking.openURL(url);
   }
 
-
   render() {
     const { sponsorDetail } = this.props.navigation.state.params;
-    const name = I18n.locale === 'en' ? sponsorDetail.sponsor_en : sponsorDetail.sponsor;
-    const info = I18n.locale === 'en' ? sponsorDetail.about_us_en : sponsorDetail.about_us;
+    const name = I18n.locale === 'en' ? sponsorDetail.name_e : sponsorDetail.name;
+    const info = I18n.locale === 'en' ? sponsorDetail.about_us_e : sponsorDetail.about_us;
     const logo = sponsorDetail.logo_path;
 
     return (

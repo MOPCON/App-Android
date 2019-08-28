@@ -22,8 +22,7 @@ export default class Sponsor extends React.Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.title', 'mode2')
 
   state = {
-    language: I18n.locale,
-    sponsor: { tony_stark: [], bruce_wayne: [], hacker: [], geek: [], developer: [], special_cooperation: [], special_thanks: [] },
+    sponsor: [],
   }
 
   getSponsors = async () => {
@@ -47,10 +46,37 @@ export default class Sponsor extends React.Component {
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SponsorContainer style={{ flexGrow: 1 }}>
-          {Object.keys(TYPE).map(key => (
-            Array.isArray(sponsor[TYPE[key].id]) && Boolean(sponsor[TYPE[key].id].length)
-              ? (
-                <Fragment key={TYPE[key].id}>
+          {
+            sponsor.map(sponsorData => (
+              <Fragment key={sponsorData.name_e}>
+                <Style.TypeText>{I18n.locale === 'en' ? sponsorData.name_e : sponsorData.name}</Style.TypeText>
+                <Style.CardSmallView>
+                    {
+                      sponsorData.data.map(sponsorDetail => (
+                        <Style.CardSmall onPress={this.onClickImage(sponsorDetail)} key={`sponsor${sponsorDetail.name_e}`}>
+                          <Style.CardImgSmall>
+                            <Style.CardImg source={{ uri: sponsorDetail.logo_path }} />
+                          </Style.CardImgSmall>
+                          <Style.CardText>
+                            {language === 'en' ? sponsorDetail.name_e : sponsorDetail.name}
+                          </Style.CardText>
+                        </Style.CardSmall>
+                      ))
+                    }
+                  </Style.CardSmallView>
+              </Fragment>
+            ))
+          }
+        </Style.SponsorContainer>
+      </ScrollView>
+    );
+  }
+}
+
+
+
+
+/* <Fragment key={TYPE[key].id}>
                   <Style.TypeText>{TYPE[key].name}</Style.TypeText>
                   <Style.CardSmallView>
                     {
@@ -66,12 +92,4 @@ export default class Sponsor extends React.Component {
                       ))
                     }
                   </Style.CardSmallView>
-                </Fragment>
-              )
-              : null
-          ))}
-        </Style.SponsorContainer>
-      </ScrollView>
-    );
-  }
-}
+                </Fragment> */
