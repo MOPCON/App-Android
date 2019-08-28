@@ -24,11 +24,11 @@ const TagBlock = (props) => {
   const { tags } = props;
 
   return (
-    tags.length > 0 && (
+    Object.keys(tags).length > 0 && (
       <Container>
         {
           tags.map(tag => (
-            <Tag color={tag.color}><TagText>{tag.name}</TagText></Tag>
+            <Tag key={tag.name} color={tag.color}><TagText>{tag.name}</TagText></Tag>
           ))
         }
       </Container>

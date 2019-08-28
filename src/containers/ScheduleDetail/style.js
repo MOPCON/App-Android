@@ -65,6 +65,7 @@ export const SpeakerImg = styled.Image`
   width: 80px;
   height: 80px;
   border-radius: 40px;
+  margin-bottom: 10px;
 `;
 
 export const SpeakerContainer = styled.View`

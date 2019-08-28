@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { View } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-community/async-storage';
+import dayjs from 'dayjs';
+import apiServices from '../../api/services'
 import I18n from '../../locales';
 import * as Style from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
@@ -15,45 +16,65 @@ import TabDate from '../../components/TabDate/TabDate';
 export default class Schedule extends Component {
   state = {
     schedule: [],
-    unconf: [],
+    unconf: {},
     nowScheduleDate: '',
     savedSchedule: {},
     nowCategory: 'all',
   }
 
-  async componentDidMount() {
-    SplashScreen.hide();
-    const scheduleText = await AsyncStorage.getItem('schedule');
-    const savedScheduleText = await AsyncStorage.getItem('savedschedule');
-    const schedule = JSON.parse(scheduleText).payload.agenda;
-    const unconf = JSON.parse(scheduleText).payload.talk;
-    let savedSchedule = JSON.parse(savedScheduleText);
-    if (!savedSchedule) { savedSchedule = {}; }
+  getSession = async () => {
+    const { data: schedule } = await apiServices.get('/session');
+    const newSchedule = schedule.map(scheduleData => ({ ...scheduleData, date: dayjs(scheduleData.date * 1000).format('MM/DD') }));
 
-    const nowScheduleDate = this.props.navigation.getNestedValue(['state', 'params', 'nowScheduleDate']) || schedule[0].date;
-    console.log(schedule);
     this.setState({
-      unconf,
-      schedule,
-      nowScheduleDate,
-      savedSchedule,
+      schedule: newSchedule,
+      nowScheduleDate: newSchedule[0].date,
     });
+  }
+
+  getUnconf = async () => {
+    const { data: unconf } = await apiServices.get('/unconf');
+
+    this.setState({
+      unconf: unconf,
+    });
+  }
+
+  async componentDidMount() {
+    this.getSession();
+    this.getUnconf();
+
+    // const scheduleText = await AsyncStorage.getItem('schedule');
+    // const savedScheduleText = await AsyncStorage.getItem('savedschedule');
+    // const schedule = JSON.parse(scheduleText).payload.agenda;
+    // const unconf = JSON.parse(scheduleText).payload.talk;
+    // let savedSchedule = JSON.parse(savedScheduleText);
+    // if (!savedSchedule) { savedSchedule = {}; }
+
+    // const nowScheduleDate = this.props.navigation.getNestedValue(['state', 'params', 'nowScheduleDate']) || schedule[0].date;
+    // console.log(schedule);
+    // this.setState({
+    //   unconf,
+    //   schedule,
+    //   nowScheduleDate,
+    //   savedSchedule,
+    // });
   }
 
   onChangeTab = (date) => {
     this.setState({ nowScheduleDate: date });
   }
 
-  onPressTitle = (agenda) => () => {
-    const savedStatus = this.state.savedSchedule[agenda.schedule_id];
-    this.props.navigation.navigate('ScheduleDetail', { agenda, savedStatus, onSave: this.onSave });
+  onPressTitle = (session_id) => () => {
+    const savedStatus = this.state.savedSchedule[session_id];
+    this.props.navigation.navigate('ScheduleDetail', { session_id, savedStatus, onSave: this.onSave });
   }
 
-  onSave = (schedule_id) => () => {
+  onSave = (session_id) => () => {
     const savedSchedule = {
       ...this.state.savedSchedule,
     };
-    savedSchedule[schedule_id] = !savedSchedule[schedule_id];
+    savedSchedule[session_id] = !savedSchedule[session_id];
     this.setState({ savedSchedule });
     AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
@@ -64,79 +85,88 @@ export default class Schedule extends Component {
 
   renderScheduleItem = (agenda) => {
     const { savedSchedule, nowCategory } = this.state;
-    const title = I18n.locale === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en;
-    const paintBG = !Boolean(agenda.schedule_id);
-    const scheduleItem = (
-      <ScheduleView key={`agenda${agenda.schedule_id || agenda.schedule_topic}`}>
-        <ScheduleHeader
-          time={agenda.duration}
-          onSave={this.onSave(agenda.schedule_id)}
-          saved={this.state.savedSchedule[agenda.schedule_id]}
+    const startTime = agenda.started_at && dayjs(agenda.started_at * 1000).format('HH:mm');
+    const endTime = agenda.ended_at && dayjs(agenda.ended_at * 1000).format('HH:mm')
+
+    // 非議程
+    if (agenda.event && nowCategory !== 'favorite') {
+      return (
+        <CommonScheduleItem
+          title={agenda.event}
+          time={(startTime && endTime) && `${startTime} - ${endTime}`}
         />
-        <ScheduleItem
-          regular
-          title={title}
-          category={agenda.category}
-          onPressTitle={agenda.schedule_id ? this.onPressTitle(agenda) : () => { }}
-          name={I18n.locale === 'zh' ? agenda.name : agenda.name_en}
-          room={agenda.location} />
-      </ScheduleView>
-    );
-    if (paintBG) { return (<CommonScheduleItem title={title} time={agenda.duration} />); }
-    if (
-      (nowCategory === 'favorite' && savedSchedule[agenda.schedule_id])
-      || nowCategory === 'all'
-    ) {
-      return scheduleItem;
+      );
     }
-    return null;
+
+    const scheduleItem = Object.keys(agenda.room).map((key) => {
+      const item = agenda.room[key];
+      const _startTime = item.started_at && dayjs(item.started_at * 1000).format('HH:mm');
+      const _endTime = item.ended_at && dayjs(item.ended_at * 1000).format('HH:mm');
+
+      if (nowCategory === 'favorite' && !savedSchedule[item.session_id]) return null;
+
+      return (
+        <ScheduleView>
+          <ScheduleHeader
+            time={`${_startTime} - ${_endTime}`}
+            onSave={this.onSave(item.session_id)}
+            saved={this.state.savedSchedule[item.session_id]}
+          />
+          <ScheduleItem
+            regular
+            title={I18n.locale === 'zh' ? item.topic : item.topic_e}
+            onPressTitle={item.session_id ? this.onPressTitle(item.session_id) : () => { }}
+            name={I18n.locale === 'zh' ? item.name : item.name_e}
+            room={key !== 'All' && `${item.room}: ${item.location}`}
+            tags={{ tags_tech: item.tags_tech, tags_design: item.tags_design, tags_other: item.tags_other }}
+          />
+        </ScheduleView>
+      );
+    });
+
+    return scheduleItem;
   }
 
   onChangeCategory = nowCategory => this.setState({ nowCategory })
 
   renderSchedule = () => {
     const { schedule, nowScheduleDate } = this.state;
+
     return schedule.map((scheduleData) => (
       <Style.AgendaView
-        key={`schedule${scheduleData.date}`}
+        key={`schedule_${scheduleData.date}`}
         active={nowScheduleDate === scheduleData.date}>
-        {scheduleData.items.map((itemData) => (
-          <View key={`item${scheduleData.date},${itemData.duration}`}>
-            {
-              itemData.agendas.map(this.renderScheduleItem)
-            }
-          </View>
-        ))}
+        {scheduleData.period.map(this.renderScheduleItem)}
       </Style.AgendaView>
     ))
   }
 
   renderUnconf = () => {
     const { unconf, nowScheduleDate } = this.state;
-    return unconf.map(unconfData => (
-      <Style.AgendaView
-        key={`schedule${unconfData.date}`}
-        active={nowScheduleDate === unconfData.date}>
-        {unconfData.items.map(itemData => (
-          itemData.type === 'topic' ? (
-            <ScheduleView key={`item${unconfData.date},${itemData.duration}`}>
+  
+    return Object.keys(unconf).map((date) => {
+      const unconfData = unconf[date];
+
+      return (
+        <Style.AgendaView
+          key={`schedule${date}`}
+          active={nowScheduleDate === date}>
+          {unconfData.map(itemData => (
+            <ScheduleView key={`unconf_${unconfData.date},${itemData.duration}`}>
               <ScheduleHeader time={itemData.duration} />
               <ScheduleItem
-                title={itemData.topic}
+                title={itemData.title}
                 onPressTitle={this.onPressTitle}
                 room={I18n.t('unConf.location')}
                 name={itemData.speaker}
-                paintBG={itemData.type === 'others'}
+                paintBG={false}
                 tags={[]}
               />
             </ScheduleView>
-          ) : (
-              <CommonScheduleItem title={itemData.topic} time={itemData.duration} />
-            )
-
-        ))}
-      </Style.AgendaView>
-    ))
+          ))}
+        </Style.AgendaView>
+      );
+    });
   }
 
   render() {
