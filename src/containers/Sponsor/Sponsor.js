@@ -27,7 +27,6 @@ export default class Sponsor extends React.Component {
 
   getSponsors = async () => {
     const { data: sponsor } = await apiServices.get('/sponsor');
-    console.log(sponsor);
     this.setState({ sponsor });
   }
 

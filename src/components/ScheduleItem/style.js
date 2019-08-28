@@ -7,7 +7,7 @@ import {
 } from '../../theme/index';
 
 export const ScheduleItemContainer = styled.View`
-  align-items: ${props => props.paintBG ? 'center' : 'flex-start'};
+  align-items: flex-start;
 `;
 
 export const InnerContainer = styled.View`
@@ -31,7 +31,6 @@ export const Title = styled.Text`
   color: white;
   font-size: 18px;
   font-family: 'Roboto-Regular';
-  margin: ${p => p.paintBG ? '20px 0' : '0'};
 `;
 
 export const NTitle = styled.Text`
@@ -99,6 +98,7 @@ export const StarIconTouchable = styled.TouchableOpacity`
 `;
 
 export const ScheduleContainer = styled.View`
+  width: 100%;
   padding: 16px 20px;
   border: 1px solid #00aaf0;
   border-radius: 6px;

@@ -1,12 +1,19 @@
 import React from 'react'
+import moment from 'dayjs';
 import { ScrollView, Linking } from 'react-native';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 import I18n from '../../locales';
 import * as Style from './style';
 
+const toTime = timestamp => moment(timestamp).format('HH:mm')
+
 const normalizeScheduleData = (originScheduleData) => ({
   ...originScheduleData,
-  
+  time: `${toTime(originScheduleData.started_at * 1000)} - ${toTime(originScheduleData.endeded_at * 1000)}`,
+  saved: false,
+  speaker: originScheduleData.name,
+  speaker_e: originScheduleData.name_e,
 });
 
 export default class SponsorDetail extends React.Component {
@@ -37,9 +44,18 @@ export default class SponsorDetail extends React.Component {
           <Style.SponsorName>
             {name}
           </Style.SponsorName>
+          <Style.SplitText>關於廠商</Style.SplitText>
           <Style.SponsorDesc>
             {info}
           </Style.SponsorDesc>
+          <Style.SplitText>贊助場次</Style.SplitText>
+
+          {
+            sponsorDetail.speaker_information.map(normalizeScheduleData).map(scheduleData => (
+              <ScheduleCard key={scheduleData.title_e} scheduleData={scheduleData} />
+            ))
+          }
+
           <Style.MoreButton onPress={() => this.openLink(sponsorDetail.understand_more)}>
             <Style.MoreText>{I18n.t('sponsor.more')}</Style.MoreText>
           </Style.MoreButton>

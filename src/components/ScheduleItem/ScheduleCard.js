@@ -22,7 +22,7 @@ const ScheduleCard = (props) => {
       />
     </ScheduleView>
   );
-}
+};
 
 ScheduleCard.propTypes = {
   scheduleData: PropTypes.shape({
@@ -56,3 +56,5 @@ ScheduleCard.defaultProps = {
   onPressTitle: () => { },
   onSave: () => { },
 };
+
+export default ScheduleCard;

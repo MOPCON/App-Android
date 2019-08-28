@@ -44,3 +44,5 @@ ScheduleItem.defaultProps = {
   tags: [{ color: '', name: '' }],
   onPressTitle: () => { },
 };
+
+export default ScheduleItem;
