@@ -54,10 +54,10 @@ const TabText = styled.Text`
   letter-spacing: 0.6px;
 `;
 
-export default class Tab extends Component {
+export default class TabDate extends Component {
   static propTypes = {
     tabs: PropTypes.array,
-    defaultActiveTab: PropTypes.string,
+    defaultActiveTab: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func,
   }
   static defaultProps = {
@@ -115,7 +115,7 @@ export default class Tab extends Component {
         <TextContainer>
           {
             tabs.map(tab => (
-              <TouchArea onPress={() => { this.onPressTab(tab) }} key={`tab_${tab.value}`}>
+              <TouchArea key={tab.value} onPress={() => { this.onPressTab(tab) }} key={`tab_${tab.value}`}>
                 <TabText isActive={tab.value === activeTab} >{tab.name}</TabText>
               </TouchArea>
             ))

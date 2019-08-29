@@ -11,11 +11,11 @@ import starIconChecked from '../../images/buttonStarChecked.png';
 export default class ScheduleDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const options = NavigationOptions(navigation, 'scheduleDetail.title', 'mode2');
-    const agenda = navigation.getParam('agenda', {});
-    const savedStatus = navigation.getParam('savedStatus', {});
+    const session_id = navigation.getParam('session_id', 1);
+    const savedStatus = navigation.getParam('savedStatus', false);
     const onSave = navigation.getParam('onSave', () => { });
     const onPress = () => {
-      onSave(agenda.schedule_id)();
+      onSave({ session_id });
       navigation.setParams({ savedStatus: !savedStatus });
     }
     options.headerRight = (
@@ -31,7 +31,7 @@ export default class ScheduleDetail extends React.Component {
   }
 
   async componentDidMount() {
-    const session_id = this.props.navigation.getParam('session_id', {});
+    const session_id = this.props.navigation.getParam('session_id', 1);
 
     const { data: session } = await apiServices.get(`/session/${session_id}`);
     this.setState({
@@ -49,7 +49,9 @@ export default class ScheduleDetail extends React.Component {
         <Style.SDContainer>
           <Style.IntroContainer>
             <Style.SpeakerContainer>
-              <Style.SpeakerImg source={{ uri: session.photo_for_session_mobile }} />
+              {
+                Boolean(session.img) && <Style.SpeakerImg source={{ uri: session.img.mobile }} />
+              }
               <Style.NameText>{lang === 'zh' ? session.name : session.name_e}</Style.NameText>
               <Style.JobText>{`${lang === 'zh' ? session.job_title : session.job_title_e}@${lang === 'zh' ? session.company : session.company_e}`}</Style.JobText>
             </Style.SpeakerContainer>
@@ -58,13 +60,16 @@ export default class ScheduleDetail extends React.Component {
                 {lang === 'zh' ? session.topic : session.topic_e}
               </Style.Title>
               <Style.CategoryText>
-                {[...(session.tags_tech || []), ...(session.tags_design || []), ...(session.tags_other || [])].join(', ')}
+                {
+                  Boolean(session.tags) &&
+                  session.tags.map(t => t.name).join(', ')
+                }
               </Style.CategoryText>
             </Style.SpeechItemContainer>
             <Style.Line />
             <Style.DesText>
               {
-                lang === 'zh' ? session.schedule_info : session.schedule_info_en
+                lang === 'zh' ? session.summary : session.summary_e
               }
             </Style.DesText>
           </Style.IntroContainer>

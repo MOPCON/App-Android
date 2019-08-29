@@ -1,17 +1,35 @@
 import React, { Component } from 'react'
 import { View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import dayjs from 'dayjs';
+import moment from 'dayjs';
 import apiServices from '../../api/services'
 import I18n from '../../locales';
 import * as Style from './style';
 import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
 import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
 import ScheduleView from '../../components/ScheduleItem/ScheduleView';
+import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 import CommonScheduleItem from '../../components/ScheduleItem/CommonScheduleItem';
 
 import Tab from '../../components/Tab/Tab';
 import TabDate from '../../components/TabDate/TabDate';
+
+const toTime = timestamp => moment(timestamp).format('HH:mm');
+
+const normalizeScheduleData = (originScheduleData, savedSchedule) => ({
+  ...originScheduleData,
+  time: `${toTime(originScheduleData.started_at * 1000)} - ${toTime(originScheduleData.ended_at * 1000)}`,
+  saved: Boolean(savedSchedule[originScheduleData.session_id]),
+  speaker: originScheduleData.name,
+  speaker_e: originScheduleData.name_e,
+  title: originScheduleData.topic,
+  title_e: originScheduleData.topic_e,
+});
+
+const normalizePeriodData = originPeriodData => ({
+  title: originPeriodData.event,
+  time: `${toTime(originPeriodData.started_at * 1000)} - ${toTime(originPeriodData.ended_at * 1000)}`,
+});
 
 export default class Schedule extends Component {
   state = {
@@ -24,11 +42,11 @@ export default class Schedule extends Component {
 
   getSession = async () => {
     const { data: schedule } = await apiServices.get('/session');
-    const newSchedule = schedule.map(scheduleData => ({ ...scheduleData, date: dayjs(scheduleData.date * 1000).format('MM/DD') }));
+    // const newSchedule = schedule.map(scheduleData => ({ ...scheduleData, date: dayjs(scheduleData.date * 1000).format('MM/DD') }));
 
     this.setState({
-      schedule: newSchedule,
-      nowScheduleDate: newSchedule[0].date,
+      schedule: schedule,
+      nowScheduleDate: schedule[0].date,
     });
   }
 
@@ -42,35 +60,25 @@ export default class Schedule extends Component {
 
   async componentDidMount() {
     this.getSession();
-    this.getUnconf();
-
-    // const scheduleText = await AsyncStorage.getItem('schedule');
-    // const savedScheduleText = await AsyncStorage.getItem('savedschedule');
-    // const schedule = JSON.parse(scheduleText).payload.agenda;
-    // const unconf = JSON.parse(scheduleText).payload.talk;
-    // let savedSchedule = JSON.parse(savedScheduleText);
-    // if (!savedSchedule) { savedSchedule = {}; }
-
-    // const nowScheduleDate = this.props.navigation.getNestedValue(['state', 'params', 'nowScheduleDate']) || schedule[0].date;
-    // console.log(schedule);
-    // this.setState({
-    //   unconf,
-    //   schedule,
-    //   nowScheduleDate,
-    //   savedSchedule,
-    // });
+    // this.getUnconf();
+    const savedScheduleText = await AsyncStorage.getItem('savedschedule');
+    let savedSchedule = JSON.parse(savedScheduleText);
+    if (!savedSchedule) { savedSchedule = {}; }
+    console.log(savedSchedule);
+    this.setState({ savedSchedule });
   }
 
   onChangeTab = (date) => {
     this.setState({ nowScheduleDate: date });
   }
 
-  onPressTitle = (session_id) => () => {
+  onPressTitle = ({ session_id }) => {
+    console.log('onpress title');
     const savedStatus = this.state.savedSchedule[session_id];
     this.props.navigation.navigate('ScheduleDetail', { session_id, savedStatus, onSave: this.onSave });
   }
 
-  onSave = (session_id) => () => {
+  onSave = ({ session_id }) => {
     const savedSchedule = {
       ...this.state.savedSchedule,
     };
@@ -83,67 +91,38 @@ export default class Schedule extends Component {
     this.props.navigation.navigate('UnConf', { nowUnconfDate: this.state.nowScheduleDate });
   }
 
-  renderScheduleItem = (agenda) => {
-    const { savedSchedule, nowCategory } = this.state;
-    const startTime = agenda.started_at && dayjs(agenda.started_at * 1000).format('HH:mm');
-    const endTime = agenda.ended_at && dayjs(agenda.ended_at * 1000).format('HH:mm')
-
-    // 非議程
-    if (agenda.event && nowCategory !== 'favorite') {
-      return (
-        <CommonScheduleItem
-          title={agenda.event}
-          time={(startTime && endTime) && `${startTime} - ${endTime}`}
-        />
-      );
-    }
-
-    const scheduleItem = Object.keys(agenda.room).map((key) => {
-      const item = agenda.room[key];
-      const _startTime = item.started_at && dayjs(item.started_at * 1000).format('HH:mm');
-      const _endTime = item.ended_at && dayjs(item.ended_at * 1000).format('HH:mm');
-
-      if (nowCategory === 'favorite' && !savedSchedule[item.session_id]) return null;
-
-      return (
-        <ScheduleView>
-          <ScheduleHeader
-            time={`${_startTime} - ${_endTime}`}
-            onSave={this.onSave(item.session_id)}
-            saved={this.state.savedSchedule[item.session_id]}
-          />
-          <ScheduleItem
-            regular
-            title={I18n.locale === 'zh' ? item.topic : item.topic_e}
-            onPressTitle={item.session_id ? this.onPressTitle(item.session_id) : () => { }}
-            name={I18n.locale === 'zh' ? item.name : item.name_e}
-            room={key !== 'All' && `${item.room}: ${item.location}`}
-            tags={{ tags_tech: item.tags_tech, tags_design: item.tags_design, tags_other: item.tags_other }}
-          />
-        </ScheduleView>
-      );
-    });
-
-    return scheduleItem;
-  }
-
   onChangeCategory = nowCategory => this.setState({ nowCategory })
 
   renderSchedule = () => {
-    const { schedule, nowScheduleDate } = this.state;
+    const { onPressTitle, onSave } = this;
+    const { schedule, nowScheduleDate, savedSchedule } = this.state;
 
-    return schedule.map((scheduleData) => (
-      <Style.AgendaView
-        key={`schedule_${scheduleData.date}`}
-        active={nowScheduleDate === scheduleData.date}>
-        {scheduleData.period.map(this.renderScheduleItem)}
-      </Style.AgendaView>
-    ))
+    const nowSchedule = schedule
+      .find(schedulePeriod => schedulePeriod.date === nowScheduleDate);
+    if (!nowSchedule) { return (<View />); }
+    return nowSchedule.period.map((periodData) => {
+      if (periodData.event) {
+        const key = nowSchedule.date + periodData.started_at + periodData.event;
+        return (<CommonScheduleItem key={key} scheduleData={normalizePeriodData(periodData)} />);
+      }
+      return periodData.room
+        .map((scheduleData) => {
+          return normalizeScheduleData(scheduleData, savedSchedule)
+        })
+        .map(scheduleData => (
+          <ScheduleCard
+            key={scheduleData.session_id}
+            scheduleData={scheduleData}
+            onPressTitle={onPressTitle}
+            onSave={onSave}
+          />
+        ));
+    }).reduce((acc, val) => acc.concat(val), []);
   }
 
   renderUnconf = () => {
     const { unconf, nowScheduleDate } = this.state;
-  
+
     return Object.keys(unconf).map((date) => {
       const unconfData = unconf[date];
 
@@ -171,7 +150,7 @@ export default class Schedule extends Component {
 
   render() {
     const { schedule, nowScheduleDate, nowCategory } = this.state;
-    const tabs = schedule.map(scheduleData => ({ name: scheduleData.date, value: scheduleData.date }));
+    const tabs = schedule.map(scheduleData => ({ name: moment(scheduleData.date * 1000).format('MM-DD'), value: scheduleData.date }));
     const categoryTabs = [
       { name: I18n.t('schedule.allSchedule'), value: 'all' },
       { name: I18n.t('schedule.favoriteSchedule'), value: 'favorite' },
@@ -192,11 +171,16 @@ export default class Schedule extends Component {
         }
 
         {
-          nowCategory === 'unconf'
-            ? this.renderUnconf()
-            : this.renderSchedule()
+          this.renderSchedule()
         }
       </Style.ScheduleContainer>
     )
   }
 }
+
+
+// {
+//   nowCategory === 'unconf'
+//     ? this.renderUnconf()
+//     : this.renderSchedule()
+// }

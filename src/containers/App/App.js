@@ -85,7 +85,7 @@ class App extends Component {
   initialData = async () => {
     // 這邊是以後作為小遊戲開關
     const { data: { enable_game } } = await apiServices.get('/initial');
-    console.log(enable_game);
+    console.log('enable_game', enable_game);
   }
 
   async componentDidMount() {
@@ -154,7 +154,7 @@ class App extends Component {
             <Style.NavBar>
               {
                 TABS.map(tab => (
-                  <Style.NavItem onPress={() => this.setState({ current: tab.key })}>
+                  <Style.NavItem key={tab.key} onPress={() => this.setState({ current: tab.key })}>
                     <Style.NavIcon source={current === tab.key ? tab.activeIcon : tab.icon} />
                     <Style.NavText active={current === tab.key}>
                       {I18n.t(tab.title)}
