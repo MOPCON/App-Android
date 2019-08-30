@@ -8,6 +8,7 @@ import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
 import ModalReward from '../../components/ModalReward/ModalReward';
 import Button from '../../components/Button/Button';
 import GameBlock from './GameBlock';
+import gameServices from '../../api/gameServices';
 import avatarUser from '../../images/avatar/avatarUser.png';
 import * as Style from './style';
 
@@ -81,16 +82,19 @@ export default class Game extends Component {
     modalWelcomeVisible: false,
     modalRewardVisible: false,
     score: 1,
+    intro: {},
   }
 
   async componentDidMount() {
     SplashScreen.hide();
 
     const hasPlayed = await AsyncStorage.getItem('hasPlayed');
+    const { data: intro } = await gameServices.get('/intro');
 
     // 第一次進入遊戲才會出現
     this.setState({
-      modalWelcomeVisible: !hasPlayed,
+      modalWelcomeVisible: hasPlayed !== 'true',
+      intro,
     });
   }
 
@@ -112,7 +116,7 @@ export default class Game extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { modalWelcomeVisible, modalRewardVisible, score } = this.state;
+    const { modalWelcomeVisible, modalRewardVisible, score, intro } = this.state;
 
     return (
       <Style.GameContainer>
@@ -143,6 +147,7 @@ export default class Game extends Component {
         {
           modalWelcomeVisible && (
             <ModalGameInfo
+              intro={intro}
               visible={modalWelcomeVisible}
               onClose={async () => {
                 this.onCloseModalWelcome();

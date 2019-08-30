@@ -85,6 +85,7 @@ export default {
     total_score: '累積分數',
     my_reward: '我的獎勵',
     progress: '破關進度',
+    start: '開始遊戲',
   },
   gameDetail: {
     title: '關卡',

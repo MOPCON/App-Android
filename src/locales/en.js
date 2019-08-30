@@ -85,6 +85,7 @@ export default {
     total_score: 'Total Score',
     my_reward: 'Reward',
     progress: 'Progress',
+    start: 'Start',
   },
   gameDetail: {
     title: 'Stage',
