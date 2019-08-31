@@ -72,6 +72,19 @@ export default class ScheduleDetail extends React.Component {
                 lang === 'zh' ? session.summary : session.summary_e
               }
             </Style.DesText>
+            {
+              Boolean(session.sponsor_info) && (
+                <React.Fragment>
+                  <Style.SponsorText>{I18n.t('sponsor.title')}</Style.SponsorText>
+                  <Style.CardSmall>
+                    <Style.CardImg source={{ uri: session.sponsor_info.logo_path }} />
+                    <Style.CardText>
+                      {lang === 'en' ? session.sponsor_info.name_e : session.sponsor_info.name}
+                    </Style.CardText>
+                  </Style.CardSmall>
+                </React.Fragment>
+              )
+            }
           </Style.IntroContainer>
         </Style.SDContainer>
       </ScrollView>

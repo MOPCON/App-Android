@@ -84,3 +84,26 @@ export const Line = styled.View`
   border: 1px solid #878787;
   margin: 40px 0;
 `
+export const SponsorText = styled.Text`
+  margin: 40px 0;
+  color: #878787;
+  font-size: 16px;
+`;
+
+export const CardSmall = styled.View`
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const CardImg = styled.Image`
+  width: 80px;
+  height: 80px;
+  border-radius: 80px;
+  margin-bottom: 10px;
+`;
+
+export const CardText = styled.Text`
+  font-size: 16px;
+  color: white;
+`;

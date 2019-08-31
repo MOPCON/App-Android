@@ -64,7 +64,6 @@ export default class Schedule extends Component {
     const savedScheduleText = await AsyncStorage.getItem('savedschedule');
     let savedSchedule = JSON.parse(savedScheduleText);
     if (!savedSchedule) { savedSchedule = {}; }
-    console.log(savedSchedule);
     this.setState({ savedSchedule });
   }
 
@@ -73,7 +72,6 @@ export default class Schedule extends Component {
   }
 
   onPressTitle = ({ session_id }) => {
-    console.log('onpress title');
     const savedStatus = this.state.savedSchedule[session_id];
     this.props.navigation.navigate('ScheduleDetail', { session_id, savedStatus, onSave: this.onSave });
   }
