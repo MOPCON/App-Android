@@ -14,8 +14,8 @@ export default class Speaker extends Component {
     speaker: []
   }
 
-  goDetail = (speakerId) => {
-    this.props.navigation.navigate('SpeakerDetail', { speakerId });
+  goDetail = (speakerDetail) => {
+    this.props.navigation.navigate('SpeakerDetail', { speakerDetail });
   }
 
   getSpeakers = async() => {
@@ -46,7 +46,7 @@ export default class Speaker extends Component {
       };
 
       return (
-        <Style.Card key={`speaker_${index}`} onPress={() => this.goDetail(s.speaker_id)}>
+        <Style.Card key={`speaker_${index}`} onPress={() => this.goDetail(s)}>
           <SpeakerItem {...props} />
         </Style.Card>
       );
