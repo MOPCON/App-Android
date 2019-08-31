@@ -53,7 +53,6 @@ export default class SponsorDetail extends React.Component {
   }
 
   render() {
-    console.log(I18n.locale);
     const { sponsorDetail } = this.props.navigation.state.params;
     const name = I18n.locale === 'en' ? sponsorDetail.name_e : sponsorDetail.name;
     const info = I18n.locale === 'en' ? sponsorDetail.about_us_e : sponsorDetail.about_us;
