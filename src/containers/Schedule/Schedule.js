@@ -118,6 +118,34 @@ export default class Schedule extends Component {
     }).reduce((acc, val) => acc.concat(val), []);
   }
 
+  renderFavorite = () => {
+    const { onPressTitle, onSave } = this;
+    const { schedule, nowScheduleDate, savedSchedule } = this.state;
+
+    const nowSchedule = schedule
+      .find(schedulePeriod => schedulePeriod.date === nowScheduleDate);
+    if (!nowSchedule) { return (<View />); }
+    return nowSchedule.period.map((periodData) => {
+      if (periodData.event) {
+        const key = nowSchedule.date + periodData.started_at + periodData.event;
+        return (<CommonScheduleItem key={key} scheduleData={normalizePeriodData(periodData)} />);
+      }
+      return periodData.room
+        .filter(scheduleData => savedSchedule[scheduleData.session_id])
+        .map((scheduleData) => {
+          return normalizeScheduleData(scheduleData, savedSchedule)
+        })
+        .map(scheduleData => (
+          <ScheduleCard
+            key={scheduleData.session_id}
+            scheduleData={scheduleData}
+            onPressTitle={onPressTitle}
+            onSave={onSave}
+          />
+        ));
+    }).reduce((acc, val) => acc.concat(val), []);
+  }
+
   renderUnconf = () => {
     const { unconf, nowScheduleDate } = this.state;
 
@@ -169,7 +197,11 @@ export default class Schedule extends Component {
         }
 
         {
-          this.renderSchedule()
+          nowCategory === 'all' && this.renderSchedule()
+        }
+
+        {
+          nowCategory === 'favorite' && this.renderFavorite()
         }
       </Style.ScheduleContainer>
     )
