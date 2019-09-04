@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import { ScrollView, Linking } from 'react-native';
+import { ScrollView, Linking, TouchableOpacity } from 'react-native';
+import apiService from '../../api/services';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
 import I18n from '../../locales';
+import IconFB from '../../images/icon/icon_facebook.png';
+import IconIG from '../../images/icon/icon_instagram.png';
+import IconTe from '../../images/icon/icon_telegram.png';
+import IconTw from '../../images/icon/icon_twitter.png';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 
 export default class CommunityDetail extends Component {
@@ -12,12 +17,17 @@ export default class CommunityDetail extends Component {
     community: {},
   }
 
-  async componentDidMount() {
-    const { id } = this.props.navigation.state.params;
-    const communityText = await AsyncStorage.getItem('community');
-    const community = JSON.parse(communityText).payload.find(c => c.id === id);
-
+  getDetail = async (url) => {
+    const { data: community } = await apiService.get(url);
     this.setState({ community });
+  }
+
+  async componentDidMount() {
+    const { url } = this.props.navigation.state.params;
+    // const communityText = await AsyncStorage.getItem('community');
+    // const community = JSON.parse(communityText).payload.find(c => c.id === id);
+    // this.setState({ community });
+    this.getDetail(url);
   }
 
   linkBtn = () => {
@@ -33,25 +43,58 @@ export default class CommunityDetail extends Component {
       </Style.MoreButton>
     );
   }
-  
+
   render() {
     const { community } = this.state;
-    const title = community.title;
-    const info = I18n.locale === 'en' ? community.info_en : community.info;
+    const info = I18n.locale === 'en' ? community.introduction_en : community.introduction;
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.Container>
           <Style.logo
-            source={{ uri: community.logo }}
+            source={{ uri: community.photo }}
           />
           <Style.Title>
-            { title }
+            {community.name}
           </Style.Title>
+          <Style.IconPanel>
+            {
+              Boolean(community.facebook) &&
+              (
+                <TouchableOpacity onPress={()=>{Linking.openURL(community.facebook);}}>
+                  <Style.IconImg resizeMode="contain" source={IconFB} />
+                </TouchableOpacity>
+              )
+            }
+            {
+              Boolean(community.instagram) &&
+              (
+                <TouchableOpacity onPress={()=>{Linking.openURL(community.instagram);}}>
+                  <Style.IconImg resizeMode="contain" source={IconIG} />
+                </TouchableOpacity>
+              )
+            }
+            {
+              Boolean(community.twitter) &&
+              (
+                <TouchableOpacity onPress={()=>{Linking.openURL(community.twitter);}}>
+                  <Style.IconImg resizeMode="contain" source={IconTw} />
+                </TouchableOpacity>
+              )
+            }
+            {
+              Boolean(community.telegram) &&
+              (
+                <TouchableOpacity onPress={()=>{Linking.openURL(community.telegram);}}>
+                  <Style.IconImg resizeMode="contain" source={IconTe} />
+                </TouchableOpacity>
+              )
+            }
+          </Style.IconPanel>
           <Style.Content>
-            { info }
+            {info}
           </Style.Content>
-          { this.linkBtn() }
+          {this.linkBtn()}
         </Style.Container>
       </ScrollView>
     );

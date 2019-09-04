@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView, Linking } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import apiServices from '../../api/services'
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
@@ -16,18 +17,20 @@ export default class Community extends Component {
 
   state = {
     tab: 'community',
-    community: [],
-    volunteer: [],
+    community: [], // 主辦社群
+    participant: [], // 協辦社群
+    volunteer: [], // 志工
   }
 
-  async componentDidMount() {
-    const communityText = await AsyncStorage.getItem('community');
-    const community = JSON.parse(communityText).payload;
+  getData = async () => {
+    const [{ data: { community, participant } }, { data: { volunteer } }] = await Promise.all([apiServices.get('/community'), apiServices.get('/volunteer')])
+    // const { data: { community, participant } } = await apiServices.get('/community');
+    // const { data: { volunteer } } = await apiServices.get('/volunteer');
+    this.setState({ community, volunteer, participant });
+  }
 
-    const volunteerText = await AsyncStorage.getItem('volunteer');
-    const volunteer = JSON.parse(volunteerText).payload;
-
-    this.setState({ community, volunteer });
+  componentDidMount() {
+    this.getData();
   }
 
   handleChange = (tab) => {
@@ -37,11 +40,11 @@ export default class Community extends Component {
   }
 
   goCommunityDetail = (id) => {
-    this.props.navigation.navigate('CommunityDetail', { id });
+    this.props.navigation.navigate('CommunityDetail', { url: `/community/organizer/${id}` });
   }
 
   goVolunteerDetail = (id) => {
-    this.props.navigation.navigate('VolunteerDetail', { id });
+    this.props.navigation.navigate('VolunteerDetail', { url: `/volunteer/${id}`, id });
   }
 
   goFB = (url) => {
@@ -49,7 +52,7 @@ export default class Community extends Component {
   }
 
   render() {
-    const { tab, community, volunteer } = this.state;
+    const { tab, community, volunteer, participant } = this.state;
 
     const tabs = [
       { name: I18n.t('community.tab_community'), value: 'community' },
@@ -64,7 +67,7 @@ export default class Community extends Component {
           </Style.TabContainer>
           {
             tab === 'community'
-              ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} community={community} />
+              ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} community={community} participant={participant} />
               : <VolunteerBlock goVolunteerDetail={this.goVolunteerDetail} volunteer={volunteer} />
           }
         </Style.Container>

@@ -3,6 +3,7 @@ import I18n from '../../locales';
 import { ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
+import apiServices from '../../api/services'
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import starIconNormal from '../../images/buttonStarNormal.png';
 import starIconChecked from '../../images/buttonStarChecked.png';
@@ -10,11 +11,11 @@ import starIconChecked from '../../images/buttonStarChecked.png';
 export default class ScheduleDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const options = NavigationOptions(navigation, 'scheduleDetail.title', 'mode2');
-    const agenda = navigation.getParam('agenda', {});
-    const savedStatus = navigation.getParam('savedStatus', {});
+    const session_id = navigation.getParam('session_id', 1);
+    const savedStatus = navigation.getParam('savedStatus', false);
     const onSave = navigation.getParam('onSave', () => { });
     const onPress = () => {
-      onSave(agenda.schedule_id)();
+      onSave({ session_id });
       navigation.setParams({ savedStatus: !savedStatus });
     }
     options.headerRight = (
@@ -25,34 +26,65 @@ export default class ScheduleDetail extends React.Component {
     return options;
   }
 
+  state = {
+    session: {}
+  }
+
   async componentDidMount() {
+    const session_id = this.props.navigation.getParam('session_id', 1);
+
+    const { data: session } = await apiServices.get(`/session/${session_id}`);
+    this.setState({
+      session,
+    });
   }
 
   render() {
     const { navigation } = this.props;
+    const { session } = this.state;
     const lang = I18n.locale;
-    const agenda = navigation.getParam('agenda', {});
+
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SDContainer>
           <Style.IntroContainer>
             <Style.SpeakerContainer>
-              <Style.SpeakerImg source={{ uri: agenda.picture }} />
-              <Style.NameText>{lang === 'zh' ? agenda.name : agenda.name_en}</Style.NameText>
-              <Style.JobText>{`${agenda.job}@${agenda.company}`}</Style.JobText>
+              {
+                Boolean(session.img) && <Style.SpeakerImg source={{ uri: session.img.mobile }} />
+              }
+              <Style.NameText>{lang === 'zh' ? session.name : session.name_e}</Style.NameText>
+              <Style.JobText>{`${lang === 'zh' ? session.job_title : session.job_title_e}@${lang === 'zh' ? session.company : session.company_e}`}</Style.JobText>
             </Style.SpeakerContainer>
             <Style.SpeechItemContainer>
               <Style.Title>
-                {lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
+                {lang === 'zh' ? session.topic : session.topic_e}
               </Style.Title>
-              <Style.CategoryText>{agenda.category}</Style.CategoryText>
+              <Style.CategoryText>
+                {
+                  Boolean(session.tags) &&
+                  session.tags.map(t => t.name).join(', ')
+                }
+              </Style.CategoryText>
             </Style.SpeechItemContainer>
             <Style.Line />
             <Style.DesText>
               {
-                lang === 'zh' ? agenda.schedule_info : agenda.schedule_info_en
+                lang === 'zh' ? session.summary : session.summary_e
               }
             </Style.DesText>
+            {
+              Boolean(session.sponsor_info) && (
+                <React.Fragment>
+                  <Style.SponsorText>{I18n.t('sponsor.title')}</Style.SponsorText>
+                  <Style.CardSmall>
+                    <Style.CardImg source={{ uri: session.sponsor_info.logo_path }} />
+                    <Style.CardText>
+                      {lang === 'en' ? session.sponsor_info.name_e : session.sponsor_info.name}
+                    </Style.CardText>
+                  </Style.CardSmall>
+                </React.Fragment>
+              )
+            }
           </Style.IntroContainer>
         </Style.SDContainer>
       </ScrollView>

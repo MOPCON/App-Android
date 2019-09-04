@@ -22,6 +22,7 @@ export const CardImg = styled.Image`
 `;
 
 export const SponsorName = styled.Text`
+  color: white;
   font-family: 'Roboto-Medium';
   font-size: 16px;
   letter-spacing: 2.7px;
@@ -36,7 +37,7 @@ export const SponsorDesc = styled.Text`
   line-height: 22px;
   text-align: justify;
   letter-spacing: 0.3px;
-  margin-bottom: 70px;
+  margin-bottom: 50px;
 `;
 
 export const MoreButton = styled.TouchableOpacity`
@@ -46,6 +47,17 @@ export const MoreButton = styled.TouchableOpacity`
   padding: 13px 40px;
   border: 1px solid #00aaf0;
   border-radius: 6px;
+`;
+
+export const SplitText = styled.Text`
+  color: white;
+  font-family: 'Roboto-Regular';
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  margin-bottom: 16px;
+  width: 100%;
+  justify-content: flex-start;
+  flex-direction: row;
 `;
 
 export const MoreText = styled.Text`

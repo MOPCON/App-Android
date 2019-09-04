@@ -4,6 +4,7 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 import { RSA } from 'react-native-rsa-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
+import SplashScreen from 'react-native-splash-screen';
 import I18n from '../../locales';
 import Header from './Header';
 import Main from '../Main/Main';
@@ -44,6 +45,9 @@ import iconNewsActive from '../../images/icon/iconNewsActive.png';
 import iconMore from '../../images/icon/iconMore.png';
 import iconMoreActive from '../../images/icon/iconMoreActive.png';
 
+
+SplashScreen.hide();
+
 const getLanguageCode = () => {
   let systemLanguage = 'en';
   if (Platform.OS === 'android') {
@@ -62,14 +66,14 @@ class App extends Component {
 
     const language = getLanguageCode();
     I18n.locale = language;
-    
+
     this.state = {
       hasUpdated: true,
       language,
-      current: 'GAME',
+      current: 'HOME',
     };
   }
-  
+
   onChangeLanguage = (language) => {
     I18n.locale = language;
 
@@ -78,42 +82,15 @@ class App extends Component {
     });
   }
 
-  updateData = async () => {
-    try {
-      const [schedule, codeOfConduct, speaker, unconf, sponsor, community, volunteer, carousel, news] = await Promise.all([
-        apiServices.get(`/schedule`),
-        apiServices.get(`/code-of-conduct`),
-        apiServices.get(`/speaker`),
-        apiServices.get(`/schedule-unconf`),
-        apiServices.get(`/sponsor`),
-        apiServices.get(`/community`),
-        apiServices.get(`/volunteer`),
-        apiServices.get(`/carousel`),
-        apiServices.get(`/news`),
-      ]);
-      await AsyncStorage.setItem('schedule', JSON.stringify(schedule));
-      await AsyncStorage.setItem('codeOfConduct', JSON.stringify(codeOfConduct));
-      await AsyncStorage.setItem('speaker', JSON.stringify(speaker));
-      await AsyncStorage.setItem('unconf', JSON.stringify(unconf));
-      await AsyncStorage.setItem('sponsor', JSON.stringify(sponsor));
-      await AsyncStorage.setItem('community', JSON.stringify(community));
-      await AsyncStorage.setItem('volunteer', JSON.stringify(volunteer));
-      // await AsyncStorage.setItem('updateTime', new Date());
-      await AsyncStorage.setItem('carousel', JSON.stringify(carousel));
-      await AsyncStorage.setItem('news', JSON.stringify(news));
-      this.setState({ hasUpdated: true });
-      return true;
-    } catch (e) {
-      console.warn('api 呼叫失敗 過三秒重試')
-      setTimeout(this.updateData, 3000);
-      return false;
-    }
+  initialData = async () => {
+    // 這邊是以後作為小遊戲開關
+    const { data: { enable_game } } = await apiServices.get('/initial');
+    console.log('enable_game', enable_game);
   }
 
-  // TODO add try catch;
   async componentDidMount() {
     try {
-      // this.updateData();
+      this.initialData();
     } catch (e) { }
   }
 
@@ -128,7 +105,7 @@ class App extends Component {
         showHeader: false,
         icon: iconHome,
         activeIcon: iconHomeActive,
-        component: () => <Main language={language} onChangeLanguage={this.onChangeLanguage}  navigation={navigation} />,
+        component: () => <Main language={language} onChangeLanguage={this.onChangeLanguage} navigation={navigation} />,
       },
       {
         key: 'SCHEDULE',
@@ -175,17 +152,17 @@ class App extends Component {
               {matchTab.component()}
             </Page>
             <Style.NavBar>
-                {
-                  TABS.map(tab => (
-                    <Style.NavItem onPress={() => this.setState({ current: tab.key })}>
-                      <Style.NavIcon source={current === tab.key ? tab.activeIcon : tab.icon} />
-                      <Style.NavText active={current === tab.key}>
-                        {I18n.t(tab.title)}
-                      </Style.NavText>
-                    </Style.NavItem>
-                  ))
-                }
-              </Style.NavBar>
+              {
+                TABS.map(tab => (
+                  <Style.NavItem key={tab.key} onPress={() => this.setState({ current: tab.key })}>
+                    <Style.NavIcon source={current === tab.key ? tab.activeIcon : tab.icon} />
+                    <Style.NavText active={current === tab.key}>
+                      {I18n.t(tab.title)}
+                    </Style.NavText>
+                  </Style.NavItem>
+                ))
+              }
+            </Style.NavBar>
           </View>
         )
         : (<View />)
@@ -211,8 +188,8 @@ const MyStack = new createStackNavigator({
   GameDetail: { screen: GameDetail },
   // MissionDetail: { screen: MissionDetail },
 }, {
-  initialRouteName: 'Main'
-});
+    initialRouteName: 'Main'
+  });
 
 const AppContainer = createAppContainer(MyStack);
 

@@ -10,15 +10,20 @@ export default class SpeakerItem extends Component {
     job: PropTypes.string,
     company: PropTypes.string,
     picture: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string,
+      color: PropTypes.string,
+    })),
   }
   static defaultProps = {
     name: '',
     job: '',
     company: '',
     picture: '',
+    tags: [],
   }
   render() {
-    const { name, job, company, picture } = this.props;
+    const { name, job, company, picture, tags } = this.props;
 
     return (
       <Style.SpeakerItemContainer>
@@ -28,7 +33,7 @@ export default class SpeakerItem extends Component {
         <Style.ContentContainer>
           <Style.Title>{name}</Style.Title>
           <Style.Info>{job} @ {company}</Style.Info>
-          <TagBlock />
+          <TagBlock tags={tags} />
         </Style.ContentContainer>
       </Style.SpeakerItemContainer>
     );

@@ -51,6 +51,7 @@ export default {
     community_info: 'Community',
     volunteer_info: 'Volunteer',
     unconference: 'Unconference',
+    participant: 'Participant',
     more: 'More',
     member: 'Member',
   },
@@ -84,6 +85,7 @@ export default {
     total_score: 'Total Score',
     my_reward: 'Reward',
     progress: 'Progress',
+    start: 'Start',
   },
   gameDetail: {
     title: 'Stage',

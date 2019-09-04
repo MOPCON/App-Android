@@ -18,7 +18,7 @@ const Text = styled.Text`
   color: white;
 `;
 
-const CommonScheduleItem = ({ time, title }) => {
+const CommonScheduleItem = ({ scheduleData: { time, title } }) => {
   return (
     <Container>
       <Text>{time}</Text>

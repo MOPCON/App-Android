@@ -45,7 +45,7 @@ export default class More extends Component {
         <Style.MoreContainer>
           {
             MENUS.map(menu => (
-              <Style.MenuItem onPress={() => navigation.navigate(menu.screen)}>
+              <Style.MenuItem key={menu.title} onPress={() => navigation.navigate(menu.screen)}>
                 <Style.MenuTitle>
                   <Style.MenuIcon source={menu.icon} />
                   <Style.MenuText>{I18n.t(menu.title)}</Style.MenuText>

@@ -51,6 +51,7 @@ export default {
     community_info: '社群資訊',
     volunteer_info: '志工資訊',
     unconference: '查看交流場次',
+    participant: '參與社群',
     more: '了解更多',
     member: '成員',
   },
@@ -84,6 +85,7 @@ export default {
     total_score: '累積分數',
     my_reward: '我的獎勵',
     progress: '破關進度',
+    start: '開始遊戲',
   },
   gameDetail: {
     title: '關卡',

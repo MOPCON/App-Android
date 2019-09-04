@@ -26,6 +26,18 @@ export const logo = styled.Image`
   background: #fff;
 `;
 
+export const IconPanel = styled.View`
+  justify-content: space-around;
+  margin: 16px 0;
+  flex-direction: row;
+  width: 180px;
+`;
+
+export const IconImg = styled.Image`
+  width: 24px;
+  height: 24px;
+`;
+
 export const Title = styled.Text`
   color: #fff;
   font-size: 16px;

@@ -41,7 +41,7 @@ export default class VolunteerBlock extends Component {
                 style={{ backgroundColor: 'transparent' }}
                 source={AVATAR[v.id]}
               />
-              <Style.CardText>{I18n.locale === 'en' ? v.groupname_en : v.groupname}--{v.id}</Style.CardText>
+              <Style.CardText>{v.name}</Style.CardText>
             </Style.CardSmall>
           ))
         }
