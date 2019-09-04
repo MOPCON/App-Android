@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import I18n from '../../locales';
-import * as theme from '../../theme';
 
 import iconChevronRightImg from '../../images/icon/iconChevronRight.png';
 
@@ -48,7 +47,12 @@ const RightArrow = styled.Image`
 
 const Block = styled.View``;
 
-const News = ({toNews, news}) => {
+const News = ({navigation}) => {
+
+  const toNews = () => {
+    navigation.navigate('News');
+  };
+
   return (
     <Container>
       <TitleContainer>
@@ -60,7 +64,7 @@ const News = ({toNews, news}) => {
           </TouchArea>
         </Block>
       </TitleContainer>
-      <Message>{news[0].description}</Message>
+      <Message>MOPCON 2019 堅持濁水溪以南，南台灣最大行動科技年會</Message>
     </Container>
   );
 }
