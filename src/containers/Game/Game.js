@@ -16,9 +16,10 @@ export default class Game extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'game.title', 'mode1')
 
   state = {
+    isLoaded: false,
     modalWelcomeVisible: false,
     modalRewardVisible: false,
-    score: 1,
+    score: 0,
     intro: {},
     missionList: [],
     rewardList: [],
@@ -30,6 +31,8 @@ export default class Game extends Component {
     this.setState({
       missionList: me.mission_list,
       rewardList: me.reward_list,
+      isLoaded: true,
+      score: me.mission_list.filter(m => m.pass === 1).reduce((score, m) => score + m.point, 0),
     });
   }
 
@@ -71,7 +74,7 @@ export default class Game extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { modalWelcomeVisible, modalRewardVisible, score, intro, missionList } = this.state;
+    const { modalWelcomeVisible, modalRewardVisible, score, intro, missionList, isLoaded } = this.state;
 
     return (
       <Style.GameContainer>
@@ -82,23 +85,25 @@ export default class Game extends Component {
               <Style.UserIcon source={avatarUser} />
               <View style={{ justifyContent: 'space-around' }}>
                 <Style.TotalText>{I18n.t('game.total_score')}</Style.TotalText>
-                <Button onClick={this.goReward} color="inverse" text={I18n.t('game.my_reward')} margin={[0, 0, 0, 0]} />
+                <Button disabled={!isLoaded} onClick={this.goReward} color="inverse" text={I18n.t('game.my_reward')} margin={[0, 0, 0, 0]} />
               </View>
-              {
-                // <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                //   <Style.ScoreText>{score}</Style.ScoreText>
-                // </View>
-              }
+              <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                <Style.ScoreText>{score}</Style.ScoreText>
+              </View>
             </Style.ProfileContainer>
            {/** 關卡 */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
               <Style.ProgressTitleText>{I18n.t('game.progress')}</Style.ProgressTitleText>
-              <Style.ProgressText>{score}/{missionList.length}</Style.ProgressText>
+              <Style.ProgressText>{missionList.filter(m => m.pass === 1).length}/{missionList.length}</Style.ProgressText>
             </View>
             {
               missionList.map(mission => <GameBlock {...mission} mode="game" navigation={navigation} />)
             }
-            <GameBlock mode="reward" navigation={navigation} onOpenModalReward={this.onOpenModalReward} />
+            {
+              isLoaded && (
+                <GameBlock mode="reward" navigation={navigation} onOpenModalReward={this.onOpenModalReward} />
+              )
+            }
           </View>
         </Style.ScrollContainer>
 
