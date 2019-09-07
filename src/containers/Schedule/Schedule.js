@@ -1,40 +1,21 @@
 import React, { Component } from 'react'
 import { View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { normalizeScheduleData, normalizePeriodData } from '../../utils/normalizeSchedule';
 import moment from 'dayjs';
 import apiServices from '../../api/services'
 import I18n from '../../locales';
 import * as Style from './style';
-import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
-import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
-import ScheduleView from '../../components/ScheduleItem/ScheduleView';
 import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 import CommonScheduleItem from '../../components/ScheduleItem/CommonScheduleItem';
 
 import Tab from '../../components/Tab/Tab';
 import TabDate from '../../components/TabDate/TabDate';
 
-const toTime = timestamp => moment(timestamp).format('HH:mm');
-
-const normalizeScheduleData = (originScheduleData, savedSchedule) => ({
-  ...originScheduleData,
-  time: `${toTime(originScheduleData.started_at * 1000)} - ${toTime(originScheduleData.ended_at * 1000)}`,
-  saved: Boolean(savedSchedule[originScheduleData.session_id]),
-  speaker: originScheduleData.name,
-  speaker_e: originScheduleData.name_e,
-  title: originScheduleData.topic,
-  title_e: originScheduleData.topic_e,
-});
-
-const normalizePeriodData = originPeriodData => ({
-  title: originPeriodData.event,
-  time: `${toTime(originPeriodData.started_at * 1000)} - ${toTime(originPeriodData.ended_at * 1000)}`,
-});
-
 export default class Schedule extends Component {
   state = {
     schedule: [],
-    unconf: {},
+    unconf: [],
     nowScheduleDate: '',
     savedSchedule: {},
     nowCategory: 'all',
@@ -47,14 +28,6 @@ export default class Schedule extends Component {
       schedule,
       unconf,
       nowScheduleDate: schedule[0].date,
-    });
-  }
-
-  getUnconf = async () => {
-    const { data: unconf } = await apiServices.get('/unconf');
-
-    this.setState({
-      unconf: unconf,
     });
   }
 
@@ -77,12 +50,12 @@ export default class Schedule extends Component {
   }
 
   onSave = ({ session_id }) => {
-    const savedSchedule = {
+    const s = {
       ...this.state.savedSchedule,
     };
-    savedSchedule[session_id] = !savedSchedule[session_id];
-    this.setState({ savedSchedule });
-    AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
+    s[session_id] = !s[session_id];
+    this.setState({ savedSchedule: s });
+    AsyncStorage.setItem('savedschedule', JSON.stringify(s));
   }
 
   goToUnConf = () => {
@@ -166,7 +139,6 @@ export default class Schedule extends Component {
           <ScheduleCard
             key={scheduleData.session_id}
             scheduleData={scheduleData}
-            onPressTitle={onPressTitle}
             onSave={onSave}
           />
         ));

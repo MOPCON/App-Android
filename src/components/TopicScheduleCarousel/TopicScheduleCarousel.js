@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
-import moment from 'dayjs';
+import { normalizeScheduleData } from '../../utils/normalizeSchedule';
 import I18n from '../../locales';
 import Carousel from 'react-native-snap-carousel';
 import styled from 'styled-components/native';
@@ -20,19 +20,6 @@ export const CarouselTitle = styled.Text`
   margin-bottom: 16px;
   padding: 0 20px;
 `;
-
-const toTime = timestamp => moment(timestamp).format('HH:mm');
-
-const normalizeScheduleData = (originScheduleData) => ({
-  ...originScheduleData,
-  time: `${toTime(originScheduleData.started_at * 1000)} - ${toTime(originScheduleData.ended_at * 1000)}`,
-  saved: true,
-  speaker: originScheduleData.name,
-  speaker_e: originScheduleData.name_e,
-  title: originScheduleData.topic,
-  title_e: originScheduleData.topic_e,
-});
-
 
 const TopicScheduleCarousel = ({ navigation }) => {
   const [schedule, setSchedule] = useState([]);
@@ -55,7 +42,7 @@ const TopicScheduleCarousel = ({ navigation }) => {
         periodDetail.room.forEach((sessionData) => {
           const dayCondition = sessionData.started_at * 1000 > now;
           if (saved[sessionData.session_id] && dayCondition) {
-            result.push(normalizeScheduleData(sessionData));
+            result.push(normalizeScheduleData(sessionData, saved));
           }
         })
       })
@@ -72,16 +59,13 @@ const TopicScheduleCarousel = ({ navigation }) => {
   }
 
   const onSave = ({ session_id }) => {
-    console.log('onpress save', session_id);
     const s = {
       ...savedSchedule,
     };
     s[session_id] = !s[session_id];
-    console.log('001',s);
     setSavedSchedule(s);
     AsyncStorage.setItem('savedschedule', JSON.stringify(s));
     const newSchedule = filterSchedule(originSchedule, s);
-    console.log('002', originSchedule, s, newSchedule);
     setSchedule(newSchedule);
   }
 

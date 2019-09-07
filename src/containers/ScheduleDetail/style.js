@@ -107,3 +107,8 @@ export const CardText = styled.Text`
   font-size: 16px;
   color: white;
 `;
+
+export const ImgList = styled.View`
+  flex-direction: row;
+  justify-content: center;
+`;

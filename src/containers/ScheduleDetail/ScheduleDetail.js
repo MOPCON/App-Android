@@ -27,7 +27,7 @@ export default class ScheduleDetail extends React.Component {
   }
 
   state = {
-    session: {}
+    session: { speakers: [] }
   }
 
   async componentDidMount() {
@@ -49,12 +49,27 @@ export default class ScheduleDetail extends React.Component {
         <Style.SDContainer>
           <Style.IntroContainer>
             <Style.SpeakerContainer>
-              {
-                Boolean(session.img) && <Style.SpeakerImg source={{ uri: session.img.mobile }} />
-              }
-              <Style.NameText>{lang === 'zh' ? session.name : session.name_e}</Style.NameText>
-              <Style.JobText>{`${lang === 'zh' ? session.job_title : session.job_title_e}@${lang === 'zh' ? session.company : session.company_e}`}</Style.JobText>
+              <Style.ImgList>
+                {
+                  session.speakers.map(speakerData => <Style.SpeakerImg source={{ uri: speakerData.img.mobile }} />)
+                }
+              </Style.ImgList>
+              <Style.NameText>
+                {
+                  session.speakers
+                    .map(speakerData => lang === 'zh' ? speakerData.name : speakerData.name_e)
+                    .join(' | ')
+                }
+              </Style.NameText>
+              <Style.JobText>
+                {
+                  session.speakers
+                    .map(speakerData => `${lang === 'zh' ? speakerData.job_title : speakerData.job_title_e}@${lang === 'zh' ? speakerData.company : speakerData.company_e}`)
+                    .join(' | ')
+                }
+              </Style.JobText>
             </Style.SpeakerContainer>
+
             <Style.SpeechItemContainer>
               <Style.Title>
                 {lang === 'zh' ? session.topic : session.topic_e}
