@@ -5,6 +5,7 @@ import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import Button from '../../components/Button/Button';
 import ModalFinish from '../../components/ModalFinish/ModalFinish';
+import gameServices from '../../api/gameServices';
 
 import * as Style from './style';
 
@@ -13,6 +14,15 @@ export default class GameDetail extends Component {
 
   state = {
     modalFinishVisible: false,
+    game: {},
+  }
+
+  async componentDidMount() {
+    const { uid } = this.props.navigation.state.params;
+    const { data } = await gameServices.get(`/getTask/${uid}`);
+    this.setState({
+      game: data,
+    });
   }
 
   onOpenModalFinish = () => {
@@ -24,15 +34,16 @@ export default class GameDetail extends Component {
   }
 
   render() {
-    const { modalFinishVisible } = this.state;
+    const { modalFinishVisible, game } = this.state;
+    const lang = I18n.locale;
 
     return (
       <Style.Container>
         <Style.ScrollContainer>
           <View>
-            <Style.StageImage />
-            <Style.Title>找到紫色小鴨</Style.Title>
-            <Style.Content>舒適理想的伴侶，也不免添加他們的煩愁.......舒適理想的伴侶，也不免添加他們的煩愁.......舒適理想的伴侶，也不免添加他們的煩愁.......舒適理想的伴侶，也不免添加他們的煩愁.......舒適理想的伴侶，也不免添加他們的煩愁.......舒適理想的伴侶，也不免添加他們的煩愁.......</Style.Content>
+            <Style.StageImage source={{ uri: game.image }} />
+            <Style.Title>{lang === 'zh' ? game.name : game.name_e}</Style.Title>
+            <Style.Content>{lang === 'zh' ? game.description : game.description_e}</Style.Content>
 
             <Button onClick={this.onOpenModalFinish} color="primary" text={I18n.t('gameDetail.scan')} margin={[0, 0, 0, 0]} />
 

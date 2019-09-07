@@ -56,7 +56,7 @@ const GameBlock = (props) => {
       mode={mode}
       completed={pass}
       disabled={mode === 'reward'}
-      onPress={() => navigation.navigate('GameDetail', { id: uid })}
+      onPress={() => navigation.navigate('GameDetail', { uid })}
     >
       <CheckIcon source={pass ? iconCheckActive : iconCheck} />
       {
