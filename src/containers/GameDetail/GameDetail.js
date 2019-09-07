@@ -20,6 +20,7 @@ export default class GameDetail extends Component {
   async componentDidMount() {
     const { uid } = this.props.navigation.state.params;
     const { data } = await gameServices.get(`/getTask/${uid}`);
+
     this.setState({
       game: data,
     });

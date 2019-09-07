@@ -24,25 +24,31 @@ export default class Game extends Component {
     rewardList: [],
   }
 
+  loadGameList = async () => {
+    const { data: me } = await gameServices.get('/me');
+
+    this.setState({
+      missionList: me.mission_list,
+      rewardList: me.reward_list,
+    });
+  }
+
   async componentDidMount() {
     SplashScreen.hide();
+    this.loadGameList();
 
     const [
       hasPlayed,
-      { data: intro },
-      { data: me }
+      { data: intro }
     ] = await Promise.all([
       AsyncStorage.getItem('hasPlayed'),
-      gameServices.get('/intro'),
-      gameServices.get('/me')
+      gameServices.get('/intro')
     ]);
 
     // 第一次進入遊戲才會出現
     this.setState({
       modalWelcomeVisible: hasPlayed !== 'true',
       intro,
-      missionList: me.mission_list,
-      rewardList: me.reward_list,
     });
   }
 
@@ -78,9 +84,11 @@ export default class Game extends Component {
                 <Style.TotalText>{I18n.t('game.total_score')}</Style.TotalText>
                 <Button onClick={this.goReward} color="inverse" text={I18n.t('game.my_reward')} margin={[0, 0, 0, 0]} />
               </View>
-              <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                <Style.ScoreText>{score}</Style.ScoreText>
-              </View>
+              {
+                // <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                //   <Style.ScoreText>{score}</Style.ScoreText>
+                // </View>
+              }
             </Style.ProfileContainer>
            {/** 關卡 */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>

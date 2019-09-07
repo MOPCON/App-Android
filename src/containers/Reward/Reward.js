@@ -23,14 +23,15 @@ export default class Reward extends Component {
 
   state = {
     isModalVisible: false,
+    active: null,
   }
 
   onCloseModal = () => this.setState({ isModalVisible: false });
 
-  onOpenModal = () => this.setState({ isModalVisible: true });
+  onOpenModal = (uid) => this.setState({ isModalVisible: true, active: uid });
 
   render() {
-    const { isModalVisible } = this.state;
+    const { isModalVisible, active } = this.state;
     const { rewardList } = this.props.navigation.state.params;
     const lang = I18n.locale;
 
@@ -45,7 +46,7 @@ export default class Reward extends Component {
                   <Style.Title>{lang === 'zh' ? reward.name : reward.name_e}</Style.Title>
                   <Style.Desc>{lang === 'zh' ? reward.description : reward.description_e}</Style.Desc>
                   <View>
-                    <Button color="primary" onClick={this.onOpenModal} text="直接兌換" margin={[0, 0, 0, 0]} />
+                    <Button color="primary" onClick={() => this.onOpenModal(reward.uid)} text="直接兌換" margin={[0, 0, 0, 0]} />
                   </View>
                 </Style.RewardInfo>
               </Style.RewardCard>
@@ -53,7 +54,7 @@ export default class Reward extends Component {
           }
 
           {
-            <ModalExchange visible={isModalVisible} onClose={this.onCloseModal} />
+            <ModalExchange visible={isModalVisible} active={active} onClose={this.onCloseModal} />
           }
         </Style.RewardContainer>
       </ScrollView>

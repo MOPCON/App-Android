@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import apiServices from '../../api/services';
+import gameServices from '../../api/gameServices';
 import PropTypes from 'prop-types';
 import I18n from '../../locales';
 import Button from '../Button/Button';
@@ -27,17 +28,29 @@ export default class ModalExchange extends React.PureComponent {
     this.public_key = await AsyncStorage.getItem('public_key');
   }
 
-  onClickExchange = () => {
+  onClickExchange = async () => {
     const { text } = this.state;
-    const parsedText = text.toLowerCase();
-    const regexp = /^(mopcon)(\d{2})$/;
-    const testResult = regexp.test(parsedText);
-    if (testResult) {
-      this.setState({
-        hasCheckView: true,
-        exchangeCapsules: parseInt(regexp.exec(parsedText)[2], 10),
-      });
+    const { active } = this.props;
+    const payload = {
+      uid: active,
+      vKey: text,
+    };
+
+    try {
+      const { data } = await gameServices.post('/verify/reward', payload);
+      debugger;
+    } catch (error) {
+      Alert.alert('驗證碼錯誤');
     }
+    // const parsedText = text.toLowerCase();
+    // const regexp = /^(mopcon)(\d{2})$/;
+    // const testResult = regexp.test(parsedText);
+    // if (testResult) {
+    //   this.setState({
+    //     hasCheckView: true,
+    //     exchangeCapsules: parseInt(regexp.exec(parsedText)[2], 10),
+    //   });
+    // }
   }
 
   onClickExchangewServer = async () => {

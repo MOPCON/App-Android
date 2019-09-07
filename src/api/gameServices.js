@@ -53,7 +53,12 @@ class GameApiServices {
     // if (this.data) { options.body = JSON.stringify(this.data); }
     // if (this.params) { url = `${url}${this.parseParams()}` }
     const result = await fetch(urlF, options);
-    return await result.json();
+
+    if (result.status === 200) {
+      return await result.json();
+    } else {
+      throw result.status;
+    }
   }
 }
 
