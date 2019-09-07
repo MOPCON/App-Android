@@ -86,10 +86,18 @@ export default {
     my_reward: 'Reward',
     progress: 'Progress',
     start: 'Start',
+    exchange: 'Exchange',
+    score: 'Score',
+    receive_award: 'Receive award',
+    receive_award_tip: 'Complete all missions',
+    enter_reward_password: 'Enter Exchange Password',
+    invalid_reward_password: 'Invalid Exchange Password',
+    btn_receive_award: 'Award',
   },
   gameDetail: {
     title: 'Stage',
     scan: 'Scan QR Code',
+    mission_completed: 'Completed',
   },
   missionDetail: {
     quiz: 'Q&A',

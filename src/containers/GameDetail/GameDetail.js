@@ -37,6 +37,7 @@ export default class GameDetail extends Component {
   render() {
     const { modalFinishVisible, game } = this.state;
     const lang = I18n.locale;
+    const { pass } = this.props.navigation.state.params;
 
     return (
       <Style.Container>
@@ -46,7 +47,13 @@ export default class GameDetail extends Component {
             <Style.Title>{lang === 'zh' ? game.name : game.name_e}</Style.Title>
             <Style.Content>{lang === 'zh' ? game.description : game.description_e}</Style.Content>
 
-            <Button onClick={this.onOpenModalFinish} color="primary" text={I18n.t('gameDetail.scan')} margin={[0, 0, 0, 0]} />
+            {
+              pass ? (
+                <Button disabled color="inverse" text={I18n.t('gameDetail.mission_completed')} margin={[0, 0, 0, 0]} />
+              ) : (
+                <Button onClick={this.onOpenModalFinish} color="primary" text={I18n.t('gameDetail.scan')} margin={[0, 0, 0, 0]} />
+              )
+            }
 
             {
               modalFinishVisible && (

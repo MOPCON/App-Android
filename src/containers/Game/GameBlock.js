@@ -56,14 +56,14 @@ const GameBlock = (props) => {
       mode={mode}
       completed={pass}
       disabled={mode === 'reward'}
-      onPress={() => navigation.navigate('GameDetail', { uid })}
+      onPress={() => navigation.navigate('GameDetail', { uid, pass })}
     >
       <CheckIcon source={pass ? iconCheckActive : iconCheck} />
       {
         mode === 'game' && (
           <StageContainer>
             <StageText>{lang === 'zh' ? name : name_e}</StageText>
-            <StageText>{point}分</StageText>
+            <StageText>{lang === 'zh' ? `${point}${I18n.t('game.score')}` : `${I18n.t('game.score')} ${point}`}</StageText>
           </StageContainer>
         )
       }
@@ -71,10 +71,10 @@ const GameBlock = (props) => {
         mode === 'reward' && (
           <StageContainer>
             <View>
-              <StageText>領取獎勵</StageText>
-              <RewardTip>需完成所有任務</RewardTip>
+              <StageText>{I18n.t('game.receive_award')}</StageText>
+              <RewardTip>{I18n.t('game.receive_award_tip')}</RewardTip>
             </View>
-            <Button disabled={!pass} color="primary" onClick={onOpenModalReward} text="領取獎勵" margin={[0, 0, 0, 0]} />
+            <Button disabled={!pass} color="primary" onClick={onOpenModalReward} text={I18n.t('game.btn_receive_award')} margin={[0, 0, 0, 0]} />
           </StageContainer>
         )
       }

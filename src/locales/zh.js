@@ -86,10 +86,18 @@ export default {
     my_reward: '我的獎勵',
     progress: '破關進度',
     start: '開始遊戲',
+    exchange: '直接兌換',
+    score: '分',
+    receive_award: '領取獎勵',
+    receive_award_tip: '需完成所有任務',
+    enter_reward_password: '輸入兌換密碼',
+    invalid_reward_password: '兌換密碼錯誤',
+    btn_receive_award: '領取獎勵',
   },
   gameDetail: {
     title: '關卡',
     scan: '掃描 QR Code',
+    mission_completed: '任務已完成',
   },
   missionDetail: {
     quiz: '問答',

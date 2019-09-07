@@ -40,7 +40,7 @@ export default class ModalExchange extends React.PureComponent {
       const { data } = await gameServices.post('/verify/reward', payload);
       debugger;
     } catch (error) {
-      Alert.alert('驗證碼錯誤');
+      Alert.alert(I18n.t('game.invalid_reward_password'));
     }
     // const parsedText = text.toLowerCase();
     // const regexp = /^(mopcon)(\d{2})$/;
@@ -107,7 +107,7 @@ export default class ModalExchange extends React.PureComponent {
               : (
                 <Style.InfoContainer>
                   <Style.ExchangePng source={iconExchange} />
-                  <Style.ExchangeTitle>輸入兌換密碼</Style.ExchangeTitle>
+                  <Style.ExchangeTitle>{I18n.t('game.enter_reward_password')}</Style.ExchangeTitle>
                   <Style.TextInput
                     // placeholder={I18n.t('missionTable.exchangeCode')}
                     // placeholderTextColor="#00d0cb"
