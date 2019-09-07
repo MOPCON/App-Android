@@ -23,16 +23,19 @@ export default class Game extends Component {
     intro: {},
     missionList: [],
     rewardList: [],
+    lastPassIndex: 0, // 最後一個pass的關卡，因為要擋不能往後點擊
   }
 
   loadGameList = async () => {
     const { data: me } = await gameServices.get('/me');
+    const passList = me.mission_list.filter(m => m.pass === 1);
 
     this.setState({
       missionList: me.mission_list,
       rewardList: me.reward_list,
       isLoaded: true,
-      score: me.mission_list.filter(m => m.pass === 1).reduce((score, m) => score + m.point, 0),
+      score: passList.reduce((score, m) => score + m.point, 0),
+      lastPassIndex: passList.length - 1,
     });
   }
 
@@ -74,7 +77,10 @@ export default class Game extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { modalWelcomeVisible, modalRewardVisible, score, intro, missionList, isLoaded } = this.state;
+    const {
+      modalWelcomeVisible, modalRewardVisible,
+      score, intro, missionList, isLoaded, lastPassIndex,
+    } = this.state;
 
     return (
       <Style.GameContainer>
@@ -97,11 +103,23 @@ export default class Game extends Component {
               <Style.ProgressText>{missionList.filter(m => m.pass === 1).length}/{missionList.length}</Style.ProgressText>
             </View>
             {
-              missionList.map(mission => <GameBlock {...mission} mode="game" navigation={navigation} />)
+              missionList.map((mission, mission_index) => (
+                <GameBlock
+                  mode="game"
+                  {...mission}
+                  isActive={mission_index <= (lastPassIndex + 1)} // 關卡必須按照順序過
+                  navigation={navigation}
+                />
+              ))
             }
             {
               isLoaded && (
-                <GameBlock mode="reward" navigation={navigation} onOpenModalReward={this.onOpenModalReward} />
+                <GameBlock
+                  mode="reward"
+                  pass={missionList.filter(m => m.pass === 1).length === missionList.length}
+                  navigation={navigation}
+                  onOpenModalReward={this.onOpenModalReward}
+                />
               )
             }
           </View>
