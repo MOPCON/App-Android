@@ -12,84 +12,44 @@ import gameServices from '../../api/gameServices';
 import avatarUser from '../../images/avatar/avatarUser.png';
 import * as Style from './style';
 
-const DATA = [
-  {
-    id: 1,
-    mode: 'game',
-    name: '第一關',
-    score: 1,
-    completed: true,
-  },
-  {
-    id: 2,
-    mode: 'game',
-    name: '第二關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 3,
-    mode: 'game',
-    name: '第三關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 4,
-    mode: 'game',
-    name: '第四關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 5,
-    mode: 'game',
-    name: '第五關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 6,
-    mode: 'game',
-    name: '第六關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 7,
-    mode: 'game',
-    name: '第七關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 8,
-    mode: 'game',
-    name: '第八關',
-    score: 1,
-    completed: false,
-  },
-  {
-    mode: 'reward',
-    completed: false,
-  }
-]
-
 export default class Game extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'game.title', 'mode1')
 
   state = {
+    isLoaded: false,
     modalWelcomeVisible: false,
     modalRewardVisible: false,
-    score: 1,
+    score: 0,
     intro: {},
+    missionList: [],
+    rewardList: [],
+    lastPassIndex: 0, // 最後一個pass的關卡，因為要擋不能往後點擊
+  }
+
+  loadGameList = async () => {
+    const { data: me } = await gameServices.get('/me');
+    const passList = me.mission_list.filter(m => m.pass === 1);
+
+    this.setState({
+      missionList: me.mission_list,
+      rewardList: me.reward_list,
+      isLoaded: true,
+      score: passList.reduce((score, m) => score + m.point, 0),
+      lastPassIndex: passList.length - 1,
+    });
   }
 
   async componentDidMount() {
     SplashScreen.hide();
+    this.loadGameList();
 
-    const hasPlayed = await AsyncStorage.getItem('hasPlayed');
-    const { data: intro } = await gameServices.get('/intro');
+    const [
+      hasPlayed,
+      { data: intro }
+    ] = await Promise.all([
+      AsyncStorage.getItem('hasPlayed'),
+      gameServices.get('/intro')
+    ]);
 
     // 第一次進入遊戲才會出現
     this.setState({
@@ -111,12 +71,16 @@ export default class Game extends Component {
   }
 
   goReward = () => {
-    this.props.navigation.navigate('Reward');
+    const { rewardList } = this.state;
+    this.props.navigation.navigate('Reward', { rewardList: rewardList });
   }
 
   render() {
     const { navigation } = this.props;
-    const { modalWelcomeVisible, modalRewardVisible, score, intro } = this.state;
+    const {
+      modalWelcomeVisible, modalRewardVisible,
+      score, intro, missionList, isLoaded, lastPassIndex,
+    } = this.state;
 
     return (
       <Style.GameContainer>
@@ -127,7 +91,7 @@ export default class Game extends Component {
               <Style.UserIcon source={avatarUser} />
               <View style={{ justifyContent: 'space-around' }}>
                 <Style.TotalText>{I18n.t('game.total_score')}</Style.TotalText>
-                <Button onClick={this.goReward} color="inverse" text={I18n.t('game.my_reward')} margin={[0, 0, 0, 0]} />
+                <Button disabled={!isLoaded} onClick={this.goReward} color="inverse" text={I18n.t('game.my_reward')} margin={[0, 0, 0, 0]} />
               </View>
               <View style={{ flex: 1, alignItems: 'flex-end' }}>
                 <Style.ScoreText>{score}</Style.ScoreText>
@@ -136,10 +100,27 @@ export default class Game extends Component {
            {/** 關卡 */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
               <Style.ProgressTitleText>{I18n.t('game.progress')}</Style.ProgressTitleText>
-              <Style.ProgressText>{score}/8</Style.ProgressText>
+              <Style.ProgressText>{missionList.filter(m => m.pass === 1).length}/{missionList.length}</Style.ProgressText>
             </View>
             {
-              DATA.map(data => <GameBlock {...data} navigation={navigation} onOpenModalReward={this.onOpenModalReward} />)
+              missionList.map((mission, mission_index) => (
+                <GameBlock
+                  mode="game"
+                  {...mission}
+                  isActive={mission_index <= (lastPassIndex + 1)} // 關卡必須按照順序過
+                  navigation={navigation}
+                />
+              ))
+            }
+            {
+              isLoaded && (
+                <GameBlock
+                  mode="reward"
+                  pass={missionList.filter(m => m.pass === 1).length === missionList.length}
+                  navigation={navigation}
+                  onOpenModalReward={this.onOpenModalReward}
+                />
+              )
             }
           </View>
         </Style.ScrollContainer>

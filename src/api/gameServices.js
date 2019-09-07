@@ -27,7 +27,7 @@ class GameApiServices {
   headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dhbWUtdGVzdC5tb3Bjb24ub3JnL3JlZ2lzdGVyIiwiaWF0IjoxNTY3MTc4MDc5LCJleHAiOjE1NjczNTA4NzksIm5iZiI6MTU2NzE3ODA3OSwianRpIjoiODBnSkRlaThIUGRJTGM2dCIsInN1YiI6MTQsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.3SISChSZKmLEGHZezCj69cAyWTPFzqxtB65KBAD3Vd8',
+    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dhbWUtdGVzdC5tb3Bjb24ub3JnL3JlZ2lzdGVyIiwiaWF0IjoxNTY3ODM0NDE4LCJuYmYiOjE1Njc4MzQ0MTgsImp0aSI6InlzUnRwMHlKNWhWR1VHaUMiLCJzdWIiOjE2LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.kKOsMBYULTV_bUTIk4leU1rlZd6GrDYHmOHQBQM518w',
   }
   get = (url, params) => {
     const options = {
@@ -53,7 +53,12 @@ class GameApiServices {
     // if (this.data) { options.body = JSON.stringify(this.data); }
     // if (this.params) { url = `${url}${this.parseParams()}` }
     const result = await fetch(urlF, options);
-    return await result.json();
+
+    if (result.status === 200) {
+      return await result.json();
+    } else {
+      throw result.status;
+    }
   }
 }
 
