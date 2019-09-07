@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
+import I18n from '../../locales';
 import Button from '../../components/Button/Button';
 import iconCheck from '../../images/icon/iconCheck.png';
 import iconCheckActive from '../../images/icon/iconCheckActive.png';
@@ -47,21 +48,22 @@ const RewardTip = styled.Text`
 `;
 
 const GameBlock = (props) => {
-  const { mode, name, score, completed, onOpenModalReward, navigation, id } = props;
+  const { mode, name, name_e, point, pass, onOpenModalReward, navigation, uid } = props;
+  const lang = I18n.locale;
 
   return (
     <Container
       mode={mode}
-      completed={completed}
+      completed={pass}
       disabled={mode === 'reward'}
-      onPress={() => navigation.navigate('GameDetail', { id })}
+      onPress={() => navigation.navigate('GameDetail', { id: uid })}
     >
-      <CheckIcon source={completed ? iconCheckActive : iconCheck} />
+      <CheckIcon source={pass ? iconCheckActive : iconCheck} />
       {
         mode === 'game' && (
           <StageContainer>
-            <StageText>{name}</StageText>
-            <StageText>{score}分</StageText>
+            <StageText>{lang === 'zh' ? name : name_e}</StageText>
+            <StageText>{point}分</StageText>
           </StageContainer>
         )
       }
@@ -72,7 +74,7 @@ const GameBlock = (props) => {
               <StageText>領取獎勵</StageText>
               <RewardTip>需完成所有任務</RewardTip>
             </View>
-            <Button disabled={!completed} color="primary" onClick={onOpenModalReward} text="領取獎勵" margin={[0, 0, 0, 0]} />
+            <Button disabled={!pass} color="primary" onClick={onOpenModalReward} text="領取獎勵" margin={[0, 0, 0, 0]} />
           </StageContainer>
         )
       }

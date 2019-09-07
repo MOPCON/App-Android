@@ -12,69 +12,6 @@ import gameServices from '../../api/gameServices';
 import avatarUser from '../../images/avatar/avatarUser.png';
 import * as Style from './style';
 
-const DATA = [
-  {
-    id: 1,
-    mode: 'game',
-    name: '第一關',
-    score: 1,
-    completed: true,
-  },
-  {
-    id: 2,
-    mode: 'game',
-    name: '第二關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 3,
-    mode: 'game',
-    name: '第三關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 4,
-    mode: 'game',
-    name: '第四關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 5,
-    mode: 'game',
-    name: '第五關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 6,
-    mode: 'game',
-    name: '第六關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 7,
-    mode: 'game',
-    name: '第七關',
-    score: 1,
-    completed: false,
-  },
-  {
-    id: 8,
-    mode: 'game',
-    name: '第八關',
-    score: 1,
-    completed: false,
-  },
-  {
-    mode: 'reward',
-    completed: false,
-  }
-]
-
 export default class Game extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'game.title', 'mode1')
 
@@ -83,18 +20,29 @@ export default class Game extends Component {
     modalRewardVisible: false,
     score: 1,
     intro: {},
+    missionList: [],
+    rewardList: [],
   }
 
   async componentDidMount() {
     SplashScreen.hide();
 
-    const hasPlayed = await AsyncStorage.getItem('hasPlayed');
-    const { data: intro } = await gameServices.get('/intro');
+    const [
+      hasPlayed,
+      { data: intro },
+      { data: me }
+    ] = await Promise.all([
+      AsyncStorage.getItem('hasPlayed'),
+      gameServices.get('/intro'),
+      gameServices.get('/me')
+    ]);
 
     // 第一次進入遊戲才會出現
     this.setState({
       modalWelcomeVisible: hasPlayed !== 'true',
       intro,
+      missionList: me.mission_list,
+      rewardList: me.reward_list,
     });
   }
 
@@ -111,12 +59,13 @@ export default class Game extends Component {
   }
 
   goReward = () => {
-    this.props.navigation.navigate('Reward');
+    const { rewardList } = this.state;
+    this.props.navigation.navigate('Reward', { rewardList: rewardList });
   }
 
   render() {
     const { navigation } = this.props;
-    const { modalWelcomeVisible, modalRewardVisible, score, intro } = this.state;
+    const { modalWelcomeVisible, modalRewardVisible, score, intro, missionList } = this.state;
 
     return (
       <Style.GameContainer>
@@ -136,11 +85,12 @@ export default class Game extends Component {
            {/** 關卡 */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
               <Style.ProgressTitleText>{I18n.t('game.progress')}</Style.ProgressTitleText>
-              <Style.ProgressText>{score}/8</Style.ProgressText>
+              <Style.ProgressText>{score}/{missionList.length}</Style.ProgressText>
             </View>
             {
-              DATA.map(data => <GameBlock {...data} navigation={navigation} onOpenModalReward={this.onOpenModalReward} />)
+              missionList.map(mission => <GameBlock {...mission} mode="game" navigation={navigation} />)
             }
+            <GameBlock mode="reward" navigation={navigation} onOpenModalReward={this.onOpenModalReward} />
           </View>
         </Style.ScrollContainer>
 
