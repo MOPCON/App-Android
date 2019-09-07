@@ -42,10 +42,10 @@ export default class Schedule extends Component {
 
   getSession = async () => {
     const { data: schedule } = await apiServices.get('/session');
-    // const newSchedule = schedule.map(scheduleData => ({ ...scheduleData, date: dayjs(scheduleData.date * 1000).format('MM/DD') }));
-
+    const { data: unconf } = await apiServices.get('/unconf');
     this.setState({
-      schedule: schedule,
+      schedule,
+      unconf,
       nowScheduleDate: schedule[0].date,
     });
   }
@@ -147,31 +147,30 @@ export default class Schedule extends Component {
   }
 
   renderUnconf = () => {
-    const { unconf, nowScheduleDate } = this.state;
+    const { onPressTitle, onSave } = this;
+    const { unconf, nowScheduleDate, savedSchedule } = this.state;
 
-    return Object.keys(unconf).map((date) => {
-      const unconfData = unconf[date];
-
-      return (
-        <Style.AgendaView
-          key={`schedule${date}`}
-          active={nowScheduleDate === date}>
-          {unconfData.map(itemData => (
-            <ScheduleView key={`unconf_${unconfData.date},${itemData.duration}`}>
-              <ScheduleHeader time={itemData.duration} />
-              <ScheduleItem
-                title={itemData.title}
-                onPressTitle={this.onPressTitle}
-                room={I18n.t('unConf.location')}
-                name={itemData.speaker}
-                paintBG={false}
-                tags={[]}
-              />
-            </ScheduleView>
-          ))}
-        </Style.AgendaView>
-      );
-    });
+    const nowSchedule = unconf
+      .find(schedulePeriod => schedulePeriod.date === nowScheduleDate);
+    if (!nowSchedule) { return (<View />); }
+    return nowSchedule.period.map((periodData) => {
+      if (periodData.event) {
+        const key = nowSchedule.date + periodData.started_at + periodData.event;
+        return (<CommonScheduleItem key={key} scheduleData={normalizePeriodData(periodData)} />);
+      }
+      return periodData.room
+        .map((scheduleData) => {
+          return normalizeScheduleData(scheduleData, savedSchedule)
+        })
+        .map(scheduleData => (
+          <ScheduleCard
+            key={scheduleData.session_id}
+            scheduleData={scheduleData}
+            onPressTitle={onPressTitle}
+            onSave={onSave}
+          />
+        ));
+    }).reduce((acc, val) => acc.concat(val), []);
   }
 
   render() {
@@ -203,14 +202,10 @@ export default class Schedule extends Component {
         {
           nowCategory === 'favorite' && this.renderFavorite()
         }
+        {
+          nowCategory === 'unconf' && this.renderUnconf()
+        }
       </Style.ScheduleContainer>
     )
   }
 }
-
-
-// {
-//   nowCategory === 'unconf'
-//     ? this.renderUnconf()
-//     : this.renderSchedule()
-// }
