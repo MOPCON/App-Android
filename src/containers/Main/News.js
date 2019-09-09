@@ -48,12 +48,12 @@ const RightArrow = styled.Image`
 
 const Block = styled.View``;
 
-const News = ({ navigation }) => {
+const News = ({ onChangeTab }) => {
 
   const [news, setNews] = useState('')
 
   const toNews = () => {
-    navigation.navigate('News');
+    onChangeTab('NEWS');
   };
 
   const getNews = async () => {
