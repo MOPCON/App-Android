@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native';
+import apiServices from '../../api/services';
 import I18n from '../../locales';
 
 import iconChevronRightImg from '../../images/icon/iconChevronRight.png';
@@ -47,11 +48,22 @@ const RightArrow = styled.Image`
 
 const Block = styled.View``;
 
-const News = ({navigation}) => {
+const News = ({ navigation }) => {
+
+  const [news, setNews] = useState('')
 
   const toNews = () => {
     navigation.navigate('News');
   };
+
+  const getNews = async () => {
+    const { data: news } = await apiServices.get('/news');
+    setNews(news[0].title);
+  }
+
+  useEffect(() => {
+    getNews();
+  }, []);
 
   return (
     <Container>
@@ -64,7 +76,7 @@ const News = ({navigation}) => {
           </TouchArea>
         </Block>
       </TitleContainer>
-      <Message>MOPCON 2019 堅持濁水溪以南，南台灣最大行動科技年會</Message>
+      <Message>{news}</Message>
     </Container>
   );
 }
