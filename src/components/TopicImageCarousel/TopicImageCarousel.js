@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Dimensions, TouchableOpacity,
+  Dimensions, TouchableOpacity, Linking
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import styled from 'styled-components/native';
-import img from '../../images/topic.png';
+import apiServices from '../../api/services';
 
 const { width } = Dimensions.get('window');
 
@@ -20,23 +20,30 @@ export const Img = styled.Image`
 
 const renderItem = ({ item }) => {
   return (
-    <TouchableOpacity>
-      <Img source={img} resizeMode="cover"/>
+    <TouchableOpacity onPress={() => { Linking.openURL(item.link) }}>
+      <Img source={{ uri: item.img }} resizeMode="cover" />
     </TouchableOpacity>
   );
 };
 
 const TopicImageCarousel = () => {
-  const carousel = [1, 2, 3, 4];
+  const [banner, setBanner] = useState([]);
+  const getBanner = async () => {
+    const { data } = await apiServices.get('/home');
+    setBanner(data.banner);
+  }
+  useEffect(() => {
+    getBanner();
+  }, [])
   return (
     <React.Fragment>
-      
+
       <CarouselContainer>
         <Carousel
           inactiveSlideScale={0.94}
           sliderWidth={width}
           itemWidth={width - 40}
-          data={carousel}
+          data={banner}
           renderItem={renderItem}
         />
       </CarouselContainer>
