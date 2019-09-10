@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
+import I18n from '../../locales';
 import Button from '../../components/Button/Button';
 import iconCheck from '../../images/icon/iconCheck.png';
 import iconCheckActive from '../../images/icon/iconCheckActive.png';
@@ -47,21 +48,22 @@ const RewardTip = styled.Text`
 `;
 
 const GameBlock = (props) => {
-  const { mode, name, score, completed, onOpenModalReward, navigation, id } = props;
+  const { mode, name, name_e, point, pass, onOpenModalReward, navigation, uid, isActive } = props;
+  const lang = I18n.locale;
 
   return (
     <Container
       mode={mode}
-      completed={completed}
-      disabled={mode === 'reward'}
-      onPress={() => navigation.navigate('GameDetail', { id })}
+      completed={pass}
+      disabled={mode === 'reward' || !isActive}
+      onPress={() => navigation.navigate('GameDetail', { uid, pass })}
     >
-      <CheckIcon source={completed ? iconCheckActive : iconCheck} />
+      <CheckIcon source={pass ? iconCheckActive : iconCheck} />
       {
         mode === 'game' && (
           <StageContainer>
-            <StageText>{name}</StageText>
-            <StageText>{score}分</StageText>
+            <StageText>{lang === 'zh' ? name : name_e}</StageText>
+            <StageText>{lang === 'zh' ? `${point}${I18n.t('game.score')}` : `${I18n.t('game.score')} ${point}`}</StageText>
           </StageContainer>
         )
       }
@@ -69,10 +71,10 @@ const GameBlock = (props) => {
         mode === 'reward' && (
           <StageContainer>
             <View>
-              <StageText>領取獎勵</StageText>
-              <RewardTip>需完成所有任務</RewardTip>
+              <StageText>{I18n.t('game.receive_award')}</StageText>
+              <RewardTip>{I18n.t('game.receive_award_tip')}</RewardTip>
             </View>
-            <Button disabled={!completed} color="primary" onClick={onOpenModalReward} text="領取獎勵" margin={[0, 0, 0, 0]} />
+            <Button disabled={!pass} color="primary" onClick={onOpenModalReward} text={I18n.t('game.btn_receive_award')} margin={[0, 0, 0, 0]} />
           </StageContainer>
         )
       }

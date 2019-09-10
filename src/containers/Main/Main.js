@@ -13,7 +13,7 @@ import * as Style from './style';
 // image
 import mopconLogo from '../../images/logo.png';
 
-const Main = ({ language, onChangeLanguage, navigation }) => {
+const Main = ({ language, onChangeLanguage, navigation, onChangeTab }) => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
@@ -29,7 +29,7 @@ const Main = ({ language, onChangeLanguage, navigation }) => {
         <TopicImageCarousel />
         <Style.Content>
           <Style.NewsContainer>
-            <News navigation={navigation} />
+            <News onChangeTab={onChangeTab} />
           </Style.NewsContainer>
         </Style.Content>
         <TopicScheduleCarousel navigation={navigation} />

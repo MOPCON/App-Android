@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { View, Platform, NativeModules } from 'react-native';
 import { createAppContainer, createStackNavigator } from 'react-navigation';
-import { RSA } from 'react-native-rsa-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import firebase from 'react-native-firebase';
 import SplashScreen from 'react-native-splash-screen';
 import I18n from '../../locales';
 import Header from './Header';
@@ -74,6 +71,10 @@ class App extends Component {
     };
   }
 
+  onChangeTab = (current) => {
+    this.setState({ current });
+  }
+
   onChangeLanguage = (language) => {
     I18n.locale = language;
 
@@ -105,7 +106,7 @@ class App extends Component {
         showHeader: false,
         icon: iconHome,
         activeIcon: iconHomeActive,
-        component: () => <Main language={language} onChangeLanguage={this.onChangeLanguage} navigation={navigation} />,
+        component: () => <Main onChangeTab={this.onChangeTab} language={language} onChangeLanguage={this.onChangeLanguage} navigation={navigation} />,
       },
       {
         key: 'SCHEDULE',
