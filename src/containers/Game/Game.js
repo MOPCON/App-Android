@@ -3,45 +3,29 @@ import { View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { Consumer } from '../../store';
 import I18n from '../../locales';
 import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
 import ModalReward from '../../components/ModalReward/ModalReward';
 import Button from '../../components/Button/Button';
 import GameBlock from './GameBlock';
-import gameServices from '../../api/gameServices';
 import avatarUser from '../../images/avatar/avatarUser.png';
 import * as Style from './style';
 
+@Consumer('gameStore')
 export default class Game extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'game.title', 'mode1')
 
   state = {
-    isLoaded: false,
     modalWelcomeVisible: false,
     modalRewardVisible: false,
-    score: 0,
     intro: {},
-    missionList: [],
-    rewardList: [],
-    lastPassIndex: 0, // 最後一個pass的關卡，因為要擋不能往後點擊
-  }
-
-  loadGameList = async () => {
-    const { data: me } = await gameServices.get('/me');
-    const passList = me.mission_list.filter(m => m.pass === 1);
-
-    this.setState({
-      missionList: me.mission_list,
-      rewardList: me.reward_list,
-      isLoaded: true,
-      score: passList.reduce((score, m) => score + m.point, 0),
-      lastPassIndex: passList.length - 1,
-    });
   }
 
   async componentDidMount() {
     SplashScreen.hide();
-    this.loadGameList();
+    const { loadGameList } = this.props.context.gameStore;
+    loadGameList();
 
     const [
       hasPlayed,
@@ -71,18 +55,19 @@ export default class Game extends Component {
   }
 
   goReward = () => {
-    const { rewardList } = this.state;
+    const { rewardList } = this.props.context.gameStore;
 
     // has_won: 1 才是獲得的獎勵
-    this.props.navigation.navigate('Reward', { rewardList: rewardList.filter(r => r.has_won) });
+    this.props.navigation.navigate('Reward', { rewardList });
   }
 
   render() {
     const { navigation } = this.props;
     const {
-      modalWelcomeVisible, modalRewardVisible,
-      score, intro, missionList, isLoaded, lastPassIndex,
+      modalWelcomeVisible, modalRewardVisible, intro,
     } = this.state;
+
+    const { score, missionList, isLoaded, lastPassIndex } = this.props.context.gameStore;
 
     return (
       <Style.GameContainer>
