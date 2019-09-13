@@ -35,7 +35,14 @@ export default class Reward extends Component {
                   <Style.Title>{lang === 'zh' ? reward.name : reward.name_e}</Style.Title>
                   <Style.Desc>{lang === 'zh' ? reward.description : reward.description_e}</Style.Desc>
                   <View>
-                    <Button color="primary" onClick={() => this.onOpenModal(reward.uid)} text={I18n.t('game.exchange')} margin={[0, 0, 0, 0]} />
+                    {
+                      // 是否兌換完成
+                      reward.redeemed ? (
+                        <Button disabled color="inverse" text={I18n.t('game.redeemed')} margin={[0, 0, 0, 0]} />
+                      ) : (
+                        <Button color="primary" onClick={() => this.onOpenModal(reward.uid)} text={I18n.t('game.exchange')} margin={[0, 0, 0, 0]} />
+                      )
+                    }
                   </View>
                 </Style.RewardInfo>
               </Style.RewardCard>

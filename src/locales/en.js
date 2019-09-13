@@ -87,6 +87,7 @@ export default {
     progress: 'Progress',
     start: 'Start',
     exchange: 'Exchange',
+    redeemed: 'Redeemed',
     score: 'Score',
     receive_award: 'Receive award',
     receive_award_tip: 'Complete all missions',

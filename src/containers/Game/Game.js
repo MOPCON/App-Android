@@ -72,7 +72,9 @@ export default class Game extends Component {
 
   goReward = () => {
     const { rewardList } = this.state;
-    this.props.navigation.navigate('Reward', { rewardList: rewardList });
+
+    // has_won: 1 才是獲得的獎勵
+    this.props.navigation.navigate('Reward', { rewardList: rewardList.filter(r => r.has_won) });
   }
 
   render() {

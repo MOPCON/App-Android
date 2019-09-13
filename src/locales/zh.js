@@ -87,6 +87,7 @@ export default {
     progress: '破關進度',
     start: '開始遊戲',
     exchange: '直接兌換',
+    redeemed: '已兌換',
     score: '分',
     receive_award: '領取獎勵',
     receive_award_tip: '需完成所有任務',

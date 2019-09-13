@@ -38,7 +38,7 @@ export default class ModalExchange extends React.PureComponent {
 
     try {
       const { data } = await gameServices.post('/verify/reward', payload);
-      debugger;
+      this.onClose();
     } catch (error) {
       Alert.alert(I18n.t('game.invalid_reward_password'));
     }
