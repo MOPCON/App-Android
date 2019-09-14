@@ -1,11 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import I18n from '../../locales';
 import Button from '../../components/Button/Button';
 import iconCheck from '../../images/icon/iconCheck.png';
 import iconCheckActive from '../../images/icon/iconCheckActive.png';
+import gameServices from '../../api/gameServices';
 import { scheduleCardTypeColor } from '../../theme/index';
 
 const Container = styled.TouchableOpacity`
@@ -16,7 +18,7 @@ const Container = styled.TouchableOpacity`
   align-items: center;
 
   ${
-    p => (p.mode === 'game' && p.completed) ? `
+    p => (p.completed) ? `
       background-color: #0b425e;
     ` : `
       border: 1px solid ${scheduleCardTypeColor};
@@ -51,10 +53,26 @@ const GameBlock = (props) => {
   const { mode, name, name_e, point, pass, onOpenModalReward, navigation, uid, isActive } = props;
   const lang = I18n.locale;
 
+  const onGetReward = async () => {
+    await AsyncStorage.setItem('hasReward', JSON.stringify(true));
+    const reward = await gameServices.get('/getReward');
+
+    onOpenModalReward(reward.data);
+  };
+
+  // 是否點擊過領取獎勵
+  const getHasReward = async () => {
+    const hasReward = await AsyncStorage.getItem('hasReward');
+
+    return hasReward === 'true';
+  }
+
+  const hasReward = getHasReward();
+
   return (
     <Container
       mode={mode}
-      completed={pass}
+      completed={mode === 'reward' ? hasReward : pass}
       disabled={mode === 'reward' || !isActive}
       onPress={() => navigation.navigate('GameDetail', { uid, pass })}
     >
@@ -74,7 +92,7 @@ const GameBlock = (props) => {
               <StageText>{I18n.t('game.receive_award')}</StageText>
               <RewardTip>{I18n.t('game.receive_award_tip')}</RewardTip>
             </View>
-            <Button disabled={!pass} color="primary" onClick={onOpenModalReward} text={I18n.t('game.btn_receive_award')} margin={[0, 0, 0, 0]} />
+            <Button disabled={!pass || hasReward} color="primary" onClick={onGetReward} text={I18n.t('game.btn_receive_award')} margin={[0, 0, 0, 0]} />
           </StageContainer>
         )
       }

@@ -10,7 +10,7 @@ import { Consumer } from '../../store';
 import iconExchange from '../../images/icon/iconExchange.png';
 import * as Style from './style';
 
-@Consumer('missionStore')
+@Consumer('missionStore', 'gameStore')
 export default class ModalExchange extends React.PureComponent {
   static propTypes = {
     visible: PropTypes.bool,
@@ -37,8 +37,11 @@ export default class ModalExchange extends React.PureComponent {
     };
 
     try {
+      const { loadGameList } =  this.props.context.gameStore;
+
       const { data } = await gameServices.post('/verify/reward', payload);
-      debugger;
+      loadGameList();
+      this.onClose();
     } catch (error) {
       Alert.alert(I18n.t('game.invalid_reward_password'));
     }
