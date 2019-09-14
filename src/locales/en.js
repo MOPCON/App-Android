@@ -95,6 +95,8 @@ export default {
     invalid_reward_password: 'Invalid Exchange Password',
     invalid_task_password: 'Invalid QRCode',
     btn_receive_award: 'Award',
+    awarded: 'Awarded',
+    awarded_tip: 'You can check the redemption instructions in my rewards.',
   },
   gameDetail: {
     title: 'Stage',

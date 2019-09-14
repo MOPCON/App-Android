@@ -7,6 +7,7 @@ import I18n from '../../locales';
 import Button from '../../components/Button/Button';
 import iconCheck from '../../images/icon/iconCheck.png';
 import iconCheckActive from '../../images/icon/iconCheckActive.png';
+import gameServices from '../../api/gameServices';
 import { scheduleCardTypeColor } from '../../theme/index';
 
 const Container = styled.TouchableOpacity`
@@ -54,7 +55,9 @@ const GameBlock = (props) => {
 
   const onGetReward = async () => {
     await AsyncStorage.setItem('hasReward', JSON.stringify(true));
-    onOpenModalReward();
+    const reward = await gameServices.get('/getReward');
+
+    onOpenModalReward(reward.data);
   };
 
   // 是否點擊過領取獎勵

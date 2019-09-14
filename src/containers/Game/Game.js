@@ -21,6 +21,7 @@ export default class Game extends Component {
     modalWelcomeVisible: false,
     modalRewardVisible: false,
     intro: {},
+    reward: {},
   }
 
   async componentDidMount() {
@@ -47,8 +48,8 @@ export default class Game extends Component {
     this.setState({ modalWelcomeVisible: false });
   }
 
-  onOpenModalReward = () => {
-    this.setState({ modalRewardVisible: true });
+  onOpenModalReward = (reward) => {
+    this.setState({ modalRewardVisible: true, reward });
   }
 
   onCloseModalReward = () => {
@@ -62,7 +63,7 @@ export default class Game extends Component {
   render() {
     const { navigation } = this.props;
     const {
-      modalWelcomeVisible, modalRewardVisible, intro,
+      modalWelcomeVisible, modalRewardVisible, intro, reward,
     } = this.state;
 
     const { score, missionList, isLoaded, lastPassIndex } = this.props.context.gameStore;
@@ -126,7 +127,7 @@ export default class Game extends Component {
 
         {
           modalRewardVisible && (
-            <ModalReward visible={modalRewardVisible} onClose={this.onCloseModalReward} />
+            <ModalReward reward={reward} visible={modalRewardVisible} onClose={this.onCloseModalReward} />
           )
         }
       </Style.GameContainer>

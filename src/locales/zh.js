@@ -95,6 +95,8 @@ export default {
     invalid_reward_password: '兌換密碼錯誤',
     invalid_task_password: 'QRCode錯誤',
     btn_receive_award: '領取獎勵',
+    awarded: '獲得獎勵',
+    awarded_tip: '您可在我的獎勵中查詢兌換說明',
   },
   gameDetail: {
     title: '關卡',
