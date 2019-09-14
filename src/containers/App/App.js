@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Platform, NativeModules } from 'react-native';
-import { createAppContainer, createStackNavigator } from 'react-navigation';
-import SplashScreen from 'react-native-splash-screen';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import DeviceInfo from 'react-native-device-info';
+import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from '@react-native-community/async-storage';
 import I18n from '../../locales';
 import Header from './Header';
@@ -42,9 +44,6 @@ import iconNews from '../../images/icon/iconNews.png';
 import iconNewsActive from '../../images/icon/iconNewsActive.png';
 import iconMore from '../../images/icon/iconMore.png';
 import iconMoreActive from '../../images/icon/iconMoreActive.png';
-
-
-SplashScreen.hide();
 
 const getLanguageCode = () => {
   let systemLanguage = 'en';
@@ -87,8 +86,10 @@ class App extends Component {
   initialData = async () => {
     // 這邊是以後作為小遊戲開關
     const { data: { enable_game, api_server } } = await apiServices.get('/initial');
-    console.log('enable_game', enable_game);
+    const uuid = await DeviceInfo.getUniqueId();
+    console.log('uuid', uuid);
     await AsyncStorage.setItem('gameServer', api_server.game);
+    RNBootSplash.hide();
   }
 
   async componentDidMount() {

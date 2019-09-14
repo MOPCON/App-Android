@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { Consumer } from '../../store';
@@ -25,7 +24,6 @@ export default class Game extends Component {
   }
 
   async componentDidMount() {
-    SplashScreen.hide();
     const { loadGameList } = this.props.context.gameStore;
     loadGameList();
 

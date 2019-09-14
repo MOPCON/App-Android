@@ -3,7 +3,6 @@ import { Dimensions, Text, Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import produce from 'immer';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import CryptoJS from 'crypto-js';
 import apiServices from '../../api/services';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';

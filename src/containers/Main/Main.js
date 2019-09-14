@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { Image } from 'react-native';
 
-import SplashScreen from 'react-native-splash-screen';
-
 // component
 import News from './News';
 import LangSelect from '../../components/LangSelect/LangSelect';
@@ -14,9 +12,6 @@ import * as Style from './style';
 import mopconLogo from '../../images/logo.png';
 
 const Main = ({ language, onChangeLanguage, navigation, onChangeTab }) => {
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
   return (
     <Style.Container>
       <Style.ScrollContainer>

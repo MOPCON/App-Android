@@ -1,8 +1,6 @@
 import React, { Component, createContext } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import produce from 'immer';
-import BoothMissionJSON from '../../BoothMission.json';
-import QuizJSON from '../../Quiz.json';
 import gameServices from '../api/gameServices';
 
 const myContext = createContext();
@@ -82,29 +80,6 @@ export default class Provider extends Component {
       loadGameList: this.loadGameList,
       isLoaded: false,
     }
-  }
-
-  loadMission = async () => {
-    let balance = await AsyncStorage.getItem('balance');
-    if (!balance) {
-      balance = 0;
-      await AsyncStorage.setItem('balance', String(balance));
-    }
-
-    let quizs = await AsyncStorage.getItem('quizs');
-    if (!quizs) {
-      quizs = JSON.stringify([
-        ...QuizJSON,
-        ...BoothMissionJSON,
-      ]);
-      await AsyncStorage.setItem('quizs', quizs);
-    }
-
-
-    this.setState(state => produce(state, (draftState) => {
-      draftState.missionStore.balance = +(balance);
-      draftState.missionStore.quizs = this.sortQuizs(JSON.parse(quizs));
-    }));
   }
 
   async componentDidMount() {
