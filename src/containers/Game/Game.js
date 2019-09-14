@@ -101,6 +101,7 @@ export default class Game extends Component {
               isLoaded && (
                 <GameBlock
                   mode="reward"
+                  // 是否全部破關
                   pass={missionList.filter(m => m.pass === 1).length === missionList.length}
                   navigation={navigation}
                   onOpenModalReward={this.onOpenModalReward}
