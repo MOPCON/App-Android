@@ -1,4 +1,5 @@
 import URLSearchParams from 'url-search-params';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // // To see all the requests in the chrome Dev tools in the network tab.
 // XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
@@ -49,7 +50,9 @@ class GameApiServices {
     //   headers: this.headers,
     //   method: this.method,
     // };
-    let urlF = `https://game-test.mopcon.org${url}`;
+    const gameServer = await AsyncStorage.getItem('gameServer');
+    
+    let urlF = `${gameServer}${url}`;
     // if (this.data) { options.body = JSON.stringify(this.data); }
     // if (this.params) { url = `${url}${this.parseParams()}` }
     const result = await fetch(urlF, options);

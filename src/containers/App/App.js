@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Platform, NativeModules } from 'react-native';
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
+import AsyncStorage from '@react-native-community/async-storage';
 import I18n from '../../locales';
 import Header from './Header';
 import Main from '../Main/Main';
@@ -85,8 +86,9 @@ class App extends Component {
 
   initialData = async () => {
     // 這邊是以後作為小遊戲開關
-    const { data: { enable_game } } = await apiServices.get('/initial');
+    const { data: { enable_game, api_server } } = await apiServices.get('/initial');
     console.log('enable_game', enable_game);
+    await AsyncStorage.setItem('gameServer', api_server.game);
   }
 
   async componentDidMount() {
