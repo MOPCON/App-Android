@@ -93,6 +93,7 @@ export default {
     receive_award_tip: 'Complete all missions',
     enter_reward_password: 'Enter Exchange Password',
     invalid_reward_password: 'Invalid Exchange Password',
+    invalid_task_password: 'Invalid QRCode',
     btn_receive_award: 'Award',
   },
   gameDetail: {

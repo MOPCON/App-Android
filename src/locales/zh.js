@@ -93,6 +93,7 @@ export default {
     receive_award_tip: '需完成所有任務',
     enter_reward_password: '輸入兌換密碼',
     invalid_reward_password: '兌換密碼錯誤',
+    invalid_task_password: 'QRCode錯誤',
     btn_receive_award: '領取獎勵',
   },
   gameDetail: {

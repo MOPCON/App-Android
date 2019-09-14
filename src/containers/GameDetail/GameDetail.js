@@ -34,8 +34,13 @@ export default class GameDetail extends Component {
     this.setState({ modalFinishVisible: false });
   }
 
+  goScan = () => {
+    const { uid } = this.state.game;
+    this.props.navigation.navigate('QRCode', { uid });
+  }
+
   render() {
-    const { modalFinishVisible, game } = this.state;
+    const { modalFinishVisible, game, type } = this.state;
     const lang = I18n.locale;
     const { pass } = this.props.navigation.state.params;
 
@@ -51,7 +56,13 @@ export default class GameDetail extends Component {
               pass ? (
                 <Button disabled color="inverse" text={I18n.t('gameDetail.mission_completed')} margin={[0, 0, 0, 0]} />
               ) : (
-                <Button onClick={this.onOpenModalFinish} color="primary" text={I18n.t('gameDetail.scan')} margin={[0, 0, 0, 0]} />
+                <Button
+                  // onClick={this.onOpenModalFinish}
+                  onClick={this.goScan}
+                  color="primary"
+                  text={I18n.t('gameDetail.scan')}
+                  margin={[0, 0, 0, 0]}
+                />
               )
             }
 

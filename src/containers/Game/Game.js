@@ -9,6 +9,7 @@ import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
 import ModalReward from '../../components/ModalReward/ModalReward';
 import Button from '../../components/Button/Button';
 import GameBlock from './GameBlock';
+import gameServices from '../../api/gameServices';
 import avatarUser from '../../images/avatar/avatarUser.png';
 import * as Style from './style';
 

@@ -37,7 +37,7 @@ export default class ModalExchange extends React.PureComponent {
     };
 
     try {
-      const {loadGameList} =  this.props.context.missionStore;
+      const { loadGameList } =  this.props.context.gameStore;
 
       const { data } = await gameServices.post('/verify/reward', payload);
       loadGameList();
