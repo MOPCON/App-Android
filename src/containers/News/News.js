@@ -34,7 +34,7 @@ export default class News extends React.Component {
               <TouchableOpacity key={n.id} onPress={() => this.openLink(n.link)}>
                 <Style.NewsCardView>
                   <Style.NewsTimeContainer>
-                    <Style.NewsTimeText>{moment(n.date * 1000).format('YYYY/MMDD')}</Style.NewsTimeText>
+                    <Style.NewsTimeText>{moment(n.date * 1000).format('YYYY/MM/DD')}</Style.NewsTimeText>
                     <Style.NewsTimeText>{moment(n.date * 1000).format('HH:mm')}</Style.NewsTimeText>
                   </Style.NewsTimeContainer>
                   <Style.NewsCardTitleText>{n.title}</Style.NewsCardTitleText>

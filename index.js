@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppRegistry, UIManager, YellowBox } from 'react-native';
 import App from './src/containers/App/App';
 

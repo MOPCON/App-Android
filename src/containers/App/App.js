@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Platform, NativeModules } from 'react-native';
-import { createAppContainer, createStackNavigator } from 'react-navigation';
-import SplashScreen from 'react-native-splash-screen';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import DeviceInfo from 'react-native-device-info';
+import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from '@react-native-community/async-storage';
 import I18n from '../../locales';
 import Header from './Header';
@@ -29,6 +31,7 @@ import More from '../More/More';
 import Page from '../../components/Page/Page';
 import * as Style from './Style';
 import apiServices from '../../api/services';
+import gameServices from '../../api/gameServices';
 import '../../utils/extends';
 import Provider from '../../store';
 
@@ -42,9 +45,6 @@ import iconNews from '../../images/icon/iconNews.png';
 import iconNewsActive from '../../images/icon/iconNewsActive.png';
 import iconMore from '../../images/icon/iconMore.png';
 import iconMoreActive from '../../images/icon/iconMoreActive.png';
-
-
-SplashScreen.hide();
 
 const getLanguageCode = () => {
   let systemLanguage = 'en';
@@ -69,6 +69,7 @@ class App extends Component {
       hasUpdated: true,
       language,
       current: 'HOME',
+      enable_game: false,
     };
   }
 
@@ -85,16 +86,25 @@ class App extends Component {
   }
 
   initialData = async () => {
-    // 這邊是以後作為小遊戲開關
     const { data: { enable_game, api_server } } = await apiServices.get('/initial');
-    console.log('enable_game', enable_game);
     await AsyncStorage.setItem('gameServer', api_server.game);
+    this.setState({ enable_game });
+    const authorization = await AsyncStorage.getItem('Authorization');
+    if (!authorization) {
+      const uid = await DeviceInfo.getUniqueId();
+      const data = {
+        uid,
+        email: Math.random().toString(16).substring(2, 15)
+      };
+      const { data: { access_token } } = await gameServices.post('/register', data);
+      console.log('===========register success==========', access_token);
+      AsyncStorage.setItem('Authorization', `Bearer ${access_token}`);
+    }
   }
 
-  async componentDidMount() {
-    try {
-      this.initialData();
-    } catch (e) { }
+  componentDidMount() {
+    this.initialData();
+    RNBootSplash.hide();
   }
 
   render() {
@@ -191,8 +201,8 @@ const MyStack = new createStackNavigator({
   GameDetail: { screen: GameDetail },
   // MissionDetail: { screen: MissionDetail },
 }, {
-    initialRouteName: 'Main'
-  });
+  initialRouteName: 'Main'
+});
 
 const AppContainer = createAppContainer(MyStack);
 

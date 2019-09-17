@@ -3,18 +3,12 @@ jdk: oraclejdk8
 sudo: required
 android:
   components:
+    - android-28
+    - build-tools-28.0.3
     - platform-tools
     - tools
-    - build-tools-23.0.1
-    - build-tools-27.0.3
-    - build-tools-28.0.3
-    - android-23
-    - android-26
-    - android-27
-    - android-28
-    - extra-android-m2repository
-    - extra-google-google_play_services
-    - extra-google-m2repository
+    - extra
+    - add-on
 licenses:
   - android-sdk-preview-license-.+
   - android-sdk-license-.+

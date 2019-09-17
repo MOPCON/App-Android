@@ -8,46 +8,40 @@
     "build": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd ./android/ && ./gradlew assembleDebug",
     "test": "jest",
     "build:prd": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd ./android/ && ./gradlew clean assembleRelease",
-    "postversion": "react-native-version --target android --never-amend"
+    "postversion": "react-native-version --target android --never-amend",
+    "postinstall": "npx jetify"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.4.2",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
-    "crypto-js": "^3.1.9-1",
-    "dayjs": "^1.8.15",
-    "immer": "^1.7.2",
-    "react": "16.8.3",
-    "react-native": "0.59.0",
-    "react-native-camera": "^1.13.1",
-    "react-native-firebase": "^4.2.0",
-    "react-native-gesture-handler": "^1.3.0",
-    "react-native-i18n": "^2.0.12",
-    "react-native-qrcode-scanner": "^1.0.1",
-    "react-native-rsa-native": "^1.0.24",
-    "react-native-snap-carousel": "^3.7.2",
-    "react-native-splash-screen": "3.0.6",
-    "react-navigation": "^3.11.0",
-    "styled-components": "^3.3.2",
+    "@react-native-community/async-storage": "^1.6.1",
+    "dayjs": "^1.8.16",
+    "immer": "^4.0.0",
+    "react": "16.8.6",
+    "react-native": "0.60.5",
+    "react-native-bootsplash": "^1.0.1",
+    "react-native-camera": "^3.4.0",
+    "react-native-device-info": "^3.1.0",
+    "react-native-gesture-handler": "^1.4.1",
+    "react-native-i18n": "^2.0.15",
+    "react-native-qrcode-scanner": "^1.2.1",
+    "react-native-reanimated": "^1.2.0",
+    "react-native-snap-carousel": "^3.8.0",
+    "react-navigation": "^4.0.5",
+    "react-navigation-stack": "^1.7.3",
+    "styled-components": "^4.3.2",
     "url-search-params": "^1.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/plugin-proposal-decorators": "^7.3.4",
-    "@babel/runtime": "^7.3.4",
-    "babel-jest": "^24.4.0",
-    "babel-plugin-module-resolver": "^3.1.1",
-    "jest": "^24.4.0",
-    "metro-react-native-babel-preset": "^0.53.0",
-    "react-native-cli": "^2.0.1",
-    "react-native-version": "^3.1.0",
-    "react-test-renderer": "16.8.3"
+    "@babel/core": "^7.5.0",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/runtime": "^7.5.0",
+    "@react-native-community/eslint-config": "^0.0.3",
+    "babel-jest": "^24.1.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "jest": "^24.1.0",
+    "metro-react-native-babel-preset": "0.54.1",
+    "react-test-renderer": "16.8.6"
   },
   "jest": {
     "preset": "react-native"
-  },
-  "rnpm": {
-    "assets": [
-      "./assets/fonts/"
-    ]
   }
 }
