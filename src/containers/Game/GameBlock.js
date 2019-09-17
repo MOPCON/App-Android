@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -18,7 +18,7 @@ const Container = styled.TouchableOpacity`
   align-items: center;
 
   ${
-    p => (p.completed) ? `
+  p => (p.completed) ? `
       background-color: #0b425e;
     ` : `
       border: 1px solid ${scheduleCardTypeColor};
@@ -53,21 +53,26 @@ const GameBlock = (props) => {
   const { mode, name, name_e, point, pass, onOpenModalReward, navigation, uid, isActive } = props;
   const lang = I18n.locale;
 
-  const onGetReward = async () => {
-    await AsyncStorage.setItem('hasReward', JSON.stringify(true));
-    const reward = await gameServices.get('/getReward');
-
-    onOpenModalReward(reward.data);
-  };
+  const [hasReward, setHasReward] = useState(false);
 
   // 是否點擊過領取獎勵
   const getHasReward = async () => {
-    const hasReward = await AsyncStorage.getItem('hasReward');
-
-    return hasReward === 'true';
+    const h = await AsyncStorage.getItem('hasReward');
+    setHasReward(h === 'true');
   }
 
-  const hasReward = getHasReward();
+  const onGetReward = async () => {
+    const reward = await gameServices.get('/getReward');
+    onOpenModalReward(reward.data);
+    AsyncStorage.setItem('hasReward', JSON.stringify(true));
+    setHasReward(true);
+  };
+
+  useEffect(() => {
+    getHasReward();
+  }, []);
+
+  console.log('has reward', hasReward);
 
   return (
     <Container

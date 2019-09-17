@@ -31,6 +31,7 @@ import More from '../More/More';
 import Page from '../../components/Page/Page';
 import * as Style from './Style';
 import apiServices from '../../api/services';
+import gameServices from '../../api/gameServices';
 import '../../utils/extends';
 import Provider from '../../store';
 
@@ -68,6 +69,7 @@ class App extends Component {
       hasUpdated: true,
       language,
       current: 'HOME',
+      enable_game: false,
     };
   }
 
@@ -84,18 +86,25 @@ class App extends Component {
   }
 
   initialData = async () => {
-    // 這邊是以後作為小遊戲開關
     const { data: { enable_game, api_server } } = await apiServices.get('/initial');
-    const uuid = await DeviceInfo.getUniqueId();
-    console.log('uuid', uuid);
     await AsyncStorage.setItem('gameServer', api_server.game);
-    RNBootSplash.hide();
+    this.setState({ enable_game });
+    const authorization = await AsyncStorage.getItem('Authorization');
+    if (!authorization) {
+      const uid = await DeviceInfo.getUniqueId();
+      const data = {
+        uid,
+        email: Math.random().toString(16).substring(2, 15)
+      };
+      const { data: { access_token } } = await gameServices.post('/register', data);
+      console.log('===========register success==========', access_token);
+      AsyncStorage.setItem('Authorization', `Bearer ${access_token}`);
+    }
   }
 
-  async componentDidMount() {
-    try {
-      this.initialData();
-    } catch (e) { }
+  componentDidMount() {
+    this.initialData();
+    RNBootSplash.hide();
   }
 
   render() {
@@ -192,8 +201,8 @@ const MyStack = new createStackNavigator({
   GameDetail: { screen: GameDetail },
   // MissionDetail: { screen: MissionDetail },
 }, {
-    initialRouteName: 'Main'
-  });
+  initialRouteName: 'Main'
+});
 
 const AppContainer = createAppContainer(MyStack);
 
