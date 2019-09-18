@@ -14,7 +14,7 @@ export default class Reward extends Component {
 
   state = {
     isModalVisible: false,
-    activeUid: null,
+    activeUid: '',
   }
 
   onCloseModal = () => this.setState({ isModalVisible: false });
