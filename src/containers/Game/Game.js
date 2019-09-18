@@ -89,6 +89,7 @@ export default class Game extends Component {
             {
               missionList.map((mission, mission_index) => (
                 <GameBlock
+                  key={mission.uid}
                   mode="game"
                   {...mission}
                   isActive={mission_index <= (lastPassIndex + 1)} // 關卡必須按照順序過
