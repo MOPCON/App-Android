@@ -14,15 +14,15 @@ export default class Reward extends Component {
 
   state = {
     isModalVisible: false,
-    active: null,
+    activeUid: '',
   }
 
   onCloseModal = () => this.setState({ isModalVisible: false });
 
-  onOpenModal = (uid) => this.setState({ isModalVisible: true, active: uid });
+  onOpenModal = (uid) => this.setState({ isModalVisible: true, activeUid: uid });
 
   render() {
-    const { isModalVisible, active } = this.state;
+    const { isModalVisible, activeUid } = this.state;
     const { rewardList } = this.props.context.gameStore;
     const lang = I18n.locale;
 
@@ -31,7 +31,7 @@ export default class Reward extends Component {
         <Style.RewardContainer>
           {
             rewardList.map(reward => (
-              <Style.RewardCard>
+              <Style.RewardCard key={reward.uid}>
                 <Style.RewardImage source={{ uri: reward.image }} />
                 <Style.RewardInfo>
                   <Style.Title>{lang === 'zh' ? reward.name : reward.name_e}</Style.Title>
@@ -52,7 +52,7 @@ export default class Reward extends Component {
           }
 
           {
-            <ModalExchange visible={isModalVisible} active={active} onClose={this.onCloseModal} />
+            <ModalExchange visible={isModalVisible} uid={activeUid} onClose={this.onCloseModal} />
           }
         </Style.RewardContainer>
       </ScrollView>

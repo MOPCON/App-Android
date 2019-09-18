@@ -11,6 +11,7 @@ export const NavBar = styled.View`
 
 export const NavItem = styled.TouchableOpacity`
   align-items: center;
+  opacity: ${p => p.disabled ? 0.3 : 1};
 `;
 
 export const NavIcon = styled.Image`

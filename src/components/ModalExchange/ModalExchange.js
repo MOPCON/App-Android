@@ -11,9 +11,9 @@ import iconExchange from '../../images/icon/iconExchange.png';
 import * as Style from './style';
 
 @Consumer('missionStore', 'gameStore')
-export default class ModalExchange extends React.PureComponent {
+export default class ModalExchange extends React.Component {
   static propTypes = {
-    visible: PropTypes.bool,
+    uid: PropTypes.string,
     onClose: PropTypes.func,
   }
 
@@ -23,37 +23,22 @@ export default class ModalExchange extends React.PureComponent {
     exchangeCapsules: 0,
   }
 
-  async componentDidMount() {
-    this.UUID = await AsyncStorage.getItem('UUID');
-    this.public_key = await AsyncStorage.getItem('public_key');
-  }
-
   onClickExchange = async () => {
     const { text } = this.state;
-    const { active } = this.props;
+    const { uid } = this.props;
     const payload = {
-      uid: active,
+      uid,
       vKey: text,
     };
-
+    console.log(payload);
     try {
       const { loadGameList } =  this.props.context.gameStore;
-
-      const { data } = await gameServices.post('/verify/reward', payload);
+      await gameServices.post('/verify/reward', payload);
       loadGameList();
       this.onClose();
     } catch (error) {
       Alert.alert(I18n.t('game.invalid_reward_password'));
     }
-    // const parsedText = text.toLowerCase();
-    // const regexp = /^(mopcon)(\d{2})$/;
-    // const testResult = regexp.test(parsedText);
-    // if (testResult) {
-    //   this.setState({
-    //     hasCheckView: true,
-    //     exchangeCapsules: parseInt(regexp.exec(parsedText)[2], 10),
-    //   });
-    // }
   }
 
   onClickExchangewServer = async () => {
@@ -83,12 +68,12 @@ export default class ModalExchange extends React.PureComponent {
   }
 
   render() {
-    const { visible, onClose } = this.props;
+    const { uid, onClose } = this.props;
     const { text, exchangeCapsules, hasCheckView } = this.state;
     return (
       <Style.ModalContainer
         transparent
-        visible={visible}
+        visible={Boolean(uid)}
         onRequestClose={onClose}>
         <Style.BodyContainer>
           {
