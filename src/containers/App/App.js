@@ -108,7 +108,7 @@ class App extends Component {
   }
 
   render() {
-    const { hasUpdated, language, current } = this.state;
+    const { hasUpdated, language, current, enable_game } = this.state;
     const { navigation } = this.props;
 
     const TABS = [
@@ -117,6 +117,7 @@ class App extends Component {
         title: 'home.title',
         showHeader: false,
         icon: iconHome,
+        disabled: false,
         activeIcon: iconHomeActive,
         component: () => <Main onChangeTab={this.onChangeTab} language={language} onChangeLanguage={this.onChangeLanguage} navigation={navigation} />,
       },
@@ -125,6 +126,7 @@ class App extends Component {
         title: 'home.schedule',
         showHeader: true,
         icon: iconSchedule,
+        disabled: false,
         activeIcon: iconScheduleActive,
         component: () => <Schedule navigation={navigation} />,
       },
@@ -133,6 +135,7 @@ class App extends Component {
         title: 'home.Game',
         showHeader: true,
         icon: iconGame,
+        disabled: !enable_game,
         activeIcon: iconGameActive,
         component: () => <Game navigation={navigation} />,
       },
@@ -141,6 +144,7 @@ class App extends Component {
         title: 'home.News',
         showHeader: true,
         icon: iconNews,
+        disabled: false,
         activeIcon: iconNewsActive,
         component: () => <News navigation={navigation} />,
       },
@@ -149,6 +153,7 @@ class App extends Component {
         title: 'home.More',
         showHeader: true,
         icon: iconMore,
+        disabled: false,
         activeIcon: iconMoreActive,
         component: () => <More navigation={navigation} />,
       },
@@ -167,7 +172,7 @@ class App extends Component {
             <Style.NavBar>
               {
                 TABS.map(tab => (
-                  <Style.NavItem key={tab.key} onPress={() => this.setState({ current: tab.key })}>
+                  <Style.NavItem disabled={tab.disabled} key={tab.key} onPress={() => this.setState({ current: tab.key })}>
                     <Style.NavIcon source={current === tab.key ? tab.activeIcon : tab.icon} />
                     <Style.NavText active={current === tab.key}>
                       {I18n.t(tab.title)}
