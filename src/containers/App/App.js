@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Platform, NativeModules } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from '@react-native-community/async-storage';
@@ -87,24 +88,54 @@ class App extends Component {
 
   initialData = async () => {
     const { data: { enable_game, api_server } } = await apiServices.get('/initial');
-    await AsyncStorage.setItem('gameServer', api_server.game);
-    this.setState({ enable_game });
+    AsyncStorage.setItem('gameServer', api_server.game);
     const authorization = await AsyncStorage.getItem('Authorization');
     if (!authorization) {
       const uid = await DeviceInfo.getUniqueId();
+      const rand = Math.random().toString(16).substring(2, 15);
       const data = {
-        uid,
-        email: Math.random().toString(16).substring(2, 15)
+        uid: uid + rand,
+        email: rand,
       };
       const { data: { access_token } } = await gameServices.post('/register', data);
       console.log('===========register success==========', access_token);
       AsyncStorage.setItem('Authorization', `Bearer ${access_token}`);
+    }
+    this.setState({ enable_game });
+  }
+
+  async getToken() {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
+    if (!fcmToken) {
+      fcmToken = await firebase.messaging().getToken();
+      if (fcmToken) {
+        await AsyncStorage.setItem('fcmToken', fcmToken);
+      }
+    }
+  }
+
+  async checkPermission() {
+    const enabled = await firebase.messaging().hasPermission();
+    if (enabled) {
+      this.getToken();
+    } else {
+      this.requestPermission();
+    }
+  }
+
+  async requestPermission() {
+    try {
+      await firebase.messaging().requestPermission();
+      this.getToken();
+    } catch (error) {
+      console.log('permission rejected');
     }
   }
 
   componentDidMount() {
     this.initialData();
     RNBootSplash.hide();
+    this.checkPermission();
   }
 
   render() {
