@@ -94,7 +94,7 @@ class App extends Component {
       const uid = await DeviceInfo.getUniqueId();
       const rand = Math.random().toString(16).substring(2, 15);
       const data = {
-        uid: uid + rand,
+        uid: `${uid}-${rand}`,
         email: rand,
       };
       const { data: { access_token } } = await gameServices.post('/register', data);
