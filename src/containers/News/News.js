@@ -1,6 +1,7 @@
 import React from 'react';
-import { ScrollView, Linking } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { ScrollView, Linking, TouchableOpacity } from 'react-native';
+import moment from 'dayjs';
+import apiServices from '../../api/services';
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
@@ -14,9 +15,7 @@ export default class News extends React.Component {
   }
 
   async componentDidMount() {
-    const newsText = await AsyncStorage.getItem('news');
-    const news = JSON.parse(newsText).payload;
-
+    const { data: news } = await apiServices.get('/news');
     this.setState({ news });
   }
 
@@ -26,20 +25,24 @@ export default class News extends React.Component {
 
   render() {
     const { news } = this.state;
-
+    console.log(news);
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.NewsContainer>
           {
             news.map((n, i) => (
-              <Style.NewsCardView>
-                <Style.NewsTimeText>{n.time}</Style.NewsTimeText>
-                <Style.NewsCardTitleText>{n.title}</Style.NewsCardTitleText>
-                <Style.NewsCardDescText>
-                  {n.description}
-                </Style.NewsCardDescText>
-                <Button color="inverse" text={I18n.t('news.link')} align="flex-end" margin={[0, 0, 0, 0]} onClick={() => this.openLink(n.link)} />
-              </Style.NewsCardView>
+              <TouchableOpacity key={n.id} onPress={() => this.openLink(n.link)}>
+                <Style.NewsCardView>
+                  <Style.NewsTimeContainer>
+                    <Style.NewsTimeText>{moment(n.date * 1000).format('YYYY/MM/DD')}</Style.NewsTimeText>
+                    <Style.NewsTimeText>{moment(n.date * 1000).format('HH:mm')}</Style.NewsTimeText>
+                  </Style.NewsTimeContainer>
+                  <Style.NewsCardTitleText>{n.title}</Style.NewsCardTitleText>
+                  <Style.NewsCardDescText>
+                    {n.description}
+                  </Style.NewsCardDescText>
+                </Style.NewsCardView>
+              </TouchableOpacity>
             ))
           }
         </Style.NewsContainer>
@@ -47,3 +50,6 @@ export default class News extends React.Component {
     );
   }
 }
+
+
+// <Button color="inverse" text={I18n.t('news.link')} align="flex-end" margin={[0, 0, 0, 0]} onClick={() => this.openLink(n.link)} />

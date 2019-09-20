@@ -25,13 +25,15 @@ export const ButtonTouchable = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   width: ${p => p.block ? '100%' : 'auto'};
+  opacity: ${p => p.disabled ? '0.5' : '1'};
 `;
 export const ButtonText = styled.Text`
   font-family: Roboto-Medium;
   letter-spacing: 1px;
   font-size: 14px;
-  color: ${p => p.color === 'primary' ? 'white' : scheduleCardTypeColor};
+  color: white;
 `;
 
 export const ButtonIcon = styled.Image`

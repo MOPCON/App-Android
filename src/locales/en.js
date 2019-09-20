@@ -1,20 +1,27 @@
 export default {
   home: {
+    title: 'Home',
     schedule: 'Schedule',
     MySchedule: 'My-Schedule',
     Unconference: 'Unconf',
-    Mission: 'Field Games',
+    Mission: 'Mission',
+    Game: 'Game',
     Sponsors: 'Sponsors',
     Speakers: 'Speakers',
     Community: 'Community',
     News: 'News',
+    More: 'More',
   },
   news: {
     title: 'News',
     link: 'Link',
+    more: 'More',
   },
   schedule:{
-    noSchedule: 'No Schedule'
+    noSchedule: 'No Schedule',
+    hotTopic: 'You will enjoy this meeting',
+    allSchedule: 'All Schedule',
+    favoriteSchedule: 'My Favorite',
   },
   unConf: {
     title: 'UnConf',
@@ -23,19 +30,30 @@ export default {
   },
   sponsor:{
     title: 'Sponsor',
+    info: 'Sponsor',
     special_thanks: 'Special Thanks',
+    more: 'More',
   },
   scheduleDetail:{
     title: 'Speech',
   },
   speaker: {
     title: 'Speaker',
+    list: 'Speaker',
+    about: 'About',
+    more: 'more',
+    speech: 'Speech',
   },
   community: {
     title: 'Community',
     tab_community: 'Community',
     tab_volunteer: 'Volunteer',
+    community_info: 'Community',
+    volunteer_info: 'Volunteer',
     unconference: 'Unconference',
+    participant: 'Participant',
+    more: 'More',
+    member: 'Member',
   },
   communityDetail: {
     title: 'Community',
@@ -62,6 +80,29 @@ export default {
     exchangeInfo: 'You will exchange',
     capsules: 'capsule(s).',
   },
+  game: {
+    title: 'Game',
+    total_score: 'Total Score',
+    my_reward: 'Reward',
+    progress: 'Progress',
+    start: 'Start',
+    exchange: 'Exchange',
+    redeemed: 'Redeemed',
+    score: 'Score',
+    receive_award: 'Receive award',
+    receive_award_tip: 'Complete all missions',
+    enter_reward_password: 'Enter Exchange Password',
+    invalid_reward_password: 'Invalid Exchange Password',
+    invalid_task_password: 'Invalid QRCode',
+    btn_receive_award: 'Award',
+    awarded: 'Awarded',
+    awarded_tip: 'You can check the redemption instructions in my rewards.',
+  },
+  gameDetail: {
+    title: 'Stage',
+    scan: 'Scan QR Code',
+    mission_completed: 'Completed',
+  },
   missionDetail: {
     quiz: 'Q&A',
     task: 'INTERACTION',
@@ -77,5 +118,8 @@ export default {
   common: {
     ok: 'OK',
     close: 'Close',
+  },
+  more: {
+    title: 'More'
   }
 };

@@ -1,60 +1,48 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from './style';
-import { TouchableOpacity } from 'react-native';
 import geoPng from '../../images/location.png';
-import starIconNormal from '../../images/buttonStarNormal.png';
-import starIconChecked from '../../images/buttonStarChecked.png';
+import TagBlock from '../TagBlock/TagBlock';
 
-export default class ScheduleItem extends Component {
-  static propTypes = {
-    paintBG: PropTypes.bool,  // is relax time ?
-    title: PropTypes.string,  // speak topic
-    category: PropTypes.string,   // topic category string eg. CLOUD
-    name: PropTypes.string,   // speaker name
-    room: PropTypes.string,   // room location string
-    saved: PropTypes.bool,    // saved or not
-    onSave: PropTypes.func,   // when click on save button trigger this function.
-    regular: PropTypes.bool,  // regular conference schedule or not
-    onPressTitle: PropTypes.func,
-  }
-
-  onPressSave = () => {
-    this.props.onSave();
-  }
-
-  onPressTitle = () => {
-    this.props.onPressTitle();
-  }
-
-  render() {
-    const { paintBG, title, category, name, room, saved, regular } = this.props;
-    return (
-      <Style.ScheduleItemContainer paintBG={paintBG}>
+const ScheduleItem = ({ title, speaker, room, tags, onPressTitle }) => (
+  <Style.ScheduleItemContainer>
+    <Style.InnerContainer>
+      <Style.TitleTouchable onPress={onPressTitle}>
+        <Style.Title>{title}</Style.Title>
+      </Style.TitleTouchable>
+      <TagBlock tags={tags} />
+      <Style.ActionContainer>
+        <Style.Name>{speaker}</Style.Name>
         {
-          paintBG ? <Style.Title paintBG={paintBG}>{title}</Style.Title> : (
-            <Style.InnerContainer>
-              <Style.Category>{category}</Style.Category>
-              <Style.TitleTouchable onPress={this.onPressTitle}>
-                <Style.Title paintBG={paintBG}>{title}</Style.Title>
-              </Style.TitleTouchable>
-              <Style.Name>{name}</Style.Name>
-              <Style.ActionContainer>
-                <Style.GeoContainer>
-                  <Style.GeoIcon source={geoPng} />
-                  <Style.Room>{room}</Style.Room>
-                </Style.GeoContainer>
-                {
-                  regular && (
-                    <Style.StarIconTouchable onPress={this.onPressSave}>
-                      <Style.StarIconImg source={saved ? starIconChecked : starIconNormal} />
-                    </Style.StarIconTouchable>
-                  )
-                }
-              </Style.ActionContainer>
-            </Style.InnerContainer>)
+          room && (
+            <Style.GeoContainer>
+              <Style.GeoIcon source={geoPng} />
+              <Style.Room>{room}</Style.Room>
+            </Style.GeoContainer>
+          )
         }
-      </Style.ScheduleItemContainer>
-    )
-  }
-}
+      </Style.ActionContainer>
+    </Style.InnerContainer>
+  </Style.ScheduleItemContainer>
+);
+
+ScheduleItem.propTypes = {
+  title: PropTypes.string,  // speak topic
+  speaker: PropTypes.string,   // speaker name
+  room: PropTypes.string,   // room location string
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    color: PropTypes.string,
+    name: PropTypes.string,
+  })),
+  onPressTitle: PropTypes.func,
+};
+
+ScheduleItem.defaultProps = {
+  title: '',
+  speaker: '',
+  room: '',
+  tags: [{ color: '', name: '' }],
+  onPressTitle: () => { },
+};
+
+export default ScheduleItem;

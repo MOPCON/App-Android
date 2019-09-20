@@ -24,26 +24,33 @@ export const CardBig = styled.TouchableOpacity`
 `;
 export const CardSmall = styled.TouchableOpacity`
   width: ${width};
-  height: ${width};
-  border-radius: 10px;
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  background: white;
+  margin-bottom: 30px;
 `;
 export const CardImgSmall = styled.View`
-
+  margin-bottom: 10px;
 `;
+
+export const CardText = styled.Text`
+  color: #fff;
+  font-size: 16px;
+`;
+
+export const CardImg = styled.Image`
+  width: 80;
+  height: 80;
+  border-radius: 80;
+  background: #fff;
+`;
+
 export const CardImgBig = styled.View`
   width: ${width};
   height: ${width};
 `;
 export const TypeText = styled.Text`
   color: ${scheduleCardTypeColor};
-  font-family: 'Roboto-Medium';
   font-size: 16px;
   letter-spacing: 2.7px;
-  margin-bottom: 16px;
+  margin-bottom: 60px;
   text-align: center;
 `;

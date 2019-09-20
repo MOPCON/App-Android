@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import I18n from '../../locales';
+import iconWelcome from '../../images/icon/iconWelcome.png';
 import * as Style from './style';
 
 export default class ModalGameInfo extends React.PureComponent {
@@ -7,8 +10,11 @@ export default class ModalGameInfo extends React.PureComponent {
     visible: PropTypes.bool,
     onClose: PropTypes.func,
   }
+
   render() {
-    const { visible, onClose } = this.props;
+    const { visible, onClose, intro } = this.props;
+    const lang = I18n.locale;
+
     return (
       <Style.ModalContainer
         transparent
@@ -16,11 +22,12 @@ export default class ModalGameInfo extends React.PureComponent {
         onRequestClose={onClose}>
         <Style.BodyContainer>
           <Style.InfoContainer>
-            <Style.InfoTitle>搶攻 Mo 幣</Style.InfoTitle>
-            <Style.InfoDesc>透過回答問題和攤位互動收集 Mo 幣，累積越多就可以兌換越多扭蛋，裡面藏有各式各樣神秘大獎等著你！</Style.InfoDesc>
+            <Style.WelcomeImage source={iconWelcome} />
+            <Style.InfoTitle>{lang === 'zh' ? intro.landing_page_title : intro.landing_page_title_en }</Style.InfoTitle>
+            <Style.InfoDesc>{lang === 'zh' ? intro.landing_page_text : intro.landing_page_text_en }</Style.InfoDesc>
             <Style.Touch onPress={onClose}>
               <Style.Btn>
-                <Style.BtnText>開始任務</Style.BtnText>
+                <Style.BtnText>{I18n.t('game.start')}</Style.BtnText>
               </Style.Btn>
             </Style.Touch>
           </Style.InfoContainer>

@@ -1,40 +1,33 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native';
+import apiServices from '../../api/services';
 import I18n from '../../locales';
-import * as theme from '../../theme';
 
 import iconChevronRightImg from '../../images/icon/iconChevronRight.png';
 
 const Container = styled.View`
   width: 100%;
-  border: 1px solid ${theme.modBorder};
-  border-radius: 5px;
-  padding-top: 12;
-  padding-right: 16;
-  padding-bottom: 12;
-  padding-left: 16;
-  margin-bottom: 16;
+  flex-direction: column;
+`;
+
+const TitleContainer = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 16px;
 `;
 
 const Title = styled.Text`
-  color: ${theme.scheduleCardTypeColor};
-  font-size: 12px;
-  line-height: 16px;
-  margin-bottom: 8;
-  letter-spacing: 0.2px;
-`;
-
-const Content = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
+  color: white;
+  font-size: 16px;
 `;
 
 const Message = styled.Text`
   color: #fff;
   font-size: 16px;
-  font-weight: bold;
-  letter-spacing: 0.3px;
-  width: 80%;
+  background-color: #0C3449;
+  padding: 20px;
+  border-radius: 6px;
 `;
 
 const TouchArea = styled.TouchableOpacity`
@@ -43,10 +36,8 @@ const TouchArea = styled.TouchableOpacity`
 `;
 
 const MoreText = styled.Text`
-  color: ${theme.scheduleCardTypeColor};
+  color: #878787;
   font-size: 16px;
-  font-weight: bold;
-  letter-spacing: 0.3px;
 `;
 
 const RightArrow = styled.Image`
@@ -55,29 +46,39 @@ const RightArrow = styled.Image`
   margin-left: 8;
 `;
 
-export default class News extends Component {
-  renderNews = () => {
-    const { news, toNews } = this.props;
+const Block = styled.View``;
 
-    if (!news.length) return;
+const News = ({ onChangeTab }) => {
 
-    return (
-      <Content>
-        <Message>{news[0].description}</Message>
-        <TouchArea onPress={toNews}>
-          <MoreText>More</MoreText>
-          <RightArrow source={iconChevronRightImg} />
-        </TouchArea>
-      </Content>
-    );
+  const [news, setNews] = useState('')
+
+  const toNews = () => {
+    onChangeTab('NEWS');
+  };
+
+  const getNews = async () => {
+    const { data: news } = await apiServices.get('/news');
+    setNews(news[0].title);
   }
 
-  render() {
-    return (
-      <Container>
+  useEffect(() => {
+    getNews();
+  }, []);
+
+  return (
+    <Container>
+      <TitleContainer>
         <Title>{I18n.t('news.title')}</Title>
-        { this.renderNews() }
-      </Container>
-    );
-  }
+        <Block>
+          <TouchArea onPress={toNews}>
+            <MoreText>{I18n.t('news.more')}</MoreText>
+            <RightArrow source={iconChevronRightImg} />
+          </TouchArea>
+        </Block>
+      </TitleContainer>
+      <Message>{news}</Message>
+    </Container>
+  );
 }
+
+export default News;

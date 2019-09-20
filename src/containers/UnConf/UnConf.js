@@ -1,86 +1,99 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import apiServices from '../../api/services';
 import * as Style from './style';
 import I18n from '../../locales';
-import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
-import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
-import Tab from '../../components/Tab/Tab';
+import moment from 'dayjs';
+import { normalizePeriodData, normalizeScheduleData } from '../../utils/normalizeSchedule';
+import TabDate from '../../components/TabDate/TabDate';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
+import CommonScheduleItem from '../../components/ScheduleItem/CommonScheduleItem';
 import Button from '../../components/Button/Button';
 
-const tabs = [
-  { name: 'day1', value: 'day1' },
-  { name: 'day2', value: 'day2' }
-];
-const defaultActiveTab = 'day1';
+// const tabs = [
+//   { name: 'day1', value: 'day1' },
+//   { name: 'day2', value: 'day2' }
+// ];
+// const defaultActiveTab = 'day1';
 
 export default class UnConf extends React.Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'unConf.title', 'mode1')
+  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'unConf.title', 'mode2')
 
   state = {
     unconf: [],
-    nowUnconfDate: '',
+    nowScheduleDate: '',
+    savedSchedule: {},
   }
 
-  async componentDidMount() {
-    const unconfText = await AsyncStorage.getItem('schedule');
-    const unconf = JSON.parse(unconfText).payload.talk;
-    const nowUnconfDate = this.props.navigation.getNestedValue(['state', 'params', 'nowUnconfDate']) || unconf[0].date;
-
+  getSession = async () => {
+    const savedScheduleText = await AsyncStorage.getItem('savedschedule');
+    let savedSchedule = JSON.parse(savedScheduleText);
+    if (!savedSchedule) { savedSchedule = {}; }
+    const { data: unconf } = await apiServices.get('/unconf');
     this.setState({
       unconf,
-      nowUnconfDate,
+      nowScheduleDate: unconf[0].date,
+      savedSchedule
     });
   }
 
-  onChangeTab = (date) => {
-    this.setState({ nowUnconfDate: date });
+  onSave = ({ session_id }) => {
+    const s = {
+      ...this.state.savedSchedule,
+    };
+    s[session_id] = !s[session_id];
+    this.setState({ savedSchedule: s });
+    AsyncStorage.setItem('savedschedule', JSON.stringify(s));
   }
 
-  goToSchedule = () => {
-    this.props.navigation.navigate('Schedule', { nowScheduleDate: this.state.nowUnconfDate });
+  componentDidMount() {
+    this.getSession();
   }
 
-  onPressTitle = () => { }
+  renderUnconf = () => {
+    const { onPressTitle, onSave } = this;
+    const { unconf, nowScheduleDate, savedSchedule } = this.state;
+
+    const nowSchedule = unconf
+      .find(schedulePeriod => schedulePeriod.date === nowScheduleDate);
+    if (!nowSchedule) { return (<View />); }
+    return nowSchedule.period.map((periodData) => {
+      if (periodData.event) {
+        const key = nowSchedule.date + periodData.started_at + periodData.event;
+        return (<CommonScheduleItem key={key} scheduleData={normalizePeriodData(periodData)} />);
+      }
+      return periodData.room
+        .map((scheduleData) => {
+          return normalizeScheduleData(scheduleData, savedSchedule)
+        })
+        .map(scheduleData => (
+          <ScheduleCard
+            key={scheduleData.session_id}
+            scheduleData={scheduleData}
+            onSave={onSave}
+          />
+        ));
+    }).reduce((acc, val) => acc.concat(val), []);
+  }
+
+  onChangeTab = (nowScheduleDate) => this.setState({ nowScheduleDate });
 
   render() {
     const { unconf, nowUnconfDate } = this.state;
-    const tabs = unconf.map(unconfData => ({ name: unconfData.date, value: unconfData.date }));
-    const lang = I18n.locale;
+    const tabs = unconf.map(scheduleData => ({ name: moment(scheduleData.date * 1000).format('MM-DD'), value: scheduleData.date }));
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.UnConfContainer>
 
           {
-            tabs.length
-              ? <Tab tabs={tabs} defaultActiveTab={nowUnconfDate} onChange={this.onChangeTab} />
+            Boolean(tabs.length)
+              ? <TabDate tabs={tabs} defaultActiveTab={nowUnconfDate} onChange={this.onChangeTab} />
               : <View />
           }
           {
-            unconf.map(unconfData => (
-              <Style.AgendaView
-                key={`schedule${unconfData.date}`}
-                active={nowUnconfDate === unconfData.date}>
-                {unconfData.items.map(itemData => (
-                  <View key={`item${unconfData.date},${itemData.duration}`}>
-                    <ScheduleHeader time={itemData.duration} />
-                    <ScheduleItem
-                      title={itemData.topic}
-                      onPressTitle={this.onPressTitle}
-                      room={I18n.t('unConf.location')}
-                      name={itemData.speaker}
-                      paintBG={itemData.type === 'others'}
-                    />
-                  </View>
-                ))}
-              </Style.AgendaView>
-            ))
-          }
-          {
-            tabs.length
-              ? <Button onClick={this.goToSchedule} text={I18n.t('unConf.schedule')} align="center" margin={[16, 0, 0, 0]} />
-              : <View />
+            Boolean(tabs.length) && this.renderUnconf()
           }
         </Style.UnConfContainer>
       </ScrollView>

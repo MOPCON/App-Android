@@ -6,17 +6,17 @@ export const SpeakerItemContainer = styled.View`
 `;
 
 export const ImageContainer = styled.View`
-  width: 96px;
-  height: 96px;
-  border-radius: 96px;
+  width: 80px;
+  height: 80px;
+  border-radius: 80px;
   background-color: white;
   margin-right: 16px;
 `;
 
 export const Image = styled.Image`
-  width: 96px;
-  height: 96px;
-  border-radius: 96px;
+  width: 80px;
+  height: 80px;
+  border-radius: 80px;
 `;
 
 export const ContentContainer = styled.View`
@@ -24,15 +24,16 @@ export const ContentContainer = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: 20px;
+  font-size: 16px;
   color: #fff;
   margin-bottom: 8px;
 `;
+
 export const Info = styled.Text`
-  font-size: 14px;
+  font-size: 12px;
   color: #fff;
   opacity: 0.6;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   flex: 1;
   flex-wrap: wrap;
 `;

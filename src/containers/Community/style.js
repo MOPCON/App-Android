@@ -12,6 +12,7 @@ export const Container = styled.View`
 
 export const TabContainer = styled.View`
   width: 100%;
+  margin-bottom: 20px;
 `;
 
 export const ScrollView = styled.ScrollView`
@@ -26,17 +27,20 @@ export const BlockContainer = styled.View`
 
 export const CardSmall = styled.TouchableOpacity`
   width: ${width};
-  height: ${width};
-  border-radius: 10px;
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  background: white;
+  margin-bottom: 30px;
 `;
 export const CardImgSmall = styled.Image`
-  width: 132;
-  height: 132;
+  width: 80;
+  height: 80;
+  border-radius: 80;
+  margin-bottom: 10px;
+  background: #fff;
+`;
+
+export const CardText = styled.Text`
+  color: #fff;
+  font-size: 16px;
 `;
 
 export const Card = styled.View`
@@ -73,4 +77,47 @@ export const MemberContent = styled.Text`
   font-size: 14px;
   line-height: 22px;
   letter-spacing: 0.3px;
+`;
+
+export const JoinContainer = styled.View`
+  flex: 1;
+  border-top-color: #fff;
+  border-top-width: 1px;
+  padding: 50px;
+  background-color: ${theme.darkBlue};
+  align-items: center;
+`;
+
+export const JoinImage = styled.Image`
+  width: 97;
+  height: 92;
+  margin-bottom: 20;
+`;
+
+export const JoinText = styled.Text`
+  color: #ff4392;
+  font-size: 20px;
+  margin-bottom: 30px;
+`;
+
+export const FollowView = styled.TouchableOpacity`
+
+`;
+
+export const FollowImage = styled.Image`
+  width: 178;
+  height: 62;
+  margin-bottom: 40px;
+`;
+
+export const FollowText = styled.Text`
+  color: #fff;
+  font-size: 15px;
+  line-height: 24px;
+`;
+
+export const CommunitySubTitle = styled.Text`
+  color: #878787;
+  font-size: 14px;
+  margin-bottom: 20px;
 `;

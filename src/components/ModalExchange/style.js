@@ -12,29 +12,29 @@ export const BodyContainer = styled.View`
 `;
 
 export const InfoContainer = styled.View`
-  width: 340px;
+  width: 90%;
   height: auto;
-  border: 2px solid ${scheduleCardTypeColor};
-  border-radius: 4px;
-  background-color: ${darkBlue};
-  padding: 16px;
-  justify-content: center;
-  flex-direction: column;
+  border-radius: 20px;
+  background-color: #0b425e;
+  padding: 48px 30px 35px 30px;
   align-items: center;
+  justify-content: center;
 `;
 
 export const TextInput = styled.TextInput`
-  border-bottom-color: ${scheduleCardTypeColor};
-  border-bottom-width: 1px;
-  border-style: solid;
-  color: ${scheduleCardTypeColor};
+  color: #fff;
   width: 100%;
+  height: 60px;
+  background-color: #09364c;
+  border-radius: 8px;
+  margin-bottom: 24px;
 `;
 
 export const ButtonsContainer = styled.View`
   display: flex;
   justify-content: center;
   flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const ExchangeText = styled.Text`
@@ -48,7 +48,13 @@ export const ExchangeCoinText = styled.Text`
 `;
 
 export const ExchangePng = styled.Image`
-  width: 50px;
-  height: 50px;
-  margin-bottom: 16px;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 24px;
+`;
+
+export const ExchangeTitle = styled.Text`
+  color: #fff;
+  font-size: 22px;
+  margin-bottom: 24px;
 `;

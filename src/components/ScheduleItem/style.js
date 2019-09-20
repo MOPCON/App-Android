@@ -7,10 +7,7 @@ import {
 } from '../../theme/index';
 
 export const ScheduleItemContainer = styled.View`
-  background-color: ${scheduleCardBackground};
-  align-items: ${props => props.paintBG ? 'center' : 'flex-start'};
-  padding:  ${props => props.paintBG ? '0' : '16px'};
-  margin-bottom: 1px;
+  align-items: flex-start;
 `;
 
 export const InnerContainer = styled.View`
@@ -27,13 +24,13 @@ export const ActionContainer = styled.View`
 
 export const TitleTouchable = styled.TouchableOpacity`
   max-width: 100%;
+  margin-bottom: 16px;
 `;
 
 export const Title = styled.Text`
   color: white;
-  font-size: 19px;
+  font-size: 18px;
   font-family: 'Roboto-Regular';
-  margin: ${p => p.paintBG ? '20px 0' : '0'};
 `;
 
 export const NTitle = styled.Text`
@@ -54,23 +51,23 @@ export const Category = styled.Text`
 export const Name = styled.Text`
   opacity: 0.6;
   color: white;
-  font-size: 13px;
+  font-size: 16px;
   font-family: 'Roboto-Regular';
   letter-spacing: 0.3px;
   margin: 10px 0;
 `;
 
 export const Header = styled.View`
-  background-color: ${aquamarine};
   width: 100%;
-  height: 34px;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 16px;
   align-items: center;
 `;
 
 export const HeaderText = styled.Text`
-  color: white;
-  font-size: 16px;
+  color: #00aaf0;
+  font-size: 20px;
 `;
 
 export const GeoContainer = styled.View`
@@ -98,4 +95,12 @@ export const StarIconImg = styled.Image`
 
 export const StarIconTouchable = styled.TouchableOpacity`
   
+`;
+
+export const ScheduleContainer = styled.View`
+  width: 100%;
+  padding: 16px 20px;
+  border: 1px solid #00aaf0;
+  border-radius: 6px;
+  margin-bottom: 16px;
 `;

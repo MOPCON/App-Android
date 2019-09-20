@@ -7,9 +7,6 @@ export const ScheduleContainer = styled.View`
   flex-grow:1;
 `;
 
-export const ScheduleScrollView = styled.ScrollView`
-`;
-
 export const AgendaView = styled.View`
   display: ${p => (p.active ? 'flex' : 'none')};
 `;

@@ -1,8 +1,7 @@
 import React, { Component, createContext } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import produce from 'immer';
-import BoothMissionJSON from '../../BoothMission.json';
-import QuizJSON from '../../Quiz.json';
+import gameServices from '../api/gameServices';
 
 const myContext = createContext();
 
@@ -49,6 +48,20 @@ export default class Provider extends Component {
     ];
   }
 
+  loadGameList = async () => {
+    const { data: me } = await gameServices.get('/me');
+    const passList = me.mission_list.filter(m => m.pass === 1);
+
+    this.setState(state => produce(state, (draftState) => {
+      draftState.gameStore.missionList = me.mission_list;
+      // 已獲得獎勵
+      draftState.gameStore.rewardList = me.reward_list.filter(r => r.has_won);
+      draftState.gameStore.score = passList.reduce((score, m) => score + m.point, 0);
+      draftState.gameStore.lastPassIndex = passList.length - 1;
+      draftState.gameStore.isLoaded = true;
+    }));
+  }
+
   state = {
     missionStore: {
       CAPSULE_RATE: 200,
@@ -58,29 +71,19 @@ export default class Provider extends Component {
       quizs: [],
       setQuizStatus: this.setQuizStatus,
     },
+
+    gameStore: {
+      missionList: [],
+      rewardList: [],
+      score: 0,
+      lastPassIndex: -1,
+      loadGameList: this.loadGameList,
+      isLoaded: false,
+    }
   }
 
   async componentDidMount() {
-    let balance = await AsyncStorage.getItem('balance');
-    if (!balance) {
-      balance = 0;
-      await AsyncStorage.setItem('balance', String(balance));
-    }
-
-    let quizs = await AsyncStorage.getItem('quizs');
-    if (!quizs) {
-      quizs = JSON.stringify([
-        ...QuizJSON,
-        ...BoothMissionJSON,
-      ]);
-      await AsyncStorage.setItem('quizs', quizs);
-    }
-
-
-    this.setState(state => produce(state, (draftState) => {
-      draftState.missionStore.balance = +(balance);
-      draftState.missionStore.quizs = this.sortQuizs(JSON.parse(quizs));
-    }));
+    // this.loadMission();
   }
 
   render() {
