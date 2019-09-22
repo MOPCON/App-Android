@@ -58,7 +58,7 @@ export const StarIconImg = styled.Image`
 `;
 
 export const StarIconTouchable = styled.TouchableOpacity`
-  
+  margin-right: 20px;
 `;
 
 export const SpeakerImg = styled.Image`

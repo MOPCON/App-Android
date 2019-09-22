@@ -51,7 +51,7 @@ export default class ScheduleDetail extends React.Component {
             <Style.SpeakerContainer>
               <Style.ImgList>
                 {
-                  session.speakers.map(speakerData => <Style.SpeakerImg source={{ uri: speakerData.img.mobile }} />)
+                  session.speakers.map(speakerData => <Style.SpeakerImg key={speakerData.name} source={{ uri: speakerData.img.mobile }} />)
                 }
               </Style.ImgList>
               <Style.NameText>
