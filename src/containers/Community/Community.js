@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, Linking } from 'react-native';
+import VersionNum from 'react-native-version-number';
 import AsyncStorage from '@react-native-community/async-storage';
 import apiServices from '../../api/services'
 import * as Style from './style';
@@ -80,6 +81,7 @@ export default class Community extends Component {
           <Style.FollowText>
             想要和我們一起改變南部資訊生態圈嗎？歡迎追蹤我們的 Facebook，我們會在下一屆準備開始前 PO 出徵才資訊！加入我們不僅有機會參與改變的過程，還可以得到寶貴的辦展經驗，認識大神們哦！
           </Style.FollowText>
+          <Style.VersionText>{`Ver: ${VersionNum.appVersion}-${VersionNum.buildVersion}`}</Style.VersionText>
         </Style.JoinContainer>
       </ScrollView>
     );
