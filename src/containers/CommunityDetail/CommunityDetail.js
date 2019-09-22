@@ -46,7 +46,7 @@ export default class CommunityDetail extends Component {
 
   render() {
     const { community } = this.state;
-    const info = I18n.locale === 'en' ? community.introduction_en : community.introduction;
+    const info = I18n.locale === 'en' ? community.introduction_e : community.introduction;
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

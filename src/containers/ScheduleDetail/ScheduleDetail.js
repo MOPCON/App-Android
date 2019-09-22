@@ -7,6 +7,7 @@ import apiServices from '../../api/services'
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import starIconNormal from '../../images/buttonStarNormal.png';
 import starIconChecked from '../../images/buttonStarChecked.png';
+import { Keynote, DontRecord, IsSponsor, Level } from './InnerTag';
 
 export default class ScheduleDetail extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -51,7 +52,7 @@ export default class ScheduleDetail extends React.Component {
             <Style.SpeakerContainer>
               <Style.ImgList>
                 {
-                  session.speakers.map(speakerData => <Style.SpeakerImg source={{ uri: speakerData.img.mobile }} />)
+                  session.speakers.map(speakerData => <Style.SpeakerImg key={speakerData.name} source={{ uri: speakerData.img.mobile }} />)
                 }
               </Style.ImgList>
               <Style.NameText>
@@ -81,6 +82,12 @@ export default class ScheduleDetail extends React.Component {
                 }
               </Style.CategoryText>
             </Style.SpeechItemContainer>
+            <Style.InnerTagContainer>
+              {session.is_keynote ? <Keynote /> : null}
+              {!session.recordable ? <DontRecord /> : null}
+              {session.sponsor_info ? <IsSponsor /> : null}
+              <Level>{session.level}</Level>
+            </Style.InnerTagContainer>
             <Style.Line />
             <Style.DesText>
               {

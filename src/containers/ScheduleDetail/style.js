@@ -26,6 +26,13 @@ export const DesText = styled.Text`
 export const SpeechItemContainer = styled.View`
 `;
 
+export const InnerTagContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 16px;
+`;
+
 export const Title = styled.Text`
   color: white;
   font-size: 18px;
@@ -58,7 +65,7 @@ export const StarIconImg = styled.Image`
 `;
 
 export const StarIconTouchable = styled.TouchableOpacity`
-  
+  margin-right: 20px;
 `;
 
 export const SpeakerImg = styled.Image`
