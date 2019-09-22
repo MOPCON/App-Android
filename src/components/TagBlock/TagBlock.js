@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Container = styled.View`
-  margin-bottom: 10px;
   flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 const Tag = styled.View`
@@ -13,6 +13,7 @@ const Tag = styled.View`
   background: ${p => p.color};
   align-items: center;
   margin-right: 10px;
+  margin-bottom: 10px;
 `;
 
 const TagText = styled.Text`

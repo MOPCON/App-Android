@@ -121,3 +121,9 @@ export const CommunitySubTitle = styled.Text`
   font-size: 14px;
   margin-bottom: 20px;
 `;
+
+export const VersionText = styled.Text`
+  margin-top: auto;
+  color: #ccc;
+  font-size: 10px;
+`;
