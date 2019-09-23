@@ -52,7 +52,6 @@ const RewardTip = styled.Text`
 const GameBlock = (props) => {
   const { mode, name, name_e, point, pass, onOpenModalReward, navigation, uid, isActive } = props;
   const lang = I18n.locale;
-
   const [hasReward, setHasReward] = useState(false);
 
   // 是否點擊過領取獎勵
@@ -62,10 +61,14 @@ const GameBlock = (props) => {
   }
 
   const onGetReward = async () => {
-    const reward = await gameServices.get('/getReward');
-    onOpenModalReward(reward.data);
-    AsyncStorage.setItem('hasReward', JSON.stringify(true));
-    setHasReward(true);
+    try{
+      setHasReward(true);
+      const reward = await gameServices.get('/getReward');
+      onOpenModalReward(reward.data);
+      AsyncStorage.setItem('hasReward', JSON.stringify(true));
+    }catch(e){
+      setHasReward(false);
+    }
   };
 
   useEffect(() => {
