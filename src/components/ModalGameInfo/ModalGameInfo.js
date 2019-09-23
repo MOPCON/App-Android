@@ -23,8 +23,8 @@ export default class ModalGameInfo extends React.PureComponent {
         <Style.BodyContainer>
           <Style.InfoContainer>
             <Style.WelcomeImage source={iconWelcome} />
-            <Style.InfoTitle>{lang === 'zh' ? intro.landing_page_title : intro.landing_page_title_en }</Style.InfoTitle>
-            <Style.InfoDesc>{lang === 'zh' ? intro.landing_page_text : intro.landing_page_text_en }</Style.InfoDesc>
+            <Style.InfoTitle>{lang === 'zh' ? intro.title : intro.title_e }</Style.InfoTitle>
+            <Style.InfoDesc>{lang === 'zh' ? intro.description : intro.description_e }</Style.InfoDesc>
             <Style.Touch onPress={onClose}>
               <Style.Btn>
                 <Style.BtnText>{I18n.t('game.start')}</Style.BtnText>

@@ -17,7 +17,7 @@ export default class Reward extends Component {
     activeUid: '',
   }
 
-  onCloseModal = () => this.setState({ isModalVisible: false });
+  onCloseModal = () => this.setState({ activeUid: '' });
 
   onOpenModal = (uid) => this.setState({ isModalVisible: true, activeUid: uid });
 
@@ -42,8 +42,8 @@ export default class Reward extends Component {
                       reward.redeemed ? (
                         <Button disabled color="inverse" text={I18n.t('game.redeemed')} margin={[0, 0, 0, 0]} />
                       ) : (
-                        <Button color="primary" onClick={() => this.onOpenModal(reward.uid)} text={I18n.t('game.exchange')} margin={[0, 0, 0, 0]} />
-                      )
+                          <Button color="primary" onClick={() => this.onOpenModal(reward.uid)} text={I18n.t('game.exchange')} margin={[0, 0, 0, 0]} />
+                        )
                     }
                   </View>
                 </Style.RewardInfo>
@@ -52,7 +52,7 @@ export default class Reward extends Component {
           }
 
           {
-            <ModalExchange visible={isModalVisible} uid={activeUid} onClose={this.onCloseModal} />
+            <ModalExchange uid={activeUid} onClose={this.onCloseModal} />
           }
         </Style.RewardContainer>
       </ScrollView>

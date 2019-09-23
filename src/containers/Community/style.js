@@ -29,6 +29,7 @@ export const CardSmall = styled.TouchableOpacity`
   width: ${width};
   align-items: center;
   margin-bottom: 30px;
+  justify-content: center;
 `;
 export const CardImgSmall = styled.Image`
   width: 80;
@@ -41,6 +42,7 @@ export const CardImgSmall = styled.Image`
 export const CardText = styled.Text`
   color: #fff;
   font-size: 16px;
+  text-align: center;
 `;
 
 export const Card = styled.View`

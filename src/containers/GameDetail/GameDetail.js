@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-
+import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import Button from '../../components/Button/Button';
@@ -15,6 +15,7 @@ export default class GameDetail extends Component {
   state = {
     modalFinishVisible: false,
     game: {},
+    isLoading: true,
   }
 
   async componentDidMount() {
@@ -23,6 +24,7 @@ export default class GameDetail extends Component {
 
     this.setState({
       game: data,
+      isLoading: false,
     });
   }
 
@@ -40,38 +42,46 @@ export default class GameDetail extends Component {
   }
 
   render() {
-    const { modalFinishVisible, game, type } = this.state;
+    const { modalFinishVisible, game, type, isLoading } = this.state;
     const lang = I18n.locale;
     const { pass } = this.props.navigation.state.params;
 
     return (
       <Style.Container>
         <Style.ScrollContainer>
-          <View>
-            <Style.StageImage source={{ uri: game.image }} />
-            <Style.Title>{lang === 'zh' ? game.name : game.name_e}</Style.Title>
-            <Style.Content>{lang === 'zh' ? game.description : game.description_e}</Style.Content>
-
-            {
-              pass ? (
-                <Button disabled color="inverse" text={I18n.t('gameDetail.mission_completed')} margin={[0, 0, 0, 0]} />
-              ) : (
-                <Button
-                  // onClick={this.onOpenModalFinish}
-                  onClick={this.goScan}
-                  color="primary"
-                  text={I18n.t('gameDetail.scan')}
-                  margin={[0, 0, 0, 0]}
-                />
+          {
+            isLoading
+              ? (
+                <LoadingIcon size="large" color="#ffffff" />
               )
-            }
+              : (
+                <View>
+                  <Style.StageImage source={{ uri: game.image }} />
+                  <Style.Title>{lang === 'zh' ? game.name : game.name_e}</Style.Title>
+                  <Style.Content>{lang === 'zh' ? game.description : game.description_e}</Style.Content>
 
-            {
-              modalFinishVisible && (
-                <ModalFinish visible={modalFinishVisible} onClose={this.onCloseModalFinish} />
+                  {
+                    pass ? (
+                      <Button disabled color="inverse" text={I18n.t('gameDetail.mission_completed')} margin={[0, 0, 0, 0]} />
+                    ) : (
+                        <Button
+                          // onClick={this.onOpenModalFinish}
+                          onClick={this.goScan}
+                          color="primary"
+                          text={I18n.t('gameDetail.scan')}
+                          margin={[0, 0, 0, 0]}
+                        />
+                      )
+                  }
+
+                  {
+                    modalFinishVisible && (
+                      <ModalFinish visible={modalFinishVisible} onClose={this.onCloseModalFinish} />
+                    )
+                  }
+                </View>
               )
-            }
-          </View>
+          }
         </Style.ScrollContainer>
       </Style.Container>
     )

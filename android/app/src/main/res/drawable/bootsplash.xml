@@ -6,8 +6,6 @@
         android:drawable="@color/blue"/>
 
     <item
-        android:width="200dp"
-        android:height="200dp"
         android:drawable="@mipmap/splash"
-        android:gravity="center" />ß
+        android:gravity="center" />
 </layer-list>
