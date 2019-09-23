@@ -41,13 +41,15 @@ class GameApiServices {
     let urlF = `${gameServer}${url}`;
     // if (this.data) { options.body = JSON.stringify(this.data); }
     // if (this.params) { url = `${url}${this.parseParams()}` }
-    const result = await fetch(urlF, options);
-    const response = await result.json();
-    console.log(urlF, options, response)
-    if (result.status === 200) {
-      return response;
-    } else {
-      throw result.status;
+    try {
+      const result = await fetch(urlF, options);
+      const response = await result.json();
+      console.log(urlF, options, response)
+      if (result.status === 200) { return response; }
+    } catch (e) {
+      console.error(e);
+      window.ee = e;
+      throw e;
     }
   }
 }
