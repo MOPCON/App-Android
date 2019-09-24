@@ -5,6 +5,7 @@ import apiServices from '../../api/services';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 import SpeakerItem from '../../components/SpeakerItem/SpeakerItem';
 
 export default class Speaker extends Component {
@@ -54,10 +55,15 @@ export default class Speaker extends Component {
   }
 
   render() {
+    const { speaker } = this.state;
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.SpeakerContainer>
-          {this.renderSpeaker()}
+          {
+            speaker.length
+            ? this.renderSpeaker()
+            : (<LoadingIcon size="large" color="#ffffff" />)
+          }
         </Style.SpeakerContainer>
       </ScrollView>
     );
