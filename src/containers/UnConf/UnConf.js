@@ -86,23 +86,20 @@ export default class UnConf extends React.Component {
     const tabs = unconf.map(scheduleData => ({ name: moment(scheduleData.date * 1000).format('MM-DD'), value: scheduleData.date }));
     return (
       <Style.UnConfScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        {
-          unconf.length
-            ? (
-              <Style.UnConfContainer>
 
-                {
-                  Boolean(tabs.length)
-                    ? <TabDate tabs={tabs} defaultActiveTab={nowUnconfDate} onChange={this.onChangeTab} />
-                    : <View />
-                }
-                {
-                  Boolean(tabs.length) && this.renderUnconf()
-                }
-              </Style.UnConfContainer>
-            )
-            : (<LoadingIcon size="large" color="#ffffff" />)
-        }
+        <Style.UnConfContainer>
+          {
+            !Boolean(tabs.length) && <LoadingIcon size="large" color="#ffffff" />
+          }
+          {
+            Boolean(tabs.length)
+              ? <TabDate tabs={tabs} defaultActiveTab={nowUnconfDate} onChange={this.onChangeTab} />
+              : <View />
+          }
+          {
+            Boolean(tabs.length) && this.renderUnconf()
+          }
+        </Style.UnConfContainer>
       </Style.UnConfScrollView>
     );
   }
