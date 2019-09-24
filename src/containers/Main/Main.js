@@ -33,7 +33,6 @@ const Main = ({ language, onChangeLanguage, navigation, onChangeTab }) => {
     init();
   }, [])
 
-
   return (
     <Style.Container>
       {
