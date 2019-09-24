@@ -4,12 +4,10 @@ import * as Style from './style';
 import geoPng from '../../images/location.png';
 import TagBlock from '../TagBlock/TagBlock';
 
-const ScheduleItem = ({ title, speaker, room, tags, onPressTitle }) => (
+const ScheduleItem = ({ title, speaker, room, tags}) => (
   <Style.ScheduleItemContainer>
     <Style.InnerContainer>
-      <Style.TitleTouchable onPress={onPressTitle}>
-        <Style.Title>{title}</Style.Title>
-      </Style.TitleTouchable>
+      <Style.Title>{title}</Style.Title>
       <TagBlock tags={tags} />
       <Style.ActionContainer>
         <Style.Name>{speaker}</Style.Name>
@@ -34,7 +32,6 @@ ScheduleItem.propTypes = {
     color: PropTypes.string,
     name: PropTypes.string,
   })),
-  onPressTitle: PropTypes.func,
 };
 
 ScheduleItem.defaultProps = {
@@ -42,7 +39,6 @@ ScheduleItem.defaultProps = {
   speaker: '',
   room: '',
   tags: [{ color: '', name: '' }],
-  onPressTitle: () => { },
 };
 
 export default ScheduleItem;

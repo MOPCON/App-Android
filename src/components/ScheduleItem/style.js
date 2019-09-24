@@ -22,15 +22,12 @@ export const ActionContainer = styled.View`
   width: 100%;
 `;
 
-export const TitleTouchable = styled.TouchableOpacity`
-  max-width: 100%;
-  margin-bottom: 16px;
-`;
-
 export const Title = styled.Text`
   color: white;
   font-size: 18px;
   font-family: 'Roboto-Regular';
+  margin-bottom: 16px;
+  max-width: 100%;
 `;
 
 export const NTitle = styled.Text`
@@ -97,7 +94,7 @@ export const StarIconTouchable = styled.TouchableOpacity`
   
 `;
 
-export const ScheduleContainer = styled.View`
+export const ScheduleContainer = styled.TouchableOpacity`
   width: 100%;
   padding: 16px 20px;
   border: 1px solid #00aaf0;
