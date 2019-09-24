@@ -11,7 +11,7 @@ const ScheduleCard = (props) => {
   const onSave = () => props.onSave(props.scheduleData);
   const { time, saved, title, title_e, speaker, speaker_e, room, tags } = props.scheduleData;
   return (
-    <ScheduleView>
+    <ScheduleView onPress={onPressTitle}>
       <ScheduleHeader time={time} saved={saved} onSave={onSave} />
       <ScheduleItem
         room={room}
