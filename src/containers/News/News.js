@@ -5,6 +5,7 @@ import apiServices from '../../api/services';
 import * as Style from './style';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
+import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 import Button from '../../components/Button/Button';
 
 export default class News extends React.Component {
@@ -28,24 +29,30 @@ export default class News extends React.Component {
     console.log(news);
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Style.NewsContainer>
-          {
-            news.map((n, i) => (
-              <TouchableOpacity key={n.id} onPress={() => this.openLink(n.link)}>
-                <Style.NewsCardView>
-                  <Style.NewsTimeContainer>
-                    <Style.NewsTimeText>{moment(n.date * 1000).format('YYYY/MM/DD')}</Style.NewsTimeText>
-                    <Style.NewsTimeText>{moment(n.date * 1000).format('HH:mm')}</Style.NewsTimeText>
-                  </Style.NewsTimeContainer>
-                  <Style.NewsCardTitleText>{n.title}</Style.NewsCardTitleText>
-                  <Style.NewsCardDescText>
-                    {n.description}
-                  </Style.NewsCardDescText>
-                </Style.NewsCardView>
-              </TouchableOpacity>
-            ))
-          }
-        </Style.NewsContainer>
+        {
+          news.length
+            ? (
+              <Style.NewsContainer>
+                {
+                  news.map((n, i) => (
+                    <TouchableOpacity key={n.id} onPress={() => this.openLink(n.link)}>
+                      <Style.NewsCardView>
+                        <Style.NewsTimeContainer>
+                          <Style.NewsTimeText>{moment(n.date * 1000).format('YYYY/MM/DD')}</Style.NewsTimeText>
+                          <Style.NewsTimeText>{moment(n.date * 1000).format('HH:mm')}</Style.NewsTimeText>
+                        </Style.NewsTimeContainer>
+                        <Style.NewsCardTitleText>{n.title}</Style.NewsCardTitleText>
+                        <Style.NewsCardDescText>
+                          {n.description}
+                        </Style.NewsCardDescText>
+                      </Style.NewsCardView>
+                    </TouchableOpacity>
+                  ))
+                }
+              </Style.NewsContainer>
+            )
+            : (<LoadingIcon size="large" color="#ffffff" />)
+        }
       </ScrollView>
     );
   }
