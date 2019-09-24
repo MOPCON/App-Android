@@ -10,6 +10,7 @@ import TabDate from '../../components/TabDate/TabDate';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 import CommonScheduleItem from '../../components/ScheduleItem/CommonScheduleItem';
+import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 import Button from '../../components/Button/Button';
 
 // const tabs = [
@@ -23,7 +24,7 @@ export default class UnConf extends React.Component {
 
   state = {
     unconf: [],
-    nowScheduleDate: '',
+    nowUnconfDate: '',
     savedSchedule: {},
   }
 
@@ -34,7 +35,7 @@ export default class UnConf extends React.Component {
     const { data: unconf } = await apiServices.get('/unconf');
     this.setState({
       unconf,
-      nowScheduleDate: unconf[0].date,
+      nowUnconfDate: unconf[0].date,
       savedSchedule
     });
   }
@@ -54,10 +55,10 @@ export default class UnConf extends React.Component {
 
   renderUnconf = () => {
     const { onPressTitle, onSave } = this;
-    const { unconf, nowScheduleDate, savedSchedule } = this.state;
+    const { unconf, nowUnconfDate, savedSchedule } = this.state;
 
     const nowSchedule = unconf
-      .find(schedulePeriod => schedulePeriod.date === nowScheduleDate);
+      .find(schedulePeriod => schedulePeriod.date === nowUnconfDate);
     if (!nowSchedule) { return (<View />); }
     return nowSchedule.period.map((periodData) => {
       if (periodData.event) {
@@ -78,25 +79,31 @@ export default class UnConf extends React.Component {
     }).reduce((acc, val) => acc.concat(val), []);
   }
 
-  onChangeTab = (nowScheduleDate) => this.setState({ nowScheduleDate });
+  onChangeTab = (nowUnconfDate) => this.setState({ nowUnconfDate });
 
   render() {
     const { unconf, nowUnconfDate } = this.state;
     const tabs = unconf.map(scheduleData => ({ name: moment(scheduleData.date * 1000).format('MM-DD'), value: scheduleData.date }));
     return (
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Style.UnConfContainer>
+      <Style.UnConfScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        {
+          unconf.length
+            ? (
+              <Style.UnConfContainer>
 
-          {
-            Boolean(tabs.length)
-              ? <TabDate tabs={tabs} defaultActiveTab={nowUnconfDate} onChange={this.onChangeTab} />
-              : <View />
-          }
-          {
-            Boolean(tabs.length) && this.renderUnconf()
-          }
-        </Style.UnConfContainer>
-      </ScrollView>
+                {
+                  Boolean(tabs.length)
+                    ? <TabDate tabs={tabs} defaultActiveTab={nowUnconfDate} onChange={this.onChangeTab} />
+                    : <View />
+                }
+                {
+                  Boolean(tabs.length) && this.renderUnconf()
+                }
+              </Style.UnConfContainer>
+            )
+            : (<LoadingIcon size="large" color="#ffffff" />)
+        }
+      </Style.UnConfScrollView>
     );
   }
 }
