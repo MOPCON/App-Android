@@ -31,7 +31,7 @@ export default class VolunteerDetail extends Component {
   render() {
     const { volunteer } = this.state;
     const { id } = this.props.navigation.state.params;
-
+    const lang = I18n.locale;
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.Container>
@@ -39,7 +39,7 @@ export default class VolunteerDetail extends Component {
             source={AVATAR[id]}
           />
           <Style.Title>
-            {volunteer.name}
+            {lang === 'zh' ? volunteer.name : volunteer.name_e}
           </Style.Title>
           <Style.Content>
             {volunteer.introduction}
