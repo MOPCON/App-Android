@@ -72,8 +72,8 @@ export default class Game extends Component {
     const { score, missionList, isLoaded, lastPassIndex } = this.props.context.gameStore;
 
     return (
-      <Style.GameContainer>
-        <Style.ScrollContainer>
+      <Style.ScrollContainer contentContainerStyle={{ flexGrow: 1 }}>
+        <Style.GameContainer>
           {
             isLoading
               ? (
@@ -122,7 +122,8 @@ export default class Game extends Component {
                 </View>
               )
           }
-        </Style.ScrollContainer>
+        </Style.GameContainer>
+
 
         {
           modalWelcomeVisible && (
@@ -142,7 +143,7 @@ export default class Game extends Component {
             <ModalReward reward={reward} visible={modalRewardVisible} onClose={this.onCloseModalReward} />
           )
         }
-      </Style.GameContainer>
+      </Style.ScrollContainer>
     );
   }
 }

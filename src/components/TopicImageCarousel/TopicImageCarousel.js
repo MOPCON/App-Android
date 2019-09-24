@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Dimensions, TouchableOpacity, Linking
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import styled from 'styled-components/native';
-import apiServices from '../../api/services';
 
 const { width } = Dimensions.get('window');
 
@@ -26,18 +26,9 @@ const renderItem = ({ item }) => {
   );
 };
 
-const TopicImageCarousel = () => {
-  const [banner, setBanner] = useState([]);
-  const getBanner = async () => {
-    const { data } = await apiServices.get('/home');
-    setBanner(data.banner);
-  }
-  useEffect(() => {
-    getBanner();
-  }, [])
+const TopicImageCarousel = ({ banner }) => {
   return (
     <React.Fragment>
-
       <CarouselContainer>
         <Carousel
           inactiveSlideScale={0.94}
@@ -49,6 +40,17 @@ const TopicImageCarousel = () => {
       </CarouselContainer>
     </React.Fragment>
   );
+};
+
+TopicImageCarousel.propTypes = {
+  banner: PropTypes.arrayOf(PropTypes.shape({
+    img: PropTypes.string,
+    link: PropTypes.string,
+  })),
+};
+
+TopicImageCarousel.defaultProps = {
+  banner: [],
 };
 
 export default TopicImageCarousel;

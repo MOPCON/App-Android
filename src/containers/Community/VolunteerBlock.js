@@ -31,7 +31,7 @@ export const AVATAR = {
 export default class VolunteerBlock extends Component {
   render() {
     const { goVolunteerDetail, volunteer } = this.props;
-
+    const lang = I18n.locale;
     return (
       <Style.BlockContainer>
         {
@@ -41,27 +41,9 @@ export default class VolunteerBlock extends Component {
                 style={{ backgroundColor: 'transparent' }}
                 source={AVATAR[v.id]}
               />
-              <Style.CardText>{v.name}</Style.CardText>
+              <Style.CardText>{lang === 'zh' ? v.name : v.name_e}</Style.CardText>
             </Style.CardSmall>
           ))
-        }
-        {
-          // volunteer.map((v,i) => (
-          //   <Style.Card key={`volunteer_${v.id}`}>
-          //     <Style.CardTitle>
-          //       {(I18n.locale === 'en' ? v.groupname_en : v.groupname)}
-          //     </Style.CardTitle>
-          //     <Style.CardContent>
-          //       {(I18n.locale === 'en' ? v.info_en : v.info)}
-          //       </Style.CardContent>
-          //     <Style.MemberTitle>
-          //       {I18n.t('volunteer.member_title')}
-          //     </Style.MemberTitle>
-          //     <Style.MemberContent>
-          //       {v.memberlist}
-          //     </Style.MemberContent>
-          //   </Style.Card>
-          // ))
         }
       </Style.BlockContainer>
     );
