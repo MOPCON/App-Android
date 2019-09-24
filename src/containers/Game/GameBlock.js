@@ -44,7 +44,7 @@ const StageText = styled.Text`
 `;
 
 const RewardTip = styled.Text`
-  font-size: 18px;
+  font-size: 12px;
   color: #878787;
   margin-top: 10px;
 `;

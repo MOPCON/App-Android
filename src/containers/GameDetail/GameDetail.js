@@ -47,8 +47,8 @@ export default class GameDetail extends Component {
     const { pass } = this.props.navigation.state.params;
 
     return (
-      <Style.Container>
-        <Style.ScrollContainer>
+      <Style.ScrollContainer contentContainerStyle={{ flexGrow: 1 }}>
+        <Style.Container>
           {
             isLoading
               ? (
@@ -82,8 +82,8 @@ export default class GameDetail extends Component {
                 </View>
               )
           }
-        </Style.ScrollContainer>
-      </Style.Container>
+        </Style.Container>
+      </Style.ScrollContainer>
     )
   }
 }

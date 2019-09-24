@@ -7,12 +7,13 @@ import {
 const width = (Dimensions.get('window').width - (20 + 20 + 16)) / 2;
 
 export const GameContainer = styled.View`
-  background-color: ${darkBlue};
+  
   flex-grow:1;
   padding: 20px;
 `;
 
 export const ScrollContainer = styled.ScrollView`
+  background-color: ${darkBlue};
 `;
 
 export const ProfileContainer = styled.View`
