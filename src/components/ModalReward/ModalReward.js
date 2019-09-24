@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import I18n from '../../locales';
 import iconReward from '../../images/icon/iconReward.png';
 import * as Style from './style';
-import { thisTypeAnnotation } from '@babel/types';
 
 export default class ModalReward extends React.PureComponent {
   static propTypes = {

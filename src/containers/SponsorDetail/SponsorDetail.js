@@ -69,12 +69,19 @@ export default class SponsorDetail extends React.Component {
           <Style.SponsorName>
             {name}
           </Style.SponsorName>
-          <Style.SplitText>關於廠商</Style.SplitText>
-          <Style.SponsorDesc>
-            {info}
-          </Style.SponsorDesc>
-          <Style.SplitText>贊助場次</Style.SplitText>
-
+          {
+            Boolean(info) && (
+              <React.Fragment>
+                <Style.SplitText>關於廠商</Style.SplitText>
+                <Style.SponsorDesc>
+                  {info}
+                </Style.SponsorDesc>
+              </React.Fragment>
+            )
+          }
+          {
+            Boolean(sponsorDetail.speaker_information.length) && <Style.SplitText>贊助場次</Style.SplitText>
+          }
           {
             sponsorDetail.speaker_information
               .map((d) => (normalizeScheduleData(d, this.state.savedSchedule)))

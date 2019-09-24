@@ -6,7 +6,6 @@ const width = (Dimensions.get('window').width - (16 * 3)) / 2;
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${theme.darkBlue};
   padding: 16px;
 `;
 
@@ -16,6 +15,7 @@ export const TabContainer = styled.View`
 `;
 
 export const ScrollView = styled.ScrollView`
+  background-color: ${theme.darkBlue};
 `;
 
 export const BlockContainer = styled.View`

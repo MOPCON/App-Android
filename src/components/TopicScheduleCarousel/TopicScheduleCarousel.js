@@ -21,10 +21,9 @@ export const CarouselTitle = styled.Text`
   padding: 0 20px;
 `;
 
-const TopicScheduleCarousel = ({ navigation }) => {
+const TopicScheduleCarousel = ({ navigation, originSchedule }) => {
   const [schedule, setSchedule] = useState([]);
   const [savedSchedule, setSavedSchedule] = useState({});
-  const [originSchedule, setOriginSchedule] = useState([]);
 
   const getSaved = async () => {
     const savedScheduleText = await AsyncStorage.getItem('savedschedule');
@@ -52,9 +51,7 @@ const TopicScheduleCarousel = ({ navigation }) => {
 
   const init = async () => {
     const s = await getSaved();
-    const { data } = await apiServices.get('/session');
-    setOriginSchedule(data);
-    const newSchedule = filterSchedule(data, s);
+    const newSchedule = filterSchedule(originSchedule, s);
     setSchedule(newSchedule);
   }
 

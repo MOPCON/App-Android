@@ -8,6 +8,7 @@ import I18n from '../../locales';
 import * as Style from './style';
 import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 import CommonScheduleItem from '../../components/ScheduleItem/CommonScheduleItem';
+import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 
 import Tab from '../../components/Tab/Tab';
 import TabDate from '../../components/TabDate/TabDate';
@@ -155,6 +156,10 @@ export default class Schedule extends Component {
     ];
     return (
       <Style.ScheduleContainer>
+        {
+          !schedule.length && <LoadingIcon size="large" color="#ffffff" />
+        }
+        
         {
           tabs.length
             ? <TabDate tabs={tabs} defaultActiveTab={nowScheduleDate} onChange={this.onChangeTab} />
