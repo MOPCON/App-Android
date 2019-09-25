@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import apiServices from '../../api/services';
+import gameServices from '../../api/gameServices';
 import * as Style from './style';
 import I18n from '../../locales';
 import moment from 'dayjs';
@@ -46,6 +47,7 @@ export default class UnConf extends React.Component {
     };
     s[session_id] = !s[session_id];
     this.setState({ savedSchedule: s });
+    gameServices.post('/mySession', {session_id, action: s[session_id] ? 'add' : 'remove'});
     AsyncStorage.setItem('savedschedule', JSON.stringify(s));
   }
 

@@ -6,6 +6,7 @@ import Carousel from 'react-native-snap-carousel';
 import styled from 'styled-components/native';
 import ScheduleCard from '../ScheduleItem/ScheduleCard';
 import apiServices from '../../api/services';
+import gameServices from '../../api/gameServices';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const { width } = Dimensions.get('window');
@@ -62,6 +63,7 @@ const TopicScheduleCarousel = ({ navigation, originSchedule }) => {
     s[session_id] = !s[session_id];
     setSavedSchedule(s);
     AsyncStorage.setItem('savedschedule', JSON.stringify(s));
+    gameServices.post('/mySession', {session_id, action: s[session_id] ? 'add' : 'remove'});
     const newSchedule = filterSchedule(originSchedule, s);
     setSchedule(newSchedule);
   }
