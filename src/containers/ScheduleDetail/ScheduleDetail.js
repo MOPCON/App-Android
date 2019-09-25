@@ -121,32 +121,3 @@ export default class ScheduleDetail extends React.Component {
     );
   }
 }
-
-/*
-
-
-
-<Style.StarIconTouchable onPress={this.onSave(agenda.schedule_id)}>
-                  <Style.StarIconImg source={savedSchedule[agenda.schedule_id] ? starIconChecked : starIconNormal} />
-                </Style.StarIconTouchable>
-
-
-<SpeechItem
-  color="inverse"
-  category={agenda.category}
-  topic={lang === 'zh' ? agenda.schedule_topic : agenda.schedule_topic_en}
-  saved={savedSchedule[agenda.schedule_id]}
-  onSave={this.onSave(agenda.schedule_id)}
-/>
-
-<Style.IntroContainer>
-  <SpeakerItem
-    name={lang === 'zh' ? agenda.name : agenda.name_en}
-    job={agenda.job}
-    company={agenda.company}
-    picture={agenda.picture}
-  />
-</Style.IntroContainer>
-
-
-*/

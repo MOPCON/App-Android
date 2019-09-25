@@ -3,7 +3,8 @@ import { View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { normalizeScheduleData, normalizePeriodData } from '../../utils/normalizeSchedule';
 import moment from 'dayjs';
-import apiServices from '../../api/services'
+import apiServices from '../../api/services';
+import gameServices from '../../api/gameServices';
 import I18n from '../../locales';
 import * as Style from './style';
 import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
@@ -56,6 +57,7 @@ export default class Schedule extends Component {
     };
     s[session_id] = !s[session_id];
     this.setState({ savedSchedule: s });
+    gameServices.post('/mySession', {session_id, action: s[session_id] ? 'add' : 'remove'});
     AsyncStorage.setItem('savedschedule', JSON.stringify(s));
   }
 

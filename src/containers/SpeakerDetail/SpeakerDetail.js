@@ -4,10 +4,7 @@ import moment from 'dayjs';
 import AsyncStorage from '@react-native-community/async-storage';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-
-import ScheduleHeader from '../../components/ScheduleItem/ScheduleHeader';
-import ScheduleItem from '../../components/ScheduleItem/ScheduleItem';
-import ScheduleView from '../../components/ScheduleItem/ScheduleView';
+import gameServices from '../../api/gameServices';
 import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 // import SpeechItem from '../../components/SpeechItem/SpeechItem';
 import iconFB from '../../images/icon/iconFB.png';
@@ -49,6 +46,7 @@ export default class SpeakerDetail extends Component {
     };
     savedSchedule[session_id] = !savedSchedule[session_id];
     this.setState({ savedSchedule });
+    gameServices.post('/mySession', {session_id, action: savedSchedule[session_id] ? 'add' : 'remove'});
     AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
 
