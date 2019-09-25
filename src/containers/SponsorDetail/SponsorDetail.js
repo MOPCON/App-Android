@@ -4,6 +4,7 @@ import { ScrollView, Linking } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
+import gameServices from '../../api/gameServices';
 import I18n from '../../locales';
 import * as Style from './style';
 
@@ -49,6 +50,7 @@ export default class SponsorDetail extends React.Component {
     };
     savedSchedule[session_id] = !savedSchedule[session_id];
     this.setState({ savedSchedule });
+    gameServices.post('/mySession', {session_id, action: savedSchedule[session_id] ? 'add' : 'remove'});
     AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
 
