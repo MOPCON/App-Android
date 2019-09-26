@@ -37,6 +37,7 @@ export const CardImgSmall = styled.Image`
   height: 80;
   margin-bottom: 10px;
   background: #fff;
+  border-radius: 80px;
 `;
 
 export const CardText = styled.Text`
