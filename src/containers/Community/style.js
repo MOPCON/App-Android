@@ -31,10 +31,10 @@ export const CardSmall = styled.TouchableOpacity`
   margin-bottom: 30px;
   justify-content: center;
 `;
+
 export const CardImgSmall = styled.Image`
   width: 80;
   height: 80;
-  border-radius: 80;
   margin-bottom: 10px;
   background: #fff;
 `;
