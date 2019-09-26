@@ -69,6 +69,7 @@ export default class SpeakerDetail extends Component {
       speaker_e: speakerDetail.name_e,
       room: speakerDetail.room,
       tags: speakerDetail.tags,
+      session_id: speakerDetail.session_id,
     };
 
     const introProps = isReadMore ? {} : { numberOfLines: 3 };
