@@ -85,7 +85,7 @@ export default class UnConf extends React.Component {
 
   render() {
     const { unconf, nowUnconfDate } = this.state;
-    const tabs = unconf.map(scheduleData => ({ name: moment(scheduleData.date * 1000).format('MM-DD'), value: scheduleData.date }));
+    const tabs = unconf.map(scheduleData => ({ name: moment(scheduleData.date * 1000).format('MM/DD'), value: scheduleData.date }));
     return (
       <Style.UnConfScrollView contentContainerStyle={{ flexGrow: 1 }}>
 
