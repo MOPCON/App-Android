@@ -16,16 +16,16 @@ import avatarField from '../../images/avatar/avatarField.png';
 
 export const AVATAR = {
   1: avatarAgenda,
-  2: avatarAdministrative,
-  3: avatarSession,
-  4: avatarFinance,
+  2: avatarSession,
+  3: avatarFinance,
+  4: avatarAdministrative,
   5: avatarSponsor,
-  6: avatarPublic,
-  7: avatarInformation,
-  8: avatarArt,
-  9: avatarRecord,
-  10: avatarVideo,
-  11: avatarField,
+  6: avatarInformation,
+  7: avatarArt,
+  8: avatarPublic,
+  9: avatarField,
+  10: avatarRecord,
+  11: avatarVideo,
 };
 
 export default class VolunteerBlock extends Component {
@@ -38,6 +38,7 @@ export default class VolunteerBlock extends Component {
           volunteer.map(v => (
             <Style.CardSmall key={`community_${v.id}`} onPress={() => goVolunteerDetail(v.id)}>
               <Style.CardImgSmall
+                resizeMode="cover"
                 style={{ backgroundColor: 'transparent' }}
                 source={AVATAR[v.id]}
               />

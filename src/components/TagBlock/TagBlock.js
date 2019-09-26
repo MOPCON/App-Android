@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 const Container = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
+  width: 100%;
 `;
 
 const Tag = styled.View`

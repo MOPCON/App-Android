@@ -48,22 +48,11 @@ const RightArrow = styled.Image`
 
 const Block = styled.View``;
 
-const News = ({ onChangeTab }) => {
-
-  const [news, setNews] = useState('')
+const News = ({ onChangeTab, news }) => {
 
   const toNews = () => {
     onChangeTab('NEWS');
   };
-
-  const getNews = async () => {
-    const { data: news } = await apiServices.get('/news');
-    setNews(news[0].title);
-  }
-
-  useEffect(() => {
-    getNews();
-  }, []);
 
   return (
     <Container>
@@ -76,7 +65,11 @@ const News = ({ onChangeTab }) => {
           </TouchArea>
         </Block>
       </TitleContainer>
-      <Message>{news}</Message>
+      <Message>
+      {
+        Boolean(news.length) ? news[0].title : ''
+      }
+      </Message>
     </Container>
   );
 }

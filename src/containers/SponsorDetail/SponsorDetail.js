@@ -50,14 +50,14 @@ export default class SponsorDetail extends React.Component {
     };
     savedSchedule[session_id] = !savedSchedule[session_id];
     this.setState({ savedSchedule });
-    gameServices.post('/mySession', {session_id, action: savedSchedule[session_id] ? 'add' : 'remove'});
+    gameServices.post('/mySession', { session_id, action: savedSchedule[session_id] ? 'add' : 'remove' });
     AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
 
   render() {
     const { sponsorDetail } = this.props.navigation.state.params;
-    const name = I18n.locale === 'en' ? sponsorDetail.name_e : sponsorDetail.name;
-    const info = I18n.locale === 'en' ? sponsorDetail.about_us_e : sponsorDetail.about_us;
+    const name = I18n.locale === 'zh' ? sponsorDetail.name : sponsorDetail.name_e;
+    const info = I18n.locale === 'zh' ? sponsorDetail.about_us : sponsorDetail.about_us_e;
     const logo = sponsorDetail.logo_path;
 
     return (
@@ -91,10 +91,15 @@ export default class SponsorDetail extends React.Component {
                 <ScheduleCard key={scheduleData.title_e} scheduleData={scheduleData} onPressTitle={this.onPressTitle} onSave={this.onSave} />
               ))
           }
+          {
+            Boolean(sponsorDetail.official_website)
+            && (
+              <Style.MoreButton onPress={() => this.openLink(sponsorDetail.official_website)}>
+                <Style.MoreText>{I18n.t('sponsor.more')}</Style.MoreText>
+              </Style.MoreButton>
+            )
+          }
 
-          <Style.MoreButton onPress={() => this.openLink(sponsorDetail.understand_more)}>
-            <Style.MoreText>{I18n.t('sponsor.more')}</Style.MoreText>
-          </Style.MoreButton>
         </Style.SDContainer>
       </ScrollView>
     );
