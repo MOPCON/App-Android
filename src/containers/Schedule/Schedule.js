@@ -150,7 +150,7 @@ export default class Schedule extends Component {
 
   render() {
     const { schedule, nowScheduleDate, nowCategory } = this.state;
-    const tabs = schedule.map(scheduleData => ({ name: moment(scheduleData.date * 1000).format('MM-DD'), value: scheduleData.date }));
+    const tabs = schedule.map(scheduleData => ({ name: moment(scheduleData.date * 1000).format('MM/DD'), value: scheduleData.date }));
     const categoryTabs = [
       { name: I18n.t('schedule.allSchedule'), value: 'all' },
       { name: I18n.t('schedule.favoriteSchedule'), value: 'favorite' },
