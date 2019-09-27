@@ -48,6 +48,10 @@ export default class Community extends Component {
     this.props.navigation.navigate('CommunityDetail', { url: `/community/organizer/${id}` });
   }
 
+  goParticipentDetail = (id) => {
+    this.props.navigation.navigate('CommunityDetail', { url: `/community/participant/${id}` });
+  }
+
   goVolunteerDetail = (id) => {
     this.props.navigation.navigate('VolunteerDetail', { url: `/volunteer/${id}`, id });
   }
@@ -76,7 +80,12 @@ export default class Community extends Component {
                   </Style.TabContainer>
                   {
                     tab === 'community'
-                      ? <CommunityBlock goCommunityDetail={this.goCommunityDetail} community={community} participant={participant} />
+                      ? <CommunityBlock
+                        goCommunityDetail={this.goCommunityDetail}
+                        goParticipentDetail={this.goParticipentDetail}
+                        community={community}
+                        participant={participant}
+                      />
                       : <VolunteerBlock goVolunteerDetail={this.goVolunteerDetail} volunteer={volunteer} />
                   }
                 </Style.Container>
