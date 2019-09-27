@@ -5,7 +5,7 @@ import * as Style from './style';
 
 export default class CommunityBlock extends Component {
   render() {
-    const { goCommunityDetail, community, participant } = this.props;
+    const { goCommunityDetail, community, participant, goParticipentDetail } = this.props;
 
     return (
       <View>
@@ -26,7 +26,7 @@ export default class CommunityBlock extends Component {
         <Style.BlockContainer>
           {
             participant.map(c => (
-              <Style.CardSmall key={`community_${c.id}`} onPress={() => goCommunityDetail(c.id)}>
+              <Style.CardSmall key={`community_${c.id}`} onPress={() => goParticipentDetail(c.id)}>
                 <Style.CardImgSmall
                   source={{ uri: c.photo }}
                 />
