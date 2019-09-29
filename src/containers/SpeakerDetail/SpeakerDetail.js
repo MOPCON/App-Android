@@ -46,7 +46,9 @@ export default class SpeakerDetail extends Component {
     };
     savedSchedule[session_id] = !savedSchedule[session_id];
     this.setState({ savedSchedule });
-    gameServices.post('/mySession', {session_id, action: savedSchedule[session_id] ? 'add' : 'remove'});
+    if(global.enable_game){
+      gameServices.post('/mySession', {session_id, action: savedSchedule[session_id] ? 'add' : 'remove'});
+    }
     AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
 

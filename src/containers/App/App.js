@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Platform, NativeModules } from 'react-native';
+import { View, Platform, NativeModules, AppState } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import firebase from 'react-native-firebase';
@@ -71,6 +71,7 @@ class App extends Component {
       language,
       current: 'HOME',
       enable_game: false,
+      appState: AppState.currentState,
     };
   }
 
@@ -88,7 +89,10 @@ class App extends Component {
 
   initialData = async () => {
     const { data: { enable_game, api_server } } = await apiServices.get('/initial');
-    AsyncStorage.setItem('gameServer', api_server.game);
+    // set global value
+    global.gameServer = api_server.game;
+    global.enable_game = enable_game;
+    // regist game
     const authorization = await AsyncStorage.getItem('Authorization');
     if (!authorization) {
       const uid = await DeviceInfo.getUniqueId();
@@ -114,16 +118,7 @@ class App extends Component {
     }
   }
 
-  async checkPermission() {
-    const enabled = await firebase.messaging().hasPermission();
-    if (enabled) {
-      this.getToken();
-    } else {
-      this.requestPermission();
-    }
-  }
-
-  async requestPermission() {
+  async requestNotificationPermission() {
     try {
       await firebase.messaging().requestPermission();
       this.getToken();
@@ -132,10 +127,35 @@ class App extends Component {
     }
   }
 
+  async checkNotificationPermission() {
+    const enabled = await firebase.messaging().hasPermission();
+    if (enabled) {
+      this.getToken();
+    } else {
+      this.requestNotificationPermission();
+    }
+  }
+
+  handleAppStateChange = (nextAppState) => {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      console.log('App has come to the foreground!');
+      this.initialData();
+    }
+    this.setState({appState: nextAppState});
+  };
+
   componentDidMount() {
     this.initialData();
     RNBootSplash.hide();
-    this.checkPermission();
+    this.checkNotificationPermission();
+    AppState.addEventListener('change', this.handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange);
   }
 
   render() {
