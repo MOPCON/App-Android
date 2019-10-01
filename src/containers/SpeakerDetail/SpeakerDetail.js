@@ -7,9 +7,10 @@ import NavigationOptions from '../../components/NavigationOptions/NavigationOpti
 import gameServices from '../../api/gameServices';
 import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 // import SpeechItem from '../../components/SpeechItem/SpeechItem';
-import iconFB from '../../images/icon/iconFB.png';
-import iconGithub from '../../images/icon/iconGithub.png';
-import iconIG from '../../images/icon/iconIG.png';
+import iconFB from '../../images/icon/icon_fb.png';
+import iconGithub from '../../images/icon/icon_gh.png';
+import iconTwitter from '../../images/icon/icon_tw.png';
+import iconOther from '../../images/icon/icon_web.png';
 import * as Style from './style';
 
 const toTime = timestamp => moment(timestamp).format('HH:mm');
@@ -100,9 +101,16 @@ export default class SpeakerDetail extends Component {
                 )
               }
               {
-                Boolean(speakerDetail.link_instagram) && (
-                  <TouchableOpacity onPress={()=>{Linking.openURL(speakerDetail.link_instagram)}}>
-                    <Style.Icon source={iconIG} />
+                Boolean(speakerDetail.link_twitter) && (
+                  <TouchableOpacity onPress={()=>{Linking.openURL(speakerDetail.link_twitter)}}>
+                    <Style.Icon source={iconTwitter} />
+                  </TouchableOpacity>
+                )
+              }
+              {
+                Boolean(speakerDetail.link_other) && (
+                  <TouchableOpacity onPress={()=>{Linking.openURL(speakerDetail.link_other)}}>
+                    <Style.Icon source={iconOther} />
                   </TouchableOpacity>
                 )
               }
