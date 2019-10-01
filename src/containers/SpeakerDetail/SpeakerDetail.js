@@ -7,12 +7,14 @@ import NavigationOptions from '../../components/NavigationOptions/NavigationOpti
 import gameServices from '../../api/gameServices';
 import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 // import SpeechItem from '../../components/SpeechItem/SpeechItem';
-import iconFB from '../../images/icon/iconFB.png';
-import iconGithub from '../../images/icon/iconGithub.png';
-import iconIG from '../../images/icon/iconIG.png';
+import iconFB from '../../images/icon/icon_fb.png';
+import iconGithub from '../../images/icon/icon_gh.png';
+import iconTwitter from '../../images/icon/icon_tw.png';
+import iconOther from '../../images/icon/icon_web.png';
 import * as Style from './style';
 
 const toTime = timestamp => moment(timestamp).format('HH:mm');
+const toDate = timestamp => moment(timestamp)
 export default class SpeakerDetail extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.title', 'mode2')
 
@@ -46,7 +48,9 @@ export default class SpeakerDetail extends Component {
     };
     savedSchedule[session_id] = !savedSchedule[session_id];
     this.setState({ savedSchedule });
-    gameServices.post('/mySession', {session_id, action: savedSchedule[session_id] ? 'add' : 'remove'});
+    if(global.enable_game){
+      gameServices.post('/mySession', {session_id, action: savedSchedule[session_id] ? 'add' : 'remove'});
+    }
     AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
   }
 
@@ -61,7 +65,7 @@ export default class SpeakerDetail extends Component {
     const picture = speakerDetail.img.mobile;
     
     const scheduleData = {
-      time: `${toTime(speakerDetail.started_at * 1000)} - ${toTime(speakerDetail.ended_at * 1000)}`,
+      time: `${moment(speakerDetail.started_at * 1000).format('MM/DD HH:mm')} - ${toTime(speakerDetail.ended_at * 1000)}`,
       saved: Boolean(savedSchedule[speakerDetail.session_id]),
       title: speakerDetail.topic,
       title_e: speakerDetail.topic_e,
@@ -97,9 +101,16 @@ export default class SpeakerDetail extends Component {
                 )
               }
               {
-                Boolean(speakerDetail.link_instagram) && (
-                  <TouchableOpacity onPress={()=>{Linking.openURL(speakerDetail.link_instagram)}}>
-                    <Style.Icon source={iconIG} />
+                Boolean(speakerDetail.link_twitter) && (
+                  <TouchableOpacity onPress={()=>{Linking.openURL(speakerDetail.link_twitter)}}>
+                    <Style.Icon source={iconTwitter} />
+                  </TouchableOpacity>
+                )
+              }
+              {
+                Boolean(speakerDetail.link_other) && (
+                  <TouchableOpacity onPress={()=>{Linking.openURL(speakerDetail.link_other)}}>
+                    <Style.Icon source={iconOther} />
                   </TouchableOpacity>
                 )
               }

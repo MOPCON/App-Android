@@ -32,8 +32,13 @@ export default class ModalExchange extends React.Component {
     };
     console.log(payload);
     try {
-      const { loadGameList } =  this.props.context.gameStore;
-      await gameServices.post('/verify/reward', payload);
+      const { loadGameList } = this.props.context.gameStore;
+      const result = await gameServices.post('/verify/reward', payload);
+      if (result.success) {
+        Alert.alert('兌換完成');
+      } else {
+        Alert.alert(I18n.t('game.invalid_reward_password'));
+      }
       loadGameList();
       this.onClose();
     } catch (error) {
@@ -43,15 +48,15 @@ export default class ModalExchange extends React.Component {
 
   onClickExchangewServer = async () => {
     const { exchangeCapsules } = this.state;
-    const {CAPSULE_RATE, balance, setBalance} =  this.props.context.missionStore;
-    if(Math.floor(balance / CAPSULE_RATE) >= exchangeCapsules){
+    const { CAPSULE_RATE, balance, setBalance } = this.props.context.missionStore;
+    if (Math.floor(balance / CAPSULE_RATE) >= exchangeCapsules) {
       setBalance(balance - (exchangeCapsules * CAPSULE_RATE));
       this.onClose();
     } else {
       Alert.alert('錢不夠');
       this.onClose();
     }
-    
+
   }
 
   onChangeText = (text) => {

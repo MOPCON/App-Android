@@ -57,7 +57,9 @@ export default class Schedule extends Component {
     };
     s[session_id] = !s[session_id];
     this.setState({ savedSchedule: s });
-    gameServices.post('/mySession', {session_id, action: s[session_id] ? 'add' : 'remove'});
+    if(global.enable_game){
+      gameServices.post('/mySession', {session_id, action: s[session_id] ? 'add' : 'remove'});
+    }
     AsyncStorage.setItem('savedschedule', JSON.stringify(s));
   }
 

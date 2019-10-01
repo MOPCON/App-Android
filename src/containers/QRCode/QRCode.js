@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Text, Alert, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import I18n from '../../locales';
 import produce from 'immer';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import apiServices from '../../api/services';
@@ -37,6 +38,7 @@ export default class QRCode extends Component {
       this.setState({ modalVisible: true });
     } catch (error) {
       Alert.alert(I18n.t('game.invalid_task_password'));
+      this.props.navigation.goBack();
     }
     this.setState({ isLoading: false });
   }
