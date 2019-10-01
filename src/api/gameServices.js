@@ -1,6 +1,12 @@
 import URLSearchParams from 'url-search-params';
 import AsyncStorage from '@react-native-community/async-storage';
 
+// // To see all the requests in the chrome Dev tools in the network tab.
+// XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
+//   GLOBAL.originalXMLHttpRequest :
+//   GLOBAL.XMLHttpRequest;
+
+
 const parseParams = (p = {}) => {
   const length = Object.keys(p).length;
   if (!length) { return ''; }
@@ -29,7 +35,7 @@ class GameApiServices {
       'Content-Type': 'application/json',
     };
 
-    const gameServer = await AsyncStorage.getItem('gameServer');
+    const gameServer = global.gameServer;
     const Authorization = await AsyncStorage.getItem('Authorization');
     if (Authorization) { headers.Authorization = Authorization; }
 
@@ -38,7 +44,7 @@ class GameApiServices {
       headers,
     };
 
-    let urlF = `${gameServer}${url}`;
+    const urlF = `${gameServer}${url}`;
     // if (this.data) { options.body = JSON.stringify(this.data); }
     // if (this.params) { url = `${url}${this.parseParams()}` }
     try {
@@ -47,8 +53,6 @@ class GameApiServices {
       console.log(urlF, options, response)
       if (result.status === 200) { return response; }
     } catch (e) {
-      console.error(e);
-      window.ee = e;
       throw e;
     }
   }

@@ -4,10 +4,10 @@ import apiService from '../../api/services';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as Style from './style';
 import I18n from '../../locales';
-import IconFB from '../../images/icon/icon_facebook.png';
-import IconIG from '../../images/icon/icon_instagram.png';
-import IconTe from '../../images/icon/icon_telegram.png';
-import IconTw from '../../images/icon/icon_twitter.png';
+import IconFB from '../../images/icon/icon_fb.png';
+import IconIG from '../../images/icon/icon_ig.png';
+import IconTe from '../../images/icon/icon_tw.png';
+import IconTw from '../../images/icon/icon_tw.png';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 
 export default class CommunityDetail extends Component {
@@ -33,9 +33,13 @@ export default class CommunityDetail extends Component {
   linkBtn = () => {
     if (!this.state.community) return;
 
-    const url = this.state.community.facebook || this.state.community.other_links;
+    const url = this.state.community.event
+      || this.state.community.facebook
+      || this.state.community.instagram
+      || this.state.community.telegram
+      || this.state.community.twitter;
 
-    if (!url) return;
+    if (!url) { return null };
 
     return (
       <Style.MoreButton onPress={() => { Linking.openURL(url) }}>
@@ -61,7 +65,7 @@ export default class CommunityDetail extends Component {
             {
               Boolean(community.facebook) &&
               (
-                <TouchableOpacity onPress={()=>{Linking.openURL(community.facebook);}}>
+                <TouchableOpacity onPress={() => { Linking.openURL(community.facebook); }}>
                   <Style.IconImg resizeMode="contain" source={IconFB} />
                 </TouchableOpacity>
               )
@@ -69,7 +73,7 @@ export default class CommunityDetail extends Component {
             {
               Boolean(community.instagram) &&
               (
-                <TouchableOpacity onPress={()=>{Linking.openURL(community.instagram);}}>
+                <TouchableOpacity onPress={() => { Linking.openURL(community.instagram); }}>
                   <Style.IconImg resizeMode="contain" source={IconIG} />
                 </TouchableOpacity>
               )
@@ -77,7 +81,7 @@ export default class CommunityDetail extends Component {
             {
               Boolean(community.twitter) &&
               (
-                <TouchableOpacity onPress={()=>{Linking.openURL(community.twitter);}}>
+                <TouchableOpacity onPress={() => { Linking.openURL(community.twitter); }}>
                   <Style.IconImg resizeMode="contain" source={IconTw} />
                 </TouchableOpacity>
               )
@@ -85,7 +89,7 @@ export default class CommunityDetail extends Component {
             {
               Boolean(community.telegram) &&
               (
-                <TouchableOpacity onPress={()=>{Linking.openURL(community.telegram);}}>
+                <TouchableOpacity onPress={() => { Linking.openURL(community.telegram); }}>
                   <Style.IconImg resizeMode="contain" source={IconTe} />
                 </TouchableOpacity>
               )

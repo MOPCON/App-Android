@@ -63,7 +63,9 @@ const TopicScheduleCarousel = ({ navigation, originSchedule }) => {
     s[session_id] = !s[session_id];
     setSavedSchedule(s);
     AsyncStorage.setItem('savedschedule', JSON.stringify(s));
-    gameServices.post('/mySession', {session_id, action: s[session_id] ? 'add' : 'remove'});
+    if(global.enable_game){
+      gameServices.post('/mySession', {session_id, action: s[session_id] ? 'add' : 'remove'});
+    }
     const newSchedule = filterSchedule(originSchedule, s);
     setSchedule(newSchedule);
   }
