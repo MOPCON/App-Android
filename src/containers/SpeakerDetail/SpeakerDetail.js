@@ -13,6 +13,7 @@ import iconIG from '../../images/icon/iconIG.png';
 import * as Style from './style';
 
 const toTime = timestamp => moment(timestamp).format('HH:mm');
+const toDate = timestamp => moment(timestamp)
 export default class SpeakerDetail extends Component {
   static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.title', 'mode2')
 
@@ -63,7 +64,7 @@ export default class SpeakerDetail extends Component {
     const picture = speakerDetail.img.mobile;
     
     const scheduleData = {
-      time: `${toTime(speakerDetail.started_at * 1000)} - ${toTime(speakerDetail.ended_at * 1000)}`,
+      time: `${moment(speakerDetail.started_at * 1000).format('MM/DD HH:mm')} - ${toTime(speakerDetail.ended_at * 1000)}`,
       saved: Boolean(savedSchedule[speakerDetail.session_id]),
       title: speakerDetail.topic,
       title_e: speakerDetail.topic_e,
