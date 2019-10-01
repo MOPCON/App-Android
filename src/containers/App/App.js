@@ -144,11 +144,30 @@ class App extends Component {
       console.log('App has come to the foreground!');
       this.initialData();
     }
-    this.setState({appState: nextAppState});
+    this.setState({ appState: nextAppState });
   };
 
-  componentDidMount() {
-    this.initialData();
+  onLink = (url, byOnlink) => {
+    if (url) {
+      const email = url.substring(url.indexOf('email=') + 6);
+      console.log('==== get user email =====', byOnlink, email);
+    }
+  }
+
+  registDynamicLink = () => {
+    console.log('registDynamicLink')
+    firebase.links()
+      .getInitialLink()
+      .then(this.onLink);
+    this.register = firebase.links().onLink((url) => {
+      this.onLink(url, true)
+    });
+  }
+
+  async componentDidMount() {
+    global.firebase = firebase;
+    await this.initialData();
+    this.registDynamicLink()
     RNBootSplash.hide();
     this.checkNotificationPermission();
     AppState.addEventListener('change', this.handleAppStateChange);
@@ -156,6 +175,7 @@ class App extends Component {
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this.handleAppStateChange);
+    if (this.register) { this.register(); }
   }
 
   render() {
