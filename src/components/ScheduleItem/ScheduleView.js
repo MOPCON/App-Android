@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ScheduleContainer } from './style';
 
-const ScheduleView = ({ onPress, children }) => (
-  <ScheduleContainer onPress={onPress}>
+const ScheduleView = ({ onPress, children, disabled }) => (
+  <ScheduleContainer onPress={onPress} disabled={disabled}>
     {children}
   </ScheduleContainer>
 );
@@ -11,11 +11,13 @@ const ScheduleView = ({ onPress, children }) => (
 ScheduleView.propTypes = {
   onPress: PropTypes.func,
   children: PropTypes.node,
+  disabled: PropTypes.bool,
 };
 
 ScheduleView.defaultProps = {
   onPress: () => { },
   children: null,
+  disabled: false,
 };
 
 export default ScheduleView;

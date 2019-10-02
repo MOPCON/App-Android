@@ -11,7 +11,7 @@ const ScheduleCard = (props) => {
   const onSave = () => props.onSave(props.scheduleData);
   const { time, saved, title, title_e, speaker, speaker_e, room, tags } = props.scheduleData;
   return (
-    <ScheduleView onPress={onPressTitle}>
+    <ScheduleView onPress={onPressTitle} disabled={props.disabled}>
       <ScheduleHeader time={time} saved={saved} onSave={onSave} />
       <ScheduleItem
         room={room}
@@ -40,6 +40,7 @@ ScheduleCard.propTypes = {
   }),
   onPressTitle: PropTypes.func,
   onSave: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 ScheduleCard.defaultProps = {
@@ -55,6 +56,7 @@ ScheduleCard.defaultProps = {
   },
   onPressTitle: () => { },
   onSave: () => { },
+  disabled: false,
 };
 
 export default ScheduleCard;
