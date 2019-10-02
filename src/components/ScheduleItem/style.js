@@ -31,10 +31,12 @@ export const Title = styled.Text`
 `;
 
 export const NTitle = styled.Text`
-  color: #ccc;
-  font-size: 19px;
-  font-family: 'Roboto-Regular';
-  margin: 20px 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
 `;
 
 export const Category = styled.Text`

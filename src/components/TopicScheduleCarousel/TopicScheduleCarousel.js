@@ -5,7 +5,7 @@ import I18n from '../../locales';
 import Carousel from 'react-native-snap-carousel';
 import styled from 'styled-components/native';
 import ScheduleCard from '../ScheduleItem/ScheduleCard';
-import apiServices from '../../api/services';
+import NoSchedule from '../ScheduleItem/NoScheduleItem';
 import gameServices from '../../api/gameServices';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -15,6 +15,10 @@ export const CarouselContainer = styled.ScrollView`
   margin-bottom: 16px;
 `;
 
+export const NoScheduleContainer = styled.View`
+  padding: 0 20px;
+`;
+
 export const CarouselTitle = styled.Text`
   color: white;
   font-size: 16px;
@@ -22,7 +26,7 @@ export const CarouselTitle = styled.Text`
   padding: 0 20px;
 `;
 
-const TopicScheduleCarousel = ({ navigation, originSchedule }) => {
+const TopicScheduleCarousel = ({ navigation, originSchedule, onChangeTab }) => {
   const [schedule, setSchedule] = useState([]);
   const [savedSchedule, setSavedSchedule] = useState({});
 
@@ -93,15 +97,25 @@ const TopicScheduleCarousel = ({ navigation, originSchedule }) => {
   return (
     <React.Fragment>
       <CarouselTitle>{I18n.t('schedule.hotTopic')}</CarouselTitle>
-      <CarouselContainer>
-        <Carousel
-          inactiveSlideScale={0.94}
-          sliderWidth={width}
-          itemWidth={width - 40}
-          data={schedule}
-          renderItem={renderItem}
-        />
-      </CarouselContainer>
+      {
+        Boolean(schedule.length)
+        ?(
+        <CarouselContainer>
+          <Carousel
+            inactiveSlideScale={0.94}
+            sliderWidth={width}
+            itemWidth={width - 40}
+            data={schedule}
+            renderItem={renderItem}
+          />
+        </CarouselContainer>
+        )
+        :(
+          <NoScheduleContainer>
+            <NoSchedule onClick={()=>onChangeTab('SCHEDULE')} />
+          </NoScheduleContainer>
+        )
+      }
     </React.Fragment>
   );
 };

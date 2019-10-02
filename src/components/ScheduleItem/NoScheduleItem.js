@@ -6,17 +6,17 @@ import * as Style from './style';
 export default class ScheduleItem extends Component {
   render() {
     return (
-      <Style.ScheduleItemContainer paintBG>
+      <Style.ScheduleContainer disabled>
         <Style.NTitle>
           {I18n.t('schedule.noSchedule')}
         </Style.NTitle>
         <Button
-          color="inverse"
+          color="primary"
           onClick={this.props.onClick}
-          text={I18n.t('unConf.schedule')}
+          text={I18n.t('schedule.goSchedule')}
           align="center" margin={[0, 0, 20, 0]}
         />
-      </Style.ScheduleItemContainer>
+      </Style.ScheduleContainer>
     )
   }
 }
