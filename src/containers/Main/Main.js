@@ -52,7 +52,7 @@ const Main = ({ language, onChangeLanguage, navigation, onChangeTab }) => {
                   <News onChangeTab={onChangeTab} news={news} />
                 </Style.NewsContainer>
               </Style.Content>
-              <TopicScheduleCarousel navigation={navigation} originSchedule={originSchedule} />
+              <TopicScheduleCarousel onChangeTab={onChangeTab} navigation={navigation} originSchedule={originSchedule} />
             </Style.ScrollContainer>
           )
       }
