@@ -75,6 +75,7 @@ export default class UnConf extends React.Component {
         })
         .map(scheduleData => (
           <ScheduleCard
+            disabled
             key={scheduleData.session_id}
             scheduleData={scheduleData}
             onSave={onSave}
