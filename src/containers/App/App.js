@@ -6,7 +6,8 @@ import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from '@react-native-community/async-storage';
-import URLSearchParams from 'url-search-params';
+import { URL, URLSearchParams } from 'whatwg-url';
+import { Buffer } from 'buffer';
 import I18n from '../../locales';
 import Header from './Header';
 import Main from '../Main/Main';
@@ -47,6 +48,10 @@ import iconNews from '../../images/icon/iconNews.png';
 import iconNewsActive from '../../images/icon/iconNewsActive.png';
 import iconMore from '../../images/icon/iconMore.png';
 import iconMoreActive from '../../images/icon/iconMoreActive.png';
+
+global.Buffer = Buffer;
+global.URL = URL;
+global.URLSearchParams = URLSearchParams;
 
 const getLanguageCode = () => {
   let systemLanguage = 'en';
@@ -145,8 +150,11 @@ class App extends Component {
     console.log('onlink', url);
     if (url) {
       const searchString = url.substring(url.indexOf('?') + 1);
+      console.log(searchString);
       const param = new URLSearchParams(searchString);
+      console.log(param);
       const sn = param.get('sn');
+      console.log(sn)
       const uid = await DeviceInfo.getUniqueId();
       const data = {
         uid,
