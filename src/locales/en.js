@@ -18,10 +18,11 @@ export default {
     more: 'More',
   },
   schedule:{
-    noSchedule: 'No Schedule',
+    noSchedule: 'You have not yet collected any session',
     hotTopic: 'You will enjoy this meeting',
     allSchedule: 'All Schedule',
     favoriteSchedule: 'My Favorite',
+    goSchedule: 'Collect session',
   },
   unConf: {
     title: 'UnConf',

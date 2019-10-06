@@ -18,10 +18,11 @@ export default {
     more: '查看更多',
   },
   schedule:{
-    noSchedule: '暫無行程',
+    noSchedule: '你目前尚未收藏任何議程',
     hotTopic: '你最想聽的演講要開始了',
     allSchedule: '全部議程',
     favoriteSchedule: '我最想聽',
+    goSchedule: '來去逛逛',
   },
   unConf: {
     title: '交流場次',

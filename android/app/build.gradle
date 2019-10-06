@@ -132,8 +132,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 20229
-        versionName "3.0.7"
+        versionCode 20230
+        versionName "3.0.8"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
     signingConfigs {
