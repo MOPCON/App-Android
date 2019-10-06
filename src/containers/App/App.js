@@ -6,6 +6,7 @@ import firebase from 'react-native-firebase';
 import DeviceInfo from 'react-native-device-info';
 import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from '@react-native-community/async-storage';
+import URLSearchParams from 'url-search-params';
 import I18n from '../../locales';
 import Header from './Header';
 import Main from '../Main/Main';
@@ -93,22 +94,26 @@ class App extends Component {
     global.gameServer = api_server.game;
     global.enable_game = enable_game;
     // regist game
-    const authorization = await AsyncStorage.getItem('Authorization');
-    if (!authorization) {
-      const uid = await DeviceInfo.getUniqueId();
-      const rand = Math.random().toString(16).substring(2, 15);
-      const data = {
-        uid: `${uid}-${rand}`,
-        email: rand,
-      };
-      const { data: { access_token } } = await gameServices.post('/register', data);
-      console.log('===========register success==========', access_token);
-      AsyncStorage.setItem('Authorization', `Bearer ${access_token}`);
-    }
     this.setState({ enable_game });
+    firebase.analytics().logEvent('android_initial_app');
   }
 
-  async getToken() {
+  registerByRandom = async () => {
+    const authori = await AsyncStorage.getItem('Authorization');
+    if (authori) { return true; }
+    const uid = await DeviceInfo.getUniqueId();
+    const rand = Math.random().toString(16).substring(2, 15);
+    const data = {
+      uid: `${uid}-${rand}`,
+      email: rand,
+    };
+    const { data: { access_token } } = await gameServices.post('/register', data);
+    console.log('===========register by random success==========', access_token);
+    AsyncStorage.setItem('Authorization', `Bearer ${access_token}`);
+    firebase.analytics().logEvent('android_register_by_random', data);
+  }
+
+  getToken = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
     if (!fcmToken) {
       fcmToken = await firebase.messaging().getToken();
@@ -136,45 +141,49 @@ class App extends Component {
     }
   }
 
-  handleAppStateChange = (nextAppState) => {
-    if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === 'active'
-    ) {
-      console.log('App has come to the foreground!');
-      this.initialData();
-    }
-    this.setState({ appState: nextAppState });
-  };
-
-  onLink = (url, byOnlink) => {
+  onLink = async (url) => {
+    console.log('onlink', url);
     if (url) {
-      const email = url.substring(url.indexOf('email=') + 6);
-      console.log('==== get user email =====', byOnlink, email);
+      const searchString = url.substring(url.indexOf('?') + 1);
+      const param = new URLSearchParams(searchString);
+      const sn = param.get('sn');
+      const uid = await DeviceInfo.getUniqueId();
+      const data = {
+        uid,
+        email: sn,
+      };
+      const { data: { access_token } } = await gameServices.post('/invite', data);
+      console.log('===========register success==========', access_token);
+      AsyncStorage.setItem('Authorization', `Bearer ${access_token}`);
+      AsyncStorage.setItem('hasInvited', JSON.stringify(data));
+      firebase.analytics().logEvent('android_register_by_link', data);
+      if (this.register) { this.register(); }
+      return true;
     }
+    return false;
   }
 
-  registDynamicLink = () => {
-    console.log('registDynamicLink')
-    firebase.links()
-      .getInitialLink()
-      .then(this.onLink);
-    this.register = firebase.links().onLink((url) => {
-      this.onLink(url, true)
-    });
+  listenDynamicLink = () => {
+    firebase.analytics().logEvent('android_listen_invite');
+    this.register = firebase.links().onLink(this.onLink);
   }
 
   async componentDidMount() {
-    global.firebase = firebase;
-    await this.initialData();
-    this.registDynamicLink()
     RNBootSplash.hide();
     this.checkNotificationPermission();
-    AppState.addEventListener('change', this.handleAppStateChange);
+    // 取得遊戲 server url 跟遊戲啟用狀態
+    await this.initialData();
+    const hasInvited = await AsyncStorage.getItem('hasInvited');
+    if (!hasInvited) {
+      const getInviteResult = await firebase.links().getInitialLink().then(this.onLink);
+      if (!getInviteResult) {
+        this.registerByRandom();
+        this.listenDynamicLink();
+      }
+    }
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange);
     if (this.register) { this.register(); }
   }
 
