@@ -19,10 +19,7 @@ before_install:
   - npm i -g react-native-cli
   - mkdir -p ./android/app/src/main/assets/
   - mkdir -p ./android/app/src/main/res/
-  - openssl des-cbc -d -k $MOPCON_DES_KEY -in secrets.tar.enc -out secrets.tar
-  - tar xvf ./secrets.tar
-  - mv release.keystore ./android/app/
-  - mv google-services.json ./android/app/
+  - sh appcenter-post-clone.sh
 install:
   - npm i
 script:

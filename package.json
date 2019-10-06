@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",
+    "buffer": "^5.4.3",
     "dayjs": "^1.8.16",
     "immer": "^4.0.0",
     "react": "16.8.6",
@@ -30,7 +31,7 @@
     "react-navigation": "^4.0.5",
     "react-navigation-stack": "^1.7.3",
     "styled-components": "^4.3.2",
-    "url-search-params": "^1.1.0"
+    "whatwg-url": "^7.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.0",

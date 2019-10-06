@@ -1,5 +1,10 @@
-import URLSearchParams from 'url-search-params';
+import { URL, URLSearchParams } from 'whatwg-url';
+import { Buffer } from 'buffer';
 import AsyncStorage from '@react-native-community/async-storage';
+
+global.Buffer = Buffer;
+global.URL = URL;
+global.URLSearchParams = URLSearchParams;
 
 // // To see all the requests in the chrome Dev tools in the network tab.
 // XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
