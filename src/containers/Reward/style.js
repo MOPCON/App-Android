@@ -10,7 +10,6 @@ export const RewardContainer = styled.View`
 `;
 
 export const RewardCard = styled.View`
-  height: 168px;
   border: 1px solid ${scheduleCardTypeColor};
   border-radius: 6px;
   padding: 16px 20px;
