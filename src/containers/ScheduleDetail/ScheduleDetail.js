@@ -19,8 +19,8 @@ export default class ScheduleDetail extends React.Component {
       onSave({ session_id });
       navigation.setParams({ savedStatus: !savedStatus });
     }
-    options.headerRight = (
-      <Style.StarIconTouchable onPress={onPress}>
+    options.headerRight = (props) => (
+      <Style.StarIconTouchable {...props} onPress={onPress}>
         <Style.StarIconImg source={savedStatus ? starIconChecked : starIconNormal} />
       </Style.StarIconTouchable>
     );
