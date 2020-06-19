@@ -1,6 +1,6 @@
 export default {
   home: {
-    title: '首頁',
+    title: '首頁 1',
     schedule: '議程',
     MySchedule: '我的行程',
     Unconference: '交流場次',
