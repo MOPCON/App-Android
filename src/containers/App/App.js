@@ -223,7 +223,7 @@ class App extends Component {
         title: 'home.Game',
         showHeader: true,
         icon: iconGame,
-        disabled: enable_game,
+        disabled: !enable_game,
         activeIcon: iconGameActive,
         component: () => <Game navigation={navigation} />,
       },
