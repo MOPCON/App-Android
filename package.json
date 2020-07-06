@@ -60,45 +60,7 @@
     "react-native-version": "^3.2.0",
     "react-test-renderer": "16.11.0"
   },
-  "babel": {
-    "presets": [
-      "module:metro-react-native-babel-preset"
-    ],
-    "plugins": [
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "legacy": true
-        }
-      ],
-      "transform-inline-environment-variables",
-      "@babel/plugin-syntax-class-properties",
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ]
-    ]
-  },
   "jest": {
-    "preset": "react-native",
-    "transform": {
-      "^.+\\.[jt]sx?$": [
-        "babel-jest",
-        {
-          "rootMode": "upward"
-        }
-      ]
-    },
-    "haste": {
-      "defaultPlatform": "android"
-    },
-    "moduleNameMapper": {
-      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
-    },
-    "setupFilesAfterEnv": [
-      "./__mocks__/mockFirebase"
-    ]
+    "preset": "react-native"
   }
 }
