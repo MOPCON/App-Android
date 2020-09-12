@@ -33,7 +33,7 @@ export const ButtonText = styled.Text`
   font-family: Roboto-Medium;
   letter-spacing: 1px;
   font-size: 14px;
-  color: white;
+  color: #000000;
 `;
 
 export const ButtonIcon = styled.Image`

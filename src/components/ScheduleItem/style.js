@@ -99,7 +99,7 @@ export const StarIconTouchable = styled.TouchableOpacity`
 export const ScheduleContainer = styled.TouchableOpacity`
   width: 100%;
   padding: 16px 20px;
-  border: 1px solid #00aaf0;
+  border: 1px solid #FFCC00;
   border-radius: 6px;
   margin-bottom: 16px;
 `;
