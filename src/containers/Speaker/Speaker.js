@@ -8,34 +8,26 @@ import NavigationOptions from '../../components/NavigationOptions/NavigationOpti
 import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 import SpeakerItem from '../../components/SpeakerItem/SpeakerItem';
 
-export default class Speaker extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.list', 'mode2')
-
-  state = {
+const Speaker = ({ navigation }) => {
+  const [ state, setState ] = React.useState({
     speaker: []
+  })
+
+  const goDetail = (speakerDetail) => {
+    navigation.navigate('SpeakerDetail', { speakerDetail });
   }
 
-  goDetail = (speakerDetail) => {
-    this.props.navigation.navigate('SpeakerDetail', { speakerDetail });
-  }
-
-  getSpeakers = async() => {
+  const getSpeakers = async () => {
     const { data: speaker } = await apiServices.get('/speaker');
-    this.setState({speaker});
+    setState({ speaker });
   }
 
-  componentDidMount() {
-    // const speakerText = await AsyncStorage.getItem('speaker');
-    // const spObject = JSON.parse(speakerText).payload;
-    // const speaker = Object.keys(spObject).map(key => spObject[key]);
-    // this.setState({
-    //   speaker
-    // });
-    this.getSpeakers();
-  }
+  React.useEffect(() => {
+    getSpeakers();
+  }, [])
 
-  renderSpeaker() {
-    const { speaker } = this.state;
+  const _renderSpeaker = () => {
+    const { speaker } = state;
 
     return speaker.map((s, index) => {
       const props = {
@@ -47,25 +39,28 @@ export default class Speaker extends Component {
       };
 
       return (
-        <Style.Card key={`speaker_${index}`} onPress={() => this.goDetail(s)}>
+        <Style.Card key={`speaker_${index}`} onPress={() => goDetail(s)}>
           <SpeakerItem {...props} />
         </Style.Card>
       );
     })
   }
 
-  render() {
-    const { speaker } = this.state;
-    return (
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Style.SpeakerContainer>
-          {
-            speaker.length
-            ? this.renderSpeaker()
+  const { speaker } = state;
+
+  return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <Style.SpeakerContainer>
+        {
+          speaker.length
+            ? _renderSpeaker()
             : (<LoadingIcon size="large" color="#ffffff" />)
-          }
-        </Style.SpeakerContainer>
-      </ScrollView>
-    );
-  }
+        }
+      </Style.SpeakerContainer>
+    </ScrollView>
+  );
+
 }
+
+Speaker.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.list', 'mode2');
+export default Speaker;

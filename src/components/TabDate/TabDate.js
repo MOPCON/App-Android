@@ -72,6 +72,7 @@ const TabDate = props => {
       {
         toValue: compWidth * index / length,
         duration: 200,
+        useNativeDriver: true,
       }
     ).start();
     

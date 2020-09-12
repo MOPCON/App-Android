@@ -21,19 +21,19 @@ export default (navigation, title, mode = 'mode1') => {
       color: '#fff',
       fontWeight: 'bold',
       fontSize: 20,
-      marginLeft: 'auto',
-      marginRight: 'auto',
+      marginHorizontal: 'auto',
     },
     title: I18n.t(title),
   };
 
   if (mode === 'mode1') {
-    options.headerLeft = (
-      <View />
+    options.headerLeft = (props) => (
+      <View {...props} />
     );
 
-    options.headerRight = (
+    options.headerRight = (props) => (
       <TouchableOpacity
+          {...props}
         style={{width: 24, height: 24, marginRight: 30}}
         onPress={() => navigation.goBack()}
       >
@@ -42,8 +42,9 @@ export default (navigation, title, mode = 'mode1') => {
     )
   } else if (mode === 'mode2') {
 
-    options.headerLeft = (
+    options.headerLeft = (props) => (
       <TouchableOpacity
+          {...props}
         style={{width: 24, height: 24, marginLeft: 20}}
         onPress={() => navigation.goBack()}
       >
@@ -51,8 +52,8 @@ export default (navigation, title, mode = 'mode1') => {
       </TouchableOpacity>
     );
 
-    options.headerRight = (
-      <View style={{marginRight: 30}} />
+    options.headerRight = (props) => (
+      <View {...props} style={{marginRight: 30}} />
     )
   }
 
