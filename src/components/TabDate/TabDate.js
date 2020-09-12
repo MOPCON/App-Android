@@ -24,7 +24,7 @@ const TabActiveItem = styled(Animated.View)`
 
 const TabActiveItemInner = styled.View`
   width: 80px;
-  background-color: #00aaf0;
+  background-color: #FFCC00;
   height: 1px;
 `;
 

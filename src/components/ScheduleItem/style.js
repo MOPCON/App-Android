@@ -65,7 +65,7 @@ export const Header = styled.View`
 `;
 
 export const HeaderText = styled.Text`
-  color: #00aaf0;
+  color: #FFCC00;
   font-size: 20px;
 `;
 

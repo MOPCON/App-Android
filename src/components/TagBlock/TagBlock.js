@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import { darkBlue } from "../../theme/index"
+
 const Container = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
@@ -18,7 +20,7 @@ const Tag = styled.View`
 `;
 
 const TagText = styled.Text`
-  color: #fff;
+  color: ${darkBlue};
   font-size: 12px;
 `;
 
