@@ -54,4 +54,5 @@ export const TypeText = styled.Text`
   letter-spacing: 2.7px;
   margin-bottom: 60px;
   text-align: center;
+  text-transform: uppercase;
 `;

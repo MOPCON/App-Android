@@ -45,7 +45,7 @@ export const MoreButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: flex-start;
   padding: 13px 40px;
-  border: 1px solid #00aaf0;
+  border: 1px solid #FFCC00;
   border-radius: 6px;
 `;
 
@@ -62,5 +62,5 @@ export const SplitText = styled.Text`
 
 export const MoreText = styled.Text`
   font-size: 16px;
-  color: #00aaf0;
+  color: #FFCC00;
 `;
