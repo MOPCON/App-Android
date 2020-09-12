@@ -42,6 +42,7 @@ const Tab = props => {
     }
   }
   const { tabs, activeTab, activeBarPosition, tabWidth } = state;
+
   return (
     <Style.TabContainer onLayout={onLayout}>
       {
