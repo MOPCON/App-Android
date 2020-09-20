@@ -6,52 +6,49 @@ import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import { AVATAR } from '../Community/VolunteerBlock';
 import apiServices from '../../api/services';
+import { useNavigation } from "@react-navigation/native";
 
-export default class VolunteerDetail extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.volunteer_info', 'mode2')
+const VolunteerDetail = ({ navigation }) => {
 
-  state = {
-    volunteer: { members: [] },
-  }
+  const [ volunteer, setVolunteer ] = React.useState({ members: [] })
 
-  getVolunteerDetail = async (url) => {
+  const fetchVolunteerDetail = async (url) => {
     const { data: volunteer } = await apiServices.get(url);
-    this.setState({ volunteer })
+    setVolunteer(volunteer)
   }
 
-  componentDidMount() {
-    const { url, id } = this.props.navigation.state.params;
-    // const volunteerText = await AsyncStorage.getItem('volunteer');
-    // const volunteer = JSON.parse(volunteerText).payload.find(c => c.id === id);
+  React.useEffect(() => {
+    const { url, id } = navigation.state.params;
+    fetchVolunteerDetail(url);
+  })
 
-    // this.setState({ volunteer });
-    this.getVolunteerDetail(url);
-  }
-
-  render() {
-    const { volunteer } = this.state;
-    const { id } = this.props.navigation.state.params;
-    const lang = I18n.locale;
-    return (
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Style.Container>
-          <Style.logo
-            source={AVATAR[id]}
-          />
-          <Style.Title>
-            {lang === 'zh' ? volunteer.name : volunteer.name_e}
-          </Style.Title>
-          <Style.Content>
-            {volunteer.introduction}
-          </Style.Content>
-          <View style={{ flex: 1 }}>
-            <Style.MemberText>{I18n.t('community.member')}</Style.MemberText>
-            <Style.MemberText>
-              {volunteer.members.map(m => m.trim()).join(' ， ')}
-            </Style.MemberText>
-          </View>
-        </Style.Container>
-      </ScrollView>
-    );
-  }
+  const { id } = navigation.state.params;
+  const lang = I18n.locale;
+  return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <Style.Container>
+        <Style.logo
+          source={AVATAR[id]}
+        />
+        <Style.Title>
+          {lang === 'zh' ? volunteer.name : volunteer.name_e}
+        </Style.Title>
+        <Style.Content>
+          {volunteer.introduction}
+        </Style.Content>
+        <View style={{ flex: 1 }}>
+          <Style.MemberText>{I18n.t('community.member')}</Style.MemberText>
+          <Style.MemberText>
+            {volunteer.members.map(m => m.trim()).join(' ， ')}
+          </Style.MemberText>
+        </View>
+      </Style.Container>
+    </ScrollView>
+  );
 }
+VolunteerDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.volunteer_info', 'mode2')
+export default function (props) {
+  const navigation = useNavigation();
+  return <VolunteerDetail {...props} navigation={navigation} />
+}
+

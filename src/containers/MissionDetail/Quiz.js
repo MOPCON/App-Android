@@ -46,7 +46,7 @@ export default class Quiz extends Component {
 
     return (
       <Style.QuizContainer>
-        <Style.QuizTitle>{ quiz.title }</Style.QuizTitle>
+        <Style.QuizTitle>{quiz.title}</Style.QuizTitle>
         <Style.QuizOptionContainer>
           {
             Object.keys(quiz.options).map((key, i) => {
@@ -60,7 +60,7 @@ export default class Quiz extends Component {
                 || (disabled && option === String.fromCharCode(65 + +(quiz.answer) - 1))); // answer需要-1才是index
 
               const wrong = quiz.wrongAnswer && (option === String.fromCharCode(65 + +(quiz.wrongAnswer) - 1));
-              
+
               return (
                 <Style.QuizContent key={`quiz${i}`} disabled={disabled} onPress={() => this.handleClick(option)}>
                   <Style.QuizOption active={active} wrong={wrong}>

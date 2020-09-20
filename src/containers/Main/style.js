@@ -6,12 +6,12 @@ export const Container = styled.View`
   background-color: ${theme.darkBlue};
 `;
 
-export const ScrollContainer = styled.ScrollView.attrs({
-  contentContainerStyle: props => {
+export const ScrollContainer = styled.ScrollView.attrs(props => {
     return {
-      paddingTop: 10,
+        contentContainerStyle: {
+            paddingTop: 10,
+        }
     }
-  }
 })``;
 
 export const LogoContainer = styled.View`

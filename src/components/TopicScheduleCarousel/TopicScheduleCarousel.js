@@ -27,13 +27,15 @@ export const CarouselTitle = styled.Text`
 `;
 
 const TopicScheduleCarousel = ({ navigation, originSchedule, onChangeTab }) => {
-  const [schedule, setSchedule] = useState([]);
-  const [savedSchedule, setSavedSchedule] = useState({});
+  const [ schedule, setSchedule ] = useState([]);
+  const [ savedSchedule, setSavedSchedule ] = useState({});
 
   const getSaved = async () => {
     const savedScheduleText = await AsyncStorage.getItem('savedschedule');
     let s = JSON.parse(savedScheduleText);
-    if (!s) { s = {}; }
+    if (!s) {
+      s = {};
+    }
     setSavedSchedule(s);
     return s;
   }
@@ -67,8 +69,8 @@ const TopicScheduleCarousel = ({ navigation, originSchedule, onChangeTab }) => {
     s[session_id] = !s[session_id];
     setSavedSchedule(s);
     AsyncStorage.setItem('savedschedule', JSON.stringify(s));
-    if(global.enable_game){
-      gameServices.post('/mySession', {session_id, action: s[session_id] ? 'add' : 'remove'});
+    if (global.enable_game) {
+      gameServices.post('/mySession', { session_id, action: s[session_id] ? 'add' : 'remove' });
     }
     const newSchedule = filterSchedule(originSchedule, s);
     setSchedule(newSchedule);
@@ -99,22 +101,22 @@ const TopicScheduleCarousel = ({ navigation, originSchedule, onChangeTab }) => {
       <CarouselTitle>{I18n.t('schedule.hotTopic')}</CarouselTitle>
       {
         Boolean(schedule.length)
-        ?(
-        <CarouselContainer>
-          <Carousel
-            inactiveSlideScale={0.94}
-            sliderWidth={width}
-            itemWidth={width - 40}
-            data={schedule}
-            renderItem={renderItem}
-          />
-        </CarouselContainer>
-        )
-        :(
-          <NoScheduleContainer>
-            <NoSchedule onClick={()=>onChangeTab('SCHEDULE')} />
-          </NoScheduleContainer>
-        )
+          ? (
+            <CarouselContainer>
+              <Carousel
+                inactiveSlideScale={0.94}
+                sliderWidth={width}
+                itemWidth={width - 40}
+                data={schedule}
+                renderItem={renderItem}
+              />
+            </CarouselContainer>
+          )
+          : (
+            <NoScheduleContainer>
+              <NoSchedule onClick={() => onChangeTab('SCHEDULE')}/>
+            </NoScheduleContainer>
+          )
       }
     </React.Fragment>
   );

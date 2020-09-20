@@ -15,10 +15,10 @@ import mopconLogo from '../../images/logo.png';
 
 const Main = ({ language, onChangeLanguage, navigation, onChangeTab }) => {
 
-  const [banner, setBanner] = useState([]);
-  const [news, setNews] = useState([]);
-  const [originSchedule, setSession] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [ banner, setBanner ] = useState([]);
+  const [ news, setNews ] = useState([]);
+  const [ originSchedule, setSession ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(true);
 
   const init = async () => {
     const { data } = await apiServices.get('/home');
@@ -56,7 +56,7 @@ const Main = ({ language, onChangeLanguage, navigation, onChangeTab }) => {
             </Style.ScrollContainer>
           )
       }
-    </Style.Container >
+    </Style.Container>
   )
 };
 

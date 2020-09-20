@@ -66,9 +66,9 @@ const News = ({ onChangeTab, news }) => {
         </Block>
       </TitleContainer>
       <Message>
-      {
-        Boolean(news.length) ? news[0].title : ''
-      }
+        {
+          Boolean(news.length) ? news[0].title : ''
+        }
       </Message>
     </Container>
   );

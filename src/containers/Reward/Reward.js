@@ -40,10 +40,11 @@ export default class Reward extends Component {
                     {
                       // 是否兌換完成
                       reward.redeemed ? (
-                        <Button disabled color="inverse" text={I18n.t('game.redeemed')} margin={[0, 0, 0, 0]} />
+                        <Button disabled color="inverse" text={I18n.t('game.redeemed')} margin={[ 0, 0, 0, 0 ]} />
                       ) : (
-                          <Button color="primary" onClick={() => this.onOpenModal(reward.uid)} text={I18n.t('game.exchange')} margin={[0, 0, 0, 0]} />
-                        )
+                        <Button color="primary" onClick={() => this.onOpenModal(reward.uid)}
+                                text={I18n.t('game.exchange')} margin={[ 0, 0, 0, 0 ]} />
+                      )
                     }
                   </View>
                 </Style.RewardInfo>

@@ -21,6 +21,7 @@ const Tab = props => {
       {
         toValue: this.compWidth * index / length,
         duration: 200,
+        useNativeDriver: true,
       }
     ).start();
     setState({
