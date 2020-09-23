@@ -19,7 +19,7 @@ const Tab = props => {
     Animated.timing(
       state.activeBarPosition,
       {
-        toValue: this.compWidth * index / length,
+        toValue: screenWidth * index / length,
         duration: 200,
         useNativeDriver: true,
       }

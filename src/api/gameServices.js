@@ -50,9 +50,15 @@ class GameApiServices {
     };
 
     const urlF = `${gameServer}${url}`;
+
+
+
     // if (this.data) { options.body = JSON.stringify(this.data); }
     // if (this.params) { url = `${url}${this.parseParams()}` }
     try {
+      console.log("I was called!!")
+      console.log(urlF)
+
       const result = await fetch(urlF, options);
       const response = await result.json();
       console.log(urlF, options, response)

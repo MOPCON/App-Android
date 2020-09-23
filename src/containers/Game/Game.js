@@ -13,7 +13,6 @@ import avatarUser from '../../images/avatar/avatarUser.png';
 import * as Style from './style';
 import { useNavigation } from "@react-navigation/native";
 
-@Consumer('gameStore')
 const Game = ({ navigation, context }) => {
 
   const [ state, setState ] = React.useState({
