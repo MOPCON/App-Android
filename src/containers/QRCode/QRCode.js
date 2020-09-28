@@ -13,10 +13,11 @@ import {MISSION_STATUS, Consumer} from '../../store';
 import gameServices from '../../api/gameServices';
 import {useNavigation} from "@react-navigation/native";
 
+@Consumer('gameStore')
 const QRCode = ({navigation, context}) => {
+
     const [modalVisible, setModalVisible] = React.useState(true)
     const [isLoading, setLoading] = React.useState(false)
-    
 
     const onSuccess = async (e) => {
         setLoading(true)
