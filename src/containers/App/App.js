@@ -124,6 +124,7 @@ class App extends Component {
 
   getToken = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
+
     if (!fcmToken) {
       fcmToken = await messaging().getToken();
       if (fcmToken) {

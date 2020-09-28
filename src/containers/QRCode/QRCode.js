@@ -66,6 +66,7 @@ const QRCode = ({navigation, context}) => {
 }
 
 QRCode.navigationOptions = ({navigation}) => NavigationOptions(navigation, 'qrcode.title', 'mode2')
+
 export default function (props) {
     const navigation = useNavigation();
     return <QRCode {...props} navigation={navigation}/>

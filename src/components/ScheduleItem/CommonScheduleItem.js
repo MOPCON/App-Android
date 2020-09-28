@@ -5,7 +5,7 @@ const Container = styled.View`
   width: 100%;
   height: 56px;
   border-radius: 6px;
-  background-color: #0C3449;
+  background-color: #343928;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

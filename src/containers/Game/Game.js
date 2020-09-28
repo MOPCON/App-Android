@@ -27,7 +27,6 @@ const Game = ({ navigation, context }) => {
   React.useEffect(() => {
     const firstPlayInitial = async () => {
       const { loadGameList } = context.gameStore;
-
       const [
         hasPlayed,
         { data: intro },
