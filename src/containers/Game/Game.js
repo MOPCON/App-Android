@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
-import { Consumer } from '../../store';
+import { GlobalContext } from '../../store';
 import I18n from '../../locales';
 import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
 import ModalReward from '../../components/ModalReward/ModalReward';
@@ -13,9 +13,9 @@ import avatarUser from '../../images/avatar/avatarUser.png';
 import * as Style from './style';
 import { useNavigation } from "@react-navigation/native";
 
-@Consumer('gameStore')
-const Game = ({ navigation, context }) => {
+const Game = ({ navigation }) => {
 
+  const context = React.useContext(GlobalContext);
   const [ state, setState ] = React.useState({
       modalWelcomeVisible: false,
       modalRewardVisible: false,
