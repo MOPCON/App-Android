@@ -5,6 +5,8 @@ import gameServices from '../api/gameServices';
 
 const myContext = createContext();
 
+export const GlobalContext = myContext;
+
 export const MISSION_STATUS = {
   NOT_CHALLANGE: '1',
   NOT_OPEN: '0',

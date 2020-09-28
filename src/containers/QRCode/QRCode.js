@@ -9,13 +9,13 @@ import * as Style from './style';
 import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 import ModalFinish from '../../components/ModalFinish/ModalFinish';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import {MISSION_STATUS, Consumer} from '../../store';
+import {MISSION_STATUS, GlobalContext} from '../../store';
 import gameServices from '../../api/gameServices';
 import {useNavigation} from "@react-navigation/native";
 
-@Consumer('gameStore')
-const QRCode = ({navigation, context}) => {
+const QRCode = ({navigation}) => {
 
+    const context = React.useContext(GlobalContext)
     const [modalVisible, setModalVisible] = React.useState(true)
     const [isLoading, setLoading] = React.useState(false)
 
