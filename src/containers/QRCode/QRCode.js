@@ -13,7 +13,7 @@ import {MISSION_STATUS, GlobalContext} from '../../store';
 import gameServices from '../../api/gameServices';
 import {useNavigation} from "@react-navigation/native";
 
-const QRCode = ({navigation}) => {
+const QRCode = ({navigation, uid}) => {
 
     const context = React.useContext(GlobalContext)
     const [modalVisible, setModalVisible] = React.useState(true)
@@ -22,7 +22,7 @@ const QRCode = ({navigation}) => {
     const onSuccess = async (e) => {
         setLoading(true)
         const vKey = e.data;
-        const {uid} = navigation.state.params;
+
 
         const payload = {
             uid,
@@ -42,9 +42,8 @@ const QRCode = ({navigation}) => {
     }
 
     const onCloseModal = () => {
-        const {uid} = navigation.state.params;
         setModalVisible(false)
-        navigation.navigate('GameDetail', {uid, pass: true});
+        navigation.navigate('GameDetail', {uis:uid, pass: true});
     }
 
     const cameraHeight = Dimensions.get('window').height - 80;
@@ -69,5 +68,6 @@ QRCode.navigationOptions = ({navigation}) => NavigationOptions(navigation, 'qrco
 
 export default function (props) {
     const navigation = useNavigation();
-    return <QRCode {...props} navigation={navigation}/>
+    const uid = props.navigation.getParam('uid');
+    return <QRCode {...props} navigation={navigation} uid={uid}/>
 }
