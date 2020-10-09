@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { View, Platform, NativeModules, AppState } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import firebase from 'react-native-firebase';
+import { NavigationContainer } from '@react-navigation/native';
+import { createCompatNavigatorFactory, createSwitchNavigator } from '@react-navigation/compat';
+import { createStackNavigator } from '@react-navigation/stack';
+import firebase from '@react-native-firebase/app';
+import messaging from '@react-native-firebase/messaging';
+import analytics from '@react-native-firebase/analytics';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 import DeviceInfo from 'react-native-device-info';
 import RNBootSplash from "react-native-bootsplash";
 import AsyncStorage from '@react-native-community/async-storage';
@@ -25,8 +29,6 @@ import VolunteerDetail from '../VolunteerDetail/VolunteerDetail';
 import QRCode from '../QRCode/QRCode';
 import MySchedule from '../MySchedule/MySchedule';
 import QA from '../QA/QA';
-// import Missiontable from '../MissionTable/Missiontable';
-// import MissionDetail from '../MissionDetail/MissionDetail';
 import Game from '../Game/Game';
 import GameDetail from '../GameDetail/GameDetail';
 import Reward from '../Reward/Reward';
@@ -54,12 +56,12 @@ global.URL = URL;
 global.URLSearchParams = URLSearchParams;
 
 const getLanguageCode = () => {
-  let systemLanguage = 'en';
-  if (Platform.OS === 'android') {
-    systemLanguage = NativeModules.I18nManager.localeIdentifier;
-  } else {
-    systemLanguage = NativeModules.SettingsManager.settings.AppleLocale;
-  }
+  let systemLanguage = 'zh';
+  // if (Platform.OS === 'android') {
+  //   systemLanguage = NativeModules.I18nManager.localeIdentifier;
+  // } else {
+  //   systemLanguage = NativeModules.SettingsManager.settings.AppleLocale;
+  // }
   const languageCode = systemLanguage.substring(0, 2);
   return languageCode;
 }
@@ -100,12 +102,14 @@ class App extends Component {
     global.enable_game = enable_game;
     // regist game
     this.setState({ enable_game });
-    firebase.analytics().logEvent('android_initial_app');
+    analytics().logEvent('android_initial_app');
   }
 
   registerByRandom = async () => {
     const authori = await AsyncStorage.getItem('Authorization');
-    if (authori) { return true; }
+    if (authori) {
+      return true;
+    }
     const uid = await DeviceInfo.getUniqueId();
     const rand = Math.random().toString(16).substring(2, 15);
     const data = {
@@ -115,13 +119,14 @@ class App extends Component {
     const { data: { access_token } } = await gameServices.post('/register', data);
     console.log('===========register by random success==========', access_token);
     AsyncStorage.setItem('Authorization', `Bearer ${access_token}`);
-    firebase.analytics().logEvent('android_register_by_random', data);
+    analytics().logEvent('android_register_by_random', data);
   }
 
   getToken = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
+
     if (!fcmToken) {
-      fcmToken = await firebase.messaging().getToken();
+      fcmToken = await messaging().getToken();
       if (fcmToken) {
         await AsyncStorage.setItem('fcmToken', fcmToken);
       }
@@ -130,7 +135,7 @@ class App extends Component {
 
   async requestNotificationPermission() {
     try {
-      await firebase.messaging().requestPermission();
+      await messaging().requestPermission();
       this.getToken();
     } catch (error) {
       console.log('permission rejected');
@@ -138,7 +143,7 @@ class App extends Component {
   }
 
   async checkNotificationPermission() {
-    const enabled = await firebase.messaging().hasPermission();
+    const enabled = await messaging().hasPermission();
     if (enabled) {
       this.getToken();
     } else {
@@ -164,16 +169,18 @@ class App extends Component {
       console.log('===========register success==========', access_token);
       AsyncStorage.setItem('Authorization', `Bearer ${access_token}`);
       AsyncStorage.setItem('hasInvited', JSON.stringify(data));
-      firebase.analytics().logEvent('android_register_by_link', data);
-      if (this.register) { this.register(); }
+      analytics().logEvent('android_register_by_link', data);
+      if (this.register) {
+        this.register();
+      }
       return true;
     }
     return false;
   }
 
   listenDynamicLink = () => {
-    firebase.analytics().logEvent('android_listen_invite');
-    this.register = firebase.links().onLink(this.onLink);
+    analytics().logEvent('android_listen_invite');
+    this.register = dynamicLinks().onLink(this.onLink);
   }
 
   async componentDidMount() {
@@ -183,7 +190,7 @@ class App extends Component {
     await this.initialData();
     const hasInvited = await AsyncStorage.getItem('hasInvited');
     if (!hasInvited) {
-      const getInviteResult = await firebase.links().getInitialLink().then(this.onLink);
+      const getInviteResult = await dynamicLinks().getInitialLink().then(this.onLink);
       if (!getInviteResult) {
         this.registerByRandom();
         this.listenDynamicLink();
@@ -192,7 +199,9 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    if (this.register) { this.register(); }
+    if (this.register) {
+      this.register();
+    }
   }
 
   render() {
@@ -207,7 +216,8 @@ class App extends Component {
         icon: iconHome,
         disabled: false,
         activeIcon: iconHomeActive,
-        component: () => <Main onChangeTab={this.onChangeTab} language={language} onChangeLanguage={this.onChangeLanguage} navigation={navigation} />,
+        component: () => <Main onChangeTab={this.onChangeTab} language={language}
+                               onChangeLanguage={this.onChangeLanguage} navigation={navigation} />,
       },
       {
         key: 'SCHEDULE',
@@ -260,7 +270,8 @@ class App extends Component {
             <Style.NavBar>
               {
                 TABS.map(tab => (
-                  <Style.NavItem disabled={tab.disabled} key={tab.key} onPress={() => this.setState({ current: tab.key })}>
+                  <Style.NavItem disabled={tab.disabled} key={tab.key}
+                                 onPress={() => this.setState({ current: tab.key })}>
                     <Style.NavIcon source={current === tab.key ? tab.activeIcon : tab.icon} />
                     <Style.NavText active={current === tab.key}>
                       {I18n.t(tab.title)}
@@ -276,8 +287,9 @@ class App extends Component {
   }
 }
 
-const MyStack = new createStackNavigator({
-  Main: { screen: App, navigationOptions: { header: null } },
+/* Navigation Initial (4.x) */
+const routesV4 = [ {
+  Main: { screen: App, navigationOptions: { headerShown: false } },
   ScheduleDetail: { screen: ScheduleDetail },
   MySchedule: { screen: MySchedule },
   UnConf: { screen: UnConf },
@@ -295,9 +307,60 @@ const MyStack = new createStackNavigator({
   // MissionDetail: { screen: MissionDetail },
 }, {
   initialRouteName: 'Main'
-});
+} ];
 
-const AppContainer = createAppContainer(MyStack);
+
+/* Navigation Initial (5.x) */
+const routesV5 = [
+  { name: 'Main', component: App, screenOptions: { headerShown: false } },
+  { name: 'ScheduleDetail', component: ScheduleDetail },
+  { name: 'MySchedule', component: MySchedule },
+  { name: 'UnConf', component: UnConf },
+  { name: 'Sponsor', component: Sponsor },
+  { name: 'SponsorDetail', component: SponsorDetail },
+  { name: 'Speaker', component: Speaker },
+  { name: 'SpeakerDetail', component: SpeakerDetail },
+  { name: 'Community', component: Community },
+  { name: 'CommunityDetail', component: CommunityDetail },
+  { name: 'VolunteerDetail', component: VolunteerDetail },
+  { name: 'QRCode', component: QRCode },
+  { name: 'QA', component: QA },
+  { name: 'Reward', component: Reward },
+  { name: 'GameDetail', component: GameDetail },
+  // { name: 'MissionDetail', component: MissionDetail },
+]
+
+class AppContainer extends Component {
+  constructor(p) {
+    super(p);
+  }
+
+  _renderV4 = () => {
+    const RootStack = createCompatNavigatorFactory(createStackNavigator)(...routesV4)
+    return <RootStack />
+  }
+
+  _renderV5 = () => {
+    const Stack = createStackNavigator()
+    const mapToScreens = (_routes) => {
+      return _routes.map(r => <Stack.Screen {...r} options={r.component.navigationOptions} key={r.name} />)
+    }
+
+    return (
+      <Stack.Navigator initialRouteName="Main">
+        {mapToScreens(routesV5)}
+      </Stack.Navigator>
+    )
+  }
+
+  render() {
+    const isLegacy = true;
+    return <NavigationContainer>
+      {isLegacy ? this._renderV4() : this._renderV5()}
+    </NavigationContainer>;
+  }
+}
+
 
 export default class extends Component {
   render() {

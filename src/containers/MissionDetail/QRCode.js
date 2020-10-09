@@ -22,9 +22,9 @@ export default class QRCode extends Component {
           <Style.CardImg
             source={{ uri: task.banner_url }}
           />
-          </Style.CardView>
-        <Style.QRCodeTitle>{ task.title }</Style.QRCodeTitle>
-        <Style.QRCodeText>{ task.description }</Style.QRCodeText>
+        </Style.CardView>
+        <Style.QRCodeTitle>{task.title}</Style.QRCodeTitle>
+        <Style.QRCodeText>{task.description}</Style.QRCodeText>
         {
           // 未答題
           (task.status === MISSION_STATUS.NOT_CHALLANGE) && (

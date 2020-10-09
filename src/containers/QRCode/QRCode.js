@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Dimensions, Text, Alert, ActivityIndicator } from 'react-native';
+import React from 'react';
+import {Dimensions, Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import I18n from '../../locales';
 import produce from 'immer';
@@ -9,62 +9,65 @@ import * as Style from './style';
 import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 import ModalFinish from '../../components/ModalFinish/ModalFinish';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import { MISSION_STATUS, Consumer } from '../../store';
+import {MISSION_STATUS, GlobalContext} from '../../store';
 import gameServices from '../../api/gameServices';
+import {useNavigation} from "@react-navigation/native";
 
-@Consumer('gameStore')
-export default class QRCode extends Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'qrcode.title', 'mode2')
+const QRCode = ({navigation}) => {
 
-  state = {
-    modalVisible: false,
-    isLoading: false,
-  }
+    const context = React.useContext(GlobalContext)
+    const [modalVisible, setModalVisible] = React.useState(true)
+    const [isLoading, setLoading] = React.useState(false)
 
-  onSuccess = async (e) => {
-    this.setState({ isLoading: true });
-    const vKey = e.data;
-    const { uid } = this.props.navigation.state.params;
+    const onSuccess = async (e) => {
+        setLoading(true)
+        const vKey = e.data;
+        const {uid} = navigation.state.params;
 
-    const payload = {
-      uid,
-      vKey,
-    };
+        const payload = {
+            uid,
+            vKey,
+        };
 
-    try {
-      const { loadGameList } = this.props.context.gameStore;
-      const { data } = await gameServices.post('/verify/task', payload);
-      loadGameList();
-      this.setState({ modalVisible: true });
-    } catch (error) {
-      Alert.alert(I18n.t('game.invalid_task_password'));
-      this.props.navigation.goBack();
+        try {
+            const {loadGameList} = context.gameStore;
+            const {data} = await gameServices.post('/verify/task', payload);
+            loadGameList();
+            setModalVisible(true)
+        } catch (error) {
+            Alert.alert(I18n.t('game.invalid_task_password'));
+            navigation.goBack();
+        }
+        setLoading(false)
     }
-    this.setState({ isLoading: false });
-  }
 
-  onCloseModal = () => {
-    const { uid } = this.props.navigation.state.params;
-    this.setState({ modalVisible: false });
-    this.props.navigation.navigate('GameDetail', { uid, pass: true });
-  }
+    const onCloseModal = () => {
+        const {uid} = navigation.state.params;
+        setModalVisible(false)
+        navigation.navigate('GameDetail', {uid, pass: true});
+    }
 
-  render() {
     const cameraHeight = Dimensions.get('window').height - 80;
 
     return (
-      <Style.QRCodeContainer>
-        <QRCodeScanner
-          cameraStyle={{ height: cameraHeight }}
-          onRead={this.onSuccess}
-          topContent={null}
-        />
-        {
-          this.state.isLoading ? <LoadingIcon size="large" color="#ffffff" /> : null
-        }
+        <Style.QRCodeContainer>
+            <QRCodeScanner
+                cameraStyle={{height: cameraHeight}}
+                onRead={onSuccess}
+                topContent={null}
+            />
+            {
+                isLoading ? <LoadingIcon size="large" color="#ffffff"/> : null
+            }
 
-        <ModalFinish visible={this.state.modalVisible} onClose={this.onCloseModal} />
-      </Style.QRCodeContainer>
+            <ModalFinish visible={modalVisible} onClose={onCloseModal}/>
+        </Style.QRCodeContainer>
     );
-  }
+}
+
+QRCode.navigationOptions = ({navigation}) => NavigationOptions(navigation, 'qrcode.title', 'mode2')
+
+export default function (props) {
+    const navigation = useNavigation();
+    return <QRCode {...props} navigation={navigation}/>
 }

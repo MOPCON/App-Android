@@ -2,6 +2,7 @@ module.exports = {
   "presets": ["module:metro-react-native-babel-preset"],
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    "transform-inline-environment-variables"
+    "transform-inline-environment-variables",
+    "@babel/plugin-syntax-class-properties",
   ]
 }

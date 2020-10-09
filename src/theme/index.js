@@ -1,8 +1,8 @@
 export const aquamarine = '#00687d';
 export const aquamarineTwo = '#002E50';
-export const scheduleCardBackground = '#002E50';
-export const scheduleCardTypeColor = '#00aaf0';
-export const windowsBlue = '#3677bc';
+export const scheduleCardBackground = '#FFCC00';
+export const scheduleCardTypeColor = '#FFCC00';
+export const windowsBlue = '#FFCC00';
 export const darkBlue = '#101721';
 export const red = '#d13232';
 export const peach = '#ffaa7d';

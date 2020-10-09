@@ -38,6 +38,7 @@ class ApiServices {
       headers: this.headers,
       method: 'get',
     }
+    
     return this.request(`${url}${parseParams(params)}`, options);
   }
   post = (url, data) => {

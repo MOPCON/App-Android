@@ -1,10 +1,9 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import apiServices from '../../api/services';
 import gameServices from '../../api/gameServices';
 import * as Style from './style';
-import I18n from '../../locales';
 import moment from 'dayjs';
 import { normalizePeriodData, normalizeScheduleData } from '../../utils/normalizeSchedule';
 import TabDate from '../../components/TabDate/TabDate';
@@ -12,7 +11,6 @@ import NavigationOptions from '../../components/NavigationOptions/NavigationOpti
 import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 import CommonScheduleItem from '../../components/ScheduleItem/CommonScheduleItem';
 import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
-import Button from '../../components/Button/Button';
 
 // const tabs = [
 //   { name: 'day1', value: 'day1' },
@@ -32,7 +30,9 @@ export default class UnConf extends React.Component {
   getSession = async () => {
     const savedScheduleText = await AsyncStorage.getItem('savedschedule');
     let savedSchedule = JSON.parse(savedScheduleText);
-    if (!savedSchedule) { savedSchedule = {}; }
+    if (!savedSchedule) {
+      savedSchedule = {};
+    }
     const { data: unconf } = await apiServices.get('/unconf');
     this.setState({
       unconf,
@@ -47,8 +47,8 @@ export default class UnConf extends React.Component {
     };
     s[session_id] = !s[session_id];
     this.setState({ savedSchedule: s });
-    if(global.enable_game){
-      gameServices.post('/mySession', {session_id, action: s[session_id] ? 'add' : 'remove'});
+    if (global.enable_game) {
+      gameServices.post('/mySession', { session_id, action: s[session_id] ? 'add' : 'remove' });
     }
     AsyncStorage.setItem('savedschedule', JSON.stringify(s));
   }
@@ -63,7 +63,9 @@ export default class UnConf extends React.Component {
 
     const nowSchedule = unconf
       .find(schedulePeriod => schedulePeriod.date === nowUnconfDate);
-    if (!nowSchedule) { return (<View />); }
+    if (!nowSchedule) {
+      return (<View />);
+    }
     return nowSchedule.period.map((periodData) => {
       if (periodData.event) {
         const key = nowSchedule.date + periodData.started_at + periodData.event;
@@ -88,7 +90,10 @@ export default class UnConf extends React.Component {
 
   render() {
     const { unconf, nowUnconfDate } = this.state;
-    const tabs = unconf.map(scheduleData => ({ name: moment(scheduleData.date * 1000).format('MM/DD'), value: scheduleData.date }));
+    const tabs = unconf.map(scheduleData => ({
+      name: moment(scheduleData.date * 1000).format('MM/DD'),
+      value: scheduleData.date
+    }));
     return (
       <Style.UnConfScrollView contentContainerStyle={{ flexGrow: 1 }}>
 
