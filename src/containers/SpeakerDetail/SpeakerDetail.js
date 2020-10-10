@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const toTime = timestamp => moment(timestamp).format('HH:mm');
 const toDate = timestamp => moment(timestamp)
-const SpeakerDetail = ({ navigation }) => {
+const SpeakerDetail = ({ navigation, speakerDetail }) => {
 
   const [ savedSchedule, setSavedSchedule ] = React.useState({})
   const [ state, setState ] = React.useState({
@@ -54,8 +54,7 @@ const SpeakerDetail = ({ navigation }) => {
   }
 
   const { isReadMore } = state;
-  const { speakerDetail } = navigation.state.params;
-
+  
   const name = I18n.locale === 'en' ? speakerDetail.name_e : speakerDetail.name;
   const info = I18n.locale === 'en' ? speakerDetail.bio_e : speakerDetail.bio;
   const job = I18n.locale === 'en' ? speakerDetail.job_title_e : speakerDetail.job_title;
@@ -141,5 +140,6 @@ const SpeakerDetail = ({ navigation }) => {
 SpeakerDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.title', 'mode2')
 export default function (props) {
   const navigation = useNavigation();
-  return <SpeakerDetail {...props} navigation={navigation} />
+  const speakerDetail = props.navigation.getParam('speakerDetail');
+  return <SpeakerDetail {...props} navigation={navigation} speakerDetail={speakerDetail} />
 }

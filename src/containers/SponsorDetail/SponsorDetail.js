@@ -21,7 +21,7 @@ const normalizeScheduleData = (originScheduleData, savedSchedule) => ({
   title_e: originScheduleData.topic_name_e,
 });
 
-const SponsorDetail = ({ navigation }) => {
+const SponsorDetail = ({ navigation, sponsorDetail }) => {
 
   const [ savedSchedule, setSavedSchedule ] = React.useState({})
 
@@ -59,7 +59,6 @@ const SponsorDetail = ({ navigation }) => {
     AsyncStorage.setItem('savedschedule', JSON.stringify(_savedSchedule));
   }
 
-  const { sponsorDetail } = navigation.state.params;
   const name = I18n.locale === 'zh' ? sponsorDetail.name : sponsorDetail.name_e;
   const info = I18n.locale === 'zh' ? sponsorDetail.about_us : sponsorDetail.about_us_e;
   const logo = sponsorDetail.logo_path;
@@ -112,5 +111,6 @@ const SponsorDetail = ({ navigation }) => {
 SponsorDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.info', 'mode2')
 export default function (props) {
   const navigation = useNavigation();
-  return <SponsorDetail {...props} navigation={navigation} />
+  const sponsorDetail = props.navigation.getParam('sponsorDetail');
+  return <SponsorDetail {...props} navigation={navigation} sponsorDetail={sponsorDetail} />
 }
