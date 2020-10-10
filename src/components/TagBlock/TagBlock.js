@@ -12,7 +12,7 @@ const Container = styled.View`
 
 const Tag = styled.View`
   padding: 5px 10px;
-  border-radius: 3px;
+  border-radius: 15px;
   background: ${p => p.color};
   align-items: center;
   margin-right: 10px;
