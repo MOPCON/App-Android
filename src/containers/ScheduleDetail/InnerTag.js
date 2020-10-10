@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 const KeynoteContainer = styled.View`
   padding: 2px 6px;
   background-color: ${p => p.bg};
-  border-radius: 3px;
+  border-radius: 15px;
   border: 1px;
   border-color: ${p => p.bdc};
   margin-right: 10px;
