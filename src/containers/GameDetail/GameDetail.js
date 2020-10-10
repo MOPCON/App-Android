@@ -10,14 +10,13 @@ import gameServices from '../../api/gameServices';
 import * as Style from './style';
 import { useNavigation } from "@react-navigation/native";
 
-const GameDetail = ({ navigation }) => {
+const GameDetail = ({ navigation, uid, pass }) => {
   const [ modalFinishVisible, setModalFinishVisible ] = React.useState(false)
   const [ isLoading, setLoading ] = React.useState(true)
   const [ game, setGame ] = React.useState({})
 
   React.useEffect(() => {
     const fetchGameTask = async () => {
-      const { uid } = navigation.state.params;
       const { data } = await gameServices.get(`/getTask/${uid}`);
 
       setGame(data)
@@ -37,11 +36,11 @@ const GameDetail = ({ navigation }) => {
   }
 
   const goScan = () => {
-    navigation.navigate('QRCode', game.uid);
+    navigation.navigate('QRCode', {uid:uid});
   }
 
   const lang = I18n.locale;
-  const { pass } = navigation.state.params;
+
 
   return (
     <Style.ScrollContainer contentContainerStyle={{ flexGrow: 1 }}>
@@ -84,9 +83,14 @@ const GameDetail = ({ navigation }) => {
     </Style.ScrollContainer>
   )
 }
-GameDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'gameDetail.title', 'mode2')
+
+GameDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'gameDetail.title', 'mode2');
+
 export default function (props) {
   const navigation = useNavigation();
-  return <GameDetail {...props} navigation={navigation} />
+  const uid = props.navigation.getParam('uid');
+  const pass = props.navigation.getParam('pass');
+
+  return <GameDetail {...props} navigation={navigation} uid={uid} pass={pass} />
 }
 

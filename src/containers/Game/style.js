@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import {
-  darkBlue, modBorder,
+  darkBlue, modBorder,mariGold
 } from '../../theme/index';
 
 const width = (Dimensions.get('window').width - (20 + 20 + 16)) / 2;
@@ -17,14 +17,16 @@ export const ScrollContainer = styled.ScrollView`
 `;
 
 export const ProfileContainer = styled.View`
-  margin: 20px 0 30px 0;
-  flex-direction: row;
-`;
+  width:90%;
+  margin: 20px 5% 30px 5%;
+  flex-direction: column;
+  align-items: center;
+`
 
 export const UserIcon = styled.Image`
   width: 100px;
   height: 100px;
-  margin-right: 20px;
+  margin: 0px 0px 20px 0px;
 `;
 
 export const TotalText = styled.Text`
@@ -33,8 +35,9 @@ export const TotalText = styled.Text`
 `;
 
 export const ScoreText = styled.Text`
-  color: #fff;
-  font-size: 32px;
+  color: #ffcc00;
+  font-size: 20px;
+  margin-left: 10px;
 `;
 
 export const ProgressTitleText = styled.Text`
@@ -42,7 +45,43 @@ export const ProgressTitleText = styled.Text`
   font-size: 20px;
 `;
 
+export const ProgressContainer = styled.View`
+  width: 100%;
+  margin: 10px 0px 0px 0px; 
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const ProgressBar = styled.View`
+  width:40%;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+`
+
+export const ProgressGift = styled.Image`
+  width: 100%;
+  height: 20px;
+`
+
 export const ProgressText = styled.Text`
-  color: #fff;
   font-size: 16px;
+  margin-left: 10px;
 `;
+
+export const PuzzleContainer = styled.FlatList`
+  width: 90%;
+  margin: 0px 5%;
+`
+
+export const PuzzleBlock = styled.TouchableHighlight`
+  width:25%;
+  height:110px;
+  border:0.5px solid ${darkBlue};
+`;
+
+export const PuzzlePng = styled.Image`
+  width:100%;
+  height:110px;
+`
