@@ -11,11 +11,11 @@ import iconGithub from '../../images/icon/icon_gh.png';
 import iconTwitter from '../../images/icon/icon_tw.png';
 import iconOther from '../../images/icon/icon_web.png';
 import * as Style from './style';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const toTime = timestamp => moment(timestamp).format('HH:mm');
 const toDate = timestamp => moment(timestamp)
-const SpeakerDetail = ({ navigation }) => {
+const SpeakerDetail = ({ navigation, route }) => {
 
   const [ savedSchedule, setSavedSchedule ] = React.useState({})
   const [ state, setState ] = React.useState({
@@ -54,7 +54,7 @@ const SpeakerDetail = ({ navigation }) => {
   }
 
   const { isReadMore } = state;
-  const { speakerDetail } = navigation.state.params;
+  const speakerDetail = route.params?.speakerDetail ?? {};
 
   const name = I18n.locale === 'en' ? speakerDetail.name_e : speakerDetail.name;
   const info = I18n.locale === 'en' ? speakerDetail.bio_e : speakerDetail.bio;
@@ -141,5 +141,6 @@ const SpeakerDetail = ({ navigation }) => {
 SpeakerDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.title', 'mode2')
 export default function (props) {
   const navigation = useNavigation();
-  return <SpeakerDetail {...props} navigation={navigation} />
+  const route = useRoute();
+  return <SpeakerDetail {...props} navigation={navigation} route={route} />
 }

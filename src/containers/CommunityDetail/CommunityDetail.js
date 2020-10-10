@@ -8,9 +8,9 @@ import IconIG from '../../images/icon/icon_ig.png';
 import IconTe from '../../images/icon/icon_tw.png';
 import IconTw from '../../images/icon/icon_tw.png';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-const CommunityDetail = ({ navigation }) => {
+const CommunityDetail = ({ navigation, route }) => {
   const [ community, setCommunity ] = React.useState({})
 
   React.useEffect(() => {
@@ -19,7 +19,7 @@ const CommunityDetail = ({ navigation }) => {
       setCommunity(community);
     }
 
-    const { url } = navigation.state.params;
+    const { url } = route.params;
     getDetail(url);
   }, [])
 
@@ -110,5 +110,6 @@ const CommunityDetail = ({ navigation }) => {
 CommunityDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.community_info', 'mode2')
 export default function (props) {
   const navigation = useNavigation();
-  return <CommunityDetail {...props} navigation={navigation} />
+  const route = useRoute();
+  return <CommunityDetail {...props} navigation={navigation} route={route} />
 }

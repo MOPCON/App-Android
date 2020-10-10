@@ -68,7 +68,7 @@ const Community = ({ navigation }) => {
             <React.Fragment>
               <Style.Container>
                 <Style.TabContainer>
-                  <TabDate tabs={tabs} defaultActiveTab={tab} onChange={setTab(tab)} />
+                  <TabDate tabs={tabs} defaultActiveTab={tab} onChange={setTab} />
                 </Style.TabContainer>
                 {
                   tab === 'community'
