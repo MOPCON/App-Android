@@ -36,7 +36,7 @@ const GameDetail = ({ navigation, uid, pass }) => {
   }
 
   const goScan = () => {
-    navigation.navigate('QRCode', {uid:uid});
+    navigation.navigate('QRCode', {uid: game.uid});
   }
 
   const lang = I18n.locale;
