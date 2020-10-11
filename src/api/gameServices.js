@@ -50,6 +50,9 @@ class GameApiServices {
     };
 
     const urlF = `${gameServer}${url}`;
+
+
+
     // if (this.data) { options.body = JSON.stringify(this.data); }
     // if (this.params) { url = `${url}${this.parseParams()}` }
     try {

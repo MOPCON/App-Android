@@ -15,10 +15,10 @@ import mopconLogo from '../../images/logo.png';
 
 const Main = ({ language, onChangeLanguage, navigation, onChangeTab }) => {
 
-  const [banner, setBanner] = useState([]);
-  const [news, setNews] = useState([]);
-  const [originSchedule, setSession] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [ banner, setBanner ] = useState([]);
+  const [ news, setNews ] = useState([]);
+  const [ originSchedule, setSession ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(true);
 
   const init = async () => {
     const { data } = await apiServices.get('/home');
@@ -43,7 +43,7 @@ const Main = ({ language, onChangeLanguage, navigation, onChangeTab }) => {
               <Style.Content>
                 <Style.LogoContainer>
                   <Image style={{ width: 200, height: 40 }} resizeMode="contain" source={mopconLogo} />
-                  <LangSelect language={language} onChange={onChangeLanguage} />
+                  {/* <LangSelect language={language} onChange={onChangeLanguage} /> */}
                 </Style.LogoContainer>
               </Style.Content>
               <TopicImageCarousel banner={banner} />
@@ -56,7 +56,7 @@ const Main = ({ language, onChangeLanguage, navigation, onChangeTab }) => {
             </Style.ScrollContainer>
           )
       }
-    </Style.Container >
+    </Style.Container>
   )
 };
 

@@ -65,7 +65,7 @@ export const Header = styled.View`
 `;
 
 export const HeaderText = styled.Text`
-  color: #00aaf0;
+  color: #FFCC00;
   font-size: 20px;
 `;
 
@@ -99,7 +99,15 @@ export const StarIconTouchable = styled.TouchableOpacity`
 export const ScheduleContainer = styled.TouchableOpacity`
   width: 100%;
   padding: 16px 20px;
-  border: 1px solid #00aaf0;
+  border: 1px solid #FFCC00;
   border-radius: 6px;
   margin-bottom: 16px;
+`;
+
+export const InnerTagContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: -5px;
+  margin-bottom: 10px;
 `;

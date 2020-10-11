@@ -23,9 +23,9 @@ const Title = styled.Text`
 `;
 
 const Message = styled.Text`
-  color: #fff;
+  color: #000000;
   font-size: 16px;
-  background-color: #0C3449;
+  background-color: #FFCC00;
   padding: 20px;
   border-radius: 6px;
 `;
@@ -66,9 +66,9 @@ const News = ({ onChangeTab, news }) => {
         </Block>
       </TitleContainer>
       <Message>
-      {
-        Boolean(news.length) ? news[0].title : ''
-      }
+        {
+          Boolean(news.length) ? news[0].title : ''
+        }
       </Message>
     </Container>
   );

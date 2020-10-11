@@ -20,5 +20,5 @@ export const NavIcon = styled.Image`
 `;
 
 export const NavText = styled.Text`
-  color: ${p => p.active ? '#00aaf0' : '#fff'};
+  color: ${p => p.active ? '#FFCC00' : '#fff'};
 `;

@@ -3,12 +3,18 @@ import PropTypes from 'prop-types';
 import * as Style from './style';
 import geoPng from '../../images/location.png';
 import TagBlock from '../TagBlock/TagBlock';
+import { DontRecord, IsSponsor, Keynote } from "../../containers/ScheduleDetail/InnerTag";
 
-const ScheduleItem = ({ title, speaker, room, tags}) => (
+const ScheduleItem = ({ title, speaker, room, tags, is_keynote, recordable, sponsor_info}) => (
   <Style.ScheduleItemContainer>
     <Style.InnerContainer>
       <Style.Title>{title}</Style.Title>
-      <TagBlock tags={tags} />
+      <Style.InnerTagContainer>
+        {is_keynote ? <Keynote /> : null}
+        {!recordable ? <DontRecord /> : null}
+        {sponsor_info ? <IsSponsor /> : null}
+        <TagBlock tags={tags} />
+      </Style.InnerTagContainer>
       <Style.ActionContainer>
         <Style.Name>{speaker}</Style.Name>
         {
@@ -32,6 +38,9 @@ ScheduleItem.propTypes = {
     color: PropTypes.string,
     name: PropTypes.string,
   })),
+  is_keynote: PropTypes.bool,
+  recordable: PropTypes.bool,
+  sponsor_info: PropTypes.object,
 };
 
 ScheduleItem.defaultProps = {
@@ -39,6 +48,9 @@ ScheduleItem.defaultProps = {
   speaker: '',
   room: '',
   tags: [{ color: '', name: '' }],
+  is_keynote: false,
+  recordable: true,
+  sponsor_info: null,
 };
 
 export default ScheduleItem;

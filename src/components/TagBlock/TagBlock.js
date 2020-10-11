@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import { darkBlue } from "../../theme/index"
+
 const Container = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
@@ -9,17 +11,20 @@ const Container = styled.View`
 `;
 
 const Tag = styled.View`
-  padding: 5px 10px;
-  border-radius: 3px;
+  padding: 3px 7px;
+  border-radius: 12px;
+  border: 1px;
+  border-color: ${p => p.color};
   background: ${p => p.color};
   align-items: center;
-  margin-right: 10px;
+  margin-right: 4px;
   margin-bottom: 10px;
 `;
 
 const TagText = styled.Text`
-  color: #fff;
-  font-size: 12px;
+  color: #001333;
+  font-size: 10px;
+  font-weight: bold;
 `;
 
 const TagBlock = (props) => {
@@ -29,9 +34,10 @@ const TagBlock = (props) => {
     Object.keys(tags).length > 0 && (
       <Container>
         {
-          tags.map(tag => (
-            <Tag key={tag.name} color={tag.color}><TagText>{tag.name}</TagText></Tag>
-          ))
+          tags.map(tag => {
+            return (
+            <Tag key={tag.name} color={'#ffcc00' || tag.color.mobile}><TagText>{tag.name}</TagText></Tag>
+          )})
         }
       </Container>
     )

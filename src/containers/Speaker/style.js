@@ -23,6 +23,6 @@ export const Card = styled.TouchableOpacity`
   align-items: center;
   justify-content: flex-start;
   padding: 24px 20px;
-  border: 1px solid #00aaf0;
+  border: 1px solid #FFCC00;
   border-radius: 6px;
 `;

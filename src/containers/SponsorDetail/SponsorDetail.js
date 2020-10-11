@@ -7,6 +7,7 @@ import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 import gameServices from '../../api/gameServices';
 import I18n from '../../locales';
 import * as Style from './style';
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const toTime = timestamp => moment(timestamp).format('HH:mm')
 
@@ -20,90 +21,97 @@ const normalizeScheduleData = (originScheduleData, savedSchedule) => ({
   title_e: originScheduleData.topic_name_e,
 });
 
-export default class SponsorDetail extends React.Component {
-  static navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.info', 'mode2')
+const SponsorDetail = ({ navigation, route }) => {
 
-  state = {
-    sponsor: {},
-    savedSchedule: {},
-  }
+  const [ savedSchedule, setSavedSchedule ] = React.useState({})
 
-  async componentDidMount() {
-    const savedScheduleText = await AsyncStorage.getItem('savedschedule');
-    let savedSchedule = JSON.parse(savedScheduleText);
-    if (!savedSchedule) { savedSchedule = {}; }
-    this.setState({ savedSchedule });
-  }
+  React.useEffect(() => {
+    async function fetchSavedSchedule() {
+      const savedScheduleText = await AsyncStorage.getItem('savedschedule');
+      let savedSchedule = JSON.parse(savedScheduleText);
+      if (!savedSchedule) {
+        savedSchedule = {};
+      }
+      setSavedSchedule(savedSchedule);
+    }
 
-  openLink = (url) => {
+    fetchSavedSchedule();
+  }, [])
+
+  const openLink = (url) => {
     Linking.openURL(url);
   }
 
-  onPressTitle = ({ session_id }) => {
-    const savedStatus = this.state.savedSchedule[session_id];
-    this.props.navigation.navigate('ScheduleDetail', { session_id, savedStatus, onSave: this.onSave });
+  const onPressTitle = ({ session_id }) => {
+    const savedStatus = savedSchedule[session_id];
+    navigation.navigate('ScheduleDetail', { session_id, savedStatus, onSave });
   }
 
-  onSave = ({ session_id }) => {
-    const savedSchedule = {
-      ...this.state.savedSchedule,
+  const onSave = ({ session_id }) => {
+    const _savedSchedule = {
+      ...savedSchedule,
     };
-    savedSchedule[session_id] = !savedSchedule[session_id];
-    this.setState({ savedSchedule });
-    if(global.enable_game){
-      gameServices.post('/mySession', { session_id, action: savedSchedule[session_id] ? 'add' : 'remove' });
+    _savedSchedule[session_id] = !_savedSchedule[session_id];
+    setSavedSchedule(_savedSchedule);
+    if (global.enable_game) {
+      gameServices.post('/mySession', { session_id, action: _savedSchedule[session_id] ? 'add' : 'remove' });
     }
-    AsyncStorage.setItem('savedschedule', JSON.stringify(savedSchedule));
+    AsyncStorage.setItem('savedschedule', JSON.stringify(_savedSchedule));
   }
 
-  render() {
-    const { sponsorDetail } = this.props.navigation.state.params;
-    const name = I18n.locale === 'zh' ? sponsorDetail.name : sponsorDetail.name_e;
-    const info = I18n.locale === 'zh' ? sponsorDetail.about_us : sponsorDetail.about_us_e;
-    const logo = sponsorDetail.logo_path;
+  const sponsorDetail = route.params?.sponsorDetail ?? {};
+  const name = I18n.locale === 'zh' ? sponsorDetail.name : sponsorDetail.name_e;
+  const info = I18n.locale === 'zh' ? sponsorDetail.about_us : sponsorDetail.about_us_e;
+  const logo = sponsorDetail.logo_path;
 
-    return (
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Style.SDContainer>
-          <Style.CardView>
-            <Style.CardImg
-              source={{ uri: logo }}
-            />
-          </Style.CardView>
-          <Style.SponsorName>
-            {name}
-          </Style.SponsorName>
-          {
-            Boolean(info) && (
-              <React.Fragment>
-                <Style.SplitText>關於廠商</Style.SplitText>
-                <Style.SponsorDesc>
-                  {info}
-                </Style.SponsorDesc>
-              </React.Fragment>
-            )
-          }
-          {
-            Boolean(sponsorDetail.speaker_information.length) && <Style.SplitText>贊助場次</Style.SplitText>
-          }
-          {
-            sponsorDetail.speaker_information
-              .map((d) => (normalizeScheduleData(d, this.state.savedSchedule)))
-              .map(scheduleData => (
-                <ScheduleCard key={scheduleData.title_e} scheduleData={scheduleData} onPressTitle={this.onPressTitle} onSave={this.onSave} />
-              ))
-          }
-          {
-            Boolean(sponsorDetail.official_website)
-            && (
-              <Style.MoreButton onPress={() => this.openLink(sponsorDetail.official_website)}>
-                <Style.MoreText>{I18n.t('sponsor.more')}</Style.MoreText>
-              </Style.MoreButton>
-            )
-          }
+  return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <Style.SDContainer>
+        <Style.CardView>
+          <Style.CardImg
+            source={{ uri: logo }}
+          />
+        </Style.CardView>
+        <Style.SponsorName>
+          {name}
+        </Style.SponsorName>
+        {
+          Boolean(info) && (
+            <React.Fragment>
+              <Style.SplitText>關於廠商</Style.SplitText>
+              <Style.SponsorDesc>
+                {info}
+              </Style.SponsorDesc>
+            </React.Fragment>
+          )
+        }
+        {
+          Boolean(sponsorDetail.speaker_information.length) && <Style.SplitText>贊助場次</Style.SplitText>
+        }
+        {
+          sponsorDetail.speaker_information
+            .map((d) => (normalizeScheduleData(d, savedSchedule)))
+            .map(scheduleData => (
+              <ScheduleCard key={scheduleData.title_e} scheduleData={scheduleData}
+                            onPressTitle={onPressTitle} onSave={onSave} />
+            ))
+        }
+        {
+          Boolean(sponsorDetail.official_website)
+          && (
+            <Style.MoreButton onPress={() => openLink(sponsorDetail.official_website)}>
+              <Style.MoreText>{I18n.t('sponsor.more')}</Style.MoreText>
+            </Style.MoreButton>
+          )
+        }
 
-        </Style.SDContainer>
-      </ScrollView>
-    );
-  }
+      </Style.SDContainer>
+    </ScrollView>
+  );
+}
+SponsorDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.info', 'mode2')
+export default function (props) {
+  const navigation = useNavigation();
+  const route = useRoute();
+  return <SponsorDetail {...props} navigation={navigation} route={route} />
 }

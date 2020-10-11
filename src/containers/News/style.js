@@ -10,7 +10,7 @@ export const NewsContainer = styled.View`
 `;
 
 export const NewsCardView = styled.View`
-  border: 1px solid #00aaf0;
+  border: 1px solid #FFCC00;
   border-radius: 6px;
   padding: 16px 20px;
   margin-bottom: 16px;
@@ -24,7 +24,7 @@ export const NewsTimeContainer = styled.View`
 `;
 
 export const NewsTimeText = styled.Text`
-  color: #00aaf0;
+  color: #FFCC00;
   font-size: 20px;
   margin-bottom: 16px;
 `;
