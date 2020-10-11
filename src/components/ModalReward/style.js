@@ -16,10 +16,11 @@ export const InfoContainer = styled.View`
   width: 90%;
   height: auto;
   border-radius: 20px;
-  background-color: #0b425e;
+  background-color: ${darkBlue};
   padding: 48px 30px 24px 30px;
   align-items: center;
   justify-content: center;
+  border: 1px solid #ffcc00;
 `;
 
 export const InfoTitle = styled.Text`
@@ -33,7 +34,7 @@ export const InfoDesc = styled.Text`
   color: white;
   font-size: 18px;
   line-height: 30px;
-  margin-bottom: 60px;
+  margin-bottom: 10px;
 `;
 
 export const Touch = styled.TouchableOpacity`
@@ -46,11 +47,12 @@ export const Btn = styled.View`
   justify-content: center;
   align-items: center;
   border-radius: 6px;
+  margin-top: 50px;
 `;
 
 export const BtnText = styled.Text`
   font-size: 20px;
-  color: white;
+  color: ${darkBlue};
 `;
 
 export const RewardImage = styled.Image`

@@ -13,18 +13,6 @@ import avatarUser from '../../images/avatar/avatarUser.png';
 import * as Style from './style';
 import { useNavigation } from "@react-navigation/native";
 
-import Puzzle1Lock from '../../images/puzzle/locked/Puzzle1Lock.jpg';
-import Puzzle2Lock from '../../images/puzzle/locked/Puzzle2Lock.jpg';
-import Puzzle3Lock from '../../images/puzzle/locked/Puzzle3Lock.jpg';
-import Puzzle4Lock from '../../images/puzzle/locked/Puzzle4Lock.jpg';
-import Puzzle5Lock from '../../images/puzzle/locked/Puzzle5Lock.jpg';
-import Puzzle6Lock from '../../images/puzzle/locked/Puzzle6Lock.jpg';
-import Puzzle7Lock from '../../images/puzzle/locked/Puzzle7Lock.jpg';
-import Puzzle8Lock from '../../images/puzzle/locked/Puzzle8Lock.jpg';
-import Puzzle9Lock from '../../images/puzzle/locked/Puzzle9Lock.jpg';
-import Puzzle10Lock from '../../images/puzzle/locked/Puzzle10Lock.jpg';
-import Puzzle11Lock from '../../images/puzzle/locked/Puzzle11Lock.jpg';
-import Puzzle12Lock from '../../images/puzzle/locked/Puzzle12Lock.jpg';
 
 import inActiveIcon from '../../images/iconGiftActive.png';
 import activeIcon from '../../images/iconGiftActive.png';
@@ -295,6 +283,7 @@ const Game = ({ navigation, context }) => {
           <ModalReward reward={reward} visible={modalRewardVisible} onClose={onCloseModalReward} />
         )
       }
+
     </Style.ScrollContainer>
   );
 }

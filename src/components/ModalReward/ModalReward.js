@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text } from "react-native";
 import PropTypes from 'prop-types';
 
 import I18n from '../../locales';
@@ -25,10 +26,10 @@ export default class ModalReward extends React.PureComponent {
             <Style.RewardImage source={iconReward} />
             <Style.InfoTitle>{I18n.t('game.awarded')}</Style.InfoTitle>
             <Style.InfoDesc>{`恭喜獲得 {${lang === 'zh' ? reward.name : reward.name_e}}!`}</Style.InfoDesc>
-            <Style.InfoDesc>{I18n.t('game.awarded_tip')}</Style.InfoDesc>
+            <Style.InfoDesc>{I18n.t('game.awarded_tip_1')}<Text style={{color:"#ffcc00"}}>{I18n.t('game.awarded_tip_2')}</Text>{I18n.t('game.awarded_tip_3')}</Style.InfoDesc>
             <Style.Touch onPress={onClose}>
               <Style.Btn>
-                <Style.BtnText>{I18n.t('common.ok')}</Style.BtnText>
+                <Style.BtnText>{I18n.t('common.no_problem')}</Style.BtnText>
               </Style.Btn>
             </Style.Touch>
           </Style.InfoContainer>
