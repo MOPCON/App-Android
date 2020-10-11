@@ -58,8 +58,10 @@ const GameDetail = ({ navigation, uid, pass }) => {
 
                 {
                   pass ? (
-                    <Button disabled color="inverse" text={I18n.t('gameDetail.mission_completed')}
-                            margin={[ 0, 0, 0, 0 ]} />
+                    <Button
+                      disabled
+                      text={I18n.t('gameDetail.mission_completed')}
+                      margin={[ 0, 0, 0, 0 ]} />
                   ) : (
                     <Button
                       // onClick={onOpenModalFinish}

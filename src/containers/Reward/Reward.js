@@ -6,6 +6,7 @@ import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import Button from '../../components/Button/Button';
 import ModalExchange from '../../components/ModalExchange/ModalExchange';
+import iconGift from '../../images/iconGiftActive.png';
 import * as Style from './style';
 
 @Consumer('gameStore')
@@ -32,7 +33,7 @@ export default class Reward extends Component {
           {
             rewardList.map(reward => (
               <Style.RewardCard key={reward.uid}>
-                <Style.RewardImage source={{ uri: reward.image }} />
+                <Style.RewardImage source={iconGift} />
                 <Style.RewardInfo>
                   <Style.Title>{lang === 'zh' ? reward.name : reward.name_e}</Style.Title>
                   <Style.Desc>{lang === 'zh' ? reward.description : reward.description_e}</Style.Desc>
@@ -40,7 +41,7 @@ export default class Reward extends Component {
                     {
                       // 是否兌換完成
                       reward.redeemed ? (
-                        <Button disabled color="inverse" text={I18n.t('game.redeemed')} margin={[ 0, 0, 0, 0 ]} />
+                        <Button disabled color="disabled" text={I18n.t('game.redeemed')} margin={[ 0, 0, 0, 0 ]} />
                       ) : (
                         <Button color="primary" onClick={() => this.onOpenModal(reward.uid)}
                                 text={I18n.t('game.exchange')} margin={[ 0, 0, 0, 0 ]} />
