@@ -105,7 +105,7 @@ export default {
   gameDetail: {
     title: '關卡',
     scan: '掃描 QR Code',
-    mission_completed: '任務已完成',
+    mission_completed: '關卡已完成',
   },
   missionDetail: {
     quiz: '問答',
