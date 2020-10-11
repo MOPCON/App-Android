@@ -6,9 +6,9 @@ import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
 import { AVATAR } from '../Community/VolunteerBlock';
 import apiServices from '../../api/services';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-const VolunteerDetail = ({ navigation }) => {
+const VolunteerDetail = ({ navigation, route }) => {
 
   const [ volunteer, setVolunteer ] = React.useState({ members: [] })
 
@@ -18,7 +18,7 @@ const VolunteerDetail = ({ navigation }) => {
   }
 
   React.useEffect(() => {
-    const { url, id } = navigation.state.params;
+    const { url, id } = route.params;
     fetchVolunteerDetail(url);
   })
 
@@ -49,6 +49,7 @@ const VolunteerDetail = ({ navigation }) => {
 VolunteerDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.volunteer_info', 'mode2')
 export default function (props) {
   const navigation = useNavigation();
-  return <VolunteerDetail {...props} navigation={navigation} />
+  const route = useRoute()
+  return <VolunteerDetail {...props} navigation={navigation} route={route} />
 }
 
