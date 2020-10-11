@@ -72,17 +72,17 @@ const Game = ({ navigation }) => {
           title: item.name,
           img:  hashImgUrl(item.order, item.passed),
           passed: item.passed
-        })  
+        })
       })
 
       progressHandler(data.data.passed)
 
-      setState({
+      setState(state => ({
         ...state,
         missions: puzzleList,
         passed: data.data.passed,
         rewardInfo: data.data.rewardInfo,
-      });
+      }));
     }
 
     firstPlayInitial();
@@ -168,17 +168,17 @@ const Game = ({ navigation }) => {
 
   const progressHandler = passed => {
     if(passed > 6){
-      setState({
+      setState(state => ({
         ...state,
         progressLeft: 100,
         progressRight: ((passed-6) / 6) * 100
-      })
+      }))
     }else{
-      setState({
+      setState(state => ({
         ...state,
         progressLeft: (passed / 6) * 100,
         progressRight: 0
-      })
+      }))
     }
   }
 
