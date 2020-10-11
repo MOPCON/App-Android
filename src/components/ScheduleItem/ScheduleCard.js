@@ -10,6 +10,7 @@ const ScheduleCard = (props) => {
   const onPressTitle = () => props.onPressTitle(props.scheduleData);
   const onSave = () => props.onSave(props.scheduleData);
   const { time, saved, title, title_e, speaker, speaker_e, room, tags } = props.scheduleData;
+  const { is_keynote, recordable, sponsor_info } = props.scheduleData;
   return (
     <ScheduleView onPress={onPressTitle} disabled={props.disabled}>
       <ScheduleHeader time={time} saved={saved} onSave={onSave} />
@@ -18,6 +19,9 @@ const ScheduleCard = (props) => {
         speaker={locale === 'en' ? speaker_e : speaker}
         title={locale === 'en' ? title_e : title}
         tags={tags}
+        is_keynote={is_keynote}
+        recordable={recordable}
+        sponsor_info={sponsor_info}
         onPressTitle={onPressTitle}
       />
     </ScheduleView>

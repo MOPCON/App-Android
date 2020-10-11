@@ -103,3 +103,11 @@ export const ScheduleContainer = styled.TouchableOpacity`
   border-radius: 6px;
   margin-bottom: 16px;
 `;
+
+export const InnerTagContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: -5px;
+  margin-bottom: 10px;
+`;

@@ -9,6 +9,7 @@ import starIconNormal from '../../images/buttonStarNormal.png';
 import starIconChecked from '../../images/buttonStarChecked.png';
 import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 import { Keynote, DontRecord, IsSponsor, Level } from './InnerTag';
+import TagBlock from "../../components/TagBlock/TagBlock";
 
 const ScheduleDetail = props => {
 
@@ -61,18 +62,13 @@ const ScheduleDetail = props => {
                     <Style.Title>
                       {lang === 'zh' ? session.topic : session.topic_e}
                     </Style.Title>
-                    <Style.CategoryText>
-                      {
-                        Boolean(session.tags) &&
-                        session.tags.map(t => t.name).join(', ')
-                      }
-                    </Style.CategoryText>
                   </Style.SpeechItemContainer>
                   <Style.InnerTagContainer>
                     {session.is_keynote ? <Keynote /> : null}
                     {!session.recordable ? <DontRecord /> : null}
                     {session.sponsor_info ? <IsSponsor /> : null}
-                    <Level>{session.level}</Level>
+                    {/*<Level>{session.level}</Level>*/}
+                    <TagBlock tags={session.tags} />
                   </Style.InnerTagContainer>
                   <Style.Line />
                   <Style.DesText>
