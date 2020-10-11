@@ -234,10 +234,15 @@ class App extends Component {
       {
         key: 'GAME',
         title: 'home.Game',
+        pageTitle: 'game.title',
         showHeader: true,
         icon: iconGame,
         disabled: !enable_game,
         activeIcon: iconGameActive,
+        headerRight: {
+          onPress: () => navigation.navigate('Reward'),
+          text: I18n.t('game.my_reward'),
+        },
         component: () => <Game navigation={navigation} />,
       },
       {
@@ -267,7 +272,7 @@ class App extends Component {
         ? (
           <View style={{ flex: 1 }}>
             <Header />
-            <Page title={matchTab.showHeader && matchTab.title}>
+            <Page headerRight={matchTab.headerRight} title={matchTab.showHeader && (matchTab.pageTitle || matchTab.title)}>
               {matchTab.component()}
             </Page>
             <Style.NavBar>
@@ -306,6 +311,7 @@ const routesV4 = [ {
   QRCode: { screen: QRCode },
   QA: { screen: QA },
   Reward: { screen: Reward },
+  Game: { screen: Game },
   GameDetail: { screen: GameDetail },
   // MissionDetail: { screen: MissionDetail },
 }, {
@@ -329,6 +335,7 @@ const routesV5 = [
   { name: 'QRCode', component: QRCode },
   { name: 'QA', component: QA },
   { name: 'Reward', component: Reward },
+  { name: 'Game', component: Game },
   { name: 'GameDetail', component: GameDetail },
   // { name: 'MissionDetail', component: MissionDetail },
 ]

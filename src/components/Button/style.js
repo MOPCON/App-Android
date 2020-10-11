@@ -8,7 +8,15 @@ export const ButtonTouchable = styled.TouchableOpacity`
   margin-bottom: ${p => p.margin[2]}px;
   margin-left: ${p => p.margin[3]}px;
   padding: ${p => p.hasIcon ? '6px 8px' : '8px 14px'};
-  border: 1px solid ${scheduleCardTypeColor};
+  border: 1px solid;
+  border-color: ${p => {
+    switch (p.color) {
+      case 'disabled':
+        return '#848a8e';
+      default:
+        return scheduleCardTypeColor;
+    }
+  }};
   border-radius: 4px;
   background-color: ${p => {
     switch (p.color) {
@@ -16,6 +24,8 @@ export const ButtonTouchable = styled.TouchableOpacity`
         return buttonBackground;
       case 'inverse':
         return inverseBackground;
+      case 'disabled':
+        return 'transparent';
       case 'primary':
         return scheduleCardTypeColor;
       default:
@@ -33,7 +43,16 @@ export const ButtonText = styled.Text`
   font-family: Roboto-Medium;
   letter-spacing: 1px;
   font-size: 14px;
-  color: #000000;
+  color: ${p => {
+    switch (p.color) {
+      case 'inverse':
+        return 'white';
+      case 'disabled':
+        return '#848a8e';
+      default:
+        return '#000000';
+    }  
+  }};
 `;
 
 export const ButtonIcon = styled.Image`
