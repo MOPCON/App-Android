@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
-import { Consumer } from '../../store';
+import { Consumer, GlobalContext } from '../../store';
 import I18n from '../../locales';
 import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
 import ModalReward from '../../components/ModalReward/ModalReward';
@@ -17,7 +17,8 @@ import { useNavigation } from "@react-navigation/native";
 import inActiveIcon from '../../images/iconGiftActive.png';
 import activeIcon from '../../images/iconGiftActive.png';
 
-const Game = ({ navigation, context }) => {
+const Game = ({ navigation }) => {
+  const context = React.useContext(GlobalContext);
 
   const [ state, setState ] = React.useState({
       modalWelcomeVisible: false,
@@ -35,7 +36,8 @@ const Game = ({ navigation, context }) => {
 
   React.useEffect(() => {
     const firstPlayInitial = async () => {
-      // const { loadGameList } = context.gameStore;
+      if (!context.gameStore) console.error(context)
+      const { loadGameList } = context.gameStore;
 
       const [
         hasPlayed,
@@ -44,7 +46,7 @@ const Game = ({ navigation, context }) => {
       ] = await Promise.all([
         AsyncStorage.getItem('hasPlayed'),
         gameServices.get('/intro'),
-        // loadGameList()
+        loadGameList()
       ]);
 
       console.log(task.data.missions)
