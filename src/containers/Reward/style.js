@@ -23,7 +23,7 @@ export const RewardImage = styled.Image`
   width: 80px;
   height: 80px;
   border-radius: 100px;
-  background: #fff;
+  background: transparent;
   margin-right: 20px;
 `;
 
