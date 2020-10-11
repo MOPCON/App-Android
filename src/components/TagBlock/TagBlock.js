@@ -11,17 +11,20 @@ const Container = styled.View`
 `;
 
 const Tag = styled.View`
-  padding: 5px 10px;
-  border-radius: 15px;
+  padding: 3px 7px;
+  border-radius: 12px;
+  border: 1px;
+  border-color: ${p => p.color};
   background: ${p => p.color};
   align-items: center;
-  margin-right: 10px;
+  margin-right: 4px;
   margin-bottom: 10px;
 `;
 
 const TagText = styled.Text`
-  color: ${darkBlue};
-  font-size: 12px;
+  color: #001333;
+  font-size: 10px;
+  font-weight: bold;
 `;
 
 const TagBlock = (props) => {
@@ -33,7 +36,7 @@ const TagBlock = (props) => {
         {
           tags.map(tag => {
             return (
-            <Tag key={tag.name} color={tag.color.mobile}><TagText>{tag.name}</TagText></Tag>
+            <Tag key={tag.name} color={'#ffcc00' || tag.color.mobile}><TagText>{tag.name}</TagText></Tag>
           )})
         }
       </Container>
