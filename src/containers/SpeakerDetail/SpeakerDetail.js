@@ -23,6 +23,10 @@ const SpeakerDetail = ({ navigation, route }) => {
     isReadMore: false,
   })
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions(NavigationOptions(navigation, 'speaker.title', 'mode2'));
+  }, [navigation]);
+
   React.useEffect(() => {
     async function fetchSavedSchedule() {
       const savedScheduleText = await AsyncStorage.getItem('savedschedule');
@@ -138,7 +142,6 @@ const SpeakerDetail = ({ navigation, route }) => {
   );
 }
 
-SpeakerDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'speaker.title', 'mode2')
 export default function (props) {
   const navigation = useNavigation();
   const route = useRoute();
