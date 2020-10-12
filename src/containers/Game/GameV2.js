@@ -182,7 +182,7 @@ const Game = ({ navigation }) => {
     }
   }
 
-  const { modalWelcomeVisible, modalRewardVisible, intro, reward, isLoading, missions, progressLeft, progressRight, passed} = state;
+  const { modalWelcomeVisible, modalRewardVisible, intro, reward, isLoading, missions} = state;
 
   // const { score, missionList, isLoaded, lastPassIndex } = context.gameStore;
 
@@ -201,7 +201,7 @@ const Game = ({ navigation }) => {
                   <Style.UserIcon source={avatarUser} />
                   <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
                     <Style.TotalText>{I18n.t('game.total_score')}</Style.TotalText>
-                    <Style.ScoreText>{passed}/12</Style.ScoreText>
+                    <Style.ScoreText>{12}/12</Style.ScoreText>
                   </View>
                   {/** 進度條 */}
                   <Style.ProgressContainer>
@@ -213,8 +213,8 @@ const Game = ({ navigation }) => {
                       <Style.ProgressGift source={inActiveIcon}/>
                     </View>
                     <Style.ProgressBar>
-                      <View style={{width:`${progressRight}%`, height: 4, backgroundColor:'#ffcc00'}}></View>
-                      <View style={{width:`${100-progressRight}%`, height: 4, backgroundColor:'#fff'}}></View>
+                      <View style={{width:`${progressRight}%`, height: 4, backgroundColor:'#fff'}}></View>
+                      <View style={{width:`${100-progressRight}%`, height: 4, backgroundColor:'#ffcc00'}}></View>
                     </Style.ProgressBar>
                     <View style={{width:'10%'}}>
                       <Style.ProgressGift source={inActiveIcon}/>
