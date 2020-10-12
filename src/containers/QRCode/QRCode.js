@@ -19,6 +19,10 @@ const QRCode = ({navigation, uid}) => {
     const [modalVisible, setModalVisible] = React.useState(false)
     const [isLoading, setLoading] = React.useState(false)
 
+    React.useLayoutEffect(() => {
+        navigation.setOptions(NavigationOptions(navigation, 'qrcode.title', 'mode2'));
+      }, [navigation]);
+
     const onSuccess = async (e) => {
         setLoading(true)
         const vKey = e.data;
@@ -63,8 +67,6 @@ const QRCode = ({navigation, uid}) => {
         </Style.QRCodeContainer>
     );
 }
-
-QRCode.navigationOptions = ({navigation}) => NavigationOptions(navigation, 'qrcode.title', 'mode2')
 
 export default function (props) {
     const navigation = useNavigation();
