@@ -6,6 +6,7 @@ import { Consumer, GlobalContext } from '../../store';
 import I18n from '../../locales';
 import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
 import ModalReward from '../../components/ModalReward/ModalReward';
+import ModalGameInfoComplete from '../../components/ModalGameInfoComplete/ModalGameInfoComplete';
 import Button from '../../components/Button/Button';
 import GameBlock from './GameBlock';
 import gameServices from '../../api/gameServices';
@@ -33,17 +34,19 @@ const Game = ({ navigation }) => {
     progressLeft: 0,
     progressRight: 0,
     getRewardName : '',
-    rewardInfo: ''
+    rewardInfo: '',
+    isClicked: false,
+    openCompleteModal:false,
   }
   )
-
-  console.log(state)
 
   const fetchGift = async () => {
     const reward = await gameServices.get('/getReward');
     AsyncStorage.setItem('hasReward', JSON.stringify(true));
 
-    setState({ ...state, rewardInfo: reward });
+    setState({ ...state, rewardInfo: reward.data });
+
+    console.log(reward.data)
   } 
 
   const fetchTaskData = async () => {
@@ -51,8 +54,6 @@ const Game = ({ navigation }) => {
     const data = await gameServices.get('/getTask');
 
     loadGameList()
-
-    console.log("I was called!!")
 
     const puzzleList = [];
     data.data.missions.map((item, index) => {
@@ -101,14 +102,15 @@ const Game = ({ navigation }) => {
 
   }, [])
 
-
-  console.log("LOADING!!!")
-  console.log(state);
-
+  React.useEffect(()=>{
+    if(state.rewardInfo.length !== 0){
+      setState({ ...state, modalRewardVisible: true, reward });
+    }
+  },[state.rewardInfo])
 
   React.useEffect(()=>{
-    if(state.passed === 6 || state.passed === 12){
-      setState({ ...state, modalRewardVisible: true });
+    if((state.passed === 6 || state.passed === 12)){
+      fetchGift();
     }
   },[state.passed])
 
@@ -131,8 +133,7 @@ const Game = ({ navigation }) => {
   const onCloseModalReward = () => {
     const { loadGameList } = context.gameStore;
     loadGameList();
-    // fetchGift();
-    setState({ ...state, modalRewardVisible: false });
+    setState({ ...state, modalRewardVisible: false, openCompleteModal:true });
   }
 
   const goReward = () => {
@@ -297,7 +298,6 @@ const Game = ({ navigation }) => {
         }
       </Style.GameContainer>
 
-
       {
         modalWelcomeVisible && (
           <ModalGameInfo
@@ -310,6 +310,13 @@ const Game = ({ navigation }) => {
           />
         )
       }
+
+      {
+        state.passed === 12 && state.openCompleteModal && 
+        <ModalReward reward={reward} visible={state.openCompleteModal} onClose={()=>{setState({ ...state, openCompleteModal:false });}} isComplete />
+        
+      }
+
 
       {
         modalRewardVisible && (
