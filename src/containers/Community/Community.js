@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking } from 'react-native';
+import { Linking, Text } from 'react-native';
 import VersionNum from 'react-native-version-number';
 import apiServices from '../../api/services'
 import * as Style from './style';
@@ -87,7 +87,7 @@ const Community = ({ navigation }) => {
                 <Style.JoinImage source={iconJoin} />
                 <Style.JoinText>「我想加入志工行列！」</Style.JoinText>
                 <Style.FollowView onPress={goFB}>
-                  <Style.FollowImage source={iconFollowFB} />
+                  <Style.FollowViewText >追蹤 FaceBook</Style.FollowViewText>
                 </Style.FollowView>
                 <Style.FollowText>
                   想要和我們一起改變南部資訊生態圈嗎？歡迎追蹤我們的 Facebook，我們會在下一屆準備開始前 PO
