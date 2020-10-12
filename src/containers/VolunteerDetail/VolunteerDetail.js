@@ -22,7 +22,6 @@ const VolunteerDetail = ({ navigation, route }) => {
     fetchVolunteerDetail(url);
   })
 
-  const { id } = navigation.state.params;
   const lang = I18n.locale;
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
