@@ -16,7 +16,7 @@ import {useNavigation} from "@react-navigation/native";
 const QRCode = ({navigation, uid}) => {
 
     const context = React.useContext(GlobalContext)
-    const [modalVisible, setModalVisible] = React.useState(true)
+    const [modalVisible, setModalVisible] = React.useState(false)
     const [isLoading, setLoading] = React.useState(false)
 
     const onSuccess = async (e) => {

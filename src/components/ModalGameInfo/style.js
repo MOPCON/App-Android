@@ -16,10 +16,11 @@ export const InfoContainer = styled.View`
   width: 90%;
   height: auto;
   border-radius: 20px;
-  background-color: #0b425e;
+  background-color: ${darkBlue};
   padding: 48px 30px 24px 30px;
   align-items: center;
   justify-content: center;
+  border: 1px solid #ffcc00;
 `;
 
 export const InfoTitle = styled.Text`
@@ -50,7 +51,7 @@ export const Btn = styled.View`
 
 export const BtnText = styled.Text`
   font-size: 20px;
-  color: white;
+  color: ${darkBlue};
 `;
 
 export const WelcomeImage = styled.Image`

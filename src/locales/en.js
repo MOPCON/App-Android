@@ -97,7 +97,9 @@ export default {
     invalid_task_password: 'Invalid QRCode',
     btn_receive_award: 'Award',
     awarded: 'Awarded',
-    awarded_tip: 'You can check the redemption instructions in my rewards.',
+    awarded_tip_1: 'You can check the',
+    awarded_tip_2: 'my rewards',
+    awarded_tip_3: 'redemption instructions in',
   },
   gameDetail: {
     title: 'Stage',
@@ -117,6 +119,7 @@ export default {
     schedule: 'Schedule',
   },
   common: {
+    no_problem: 'OK',
     ok: 'OK',
     close: 'Close',
   },

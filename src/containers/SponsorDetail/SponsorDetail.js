@@ -7,7 +7,7 @@ import ScheduleCard from '../../components/ScheduleItem/ScheduleCard';
 import gameServices from '../../api/gameServices';
 import I18n from '../../locales';
 import * as Style from './style';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const toTime = timestamp => moment(timestamp).format('HH:mm')
 
@@ -21,7 +21,7 @@ const normalizeScheduleData = (originScheduleData, savedSchedule) => ({
   title_e: originScheduleData.topic_name_e,
 });
 
-const SponsorDetail = ({ navigation }) => {
+const SponsorDetail = ({ navigation, route }) => {
 
   const [ savedSchedule, setSavedSchedule ] = React.useState({})
 
@@ -59,7 +59,7 @@ const SponsorDetail = ({ navigation }) => {
     AsyncStorage.setItem('savedschedule', JSON.stringify(_savedSchedule));
   }
 
-  const { sponsorDetail } = navigation.state.params;
+  const sponsorDetail = route.params?.sponsorDetail ?? {};
   const name = I18n.locale === 'zh' ? sponsorDetail.name : sponsorDetail.name_e;
   const info = I18n.locale === 'zh' ? sponsorDetail.about_us : sponsorDetail.about_us_e;
   const logo = sponsorDetail.logo_path;
@@ -112,5 +112,6 @@ const SponsorDetail = ({ navigation }) => {
 SponsorDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.info', 'mode2')
 export default function (props) {
   const navigation = useNavigation();
-  return <SponsorDetail {...props} navigation={navigation} />
+  const route = useRoute();
+  return <SponsorDetail {...props} navigation={navigation} route={route} />
 }

@@ -36,7 +36,7 @@ const GameDetail = ({ navigation, uid, pass }) => {
   }
 
   const goScan = () => {
-    navigation.navigate('QRCode', {uid:uid});
+    navigation.navigate('QRCode', {uid: game.uid});
   }
 
   const lang = I18n.locale;
@@ -58,8 +58,10 @@ const GameDetail = ({ navigation, uid, pass }) => {
 
                 {
                   pass ? (
-                    <Button disabled color="inverse" text={I18n.t('gameDetail.mission_completed')}
-                            margin={[ 0, 0, 0, 0 ]} />
+                    <Button
+                      disabled
+                      text={I18n.t('gameDetail.mission_completed')}
+                      margin={[ 0, 0, 0, 0 ]} />
                   ) : (
                     <Button
                       // onClick={onOpenModalFinish}

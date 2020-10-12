@@ -97,12 +97,15 @@ export default {
     invalid_task_password: 'QRCode錯誤',
     btn_receive_award: '領取獎勵',
     awarded: '獲得獎勵',
-    awarded_tip: '您可在我的獎勵中查詢兌換說明',
+    awarded_tip_1: '您可在',
+    awarded_tip_2: '我的獎勵',
+    awarded_tip_3: '中查詢兌換說明',
+
   },
   gameDetail: {
     title: '關卡',
     scan: '掃描 QR Code',
-    mission_completed: '任務已完成',
+    mission_completed: '關卡已完成',
   },
   missionDetail: {
     quiz: '問答',
@@ -117,6 +120,7 @@ export default {
     schedule: '加入行程',
   },
   common: {
+    no_problem: '好的',
     ok: '確定',
     close: '取消',
   },

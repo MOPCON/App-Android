@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
-import { Consumer } from '../../store';
+import { Consumer, GlobalContext } from '../../store';
 import I18n from '../../locales';
 import ModalGameInfo from '../../components/ModalGameInfo/ModalGameInfo';
 import ModalReward from '../../components/ModalReward/ModalReward';
@@ -13,23 +13,12 @@ import avatarUser from '../../images/avatar/avatarUser.png';
 import * as Style from './style';
 import { useNavigation } from "@react-navigation/native";
 
-import Puzzle1Lock from '../../images/puzzle/locked/Puzzle1Lock.jpg';
-import Puzzle2Lock from '../../images/puzzle/locked/Puzzle2Lock.jpg';
-import Puzzle3Lock from '../../images/puzzle/locked/Puzzle3Lock.jpg';
-import Puzzle4Lock from '../../images/puzzle/locked/Puzzle4Lock.jpg';
-import Puzzle5Lock from '../../images/puzzle/locked/Puzzle5Lock.jpg';
-import Puzzle6Lock from '../../images/puzzle/locked/Puzzle6Lock.jpg';
-import Puzzle7Lock from '../../images/puzzle/locked/Puzzle7Lock.jpg';
-import Puzzle8Lock from '../../images/puzzle/locked/Puzzle8Lock.jpg';
-import Puzzle9Lock from '../../images/puzzle/locked/Puzzle9Lock.jpg';
-import Puzzle10Lock from '../../images/puzzle/locked/Puzzle10Lock.jpg';
-import Puzzle11Lock from '../../images/puzzle/locked/Puzzle11Lock.jpg';
-import Puzzle12Lock from '../../images/puzzle/locked/Puzzle12Lock.jpg';
 
 import inActiveIcon from '../../images/iconGiftActive.png';
 import activeIcon from '../../images/iconGiftActive.png';
 
-const Game = ({ navigation, context }) => {
+const Game = ({ navigation }) => {
+  const context = React.useContext(GlobalContext);
 
   const [ state, setState ] = React.useState({
       modalWelcomeVisible: false,
@@ -47,7 +36,8 @@ const Game = ({ navigation, context }) => {
 
   React.useEffect(() => {
     const firstPlayInitial = async () => {
-      // const { loadGameList } = context.gameStore;
+      if (!context.gameStore) console.error(context)
+      const { loadGameList } = context.gameStore;
 
       const [
         hasPlayed,
@@ -56,7 +46,7 @@ const Game = ({ navigation, context }) => {
       ] = await Promise.all([
         AsyncStorage.getItem('hasPlayed'),
         gameServices.get('/intro'),
-        // loadGameList()
+        loadGameList()
       ]);
 
       console.log(task.data.missions)
@@ -82,17 +72,17 @@ const Game = ({ navigation, context }) => {
           title: item.name,
           img:  hashImgUrl(item.order, item.passed),
           passed: item.passed
-        })  
+        })
       })
 
       progressHandler(data.data.passed)
 
-      setState({
+      setState(state => ({
         ...state,
         missions: puzzleList,
         passed: data.data.passed,
         rewardInfo: data.data.rewardInfo,
-      });
+      }));
     }
 
     firstPlayInitial();
@@ -178,17 +168,17 @@ const Game = ({ navigation, context }) => {
 
   const progressHandler = passed => {
     if(passed > 6){
-      setState({
+      setState(state => ({
         ...state,
         progressLeft: 100,
         progressRight: ((passed-6) / 6) * 100
-      })
+      }))
     }else{
-      setState({
+      setState(state => ({
         ...state,
         progressLeft: (passed / 6) * 100,
         progressRight: 0
-      })
+      }))
     }
   }
 
@@ -295,6 +285,7 @@ const Game = ({ navigation, context }) => {
           <ModalReward reward={reward} visible={modalRewardVisible} onClose={onCloseModalReward} />
         )
       }
+
     </Style.ScrollContainer>
   );
 }
