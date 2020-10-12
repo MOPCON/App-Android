@@ -19,6 +19,7 @@ export const TouchArea = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   background-color: ${p => p.isActive ? '#FFCC00' : 'transparent'};
+  border: 0.5px solid #ffcc00;
 `;
 
 export const TabText = styled.Text`
