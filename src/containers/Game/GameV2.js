@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, SafeAreaView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 import { Consumer, GlobalContext } from '../../store';
@@ -27,7 +27,7 @@ const Game = ({ navigation }) => {
     modalRewardVisible: false,
     intro: {},
     reward: {},
-    // isLoading: true,
+    isLoading: true,
     missions: [],
     passed: 0,
     progressLeft: 0,
@@ -47,9 +47,12 @@ const Game = ({ navigation }) => {
   } 
 
   const fetchTaskData = async () => {
-    const [data] = await Promise.all([
-      gameServices.get('/getTask'),
-    ]);
+    const { loadGameList } = context.gameStore;
+    const data = await gameServices.get('/getTask');
+
+    loadGameList()
+
+    console.log("I was called!!")
 
     const puzzleList = [];
     data.data.missions.map((item, index) => {
@@ -67,14 +70,12 @@ const Game = ({ navigation }) => {
       ...state,
       missions: puzzleList,
       passed: data.data.passed,
-      reward: data.data.rewardInfo,
     }));
   }
 
   React.useEffect(() => {
     const firstPlayInitial = async () => {
       if (!context.gameStore) console.error(context)
-      const { loadGameList } = context.gameStore;
 
       const [
         hasPlayed,
@@ -83,7 +84,7 @@ const Game = ({ navigation }) => {
       ] = await Promise.all([
         AsyncStorage.getItem('hasPlayed'),
         gameServices.get('/intro'),
-        loadGameList()
+        
       ]);
 
     
@@ -95,9 +96,14 @@ const Game = ({ navigation }) => {
         isLoading: false,
       });
     }
-
     firstPlayInitial();
+    fetchTaskData();
+
   }, [])
+
+
+  console.log("LOADING!!!")
+  console.log(state);
 
 
   React.useEffect(()=>{
@@ -113,6 +119,7 @@ const Game = ({ navigation }) => {
   );
 
   
+  
   const onCloseModalWelcome = () => {
     setState({ ...state, modalWelcomeVisible: false });
   }
@@ -122,7 +129,7 @@ const Game = ({ navigation }) => {
   }
 
   const onCloseModalReward = () => {
-    // const { loadGameList } = context.gameStore;
+    const { loadGameList } = context.gameStore;
     loadGameList();
     // fetchGift();
     setState({ ...state, modalRewardVisible: false });
@@ -212,6 +219,7 @@ const Game = ({ navigation }) => {
   // const { score, missionList, isLoaded, lastPassIndex } = context.gameStore;
 
   return (
+    <>
     <Style.ScrollContainer contentContainerStyle={{ flexGrow: 1 }}>
       <Style.GameContainer>
         {
@@ -250,11 +258,8 @@ const Game = ({ navigation }) => {
                 <Style.PuzzleContainer
                   data={missions}
                   renderItem={(props) => {
-                    const { id, passed } = props.item;
-                    // const nav = navigation.navigate('GameDetail', { props.item.id , props.item.passed })                
-                    return <Style.PuzzleBlock
-                      onPress={() => navigation.navigate('GameDetail', { uid: id, pass: passed })}
-                    ><Style.PuzzlePng source={props.item.img} resizeMode="cover" /></Style.PuzzleBlock>
+                    const { id, passed } = props.item;             
+                    return <><Style.PuzzleBlock onPress={() => navigation.navigate('GameDetail', { uid: id, pass: passed })}><Style.PuzzlePng source={props.item.img} resizeMode="cover" /></Style.PuzzleBlock></>
                   }}
                   keyExtractor={item => item.id}
                   numColumns={4}
@@ -313,6 +318,7 @@ const Game = ({ navigation }) => {
       }
 
     </Style.ScrollContainer>
+    </>
   );
 }
 Game.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'game.title', 'mode1')
