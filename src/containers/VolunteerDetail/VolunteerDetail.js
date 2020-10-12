@@ -11,6 +11,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 const VolunteerDetail = ({ navigation, route }) => {
 
   const [ volunteer, setVolunteer ] = React.useState({ members: [] })
+  const [ id, setId ] = React.useState()
 
   const fetchVolunteerDetail = async (url) => {
     const { data: volunteer } = await apiServices.get(url);
@@ -19,6 +20,7 @@ const VolunteerDetail = ({ navigation, route }) => {
 
   React.useEffect(() => {
     const { url, id } = route.params;
+    setId(id);
     fetchVolunteerDetail(url);
   })
 

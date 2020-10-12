@@ -13,6 +13,10 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 const CommunityDetail = ({ navigation, route }) => {
   const [ community, setCommunity ] = React.useState({})
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions(NavigationOptions(navigation, 'community.community_info', 'mode2'));
+  }, [navigation]);
+
   React.useEffect(() => {
     const getDetail = async (url) => {
       const { data: community } = await apiService.get(url);
@@ -107,7 +111,6 @@ const CommunityDetail = ({ navigation, route }) => {
   );
 }
 
-CommunityDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.community_info', 'mode2')
 export default function (props) {
   const navigation = useNavigation();
   const route = useRoute();
