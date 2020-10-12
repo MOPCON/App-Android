@@ -33,6 +33,10 @@ const Community = ({ navigation }) => {
     setState({ ...state, community, volunteer, participant });
   }
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions(NavigationOptions(navigation, 'community.title', 'mode2'));
+  }, [navigation]);
+
   React.useEffect(() => {
     getData();
   }, [])
@@ -102,7 +106,7 @@ const Community = ({ navigation }) => {
   );
 
 }
-Community.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.title', 'mode2')
+
 export default function (props) {
   const navigation = useNavigation();
   return <Community {...props} navigation={navigation} />
