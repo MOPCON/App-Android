@@ -27,6 +27,9 @@ export default class Reward extends Component {
     const { rewardList } = this.props.context.gameStore;
     const lang = I18n.locale;
 
+
+    console.log(this.props)
+
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <Style.RewardContainer>

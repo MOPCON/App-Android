@@ -100,6 +100,10 @@ export default {
     awarded_tip_1: 'You can check the',
     awarded_tip_2: 'my rewards',
     awarded_tip_3: 'redemption instructions in',
+    awarded_complete_title: '',
+    awarded_complete_desc1: '',
+    awarded_complete_desc2: '',
+    awarded_complete_desc3: '',
   },
   gameDetail: {
     title: 'Stage',

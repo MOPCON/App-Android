@@ -48,6 +48,10 @@ const Schedule = ({navigation}) => {
     loadSavedSession();
   }, [])
 
+
+  console.log(state)
+
+  
   const onChangeTab = (date) => {
     setState({...state, nowScheduleDate: date});
   }

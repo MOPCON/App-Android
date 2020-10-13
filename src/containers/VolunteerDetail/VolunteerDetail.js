@@ -11,18 +11,23 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 const VolunteerDetail = ({ navigation, route }) => {
 
   const [ volunteer, setVolunteer ] = React.useState({ members: [] })
+  const [ id, setId ] = React.useState()
 
   const fetchVolunteerDetail = async (url) => {
     const { data: volunteer } = await apiServices.get(url);
     setVolunteer(volunteer)
+
+    React.useLayoutEffect(() => {
+      navigation.setOptions(NavigationOptions(navigation, 'community.volunteer_info', 'mode2'));
+    }, [navigation]);
   }
 
   React.useEffect(() => {
     const { url, id } = route.params;
+    setId(id);
     fetchVolunteerDetail(url);
   })
 
-  const { id } = navigation.state.params;
   const lang = I18n.locale;
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -46,7 +51,7 @@ const VolunteerDetail = ({ navigation, route }) => {
     </ScrollView>
   );
 }
-VolunteerDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.volunteer_info', 'mode2')
+
 export default function (props) {
   const navigation = useNavigation();
   const route = useRoute()

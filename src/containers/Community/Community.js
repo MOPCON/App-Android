@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking } from 'react-native';
+import { Linking, Text } from 'react-native';
 import VersionNum from 'react-native-version-number';
 import apiServices from '../../api/services'
 import * as Style from './style';
@@ -20,6 +20,7 @@ const Community = ({ navigation }) => {
     community: [], // 主辦社群
     participant: [], // 協辦社群
     volunteer: [], // 志工
+    loading: true
   })
 
   const getData = async () => {
@@ -30,8 +31,12 @@ const Community = ({ navigation }) => {
       apiServices.get('/community'),
       apiServices.get('/volunteer')
     ]);
-    setState({ ...state, community, volunteer, participant });
+    setState({ ...state, loading: false, community, volunteer, participant });
   }
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions(NavigationOptions(navigation, 'community.title', 'mode2'));
+  }, [navigation]);
 
   React.useEffect(() => {
     getData();
@@ -53,7 +58,7 @@ const Community = ({ navigation }) => {
     Linking.openURL('https://www.facebook.com/mopcon');
   }
 
-  const { community, volunteer, participant } = state;
+  const { community, volunteer, participant, loading } = state;
 
   const tabs = [
     { name: I18n.t('community.tab_community'), value: 'community' },
@@ -63,7 +68,7 @@ const Community = ({ navigation }) => {
   return (
     <Style.ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       {
-        Boolean(community.length)
+        Boolean(!loading)
           ? (
             <React.Fragment>
               <Style.Container>
@@ -86,7 +91,7 @@ const Community = ({ navigation }) => {
                 <Style.JoinImage source={iconJoin} />
                 <Style.JoinText>「我想加入志工行列！」</Style.JoinText>
                 <Style.FollowView onPress={goFB}>
-                  <Style.FollowImage source={iconFollowFB} />
+                  <Style.FollowViewText >追蹤 FaceBook</Style.FollowViewText>
                 </Style.FollowView>
                 <Style.FollowText>
                   想要和我們一起改變南部資訊生態圈嗎？歡迎追蹤我們的 Facebook，我們會在下一屆準備開始前 PO
@@ -102,7 +107,7 @@ const Community = ({ navigation }) => {
   );
 
 }
-Community.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'community.title', 'mode2')
+
 export default function (props) {
   const navigation = useNavigation();
   return <Community {...props} navigation={navigation} />

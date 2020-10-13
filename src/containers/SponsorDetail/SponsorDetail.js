@@ -25,6 +25,10 @@ const SponsorDetail = ({ navigation, route }) => {
 
   const [ savedSchedule, setSavedSchedule ] = React.useState({})
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions(NavigationOptions(navigation, 'sponsor.info', 'mode2'));
+  }, [navigation]);
+
   React.useEffect(() => {
     async function fetchSavedSchedule() {
       const savedScheduleText = await AsyncStorage.getItem('savedschedule');
@@ -109,7 +113,7 @@ const SponsorDetail = ({ navigation, route }) => {
     </ScrollView>
   );
 }
-SponsorDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.info', 'mode2')
+
 export default function (props) {
   const navigation = useNavigation();
   const route = useRoute();

@@ -15,6 +15,10 @@ const GameDetail = ({ navigation, uid, pass }) => {
   const [ isLoading, setLoading ] = React.useState(true)
   const [ game, setGame ] = React.useState({})
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions(NavigationOptions(navigation, 'gameDetail.title', 'mode2'));
+  }, [navigation]);
+
   React.useEffect(() => {
     const fetchGameTask = async () => {
       const { data } = await gameServices.get(`/getTask/${uid}`);
@@ -86,7 +90,6 @@ const GameDetail = ({ navigation, uid, pass }) => {
   )
 }
 
-GameDetail.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'gameDetail.title', 'mode2');
 
 export default function (props) {
   const navigation = useNavigation();
