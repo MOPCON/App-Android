@@ -52,6 +52,7 @@ export default class Provider extends Component {
 
   loadGameList = async () => {
     const { data: me } = await gameServices.get('/me');
+
     const passList = me.mission_list.filter(m => m.pass === 1);
 
     this.setState(state => produce(state, (draftState) => {
