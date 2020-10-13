@@ -16,11 +16,11 @@ const VolunteerDetail = ({ navigation, route }) => {
   const fetchVolunteerDetail = async (url) => {
     const { data: volunteer } = await apiServices.get(url);
     setVolunteer(volunteer)
-
-    React.useLayoutEffect(() => {
-      navigation.setOptions(NavigationOptions(navigation, 'community.volunteer_info', 'mode2'));
-    }, [navigation]);
   }
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions(NavigationOptions(navigation, 'community.volunteer_info', 'mode2'));
+  }, [navigation]);
 
   React.useEffect(() => {
     const { url, id } = route.params;
