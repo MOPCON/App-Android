@@ -20,14 +20,21 @@ const Schedule = ({navigation}) => {
     schedule: [],
     unconf: [],
     nowScheduleDate: '',
-    savedSchedule: {},
     nowCategory: 'all',
   })
 
+  const [savedSchedule, setSaveSchedule] = React.useState({})
+
   React.useEffect(() => {
     const getSession = async () => {
-      const {data: schedule} = await apiServices.get('/session');
-      const {data: unconf} = await apiServices.get('/unconf');
+      const [
+        { data: schedule },
+        { data: unconf }
+      ] = await Promise.all([
+        apiServices.get('/session'),
+        apiServices.get('/unconf')
+      ]);
+
       setState({
         ...state,
         schedule,
@@ -35,36 +42,34 @@ const Schedule = ({navigation}) => {
         nowScheduleDate: schedule[0].date,
       });
     }
+
+    getSession();
+  }, [])
+
+  React.useEffect(()=>{
     const loadSavedSession = async () => {
       const savedScheduleText = await AsyncStorage.getItem('savedschedule');
       let savedSchedule = JSON.parse(savedScheduleText);
       if (!savedSchedule) {
         savedSchedule = {};
       }
-      setState({...state, savedSchedule});
+      setSaveSchedule(savedSchedule);
     }
 
-    getSession();
     loadSavedSession();
-  }, [])
-
-
-  console.log(state)
-
+  },[])
   
   const onChangeTab = (date) => {
     setState({...state, nowScheduleDate: date});
   }
 
   const onPressTitle = ({session_id}) => {
-    const savedStatus = state.savedSchedule[session_id];
+    const savedStatus = savedSchedule[session_id];
     navigation.navigate('ScheduleDetail', {session_id, savedStatus, onSave});
   }
 
   const onSave = ({session_id}) => {
-    const s = {
-      ...state.savedSchedule,
-    };
+    const s = savedSchedule
     s[session_id] = !s[session_id];
     setState({...state, savedSchedule: s});
     if (global.enable_game) {
@@ -80,7 +85,7 @@ const Schedule = ({navigation}) => {
   const onChangeCategory = nowCategory => setState({...state, nowCategory})
 
   const _renderSchedule = () => {
-    const {schedule, nowScheduleDate, savedSchedule} = state;
+    const {schedule, nowScheduleDate} = state;
 
     const nowSchedule = schedule
       .find(schedulePeriod => schedulePeriod.date === nowScheduleDate);
@@ -108,7 +113,7 @@ const Schedule = ({navigation}) => {
   }
 
   const _renderFavorite = () => {
-    const {schedule, nowScheduleDate, savedSchedule} = state;
+    const {schedule, nowScheduleDate} = state;
 
     const nowSchedule = schedule
       .find(schedulePeriod => schedulePeriod.date === nowScheduleDate);
@@ -137,7 +142,7 @@ const Schedule = ({navigation}) => {
   }
 
   const _renderUnconf = () => {
-    const {unconf, nowScheduleDate, savedSchedule} = state;
+    const {unconf, nowScheduleDate} = state;
 
     const nowSchedule = unconf
       .find(schedulePeriod => schedulePeriod.date === nowScheduleDate);
