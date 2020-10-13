@@ -12,6 +12,10 @@ const Sponsor = ({ navigation }) => {
 
   const [ sponsor, setSponsor ] = React.useState([])
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions(NavigationOptions(navigation, 'sponsor.title', 'mode2'));
+  }, [navigation]);
+
   React.useEffect(() => {
     const fetchSponsors = async () => {
       const { data: sponsor } = await apiServices.get('/sponsor');
@@ -57,7 +61,7 @@ const Sponsor = ({ navigation }) => {
     </ScrollView>
   );
 }
-Sponsor.navigationOptions = ({ navigation }) => NavigationOptions(navigation, 'sponsor.title', 'mode2')
+
 export default function (props) {
   const navigation = useNavigation();
   return <Sponsor {...props} navigation={navigation} />
