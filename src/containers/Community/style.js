@@ -104,8 +104,19 @@ export const JoinText = styled.Text`
 `;
 
 export const FollowView = styled.TouchableOpacity`
-
+  border: 1px solid #ff4392;
+  height: 52px;
+  width: 172px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px; 
+  margin-bottom: 40px;
 `;
+
+export const FollowViewText = styled.Text`
+  font-size: 16px;
+  color: #fff
+`
 
 export const FollowImage = styled.Image`
   width: 178;

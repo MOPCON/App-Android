@@ -31,6 +31,9 @@ export const AVATAR = {
 export default class VolunteerBlock extends Component {
   render() {
     const { goVolunteerDetail, volunteer } = this.props;
+
+    console.log(volunteer)
+
     const lang = I18n.locale;
     return (
       <Style.BlockContainer>
@@ -40,7 +43,7 @@ export default class VolunteerBlock extends Component {
               <Style.CardImgSmall
                 resizeMode="cover"
                 style={{ backgroundColor: 'transparent' }}
-                source={AVATAR[v.id]}
+                source={{uri:v.photo}}
               />
               <Style.CardText>{lang === 'zh' ? v.name : v.name_e}</Style.CardText>
             </Style.CardSmall>
