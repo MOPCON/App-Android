@@ -116,7 +116,7 @@ const Game = ({ navigation }) => {
     React.useCallback(() => {
       setTimeout(()=>{
         fetchTaskData();
-      },5000)
+      },100)
     }, [])
   );
 
@@ -257,7 +257,7 @@ const Game = ({ navigation }) => {
                 </Style.ProfileContainer>
                 {/** 關卡 */}
                 <Style.PuzzleContainer
-                  data={missions}
+                  data={missions.length > 12 ? missions.splice(0,12) : missions}
                   renderItem={(props) => {
                     const { id, passed } = props.item;             
                     return <><Style.PuzzleBlock onPress={() => navigation.navigate('GameDetail', { uid: id, pass: passed })}><Style.PuzzlePng source={props.item.img} resizeMode="cover" /></Style.PuzzleBlock></>
