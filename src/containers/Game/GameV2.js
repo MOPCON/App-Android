@@ -45,8 +45,6 @@ const Game = ({ navigation }) => {
     AsyncStorage.setItem('hasReward', JSON.stringify(true));
 
     setState({ ...state, rewardInfo: reward.data });
-
-    console.log(reward.data)
   } 
 
   const fetchTaskData = async () => {
@@ -116,7 +114,9 @@ const Game = ({ navigation }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      fetchTaskData();
+      setTimeout(()=>{
+        fetchTaskData();
+      },5000)
     }, [])
   );
 
@@ -215,7 +215,7 @@ const Game = ({ navigation }) => {
     }
   }
 
-  const { modalWelcomeVisible, modalRewardVisible, intro, reward, isLoading, missions, progressLeft, progressRight, passed } = state;
+  const { modalWelcomeVisible, modalRewardVisible, intro, reward, isLoading, missions, progressLeft, progressRight, passed, rewardInfo } = state;
 
   // const { score, missionList, isLoaded, lastPassIndex } = context.gameStore;
 
@@ -313,14 +313,14 @@ const Game = ({ navigation }) => {
 
       {
         state.passed === 12 && state.openCompleteModal && 
-        <ModalReward reward={reward} visible={state.openCompleteModal} onClose={()=>{setState({ ...state, openCompleteModal:false });}} isComplete />
+        <ModalReward reward={rewardInfo.name} visible={state.openCompleteModal} onClose={()=>{setState({ ...state, openCompleteModal:false });}} isComplete />
         
       }
 
 
       {
         modalRewardVisible && (
-          <ModalReward reward={reward} visible={modalRewardVisible} onClose={onCloseModalReward} />
+          <ModalReward reward={rewardInfo.name} visible={modalRewardVisible} onClose={onCloseModalReward} />
         )
       }
 

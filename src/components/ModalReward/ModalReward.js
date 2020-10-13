@@ -25,7 +25,7 @@ export default class ModalReward extends React.PureComponent {
           <Style.InfoContainer>
             <Style.RewardImage source={iconReward} />
             <Style.InfoTitle>{isComplete ? I18n.t('game.awarded_complete_title') : I18n.t('game.awarded')}</Style.InfoTitle>
-            { !isComplete && <Style.InfoDesc>{`恭喜獲得 {${lang === 'zh' ? reward.name : reward.name_e}}!`}</Style.InfoDesc>}
+            { !isComplete && <Style.InfoDesc>{`恭喜獲得${reward}`}</Style.InfoDesc>}
             <Style.InfoDesc>{isComplete ? I18n.t('game.awarded_complete_desc1') :I18n.t('game.awarded_tip_1')}<Text style={{color:"#ffcc00"}}>{isComplete ? I18n.t('game.awarded_complete_desc2') :I18n.t('game.awarded_tip_2')}</Text>{isComplete ? I18n.t('game.awarded_complete_desc3') :I18n.t('game.awarded_tip_3')}</Style.InfoDesc>
             <Style.Touch onPress={onClose}>
               <Style.Btn>
