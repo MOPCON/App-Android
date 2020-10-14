@@ -9,7 +9,6 @@ export const ImageContainer = styled.View`
   width: 80px;
   height: 80px;
   border-radius: 80px;
-  background-color: white;
   margin-right: 16px;
 `;
 
