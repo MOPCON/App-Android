@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
 import I18n from '../../locales';
 import NavigationOptions from '../../components/NavigationOptions/NavigationOptions';
-import Button from '../../components/Button/Button';
+import Button, { FilledButton } from '../../components/Button/Button';
 import ModalFinish from '../../components/ModalFinish/ModalFinish';
 import gameServices from '../../api/gameServices';
 
@@ -62,12 +62,13 @@ const GameDetail = ({ navigation, uid, pass }) => {
 
                 {
                   pass ? (
-                    <Button
+                    <FilledButton
                       disabled
+                      color="disabled"
                       text={I18n.t('gameDetail.mission_completed')}
                       margin={[ 0, 0, 0, 0 ]} />
                   ) : (
-                    <Button
+                    <FilledButton
                       // onClick={onOpenModalFinish}
                       onClick={goScan}
                       color="primary"
