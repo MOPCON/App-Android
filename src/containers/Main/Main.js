@@ -42,7 +42,7 @@ const Main = ({ language, onChangeLanguage, navigation, onChangeTab }) => {
             <Style.ScrollContainer>
               <Style.Content>
                 <Style.LogoContainer>
-                  <Image style={{ width: 200, height: 40 }} resizeMode="contain" source={mopconLogo} />
+                  <Style.Logo resizeMode="contain" source={mopconLogo} />
                   {/* <LangSelect language={language} onChange={onChangeLanguage} /> */}
                 </Style.LogoContainer>
               </Style.Content>
