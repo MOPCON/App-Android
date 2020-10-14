@@ -44,8 +44,8 @@ const Game = ({ navigation }) => {
     const reward = await gameServices.get('/getReward');
     AsyncStorage.setItem('hasReward', JSON.stringify(true));
 
-    setState({ ...state, rewardInfo: reward.data });
-  } 
+    setState(state => ({ ...state, rewardInfo: reward.data }));
+  }
 
   const fetchTaskData = async () => {
     const { loadGameList } = context.gameStore;
@@ -88,12 +88,12 @@ const Game = ({ navigation }) => {
 
     
       // 第一次進入遊戲才會出現
-      setState({
+      setState(state => ({
         ...state,
         modalWelcomeVisible: hasPlayed !== 'true',
         intro,
         isLoading: false,
-      });
+      }));
     }
     firstPlayInitial();
     fetchTaskData();
@@ -102,7 +102,7 @@ const Game = ({ navigation }) => {
 
   React.useEffect(()=>{
     if(state.rewardInfo.length !== 0){
-      setState({ ...state, modalRewardVisible: true, reward });
+      setState(state => ({ ...state, modalRewardVisible: true, reward }));
     }
   },[state.rewardInfo])
 
