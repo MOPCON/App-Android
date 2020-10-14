@@ -23,7 +23,7 @@ const Sponsor = ({ navigation }) => {
     }
 
     fetchSponsors();
-  })
+  }, [])
 
   const onClickImage = (sponsorDetail) => () => {
     navigation.navigate('SponsorDetail', { sponsorDetail });
