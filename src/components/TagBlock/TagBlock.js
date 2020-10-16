@@ -24,6 +24,7 @@ const Tag = styled.View`
 const TagText = styled.Text`
   color: #001333;
   font-size: 10px;
+  flex-wrap: wrap;
   font-weight: bold;
 `;
 
@@ -32,14 +33,14 @@ const TagBlock = (props) => {
 
   return (
     Object.keys(tags).length > 0 && (
-      <Container>
+      <>
         {
           tags.map(tag => {
             return (
             <Tag key={tag.name} color={'#ffcc00' || tag.color.mobile}><TagText>{tag.name}</TagText></Tag>
           )})
         }
-      </Container>
+      </>
     )
   );
 };
