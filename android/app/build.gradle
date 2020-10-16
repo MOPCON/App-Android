@@ -133,8 +133,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 20240
-        versionName "3.2.0"
+        versionCode 20241
+        versionName "3.2.1"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
     signingConfigs {
@@ -190,6 +190,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "androidx.multidex:multidex:2.0.1"
 //     implementation "com.google.android.gms:play-services-base:17.0.0"
 //     implementation "com.google.firebase:firebase-core:17.0.1"
 //     implementation "com.google.firebase:firebase-analytics:17.2.0"
