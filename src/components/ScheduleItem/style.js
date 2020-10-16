@@ -106,9 +106,6 @@ export const ScheduleContainer = styled.TouchableOpacity`
 
 export const InnerTagContainer = styled.View`
   display: flex;
-  flex-wrap: wrap;
-  width: 105%;
-  overflow: hidden;
   flex-direction: row;
   justify-content: flex-start;
   margin-top: -5px;
