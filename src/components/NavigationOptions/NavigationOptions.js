@@ -14,7 +14,7 @@ export default (navigation, title, mode = 'mode1') => {
   const options = {
     headerStyle: {
       backgroundColor: theme.darkBlue,
-      borderBottomColor: '#20204c',
+      borderBottomColor: 'rgba(0, 170, 240, 0.2)',
       borderBottomWidth: 2,
     },
     headerTitleStyle: {

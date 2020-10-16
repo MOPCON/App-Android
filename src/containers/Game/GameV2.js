@@ -16,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from '@react-navigation/native';
 
 
-import inActiveIcon from '../../images/iconGiftActive.png';
+import inActiveIcon from '../../images/iconGiftInactive.png';
 import activeIcon from '../../images/iconGiftActive.png';
 
 const Game = ({ navigation }) => {
@@ -44,8 +44,8 @@ const Game = ({ navigation }) => {
     const reward = await gameServices.get('/getReward');
     AsyncStorage.setItem('hasReward', JSON.stringify(true));
 
-    setState({ ...state, rewardInfo: reward.data });
-  } 
+    setState(state => ({ ...state, rewardInfo: reward.data }));
+  }
 
   const fetchTaskData = async () => {
     const { loadGameList } = context.gameStore;
@@ -88,12 +88,12 @@ const Game = ({ navigation }) => {
 
     
       // 第一次進入遊戲才會出現
-      setState({
+      setState(state => ({
         ...state,
         modalWelcomeVisible: hasPlayed !== 'true',
         intro,
         isLoading: false,
-      });
+      }));
     }
     firstPlayInitial();
     fetchTaskData();
@@ -102,7 +102,7 @@ const Game = ({ navigation }) => {
 
   React.useEffect(()=>{
     if(state.rewardInfo.length !== 0){
-      setState({ ...state, modalRewardVisible: true, reward });
+      setState(state => ({ ...state, modalRewardVisible: true, reward }));
     }
   },[state.rewardInfo])
 
@@ -219,6 +219,28 @@ const Game = ({ navigation }) => {
 
   // const { score, missionList, isLoaded, lastPassIndex } = context.gameStore;
 
+  const _renderMissionProgress = () => {
+    let firstIconGift = (100 - progressLeft === 0) ? activeIcon : inActiveIcon;
+    let secondIconGift = (100 - progressRight === 0) ? activeIcon : inActiveIcon;
+
+    return <Style.ProgressContainer>
+      <Style.ProgressBar>
+        <View style={{ width: `${progressLeft}%`, height: 4, backgroundColor: '#ffcc00' }}></View>
+        <View style={{ width: `${100 - progressLeft}%`, height: 4, backgroundColor: '#fff' }}></View>
+      </Style.ProgressBar>
+      <View style={{ width: '10%' }}>
+        <Style.ProgressGift source={firstIconGift} />
+      </View>
+      <Style.ProgressBar>
+        <View style={{ width: `${progressRight}%`, height: 4, backgroundColor: '#ffcc00' }}></View>
+        <View style={{ width: `${100 - progressRight}%`, height: 4, backgroundColor: '#fff' }}></View>
+      </Style.ProgressBar>
+      <View style={{ width: '10%' }}>
+        <Style.ProgressGift source={secondIconGift} />
+      </View>
+    </Style.ProgressContainer>;
+  }
+
   return (
     <>
     <Style.ScrollContainer contentContainerStyle={{ flexGrow: 1 }}>
@@ -238,22 +260,7 @@ const Game = ({ navigation }) => {
                     <Style.ScoreText>{passed}/12</Style.ScoreText>
                   </View>
                   {/** 進度條 */}
-                  <Style.ProgressContainer>
-                    <Style.ProgressBar>
-                      <View style={{ width: `${progressLeft}%`, height: 4, backgroundColor: '#ffcc00' }}></View>
-                      <View style={{ width: `${100 - progressLeft}%`, height: 4, backgroundColor: '#fff' }}></View>
-                    </Style.ProgressBar>
-                    <View style={{ width: '10%' }}>
-                      <Style.ProgressGift source={inActiveIcon} />
-                    </View>
-                    <Style.ProgressBar>
-                      <View style={{ width: `${progressRight}%`, height: 4, backgroundColor: '#ffcc00' }}></View>
-                      <View style={{ width: `${100 - progressRight}%`, height: 4, backgroundColor: '#fff' }}></View>
-                    </Style.ProgressBar>
-                    <View style={{ width: '10%' }}>
-                      <Style.ProgressGift source={inActiveIcon} />
-                    </View>
-                  </Style.ProgressContainer>
+                  {_renderMissionProgress()}
                 </Style.ProfileContainer>
                 {/** 關卡 */}
                 <Style.PuzzleContainer

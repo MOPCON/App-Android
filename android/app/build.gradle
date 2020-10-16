@@ -134,7 +134,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
         versionCode 20239
-        versionName "3.1.9"
+        versionName "3.1.9
         missingDimensionStrategy 'react-native-camera', 'general'
     }
     signingConfigs {

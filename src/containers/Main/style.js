@@ -49,3 +49,9 @@ export const ModContainer = styled.View`
 export const TabContainer = styled.View`
   width: 50%;
 `;
+
+export const Logo = styled.Image`
+  width: 160;
+  height: 30;
+  margin-top: 15;
+`
