@@ -1,6 +1,6 @@
 {
   "name": "MOPCON",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -34,6 +34,7 @@
     "react-native-gesture-handler": "^1.6.1",
     "react-native-i18n": "^2.0.15",
     "react-native-permissions": "^2.1.5",
+    "react-native-push-notification": "^6.1.1",
     "react-native-qrcode-scanner": "^1.4.1",
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^3.0.3",
