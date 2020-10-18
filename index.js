@@ -7,3 +7,11 @@ YellowBox.ignoreWarnings(['Non-serializable values were found in the navigation 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 AppRegistry.registerComponent('MOPCON', () => App);
+
+// disable log
+if(!__DEV__) {
+  const noop = () => {}
+  ['log', 'error', 'warn', 'assert'].forEach((key) => {
+    console[key] = noop;
+  })
+}
