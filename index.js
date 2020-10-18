@@ -1,6 +1,7 @@
 import { AppRegistry, UIManager, YellowBox } from 'react-native';
 import App from './src/containers/App/App';
 import messaging from "@react-native-firebase/messaging";
+import PushNotification from 'react-native-push-notification'
 
 YellowBox.ignoreWarnings(['Non-serializable values were found in the navigation state', 'Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
@@ -9,10 +10,21 @@ UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationE
 
 AppRegistry.registerComponent('MOPCON', () => App);
 
-// background notification handler
-const unsubscriber = messaging().onMessage(async remoteMessage => {
+// foreground notification handler
+messaging().onMessage(async remoteMessage => {
   // display payload
-  // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+  console.log('Message handled in the foreground!', remoteMessage);
+  const { notification = {} } = remoteMessage;
+
+  PushNotification.localNotification({
+    title: notification.title,
+    message: notification.body,
+  });
+});
+
+// background notification handler
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('Message handled in the background!', remoteMessage);
 });
 
 // disable log
