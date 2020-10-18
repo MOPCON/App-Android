@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as Style from './style';
 import geoPng from '../../images/location.png';
-import TagBlock from '../TagBlock/TagBlock';
+import { TagContent } from '../TagBlock/TagBlock';
 import { DontRecord, IsSponsor, Keynote } from "../../containers/ScheduleDetail/InnerTag";
 
 const ScheduleItem = ({ title, speaker, room, tags, is_keynote, recordable, sponsor_info}) => (
@@ -13,7 +13,7 @@ const ScheduleItem = ({ title, speaker, room, tags, is_keynote, recordable, spon
         {is_keynote ? <Keynote /> : null}
         {!recordable ? <DontRecord /> : null}
         {sponsor_info ? <IsSponsor /> : null}
-        <TagBlock tags={tags} />
+        <TagContent tags={tags} />
       </Style.InnerTagContainer>
       <Style.ActionContainer>
         <Style.Name>{speaker}</Style.Name>
