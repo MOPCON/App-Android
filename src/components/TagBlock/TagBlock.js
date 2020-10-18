@@ -28,9 +28,7 @@ const TagText = styled.Text`
   font-weight: bold;
 `;
 
-const TagBlock = (props) => {
-  const { tags } = props;
-
+export const TagContent = ({ tags = []}) => {
   return (
     Object.keys(tags).length > 0 && (
       <>
@@ -44,6 +42,21 @@ const TagBlock = (props) => {
     )
   );
 };
+
+TagContent.propTypes = {
+  tags: PropTypes.arrayOf(PropTypes.shape({
+    color: PropTypes.string,
+    name: PropTypes.string,
+  })),
+};
+
+const TagBlock = (props) => {
+  return (
+    <Container>
+      <TagContent {...props} />
+    </Container>
+  )
+}
 
 TagBlock.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.shape({
