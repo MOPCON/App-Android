@@ -100,10 +100,10 @@ export default {
     awarded_tip_1: '您可在',
     awarded_tip_2: '我的獎勵',
     awarded_tip_3: '中查詢兌換說明',
-    awarded_complete_title: '全部都解開啦',
-    awarded_complete_desc1: '記得去',
-    awarded_complete_desc2: '我的獎勵',
-    awarded_complete_desc3: '中兌獎哦',
+    awarded_complete_title: '強者是你！',
+    awarded_complete_desc1: '換啦，哪次不給換！請憑畫面至',
+    awarded_complete_desc2: '4樓MOPCON攤位',
+    awarded_complete_desc3: '領取兌換獎勵',
 
 
   },
