@@ -24,7 +24,7 @@
     "@react-navigation/stack": "^5.5.1",
     "buffer": "^5.4.3",
     "dayjs": "^1.8.16",
-    "immer": "^4.0.0",
+    "immer": "^8.0.1",
     "react": "16.11.0",
     "react-dom": "^16.11.0",
     "react-native": "0.62.2",
