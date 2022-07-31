@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.mopcon_android
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

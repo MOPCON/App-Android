@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.mopcon_android
 
 import org.junit.Test
 
