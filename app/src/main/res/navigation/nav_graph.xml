@@ -3,18 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/agendaDetailFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.mopcon_android.ui.all.home.HomeFragment"
-        android:label="fragment_home"
+        android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/moreFragment"
         android:name="com.example.mopcon_android.ui.all.more.MoreFragment"
-        android:label="fragment_more"
+        android:label="MoreFragment"
         tools:layout="@layout/fragment_more" />
+
+    <fragment
+        android:id="@+id/agendaDetailFragment"
+        android:name="com.example.mopcon_android.ui.all.agenda.detail.AgendaDetailFragment"
+        android:label="AgendaDetailFragment"
+        tools:layout="@layout/fragment_agenda_detail" />
 
 </navigation>

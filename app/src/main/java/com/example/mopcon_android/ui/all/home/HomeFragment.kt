@@ -12,7 +12,6 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding = FragmentHomeBinding::inflate
 
     override fun initLayout() {
-        Log.e(">>>", "initLayout")
     }
 
     override fun initAction() {
