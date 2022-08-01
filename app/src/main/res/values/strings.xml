@@ -2,4 +2,9 @@
     <string name="app_name">mopcon_android</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">首頁</string>
+    <string name="agenda">議程</string>
+    <string name="task">任務</string>
+    <string name="news">消息</string>
+    <string name="more">更多</string>
 </resources>

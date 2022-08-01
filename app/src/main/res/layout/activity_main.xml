@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_blue"
     android:orientation="vertical"
     tools:context="com.example.mopcon_android.ui.all.MainActivity">
 
@@ -14,21 +15,20 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/colorWhite1"
-        app:navGraph="@navigation/main_navigation"
-        tools:layout="@layout/fragment_main" />
+        android:background="@color/white"
+        app:navGraph="@navigation/nav_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/colorWhite"
+        android:background="@color/dark_blue"
         android:elevation="0dp"
-        app:itemIconTint="@color/selector_blue_silver"
+        app:itemIconTint="@drawable/bottom_navigation_color_selector"
         app:itemTextAppearanceActive="@style/bottom_nav_title_active"
         app:itemTextAppearanceInactive="@style/bottom_nav_title_inactive"
-        app:itemTextColor="@color/selector_blue_silver"
+        app:itemTextColor="@drawable/bottom_navigation_color_selector"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_navigation_menu" />
 

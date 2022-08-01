@@ -19,12 +19,9 @@ abstract class BaseBindingFragment<VB : ViewBinding> : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initLayout()
-        initAdapter()
         initAction()
         initObserver()
-
     }
 
     override fun onDestroyView() {
@@ -33,7 +30,6 @@ abstract class BaseBindingFragment<VB : ViewBinding> : BaseFragment() {
     }
 
     abstract fun initLayout()
-    abstract fun initAdapter()
     abstract fun initAction()
     abstract fun initObserver()
 
