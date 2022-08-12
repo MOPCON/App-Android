@@ -3,13 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/agendaDetailFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.mopcon_android.ui.all.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/agendaFragment"
+        android:name="com.example.mopcon_android.ui.all.agenda.AgendaFragment"
+        android:label="AgendaFragment"
+        tools:layout="@layout/fragment_agenda" >
+        <action
+            android:id="@+id/action_agendaFragment_to_agendaDetailFragment"
+            app:destination="@id/agendaDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.example.mopcon_android.ui.all.task.TaskFragment"
+        android:label="TaskFragment"
+        tools:layout="@layout/fragment_task" />
 
     <fragment
         android:id="@+id/moreFragment"
@@ -22,5 +38,11 @@
         android:name="com.example.mopcon_android.ui.all.agenda.detail.AgendaDetailFragment"
         android:label="AgendaDetailFragment"
         tools:layout="@layout/fragment_agenda_detail" />
+
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.mopcon_android.ui.all.news.NewsFragment"
+        android:label="NewsFragment"
+        tools:layout="@layout/fragment_news"  />
 
 </navigation>

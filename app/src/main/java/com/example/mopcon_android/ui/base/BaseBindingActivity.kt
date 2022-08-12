@@ -13,6 +13,13 @@ abstract class BaseBindingActivity<VB : ViewBinding> : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = bindingInflater(layoutInflater)
         setContentView(binding.root)
+
+        initLayout()
+        initAction()
+        initObserver()
     }
 
+    abstract fun initLayout()
+    abstract fun initAction()
+    abstract fun initObserver()
 }

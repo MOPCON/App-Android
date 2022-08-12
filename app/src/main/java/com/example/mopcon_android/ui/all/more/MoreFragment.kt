@@ -11,15 +11,15 @@ class MoreFragment : BaseBindingFragment<FragmentMoreBinding>() {
         get() = FragmentMoreBinding::inflate
 
     override fun initLayout() {
-        TODO("Not yet implemented")
+
     }
 
     override fun initAction() {
-        TODO("Not yet implemented")
+
     }
 
     override fun initObserver() {
-        TODO("Not yet implemented")
+
     }
 
 

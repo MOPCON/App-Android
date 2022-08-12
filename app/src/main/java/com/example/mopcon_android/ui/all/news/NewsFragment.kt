@@ -3,23 +3,21 @@ package com.example.mopcon_android.ui.all.news
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.mopcon_android.databinding.FragmentMoreBinding
+import com.example.mopcon_android.databinding.FragmentNewsBinding
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 
-class NewsFragment : BaseBindingFragment<FragmentMoreBinding>() {
+class NewsFragment : BaseBindingFragment<FragmentNewsBinding>() {
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMoreBinding
-        get() = FragmentMoreBinding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentNewsBinding
+        get() = FragmentNewsBinding::inflate
 
     override fun initLayout() {
-        TODO("Not yet implemented")
     }
 
     override fun initAction() {
-        TODO("Not yet implemented")
     }
 
     override fun initObserver() {
-        TODO("Not yet implemented")
     }
 
 //    override fun onCreateView(

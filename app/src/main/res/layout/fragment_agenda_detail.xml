@@ -27,11 +27,12 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <ImageView
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingHorizontal="16dp"
-            android:src="@drawable/ic_star" />
+            android:buttonTint="@color/pink"
+            android:button="@drawable/star_checkbox_selector"/>
 
     </LinearLayout>
 
@@ -151,6 +152,38 @@
                 tools:itemCount="14"
                 tools:spanCount="3"
                 tools:listitem="@layout/item_tag" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/curve_line_blue"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/light_blue"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:text="@string/sponsor" />
+
+            <ImageView
+                android:layout_width="99dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="18dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_capsule_white"
+                android:src="@drawable/ic_avatar_default_logo"/>
 
         </LinearLayout>
 

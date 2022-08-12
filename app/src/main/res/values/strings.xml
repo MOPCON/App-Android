@@ -8,4 +8,13 @@
     <string name="news">消息</string>
     <string name="more">更多</string>
     <string name="speech_information">演講資訊</string>
+    <string name="date_10_15">10/15(六)</string>
+    <string name="date_10_16">10/16(日)</string>
+    <string name="i_want_to_listen_the_most">我最想聽</string>
+    <string name="exchange_sessions">交流場次</string>
+    <string name="all_of_the_agenda">全部議程</string>
+    <string name="sponsor">贊助廠商</string>
+    <string name="latest_news">最新消息</string>
+    <string name="your_favorite_flight_is_arriving">你喜愛的戰艦即將進站</string>
+    <string name="coming_soon">coming soon</string>
 </resources>

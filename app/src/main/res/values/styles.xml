@@ -12,4 +12,16 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="DateTabTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">20dp</item>
+    </style>
+
+    <style name="IssueTabTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">20dp</item>
+    </style>
 </resources>

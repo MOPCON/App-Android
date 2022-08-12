@@ -8,17 +8,18 @@
     android:orientation="vertical"
     tools:context="com.example.mopcon_android.ui.all.MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/main_container"
+    <fragment
+        android:id="@+id/mainContainer"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        app:defaultNavHost="true"
         android:background="@color/white"
         app:navGraph="@navigation/nav_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav_view"
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -28,6 +29,7 @@
         app:itemTextAppearanceActive="@style/bottom_nav_title_active"
         app:itemTextAppearanceInactive="@style/bottom_nav_title_inactive"
         app:itemTextColor="@drawable/bottom_navigation_color_selector"
+        app:itemRippleColor="@null"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_navigation_menu" />
 

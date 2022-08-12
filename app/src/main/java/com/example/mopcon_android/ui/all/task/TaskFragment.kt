@@ -3,23 +3,21 @@ package com.example.mopcon_android.ui.all.task
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.mopcon_android.databinding.FragmentMoreBinding
+import com.example.mopcon_android.databinding.FragmentTaskBinding
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 
-class TaskFragment : BaseBindingFragment<FragmentMoreBinding>() {
+class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMoreBinding
-        get() = FragmentMoreBinding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTaskBinding
+        get() = FragmentTaskBinding::inflate
 
     override fun initLayout() {
-        TODO("Not yet implemented")
     }
 
     override fun initAction() {
-        TODO("Not yet implemented")
     }
 
     override fun initObserver() {
-        TODO("Not yet implemented")
     }
 
 //    override fun onCreateView(
