@@ -10,6 +10,7 @@
     tools:layout_marginHorizontal="10dp">
 
     <TextView
+        android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/pink"
@@ -17,6 +18,7 @@
         tools:text="10/15(六) 14:05" />
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -26,6 +28,7 @@
         tools:text="我是標題" />
 
     <TextView
+        android:id="@+id/tvContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

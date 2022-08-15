@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,49 +8,57 @@
     android:orientation="vertical"
     android:paddingHorizontal="16dp"
     tools:context=".ui.all.home.HomeFragment">
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="16dp"
         android:src="@drawable/logo" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="16dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/home_banner" />
+    <!--
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/latest_news"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <com.stx.xhb.androidx.XBanner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            app:AutoPlayTime="3000"
+            app:isClipChildrenMode="true"
+            app:clipChildrenLeftMargin="100dp"
+            app:clipChildrenRightMargin="100dp"
+            app:showIndicatorInCenter="false"
+            app:pointsVisibility="false"
+            app:placeholderDrawable="@drawable/home_banner"/>
 
-    <include
-        layout="@layout/item_news_more"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/latest_news"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/your_favorite_flight_is_arriving"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <include
+            layout="@layout/item_news_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/your_favorite_flight_is_arriving"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    -->
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         tools:itemCount="3"
-        tools:listitem="@layout/item_news"/>
+        tools:listitem="@layout/item_news" />
 
 </LinearLayout>

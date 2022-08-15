@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.stx.xhb.androidx.XBanner xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/banner"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    app:AutoPlayTime="3000"
+    app:isClipChildrenMode="true"
+    app:clipChildrenLeftMargin="100dp"
+    app:clipChildrenRightMargin="100dp"
+    app:showIndicatorInCenter="false"
+    app:pointsVisibility="false"
+    app:placeholderDrawable="@drawable/home_banner" />

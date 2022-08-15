@@ -17,4 +17,6 @@
     <string name="latest_news">最新消息</string>
     <string name="your_favorite_flight_is_arriving">你喜愛的戰艦即將進站</string>
     <string name="coming_soon">coming soon</string>
+    <string name="you_did_not_store_any_agenda">你目前尚未收藏任何議程</string>
+    <string name="get_around">去逛逛</string>
 </resources>

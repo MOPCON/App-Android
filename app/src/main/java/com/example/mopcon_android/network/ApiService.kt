@@ -36,9 +36,9 @@ class OkHttpClientProvider {
         logInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val httpBuilder = OkHttpClient().newBuilder()
-        httpBuilder.connectTimeout(300, TimeUnit.SECONDS)
-        httpBuilder.readTimeout(300, TimeUnit.SECONDS)
-        httpBuilder.callTimeout(300, TimeUnit.SECONDS)
+        httpBuilder.connectTimeout(30000, TimeUnit.SECONDS)
+        httpBuilder.readTimeout(30000, TimeUnit.SECONDS)
+        httpBuilder.callTimeout(30000, TimeUnit.SECONDS)
         httpBuilder.addInterceptor(logInterceptor)
         return httpBuilder.build()
     }

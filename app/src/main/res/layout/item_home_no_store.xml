@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/button_capsule_transparent_blue_stroke_radius_4"
+    android:background="@drawable/button_capsule_transparent_blue_stroke_radius_8"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
@@ -22,8 +22,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/white"
-        tools:text="你目前尚未收藏任何議程"
-        tools:textColor="@color/dark_blue" />
+        android:text="@string/you_did_not_store_any_agenda" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,7 +32,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:textColor="@color/white"
-        tools:text="去逛逛" />
+        android:text="@string/get_around" />
 
 
 </LinearLayout>

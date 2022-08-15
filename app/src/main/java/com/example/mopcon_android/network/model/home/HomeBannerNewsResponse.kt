@@ -3,9 +3,9 @@ package com.example.mopcon_android.network.model.home
 
 import com.squareup.moshi.Json
 
-data class HomeBannerResponse(
+data class HomeBannerNewsResponse(
     @Json(name = "data")
-    val data: Data,
+    val data: HomeBannerNewsData,
     @Json(name = "message")
     val message: String,
     @Json(name = "success")
