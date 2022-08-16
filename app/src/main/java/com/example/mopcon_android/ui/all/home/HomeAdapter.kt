@@ -38,7 +38,6 @@ class HomeAdapter(private val itemClickListener: NewsItemClickListener) : ListAd
 
     fun addFooterAndSubmitList(bannerList: List<Banner>, newsList: List<NewsItem>, favList: List<Fav>?) {
         this.bannerList = bannerList
-        Log.e(">>>", "bannerList = ${bannerList.map { it.img }}")
         adapterScope.launch {
             val items = listOf(DataItem.Banner) +
                     when {
@@ -210,6 +209,7 @@ class HomeAdapter(private val itemClickListener: NewsItemClickListener) : ListAd
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: NewsItem) {
             binding.tvDate.textDateFormat(item.date)
+            binding.tvTitle.text = item.title
         }
 
         companion object {

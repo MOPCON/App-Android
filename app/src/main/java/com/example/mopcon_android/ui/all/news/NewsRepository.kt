@@ -1,4 +1,4 @@
-package com.example.mopcon_android.ui.all.home
+package com.example.mopcon_android.ui.all.news
 
 import androidx.lifecycle.*
 import com.example.mopcon_android.network.model.home.Banner
@@ -9,7 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.HashMap
 
-class HomeRepository(private val apiService: HomeApiService) {
-    suspend fun getHomeBannerAndNews() = apiService.getHomeBannerAndNews()
+class NewsRepository(private val apiService: HomeApiService) {
     suspend fun getNews() = apiService.getNews()
 }
