@@ -3,15 +3,15 @@ package com.example.mopcon_android.network.model.agenda
 
 import com.squareup.moshi.Json
 
-data class Period(
+data class PeriodData(
     @Json(name = "ended_at")
-    val endedAt: Int,
+    val endedAt: Long? = null,
     @Json(name = "event")
-    val event: String,
+    val event: String? = null,
     @Json(name = "isBroadCast")
-    val isBroadCast: Boolean,
+    val isBroadCast: Boolean? = null,
     @Json(name = "room")
-    val room: List<Room>,
+    val room: List<RoomData>? = listOf(),
     @Json(name = "started_at")
-    val startedAt: Int
+    val startedAt: Long? = null
 )

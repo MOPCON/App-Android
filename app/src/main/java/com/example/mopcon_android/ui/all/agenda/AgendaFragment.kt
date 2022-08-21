@@ -1,29 +1,52 @@
 package com.example.mopcon_android.ui.all.agenda
 
-import android.content.res.Resources
 import android.content.res.Resources.getSystem
 import android.util.Log
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentAgendaBinding
+import com.example.mopcon_android.network.model.agenda.AgendaData
+import com.example.mopcon_android.ui.all.home.HomeViewModel
 import com.example.mopcon_android.ui.base.BaseBindingFragment
+import com.example.mopcon_android.ui.extension.BottomItemDecoration
+import com.example.mopcon_android.util.dpToPx
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAgendaBinding
         get() = FragmentAgendaBinding::inflate
 
-    //    private val viewModel: HomeViewModel by viewModel()
+    private val viewModel: AgendaViewModel by viewModel()
+
+    private var agendaList = listOf<AgendaData>()
+
+    private val agendaAdapter by lazy {
+        AgendaAdapter(
+            ItemClickListener {
+                val view = view ?: return@ItemClickListener
+                Navigation.findNavController(view).navigate(R.id.action_agendaFragment_to_agendaDetailFragment)
+            })
+    }
+
     override fun initLayout() {
         initRg()
         initTab()
+        initRv()
+    }
+
+    private fun initRv() {
+        binding.rvAgenda.apply {
+            adapter = agendaAdapter
+            Log.e(">>>", "agendaAdapter")
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(BottomItemDecoration(8))
+        }
     }
 
     private fun initRg() {
@@ -34,12 +57,14 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
                     binding.tvDate2.background = ContextCompat.getDrawable(binding.tvDate2.context, R.drawable.button_capsule_dark_blue)
                     binding.tvDate1.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.white))
                     binding.tvDate2.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.gray))
+                    agendaAdapter.addFooterAndSubmitList(agendaList.firstOrNull()?.periodData)
                 }
                 R.id.rbDateSecond -> {
                     binding.tvDate1.background = ContextCompat.getDrawable(binding.tvDate1.context, R.drawable.button_capsule_dark_blue)
                     binding.tvDate2.background = ContextCompat.getDrawable(binding.tvDate2.context, android.R.color.transparent)
                     binding.tvDate1.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.gray))
                     binding.tvDate2.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.white))
+                    agendaAdapter.addFooterAndSubmitList(agendaList.getOrNull(1)?.periodData)
                 }
             }
         }
@@ -60,16 +85,20 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
     }
 
     override fun initAction() {
-        binding.tvDummyClick.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_agendaFragment_to_agendaDetailFragment)
-        }
+        Log.e(">>>", "getAgenda")
+        viewModel.getAgenda()
     }
 
     override fun initObserver() {
-
+        viewModel.agendaList.observe(viewLifecycleOwner) {
+//            Log.e(">>>", "it = $it")
+            agendaList = it
+            if (binding.rgDate.checkedRadioButtonId == R.id.rbDateFirst)
+                agendaAdapter.addFooterAndSubmitList(it.firstOrNull()?.periodData)
+            else
+                agendaAdapter.addFooterAndSubmitList(it.getOrNull(1)?.periodData)
+        }
     }
 
 
 }
-private fun Int.dpToPx(): Int = (this * getSystem().displayMetrics.density).toInt()
-//private fun Int.dpToPx(): Dp = (dp * Resources.getSystem().displayMetrics.density)

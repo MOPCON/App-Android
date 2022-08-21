@@ -1,5 +1,6 @@
 package com.example.mopcon_android.ui.all.home
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.mopcon_android.network.model.home.Banner
 import com.example.mopcon_android.network.model.home.HomeBannerNewsData
@@ -10,14 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
-/*
-    private val _bannerList = MutableLiveData<List<Banner>>()
-    val bannerList: LiveData<List<Banner>> = _bannerList
-
-    private val _newsList = MutableLiveData<List<NewsItem>>()
-    val newsList: LiveData<List<NewsItem>> = _newsList
-*/
-
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 

@@ -31,7 +31,6 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
 
     override fun initAction() {
         viewModel.getHomeBannerAndNews()
-
     }
 
     override fun initObserver() {

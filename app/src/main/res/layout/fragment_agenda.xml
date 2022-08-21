@@ -206,13 +206,14 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-
-    <TextView
-        android:id="@+id/tvDummyClick"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAgenda"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="agenda list"
-        android:textColor="@color/white" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:itemCount="3"
+        android:paddingHorizontal="16dp"
+        tools:listitem="@layout/item_agenda_content" />
+
 
 </LinearLayout>

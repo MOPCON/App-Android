@@ -1,6 +1,5 @@
 package com.example.mopcon_android.ui.all.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -17,8 +16,8 @@ import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.*
 import com.example.mopcon_android.network.model.home.Banner
 import com.example.mopcon_android.network.model.home.NewsItem
-import com.example.mopcon_android.ui.extension.toPx
-import com.example.mopcon_android.ui.extension.textDateFormat
+import com.example.mopcon_android.util.setTimeFormat
+import com.example.mopcon_android.util.dpToPx
 import com.stx.xhb.androidx.transformers.Transformer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +41,7 @@ class HomeAdapter(private val bannerClickListener: BannerClickListener, private 
         this.bannerList = bannerList
         this.newsList = newsList
         adapterScope.launch {
-            val items = listOf(DataItem.Banner) +
+            val items: List<DataItem> = listOf(DataItem.Banner) +
                     when {
                         newsList.isNullOrEmpty() -> listOf()
                         else -> listOf(DataItem.LatestNewsTitle) + newsList.map { DataItem.LatestNewsItem(it) }
@@ -215,10 +214,10 @@ class HomeAdapter(private val bannerClickListener: BannerClickListener, private 
             binding.apply {
                 if (!isLastItem) {
                     val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    params.setMargins(0, 0, 0, 16.toPx())
+                    params.setMargins(0, 0, 0, 16.dpToPx())
                     itemView.layoutParams = params
                 }
-                tvDate.textDateFormat(item.date)
+                tvDate.setTimeFormat(item.date)
                 tvTitle.text = item.title
                 tvContent.text = item.description
                 itemView.setOnClickListener {

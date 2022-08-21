@@ -7,5 +7,5 @@ data class AgendaData(
     @Json(name = "date")
     val date: Int,
     @Json(name = "period")
-    val period: List<Period>
+    val periodData: List<PeriodData>
 )

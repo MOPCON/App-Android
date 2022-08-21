@@ -4,6 +4,8 @@ import android.app.Application
 import com.example.mopcon_android.db.AppDatabase
 import com.example.mopcon_android.network.ApiServiceModule
 import com.example.mopcon_android.network.OkHttpClientProvider
+import com.example.mopcon_android.repository.AgendaRepository
+import com.example.mopcon_android.ui.all.agenda.AgendaViewModel
 import com.example.mopcon_android.ui.all.home.HomeRepository
 import com.example.mopcon_android.ui.all.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
@@ -37,12 +39,12 @@ class MyApplication : Application() {
 
     private val repositoryModules = module {
         single { HomeRepository(get()) }
-//        single { AgendaRepository(get(), get()) }
+        single { AgendaRepository(get(), get()) }
     }
 
     private val viewModelModules = module {
         viewModel { HomeViewModel(get()) }
-//        viewModel { AgendaViewModel() }
+        viewModel { AgendaViewModel(get()) }
     }
 
     private val databaseModules: Module = module {

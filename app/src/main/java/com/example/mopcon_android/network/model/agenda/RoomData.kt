@@ -3,11 +3,11 @@ package com.example.mopcon_android.network.model.agenda
 
 import com.squareup.moshi.Json
 
-data class Room(
+data class RoomData(
     @Json(name = "community_partner")
     val communityPartner: String,
     @Json(name = "ended_at")
-    val endedAt: Int,
+    val endedAt: Long? = null,
     @Json(name = "floor")
     val floor: String,
     @Json(name = "is_keynote")
@@ -29,17 +29,17 @@ data class Room(
     @Json(name = "sponsor_id")
     val sponsorId: Int,
     @Json(name = "sponsor_info")
-    val sponsorInfo: SponsorInfo,
+    val sponsorInfo: SponsorInfo? = null,
     @Json(name = "started_at")
-    val startedAt: Int,
+    val startedAt: Long? = null,
     @Json(name = "summary")
     val summary: String,
     @Json(name = "summary_e")
-    val summaryE: String,
+    val summaryE: String ?= null,
     @Json(name = "tags")
     val tags: List<Tag>,
     @Json(name = "topic")
     val topic: String,
     @Json(name = "topic_e")
-    val topicE: String
+    val topicE: String ?= null
 )
