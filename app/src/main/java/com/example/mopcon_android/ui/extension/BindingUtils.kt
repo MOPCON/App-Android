@@ -1,5 +1,6 @@
 package com.example.mopcon_android.ui.extension
 
+import android.content.res.Resources
 import android.widget.TextView
 import timber.log.Timber
 import java.text.SimpleDateFormat
@@ -21,3 +22,6 @@ fun TextView.textDateFormat(timeStamp: Long?, format: String ?= DATE_FORMAT) {
     text = formattedTime
 
 }
+
+
+fun Int.toPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()

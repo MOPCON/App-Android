@@ -39,7 +39,7 @@ android {
 ext {
     version_retrofit = "2.9.0"
     koin_version = "3.2.0"
-    room_version = "2.4.2"
+    room_version = "2.4.3"
     lifecycle_version = "2.2.0"
     version_navigation = "1.0.0"
 }
@@ -47,7 +47,7 @@ ext {
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
@@ -86,7 +86,7 @@ dependencies {
     //room
     implementation "androidx.room:room-ktx:$room_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.databinding:databinding-common:7.2.1'
+    implementation 'androidx.databinding:databinding-common:7.2.2'
     kapt "androidx.room:room-compiler:$room_version"
 
     //Navigation
@@ -94,7 +94,7 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"
 
     //fragment
-    implementation "androidx.fragment:fragment-ktx:1.5.1"
+    implementation "androidx.fragment:fragment-ktx:1.5.2"
 
     //banner
     implementation 'com.github.xiaohaibin:XBanner:androidx_v1.2.6'

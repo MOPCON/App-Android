@@ -1,7 +1,6 @@
 package com.example.mopcon_android.network
 
-import com.example.mopcon_android.network.service.AgendaApiService
-import com.example.mopcon_android.network.service.HomeApiService
+import com.example.mopcon_android.network.service.ApiService
 import com.example.mopcon_android.util.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -12,7 +11,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-class ApiService(private val okHttpClient: OkHttpClient) {
+class ApiServiceModule(private val okHttpClient: OkHttpClient) {
 
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
@@ -24,9 +23,7 @@ class ApiService(private val okHttpClient: OkHttpClient) {
         .client(okHttpClient)
         .build()
 
-    fun createHomeService(): HomeApiService = retrofit.create(HomeApiService::class.java)
-    fun createAgendaService(): AgendaApiService = retrofit.create(AgendaApiService::class.java)
-
+    fun createApiService(): ApiService = retrofit.create(ApiService::class.java)
 }
 
 class OkHttpClientProvider {

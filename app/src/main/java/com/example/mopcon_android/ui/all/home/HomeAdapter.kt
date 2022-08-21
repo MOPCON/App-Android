@@ -1,11 +1,10 @@
 package com.example.mopcon_android.ui.all.home
 
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +17,7 @@ import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.*
 import com.example.mopcon_android.network.model.home.Banner
 import com.example.mopcon_android.network.model.home.NewsItem
+import com.example.mopcon_android.ui.extension.toPx
 import com.example.mopcon_android.ui.extension.textDateFormat
 import com.stx.xhb.androidx.transformers.Transformer
 import kotlinx.coroutines.CoroutineScope
@@ -25,19 +25,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+
 data class Fav(val id: Int, val test: String) //TODO: rewrite
 
-class HomeAdapter(private val itemClickListener: NewsItemClickListener) : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback()) {
+class HomeAdapter(private val bannerClickListener: BannerClickListener, private val itemClickListener: NewsItemClickListener) : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback()) {
     enum class ItemType {
         BANNER, NEWS_TITLE, NEWS_ITEM, FAV_TITLE, FAV_ITEM, NO_FAV_ITEM
     }
 
     private var bannerList = listOf<Banner>()
+    private var newsList = listOf<NewsItem>()
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     fun addFooterAndSubmitList(bannerList: List<Banner>, newsList: List<NewsItem>, favList: List<Fav>?) {
         this.bannerList = bannerList
+        this.newsList = newsList
         adapterScope.launch {
             val items = listOf(DataItem.Banner) +
                     when {
@@ -72,7 +75,7 @@ class HomeAdapter(private val itemClickListener: NewsItemClickListener) : ListAd
         when (holder) {
 
             is BannerViewHolder -> {
-                holder.bind(bannerList)
+                holder.bind(bannerList, bannerClickListener)
             }
 
             is NewsTitleViewHolder -> {
@@ -81,7 +84,8 @@ class HomeAdapter(private val itemClickListener: NewsItemClickListener) : ListAd
 
             is NewsItemViewHolder -> {
                 val data = getItem(position) as DataItem.LatestNewsItem
-                holder.bind(data.newsItem)
+                val isLastItem = position == (listOf(DataItem.Banner) + listOf(DataItem.LatestNewsTitle) + newsList.map { DataItem.LatestNewsItem(it) }).size - 1
+                holder.bind(isLastItem, data.newsItem, itemClickListener)
             }
 
             is FavTitleViewHolder -> {
@@ -155,20 +159,20 @@ class HomeAdapter(private val itemClickListener: NewsItemClickListener) : ListAd
     class BannerViewHolder private constructor(private val binding: ItemHomeBannerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(bannerList: List<Banner>) {
-            setBanner(bannerList)
+        fun bind(bannerList: List<Banner>, bannerClickListener: BannerClickListener) {
+            setBanner(bannerList, bannerClickListener)
         }
 
         companion object {
             fun from(parent: ViewGroup) = BannerViewHolder(ItemHomeBannerBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
 
-        private fun setBanner(bannerList: List<Banner>) {
+        private fun setBanner(bannerList: List<Banner>, bannerClickListener: BannerClickListener) {
             binding.banner.apply {
-                setOnItemClickListener { banner, model, view, position ->
+                setOnItemClickListener { _, _, _, position ->
                     val url = bannerList[position].link
                     if (url.isEmpty()) return@setOnItemClickListener
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    bannerClickListener.onClick(url)
                 }
 
                 val requestOptions = RequestOptions()
@@ -178,7 +182,7 @@ class HomeAdapter(private val itemClickListener: NewsItemClickListener) : ListAd
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .dontTransform()
 
-                loadImage { banner, model, view, position ->
+                loadImage { _, _, view, position ->
                     try {
                         Glide.with(this)
                             .load(bannerList[position].img)
@@ -207,9 +211,20 @@ class HomeAdapter(private val itemClickListener: NewsItemClickListener) : ListAd
 
     class NewsItemViewHolder private constructor(private val binding: ItemNewsMoreBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: NewsItem) {
-            binding.tvDate.textDateFormat(item.date)
-            binding.tvTitle.text = item.title
+        fun bind(isLastItem: Boolean, item: NewsItem, itemClickListener: NewsItemClickListener) {
+            binding.apply {
+                if (!isLastItem) {
+                    val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    params.setMargins(0, 0, 0, 16.toPx())
+                    itemView.layoutParams = params
+                }
+                tvDate.textDateFormat(item.date)
+                tvTitle.text = item.title
+                tvContent.text = item.description
+                itemView.setOnClickListener {
+                    itemClickListener.onClick(item.link)
+                }
+            }
         }
 
         companion object {
@@ -230,8 +245,12 @@ class HomeAdapter(private val itemClickListener: NewsItemClickListener) : ListAd
     }
 }
 
-class NewsItemClickListener(val clickListener: (data: NewsItem) -> Unit) {
-    fun onClick(data: NewsItem) = clickListener(data)
+class BannerClickListener(val clickListener: (link: String) -> Unit) {
+    fun onClick(link: String) = clickListener(link)
+}
+
+class NewsItemClickListener(val clickListener: (link: String) -> Unit) {
+    fun onClick(link: String) = clickListener(link)
 }
 
 

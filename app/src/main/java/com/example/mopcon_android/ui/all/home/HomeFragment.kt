@@ -1,5 +1,7 @@
 package com.example.mopcon_android.ui.all.home
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,9 +15,13 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding = FragmentHomeBinding::inflate
 
     private val viewModel: HomeViewModel by viewModel()
-    private val homeAdapter by lazy { HomeAdapter(NewsItemClickListener {
-        //TODO: Click event
-    })
+    private val homeAdapter by lazy {
+        HomeAdapter(
+            BannerClickListener {
+                context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
+            }, NewsItemClickListener {
+                context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
+            })
     }
 
     override fun initLayout() {

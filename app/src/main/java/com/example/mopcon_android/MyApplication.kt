@@ -2,10 +2,8 @@ package com.example.mopcon_android
 
 import android.app.Application
 import com.example.mopcon_android.db.AppDatabase
-import com.example.mopcon_android.network.ApiService
+import com.example.mopcon_android.network.ApiServiceModule
 import com.example.mopcon_android.network.OkHttpClientProvider
-import com.example.mopcon_android.repository.AgendaRepository
-import com.example.mopcon_android.ui.all.agenda.AgendaViewModel
 import com.example.mopcon_android.ui.all.home.HomeRepository
 import com.example.mopcon_android.ui.all.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
@@ -31,11 +29,10 @@ class MyApplication : Application() {
     }
 
     private val apiModules: Module = module {
-        single { get<OkHttpClientProvider>().createOkHttpClient() }
-        single { get<ApiService>().createHomeService() }
-        single { get<ApiService>().createAgendaService() }
-        single { ApiService(get()) }
+        single { ApiServiceModule(get()) }
         single { OkHttpClientProvider() }
+        single { get<OkHttpClientProvider>().createOkHttpClient() }
+        single { get<ApiServiceModule>().createApiService() }
     }
 
     private val repositoryModules = module {

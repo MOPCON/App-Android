@@ -2,9 +2,8 @@ package com.example.mopcon_android.repository
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.mopcon_android.network.ApiService
 
-class AgendaRepository(private val androidContext: Context, private val apiService: ApiService)  {
+class AgendaRepository(private val androidContext: Context)  {
     companion object {
         const val MY_SP = "MY_SP"
         const val LOGIN_KEY = "LOGIN_KEY"

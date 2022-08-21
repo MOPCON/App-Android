@@ -8,50 +8,12 @@
     android:orientation="vertical"
     android:paddingHorizontal="16dp"
     tools:context=".ui.all.home.HomeFragment">
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="16dp"
         android:src="@drawable/logo" />
-
-    <!--
-
-        <com.stx.xhb.androidx.XBanner
-            android:id="@+id/banner"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            app:AutoPlayTime="3000"
-            app:isClipChildrenMode="true"
-            app:clipChildrenLeftMargin="100dp"
-            app:clipChildrenRightMargin="100dp"
-            app:showIndicatorInCenter="false"
-            app:pointsVisibility="false"
-            app:placeholderDrawable="@drawable/home_banner"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/latest_news"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <include
-            layout="@layout/item_news_more"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/your_favorite_flight_is_arriving"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHome"
