@@ -1,17 +1,15 @@
 package com.example.mopcon_android.ui.all.agenda
 
-import android.content.res.Resources.getSystem
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentAgendaBinding
 import com.example.mopcon_android.network.model.agenda.AgendaData
-import com.example.mopcon_android.ui.all.home.HomeViewModel
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.ui.extension.BottomItemDecoration
 import com.example.mopcon_android.util.dpToPx
@@ -29,8 +27,8 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
     private val agendaAdapter by lazy {
         AgendaAdapter(
             ItemClickListener {
-                val view = view ?: return@ItemClickListener
-                Navigation.findNavController(view).navigate(R.id.action_agendaFragment_to_agendaDetailFragment)
+                val action = AgendaFragmentDirections.actionAgendaFragmentToAgendaDetailFragment(it)
+                findNavController().navigate(action)
             })
     }
 
@@ -43,7 +41,6 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
     private fun initRv() {
         binding.rvAgenda.apply {
             adapter = agendaAdapter
-            Log.e(">>>", "agendaAdapter")
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             addItemDecoration(BottomItemDecoration(8))
         }

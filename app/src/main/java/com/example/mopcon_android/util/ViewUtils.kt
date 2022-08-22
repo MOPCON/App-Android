@@ -17,7 +17,7 @@ fun ImageView.setGlideImg(imgUrl: String?) {
         .load(imgUrl)
         .apply(
             RequestOptions()
-                .placeholder(R.drawable.loading_animation)
+                .placeholder(R.drawable.ic_avatar_default_logo)
                 .error(R.drawable.ic_baseline_broken_image_24)
         )
         .into(this)

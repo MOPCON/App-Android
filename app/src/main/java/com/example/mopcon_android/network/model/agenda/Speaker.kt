@@ -1,8 +1,11 @@
 package com.example.mopcon_android.network.model.agenda
 
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Speaker(
     @Json(name = "company")
     val company: String,
@@ -20,4 +23,4 @@ data class Speaker(
     val nameE: String ?= null,
     @Json(name = "speaker_id")
     val speakerId: Int
-)
+): Parcelable

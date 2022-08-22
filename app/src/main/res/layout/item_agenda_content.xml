@@ -60,14 +60,15 @@
         android:id="@+id/rvTag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/tvContent"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:itemCount="14"
         tools:spanCount="2"
+        android:clickable="false"
+        android:focusable="false"
         android:layout_marginHorizontal="16dp"
-        android:numColumns="auto_fit"
         tools:listitem="@layout/item_tag" />
 
     <TextView
@@ -76,7 +77,6 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:textStyle="bold"
         android:layout_marginTop="28dp"
         android:textAlignment="textStart"
         app:layout_constrainedWidth="true"
@@ -103,5 +103,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvSpeaker"
         tools:text="地點" />
+    <View
+        android:id="@+id/viewDisableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@android:color/transparent"
+        tools:visibility="gone"
+        android:clickable="true"
+        android:focusable="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

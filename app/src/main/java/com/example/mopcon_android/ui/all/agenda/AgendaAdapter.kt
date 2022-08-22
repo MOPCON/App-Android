@@ -1,7 +1,8 @@
 package com.example.mopcon_android.ui.all.agenda
 
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -102,7 +103,7 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener) : ListAdap
 
         fun bind(roomData: RoomData, itemClickListener: ItemClickListener) {
             binding.apply {
-                itemView.setOnClickListener { itemClickListener.onClick(roomData) }
+                viewDisableLayout.setOnClickListener { itemClickListener.onClick(roomData) }
                 val startTime = if (roomData.startedAt?.toString().isNullOrEmpty()) "" else "${roomData.startedAt?.toTimeFormat(HM_FORMAT)}"
                 val endTimeStr = if (roomData.endedAt?.toString().isNullOrEmpty()) "" else " - ${roomData.endedAt?.toTimeFormat(HM_FORMAT)}"
                 tvTime.text = "$startTime$endTimeStr"
@@ -125,9 +126,10 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener) : ListAdap
                         justifyContent = JustifyContent.FLEX_START
                     }
                     layoutManager = flexboxLayoutManager
+
                 }
 
-                tagAdapter.submitList(roomData.tags.map { it.name })
+                tagAdapter.submitList(roomData.tags)
             }
         }
 

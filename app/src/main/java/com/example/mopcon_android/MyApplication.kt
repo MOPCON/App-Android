@@ -6,6 +6,7 @@ import com.example.mopcon_android.network.ApiServiceModule
 import com.example.mopcon_android.network.OkHttpClientProvider
 import com.example.mopcon_android.repository.AgendaRepository
 import com.example.mopcon_android.ui.all.agenda.AgendaViewModel
+import com.example.mopcon_android.ui.all.agenda.detail.AgendaDetailViewModel
 import com.example.mopcon_android.ui.all.home.HomeRepository
 import com.example.mopcon_android.ui.all.home.HomeViewModel
 import org.koin.android.ext.koin.androidContext
@@ -45,6 +46,7 @@ class MyApplication : Application() {
     private val viewModelModules = module {
         viewModel { HomeViewModel(get()) }
         viewModel { AgendaViewModel(get()) }
+        viewModel { AgendaDetailViewModel() }
     }
 
     private val databaseModules: Module = module {

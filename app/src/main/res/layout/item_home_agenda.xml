@@ -75,7 +75,6 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toStartOf="@+id/tvLocation"
         app:layout_constraintHorizontal_bias="0"

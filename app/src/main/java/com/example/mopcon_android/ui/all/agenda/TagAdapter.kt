@@ -1,13 +1,15 @@
 package com.example.mopcon_android.ui.all.agenda
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mopcon_android.databinding.*
+import com.example.mopcon_android.network.model.agenda.Tag
 
-class TagAdapter : ListAdapter<String, TagAdapter.TagViewHolder>(DiffCallback()) {
+class TagAdapter : ListAdapter<Tag, TagAdapter.TagViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagViewHolder {
         return TagViewHolder.from(parent)
@@ -18,11 +20,11 @@ class TagAdapter : ListAdapter<String, TagAdapter.TagViewHolder>(DiffCallback())
         holder.bind(data)
     }
 
-    class TagViewHolder private constructor(private val binding: ItemTagBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class TagViewHolder private constructor(private val binding: ItemTagBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(tagStr: String) {
-            binding.tvTag.text = tagStr
+        fun bind(tag: Tag) {
+            binding.tvTag.text = tag.name
+            binding.tvTag.background.setTint(Color.parseColor(tag.color.mobile))
         }
 
         companion object {
@@ -31,12 +33,12 @@ class TagAdapter : ListAdapter<String, TagAdapter.TagViewHolder>(DiffCallback())
 
     }
 
-    class DiffCallback : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
+    class DiffCallback : DiffUtil.ItemCallback<Tag>() {
+        override fun areItemsTheSame(oldItem: Tag, newItem: Tag): Boolean {
+            return oldItem.name == newItem.name
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: Tag, newItem: Tag): Boolean {
             return oldItem == newItem
         }
 

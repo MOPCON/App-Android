@@ -18,7 +18,11 @@
         tools:layout="@layout/fragment_agenda" >
         <action
             android:id="@+id/action_agendaFragment_to_agendaDetailFragment"
-            app:destination="@id/agendaDetailFragment" />
+            app:destination="@id/agendaDetailFragment" >
+            <argument
+                android:name="roomData"
+                app:argType="com.example.mopcon_android.network.model.agenda.RoomData" />
+        </action>
     </fragment>
 
     <fragment
@@ -37,7 +41,11 @@
         android:id="@+id/agendaDetailFragment"
         android:name="com.example.mopcon_android.ui.all.agenda.detail.AgendaDetailFragment"
         android:label="AgendaDetailFragment"
-        tools:layout="@layout/fragment_agenda_detail" />
+        tools:layout="@layout/fragment_agenda_detail">
+        <argument
+            android:name="roomData"
+            app:argType="com.example.mopcon_android.network.model.agenda.RoomData" />
+    </fragment>
 
     <fragment
         android:id="@+id/newsFragment"

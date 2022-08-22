@@ -47,22 +47,23 @@
             android:paddingHorizontal="16dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout1Speaker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/iv_light_blue"
+                    android:id="@+id/ivLightBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="3dp"
                     android:layout_marginTop="3dp"
                     android:src="@drawable/ic_avatar_light_blue_circle"
-                    app:layout_constraintStart_toStartOf="@id/iv_avatar"
-                    app:layout_constraintTop_toTopOf="@id/iv_avatar" />
+                    app:layout_constraintStart_toStartOf="@id/ivAvatar"
+                    app:layout_constraintTop_toTopOf="@id/ivAvatar" />
 
                 <ImageView
-                    android:id="@+id/iv_avatar"
+                    android:id="@+id/ivAvatar"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
@@ -73,19 +74,21 @@
                     tools:src="@drawable/ic_avatar_default_logo" />
 
                 <ImageView
-                    android:id="@+id/iv_line"
+                    android:id="@+id/ivLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_avatar_line"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_light_blue"
-                    app:layout_constraintEnd_toEndOf="@id/iv_avatar"
-                    app:layout_constraintStart_toStartOf="@id/iv_avatar"
-                    app:layout_constraintTop_toTopOf="@id/iv_light_blue" />
+                    app:layout_constraintBottom_toBottomOf="@id/ivLightBlue"
+                    app:layout_constraintEnd_toEndOf="@id/ivAvatar"
+                    app:layout_constraintStart_toStartOf="@id/ivAvatar"
+                    app:layout_constraintTop_toTopOf="@id/ivLightBlue" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
             <TextView
+                android:id="@+id/tvSpeaker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -95,6 +98,7 @@
                 tools:text="田哲禹" />
 
             <TextView
+                android:id="@+id/tvJobTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -110,6 +114,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -121,6 +126,7 @@
                     tools:text="01:00-02:00" />
 
                 <TextView
+                    android:id="@+id/tvPlace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -135,57 +141,69 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="如何寫出有效率、好讀、好維護的 Java/Android 程式" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:itemCount="14"
                 tools:spanCount="3"
                 tools:listitem="@layout/item_tag" />
 
             <TextView
+                android:id="@+id/tvContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
+                android:textSize="16dp"
                 tools:text="演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容" />
 
-            <ImageView
+            <LinearLayout
+                android:id="@+id/llSponsor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:src="@drawable/curve_line_blue"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textColor="@color/light_blue"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text="@string/sponsor" />
+                <ImageView
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:src="@drawable/curve_line_blue"/>
 
-            <ImageView
-                android:layout_width="99dp"
-                android:layout_height="54dp"
-                android:layout_marginTop="18dp"
-                android:layout_gravity="center"
-                android:background="@drawable/button_capsule_white"
-                android:src="@drawable/ic_avatar_default_logo"/>
+                <TextView
+                    android:id="@+id/tvSponsorTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/light_blue"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:text="@string/sponsor" />
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/ivSponsor"
+                    android:layout_width="99dp"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_capsule_white"
+                    android:src="@drawable/ic_avatar_default_logo"/>
+
+            </LinearLayout>
+            </LinearLayout>
 
     </ScrollView>
 
