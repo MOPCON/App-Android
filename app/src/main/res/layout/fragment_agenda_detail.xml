@@ -46,46 +46,29 @@
             android:orientation="vertical"
             android:paddingHorizontal="16dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <include
                 android:id="@+id/layout1Speaker"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:visibility="gone"
+                tools:visibility="visible"
+                layout="@layout/item_agenda_detail_avatar_1"/>
 
-                <ImageView
-                    android:id="@+id/ivLightBlue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="3dp"
-                    android:src="@drawable/ic_avatar_light_blue_circle"
-                    app:layout_constraintStart_toStartOf="@id/ivAvatar"
-                    app:layout_constraintTop_toTopOf="@id/ivAvatar" />
+            <include
+                android:id="@+id/layout2Speakers"
+                android:visibility="gone"
+                tools:visibility="visible"
+                layout="@layout/item_agenda_detail_avatar_2"/>
 
-                <ImageView
-                    android:id="@+id/ivAvatar"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_avatar_dark_blue_circle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_avatar_default_logo" />
+            <include
+                android:id="@+id/layout3Speakers"
+                android:visibility="gone"
+                tools:visibility="visible"
+                layout="@layout/item_agenda_detail_avatar_3"/>
 
-                <ImageView
-                    android:id="@+id/ivLine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_avatar_line"
-                    app:layout_constraintBottom_toBottomOf="@id/ivLightBlue"
-                    app:layout_constraintEnd_toEndOf="@id/ivAvatar"
-                    app:layout_constraintStart_toStartOf="@id/ivAvatar"
-                    app:layout_constraintTop_toTopOf="@id/ivLightBlue" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+            <include
+                android:id="@+id/layout4Speakers"
+                android:visibility="gone"
+                tools:visibility="visible"
+                layout="@layout/item_agenda_detail_avatar_4"/>
 
             <TextView
                 android:id="@+id/tvSpeaker"
@@ -95,6 +78,7 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                android:fontFamily="sans-serif-medium"
                 tools:text="田哲禹" />
 
             <TextView
@@ -165,9 +149,9 @@
                 android:id="@+id/tvContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 tools:text="演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容" />
 
             <LinearLayout

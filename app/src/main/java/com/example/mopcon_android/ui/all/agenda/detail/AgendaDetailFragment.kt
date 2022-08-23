@@ -4,7 +4,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
+import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentAgendaDetailBinding
@@ -21,27 +24,37 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAgendaDetailBinding = FragmentAgendaDetailBinding::inflate
-
-//    private val viewModel: AgendaDetailViewModel by viewModel()
-
+    private val viewModel: AgendaDetailViewModel by viewModel()
     private val args: AgendaDetailFragmentArgs by navArgs()
-
-//    private val testUrl = "https://i1.kknews.cc/DGWUD0aD7sV2MS8YBnprAEEcmSjyXtHejnqwN0A/0.jpg"
-
     private val tagAdapter by lazy { TagAdapter() }
 
     override fun initLayout() {
-
         binding.apply {
             args.roomData.let {
+                setAvatarVisible(it.speakers.size)
+
                 when (it.speakers.size) {
                     1 -> {
-                        ivAvatar.setGlideImg(it.speakers.firstOrNull()?.img?.mobile)
+                        layout1Speaker.ivAvatar.setGlideImg(it.speakers.firstOrNull()?.img?.mobile)
                     }
-                    2 -> {}
-                    3 -> {}
-                    4 -> {}
-                    else -> {}
+                    2 -> {
+                        layout2Speakers.layout1.ivAvatar.setGlideImg(it.speakers.firstOrNull()?.img?.mobile)
+                        layout2Speakers.layout2.ivAvatar.setGlideImg(it.speakers.getOrNull(1)?.img?.mobile)
+                    }
+                    3 -> {
+                        layout3Speakers.layout1.ivAvatar.setGlideImg(it.speakers.firstOrNull()?.img?.mobile)
+                        layout3Speakers.layout2.ivAvatar.setGlideImg(it.speakers.getOrNull(1)?.img?.mobile)
+                        layout3Speakers.layout3.ivAvatar.setGlideImg(it.speakers.getOrNull(2)?.img?.mobile)
+                    }
+                    4 -> {
+                        layout4Speakers.layout1.ivAvatar.setGlideImg(it.speakers.firstOrNull()?.img?.mobile)
+                        layout4Speakers.layout2.ivAvatar.setGlideImg(it.speakers.getOrNull(1)?.img?.mobile)
+                        layout4Speakers.layout3.ivAvatar.setGlideImg(it.speakers.getOrNull(2)?.img?.mobile)
+                        layout4Speakers.layout4.ivAvatar.setGlideImg(it.speakers.getOrNull(3)?.img?.mobile)
+                    }
+                    else -> {
+                        layout1Speaker.ivAvatar.setGlideImg(it.speakers.firstOrNull()?.img?.mobile)
+                    }
                 }
 
                 tvSpeaker.text = getDeviceLanguage(
@@ -86,6 +99,19 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
             }
         }
 
+    }
+
+    private fun setAvatarVisible(numberOfSpeaker: Int) {
+        val listOfSpeaker: List<ConstraintLayout> = listOf(
+            binding.layout1Speaker.root,
+            binding.layout2Speakers.root,
+            binding.layout3Speakers.root,
+            binding.layout4Speakers.root
+        )
+
+        listOfSpeaker.forEachIndexed { index, item ->
+            item.isVisible = (index + 1 == numberOfSpeaker)
+        }
     }
 
     override fun initAction() {

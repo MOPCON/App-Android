@@ -1,31 +1,49 @@
 package com.example.mopcon_android.ui.all.news
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.example.mopcon_android.databinding.FragmentMoreBinding
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mopcon_android.databinding.FragmentNewsBinding
-import com.example.mopcon_android.ui.all.home.HomeViewModel
 import com.example.mopcon_android.ui.base.BaseBindingFragment
+import com.example.mopcon_android.ui.extension.BottomItemDecoration
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsFragment : BaseBindingFragment<FragmentNewsBinding>() {
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentNewsBinding
-        get() = FragmentNewsBinding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentNewsBinding = FragmentNewsBinding::inflate
 
     private val viewModel: NewsViewModel by viewModel()
 
+    private val newsAdapter by lazy {
+        NewsAdapter(
+            NewsItemClickListener {
+                context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
+            })
+    }
+
     override fun initLayout() {
-        //TODO: init RecyclerView, set RecyclerView's layoutManager & adapter
+        binding.rvNews.apply {
+            adapter = newsAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(BottomItemDecoration(16))
+        }
+
     }
 
     override fun initAction() {
-        // TODO: let viewModel call api
+        viewModel.getNews()
     }
 
     override fun initObserver() {
+        viewModel.news.observe(viewLifecycleOwner) {
+            newsAdapter.submitList(it)
+        }
 
-        // TODO: observe LiveData, give value to RecyclerView's Adapter
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) loading() else hideLoading()
+        }
     }
 
 }

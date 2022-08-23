@@ -1,11 +1,11 @@
-package com.example.mopcon_android.network.model.news
+package com.example.mopcon_android.network.model.home
 
 
 import com.squareup.moshi.Json
 
 data class NewsResponse(
     @Json(name = "data")
-    val newsData: List<NewsData> ?= listOf(),
+    val data: List<NewsData> ?= listOf(),
     @Json(name = "message")
     val message: String,
     @Json(name = "success")

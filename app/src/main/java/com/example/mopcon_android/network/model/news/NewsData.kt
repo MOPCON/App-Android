@@ -5,13 +5,13 @@ import com.squareup.moshi.Json
 
 data class NewsData(
     @Json(name = "date")
-    val date: Int,
+    val date: Long?,
     @Json(name = "description")
-    val description: String,
+    val description: String? = null,
     @Json(name = "id")
-    val id: String,
+    val id: String? = null,
     @Json(name = "link")
-    val link: String,
+    val link: String? = null,
     @Json(name = "title")
-    val title: String
+    val title: String? = null
 )

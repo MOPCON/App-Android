@@ -1,6 +1,5 @@
 package com.example.mopcon_android.ui.all.news
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.mopcon_android.network.model.news.NewsData
 import com.example.mopcon_android.util.request
@@ -22,7 +21,7 @@ class NewsViewModel(private val repository: NewsRepository) : ViewModel() {
                 request = { repository.getNews() },
                 onSuccess = {
                     _isLoading.postValue(false)
-                    _news.postValue(it.body()?.data)
+                    _news.postValue(it.body()?.newsData ?: listOf())
                 },
                 onError = {
                     _isLoading.postValue(false)

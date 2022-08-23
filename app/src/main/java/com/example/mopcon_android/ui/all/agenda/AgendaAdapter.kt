@@ -25,7 +25,6 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener) : ListAdap
         AGENDA_TITLE, AGENDA_CONTENT
     }
 
-
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
     fun addFooterAndSubmitList(agendaList: List<PeriodData>? = listOf()) {

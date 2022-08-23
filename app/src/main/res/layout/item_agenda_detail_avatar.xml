@@ -26,7 +26,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:background="@drawable/ic_avatar_dark_blue_circle_test"
+        android:background="@drawable/ic_avatar_dark_blue_circle"
         tools:src="@drawable/ic_avatar_default_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
