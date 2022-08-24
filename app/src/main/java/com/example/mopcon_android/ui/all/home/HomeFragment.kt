@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mopcon_android.databinding.FragmentHomeBinding
+import com.example.mopcon_android.ui.all.MainActivity
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,8 +20,12 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
         HomeAdapter(
             BannerClickListener {
                 context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
+            }, NewsMoreClickListener {
+                (activity as MainActivity).setTabToNews()
             }, NewsItemClickListener {
                 context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
+            }, NoFavClickListener {
+                (activity as MainActivity).setTabToAgenda()
             })
     }
 

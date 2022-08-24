@@ -13,6 +13,7 @@ import com.example.mopcon_android.network.model.agenda.AgendaData
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.ui.extension.BottomItemDecoration
 import com.example.mopcon_android.util.dpToPx
+import com.google.android.material.tabs.TabLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
@@ -34,7 +35,29 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
 
     override fun initLayout() {
         initRg()
+        initTab()
         initRv()
+    }
+
+    private fun initTab() {
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> viewModel.getAgenda()
+                    1 -> viewModel.getExchange()
+                    2 -> {}
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
     }
 
     private fun initRv() {

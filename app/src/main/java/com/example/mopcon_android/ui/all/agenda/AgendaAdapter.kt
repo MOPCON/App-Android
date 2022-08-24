@@ -125,7 +125,6 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener) : ListAdap
                         justifyContent = JustifyContent.FLEX_START
                     }
                     layoutManager = flexboxLayoutManager
-
                 }
 
                 tagAdapter.submitList(roomData.tags)

@@ -1,4 +1,4 @@
-package com.example.mopcon_android.ui.all.news
+package com.example.mopcon_android.ui.all.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,11 +6,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mopcon_android.databinding.*
-import com.example.mopcon_android.network.model.news.NewsData
+import com.example.mopcon_android.network.model.home.NewsItem
 import com.example.mopcon_android.util.setTimeFormat
 
+class HomeNewsAdapter : ListAdapter<NewsItem, HomeNewsAdapter.NewsItemViewHolder>(DiffCallback()) {
 
-class NewsAdapter(private val itemClickListener: NewsItemClickListener) : ListAdapter<NewsData, NewsAdapter.NewsItemViewHolder>(DiffCallback()) {
+    var itemClickListener: NewsItemClickListener? = null
+
+    companion object {
+        @JvmStatic
+        fun newInstance(itemClickListener: NewsItemClickListener) = HomeNewsAdapter().apply {
+            this.itemClickListener = itemClickListener
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsItemViewHolder {
         return NewsItemViewHolder.from(parent)
@@ -23,13 +31,13 @@ class NewsAdapter(private val itemClickListener: NewsItemClickListener) : ListAd
 
     class NewsItemViewHolder private constructor(private val binding: ItemNewsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: NewsData, itemClickListener: NewsItemClickListener) {
+        fun bind(item: NewsItem, itemClickListener: NewsItemClickListener?) {
             binding.apply {
                 tvDate.setTimeFormat(item.date)
                 tvTitle.text = item.title
                 tvContent.text = item.description
                 itemView.setOnClickListener {
-                    itemClickListener.onClick(item.link ?: "")
+                    itemClickListener?.onClick(item.link ?: "")
                 }
             }
         }
@@ -40,18 +48,14 @@ class NewsAdapter(private val itemClickListener: NewsItemClickListener) : ListAd
     }
 
 
-    class DiffCallback : DiffUtil.ItemCallback<NewsData>() {
-        override fun areItemsTheSame(oldItem: NewsData, newItem: NewsData): Boolean {
+    class DiffCallback : DiffUtil.ItemCallback<NewsItem>() {
+        override fun areItemsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: NewsData, newItem: NewsData): Boolean {
+        override fun areContentsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
             return oldItem == newItem
         }
 
     }
-}
-
-class NewsItemClickListener(val clickListener: (link: String) -> Unit) {
-    fun onClick(link: String) = clickListener(link)
 }

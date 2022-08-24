@@ -3,21 +3,18 @@ package com.example.mopcon_android.ui.all.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.*
 import com.example.mopcon_android.network.model.home.Banner
 import com.example.mopcon_android.network.model.home.NewsItem
-import com.example.mopcon_android.util.setTimeFormat
-import com.example.mopcon_android.util.dpToPx
+import com.example.mopcon_android.ui.extension.RightItemDecoration
 import com.stx.xhb.androidx.transformers.Transformer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +24,12 @@ import kotlinx.coroutines.withContext
 
 data class Fav(val id: Int, val test: String) //TODO: rewrite
 
-class HomeAdapter(private val bannerClickListener: BannerClickListener, private val itemClickListener: NewsItemClickListener) : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback()) {
+class HomeAdapter(
+    private val bannerClickListener: BannerClickListener,
+    private val newsMoreClickListener: NewsMoreClickListener,
+    private val itemClickListener: NewsItemClickListener,
+    private val noFavClickListener: NoFavClickListener
+) : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback()) {
     enum class ItemType {
         BANNER, NEWS_TITLE, NEWS_ITEM, FAV_TITLE, FAV_ITEM, NO_FAV_ITEM
     }
@@ -44,7 +46,8 @@ class HomeAdapter(private val bannerClickListener: BannerClickListener, private 
             val items: List<DataItem> = listOf(DataItem.Banner) +
                     when {
                         newsList.isNullOrEmpty() -> listOf()
-                        else -> listOf(DataItem.LatestNewsTitle) + newsList.map { DataItem.LatestNewsItem(it) }
+//                        else -> listOf(DataItem.LatestNewsTitle) + newsList.take(1).map { DataItem.LatestNewsItem(it) }
+                        else -> listOf(DataItem.LatestNewsTitle) + listOf(DataItem.LatestNewsItem)
                     } +
                     listOf(DataItem.FavTitle) +
                     when {
@@ -78,13 +81,11 @@ class HomeAdapter(private val bannerClickListener: BannerClickListener, private 
             }
 
             is NewsTitleViewHolder -> {
-                holder.bind(holder.itemView.context.getString(R.string.latest_news))
+                holder.bind(holder.itemView.context.getString(R.string.latest_news), newsMoreClickListener)
             }
 
             is NewsItemViewHolder -> {
-                val data = getItem(position) as DataItem.LatestNewsItem
-                val isLastItem = position == (listOf(DataItem.Banner) + listOf(DataItem.LatestNewsTitle) + newsList.map { DataItem.LatestNewsItem(it) }).size - 1
-                holder.bind(isLastItem, data.newsItem, itemClickListener)
+                holder.bind(newsList, itemClickListener)
             }
 
             is FavTitleViewHolder -> {
@@ -97,7 +98,7 @@ class HomeAdapter(private val bannerClickListener: BannerClickListener, private 
             }
 
             is NoFavItemViewHolder -> {
-                holder.bind() //TODO: added listener
+                holder.bind(noFavClickListener)
             }
 
         }
@@ -116,20 +117,23 @@ class HomeAdapter(private val bannerClickListener: BannerClickListener, private 
 
     }
 
-    class NewsTitleViewHolder private constructor(private val binding: ItemHomeTitleBinding) :
+    class NewsTitleViewHolder private constructor(private val binding: ItemHomeNewsTitleBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(title: String) {
+        fun bind(title: String, newsMoreClickListener: NewsMoreClickListener) {
             binding.tvTitle.text = title
+            binding.tvMore.setOnClickListener {
+                newsMoreClickListener.onClick()
+            }
         }
 
         companion object {
-            fun from(parent: ViewGroup) = NewsTitleViewHolder(ItemHomeTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            fun from(parent: ViewGroup) = NewsTitleViewHolder(ItemHomeNewsTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
 
     }
 
-    class FavTitleViewHolder private constructor(private val binding: ItemHomeTitleBinding) :
+    class FavTitleViewHolder private constructor(private val binding: ItemHomeFavTitleBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(title: String) {
@@ -137,7 +141,7 @@ class HomeAdapter(private val bannerClickListener: BannerClickListener, private 
         }
 
         companion object {
-            fun from(parent: ViewGroup) = FavTitleViewHolder(ItemHomeTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            fun from(parent: ViewGroup) = FavTitleViewHolder(ItemHomeFavTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
 
     }
@@ -175,7 +179,6 @@ class HomeAdapter(private val bannerClickListener: BannerClickListener, private 
                 }
 
                 val requestOptions = RequestOptions()
-                    .transform(CenterCrop(), RoundedCorners(8))
                     .placeholder(R.drawable.home_banner)
                     .error(R.drawable.home_banner)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -183,51 +186,57 @@ class HomeAdapter(private val bannerClickListener: BannerClickListener, private 
 
                 loadImage { _, _, view, position ->
                     try {
+
+                        val imgV = view.rootView.findViewById<ImageView>(R.id.img)
+
                         Glide.with(this)
                             .load(bannerList[position].img)
                             .apply(requestOptions)
-                            .into(view as ImageView)
+                            .into(imgV)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
 
-                setPageTransformer(Transformer.Scale)
-                setAutoPlayAble(bannerList.count() > 1)
-                setBannerData(bannerList)
+                setIsClipChildrenMode(true)
+                setPageTransformer(Transformer.Default)
+                setAutoPlayAble(true)
+                setBannerData(R.layout.item_home_banner_img, bannerList)
             }
         }
     }
 
     class NoFavItemViewHolder private constructor(private val binding: ItemHomeNoStoreBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind() {}
+        fun bind(noFavClickListener: NoFavClickListener) {
+            binding.tvGoAgenda.setOnClickListener {
+                noFavClickListener.onClick()
+            }
+        }
 
         companion object {
             fun from(parent: ViewGroup) = NoFavItemViewHolder(ItemHomeNoStoreBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 
-    class NewsItemViewHolder private constructor(private val binding: ItemNewsMoreBinding) :
+    class NewsItemViewHolder private constructor(private val binding: ItemNewsRvBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(isLastItem: Boolean, item: NewsItem, itemClickListener: NewsItemClickListener) {
+
+
+        fun bind(newsList: List<NewsItem>, itemClickListener: NewsItemClickListener) {
             binding.apply {
-                if (!isLastItem) {
-                    val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    params.setMargins(0, 0, 0, 16.dpToPx())
-                    itemView.layoutParams = params
+                val newsAdapter = HomeNewsAdapter.newInstance(itemClickListener)
+                rvNews.apply {
+                    adapter = newsAdapter
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    addItemDecoration(RightItemDecoration(8))
                 }
-                tvDate.setTimeFormat(item.date)
-                tvTitle.text = item.title
-                tvContent.text = item.description
-                itemView.setOnClickListener {
-                    itemClickListener.onClick(item.link)
-                }
+                newsAdapter.submitList(newsList)
             }
         }
 
         companion object {
-            fun from(parent: ViewGroup) = NewsItemViewHolder(ItemNewsMoreBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            fun from(parent: ViewGroup) = NewsItemViewHolder(ItemNewsRvBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 
@@ -248,8 +257,16 @@ class BannerClickListener(val clickListener: (link: String) -> Unit) {
     fun onClick(link: String) = clickListener(link)
 }
 
+class NewsMoreClickListener(val clickListener: () -> Unit) {
+    fun onClick() = clickListener()
+}
+
 class NewsItemClickListener(val clickListener: (link: String) -> Unit) {
     fun onClick(link: String) = clickListener(link)
+}
+
+class NoFavClickListener(val clickListener: () -> Unit) {
+    fun onClick() = clickListener()
 }
 
 
@@ -265,8 +282,12 @@ sealed class DataItem {
         override val id: Int? = null
     }
 
-    data class LatestNewsItem(val newsItem: NewsItem) : DataItem() {
-        override val id = newsItem.id
+//    data class LatestNewsItem(val newsItem: NewsItem) : DataItem() {
+//        override val id = newsItem.id
+//    }
+
+    object LatestNewsItem : DataItem() {
+        override val id: Int? = null
     }
 
     object FavTitle : DataItem() {

@@ -25,6 +25,7 @@
         android:text="@string/you_did_not_store_any_agenda" />
 
     <TextView
+        android:id="@+id/tvGoAgenda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

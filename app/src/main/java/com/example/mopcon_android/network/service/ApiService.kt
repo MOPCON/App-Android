@@ -17,5 +17,8 @@ interface ApiService {
     @GET(Constants.MOPCON_API_URL + "api/2022/session")
     suspend fun getAgenda(): Response<AgendaResponse>
 
+    @GET(Constants.MOPCON_API_URL + "api/2022/unconf")
+    suspend fun getExchange(): Response<AgendaResponse>
+
 
 }

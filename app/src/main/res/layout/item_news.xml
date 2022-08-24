@@ -6,10 +6,11 @@
     android:background="@drawable/button_capsule_transparent_pink_stroke_radius_4"
     android:orientation="vertical"
     android:padding="10dp"
-    android:layout_marginBottom="16dp"
-    tools:layout_gravity="center">
+    tools:layout_gravity="center"
+    tools:layout_marginHorizontal="10dp">
 
     <TextView
+        android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/pink"
@@ -17,6 +18,7 @@
         tools:text="10/15(六) 14:05" />
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -26,12 +28,14 @@
         tools:text="我是標題" />
 
     <TextView
+        android:id="@+id/tvContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="16sp"
         android:textColor="@color/white"
-        tools:text="下午茶時間到了！有好多點心跟飲料，不要錯過唷！下午茶時間到了！有好多點心跟飲料，不要錯過唷！" />
-
+        android:ellipsize="end"
+        android:maxLines="2"
+        tools:text="下午茶時間到了！有好多點心跟飲料，不要錯過唷！下午茶時間到了！有好多點心跟飲料，不要錯過唷！下午茶時間到了！有好多點心跟飲料，不要錯過唷！" />
 
 </LinearLayout>

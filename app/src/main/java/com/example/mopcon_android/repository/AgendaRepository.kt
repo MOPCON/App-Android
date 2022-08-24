@@ -2,7 +2,9 @@ package com.example.mopcon_android.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.lifecycle.viewModelScope
 import com.example.mopcon_android.network.service.ApiService
+import kotlinx.coroutines.launch
 
 class AgendaRepository(private val androidContext: Context, private val apiService: ApiService)  {
     companion object {
@@ -26,5 +28,7 @@ class AgendaRepository(private val androidContext: Context, private val apiServi
 
 
     suspend fun getAgenda() = apiService.getAgenda()
+
+    suspend fun getExchange() = apiService.getExchange()
 
 }

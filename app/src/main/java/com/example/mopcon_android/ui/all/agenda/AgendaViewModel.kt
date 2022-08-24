@@ -20,8 +20,28 @@ class AgendaViewModel(private val repository: AgendaRepository) : ViewModel() {
     fun getAgenda() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.postValue(true)
+
             request(
-                request = { repository.getAgenda() },
+                request = {
+                        repository.getAgenda()
+                },
+                onSuccess = {
+                    _isLoading.postValue(false)
+                    _agendaList.value = it.body()?.data
+                },
+                onError = {
+                    Timber.e("onError, $it")
+                    _isLoading.postValue(false)
+                }
+            )
+        }
+    }
+
+    fun getExchange() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.postValue(true)
+            request(
+                request = { repository.getExchange() },
                 onSuccess = {
                     _isLoading.postValue(false)
                     _agendaList.value = it.body()?.data

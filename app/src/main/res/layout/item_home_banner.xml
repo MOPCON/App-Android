@@ -6,9 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     app:AutoPlayTime="3000"
-    app:isClipChildrenMode="true"
-    app:clipChildrenLeftMargin="100dp"
-    app:clipChildrenRightMargin="100dp"
     app:showIndicatorInCenter="false"
     app:pointsVisibility="false"
     app:placeholderDrawable="@drawable/home_banner" />

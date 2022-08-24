@@ -30,4 +30,12 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
 
     }
 
+    fun setTabToAgenda() {
+        binding.bottomNavigation.selectedItemId = R.id.agendaFragment
+    }
+
+    fun setTabToNews() {
+        binding.bottomNavigation.selectedItemId = R.id.newsFragment
+    }
+
 }
