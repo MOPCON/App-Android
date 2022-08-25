@@ -40,7 +40,7 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
 
     override fun initObserver() {
         viewModel.bannerAndNews.observe(viewLifecycleOwner) {
-            homeAdapter.addFooterAndSubmitList(it.banner, it.news, listOf()) //TODO: add fav list
+            homeAdapter.addFooterAndSubmitList(it.banner, it.news, listOf()) { binding.rvHome.scrollToPosition(0) } //TODO: add fav list
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {

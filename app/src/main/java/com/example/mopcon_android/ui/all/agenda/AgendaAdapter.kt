@@ -27,7 +27,7 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener) : ListAdap
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-    fun addFooterAndSubmitList(agendaList: List<PeriodData>? = listOf()) {
+    fun addFooterAndSubmitList(agendaList: List<PeriodData>? = listOf(), scrollToTop: () -> Unit) {
         adapterScope.launch {
             val contentList = mutableListOf<AgendaDataItem>()
 
@@ -42,7 +42,9 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener) : ListAdap
             }
 
             withContext(Dispatchers.Main) { //update in main ui thread
-                submitList(contentList)
+                submitList(contentList) {
+                    scrollToTop.invoke()
+                }
             }
         }
     }

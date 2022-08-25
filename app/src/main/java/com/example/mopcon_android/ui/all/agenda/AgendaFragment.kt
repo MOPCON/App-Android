@@ -76,14 +76,14 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
                     binding.tvDate2.background = ContextCompat.getDrawable(binding.tvDate2.context, R.drawable.button_capsule_dark_blue)
                     binding.tvDate1.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.white))
                     binding.tvDate2.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.gray))
-                    agendaAdapter.addFooterAndSubmitList(agendaList.firstOrNull()?.periodData)
+                    agendaAdapter.addFooterAndSubmitList(agendaList.firstOrNull()?.periodData) {binding.rvAgenda.scrollToPosition(0)}
                 }
                 R.id.rbDateSecond -> {
                     binding.tvDate1.background = ContextCompat.getDrawable(binding.tvDate1.context, R.drawable.button_capsule_dark_blue)
                     binding.tvDate2.background = ContextCompat.getDrawable(binding.tvDate2.context, android.R.color.transparent)
                     binding.tvDate1.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.gray))
                     binding.tvDate2.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.white))
-                    agendaAdapter.addFooterAndSubmitList(agendaList.getOrNull(1)?.periodData)
+                    agendaAdapter.addFooterAndSubmitList(agendaList.getOrNull(1)?.periodData){binding.rvAgenda.scrollToPosition(0)}
                 }
             }
         }
@@ -97,9 +97,9 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
         viewModel.agendaList.observe(viewLifecycleOwner) {
             agendaList = it
             if (binding.rgDate.checkedRadioButtonId == R.id.rbDateFirst)
-                agendaAdapter.addFooterAndSubmitList(it.firstOrNull()?.periodData)
+                agendaAdapter.addFooterAndSubmitList(it.firstOrNull()?.periodData){binding.rvAgenda.scrollToPosition(0)}
             else
-                agendaAdapter.addFooterAndSubmitList(it.getOrNull(1)?.periodData)
+                agendaAdapter.addFooterAndSubmitList(it.getOrNull(1)?.periodData){binding.rvAgenda.scrollToPosition(0)}
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {

@@ -39,14 +39,13 @@ class HomeAdapter(
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-    fun addFooterAndSubmitList(bannerList: List<Banner>, newsList: List<NewsItem>, favList: List<Fav>?) {
+    fun addFooterAndSubmitList(bannerList: List<Banner>, newsList: List<NewsItem>, favList: List<Fav>?, scrollToTop: () -> Unit) {
         this.bannerList = bannerList
         this.newsList = newsList
         adapterScope.launch {
             val items: List<DataItem> = listOf(DataItem.Banner) +
                     when {
                         newsList.isNullOrEmpty() -> listOf()
-//                        else -> listOf(DataItem.LatestNewsTitle) + newsList.take(1).map { DataItem.LatestNewsItem(it) }
                         else -> listOf(DataItem.LatestNewsTitle) + listOf(DataItem.LatestNewsItem)
                     } +
                     listOf(DataItem.FavTitle) +
@@ -56,7 +55,9 @@ class HomeAdapter(
                     }
 
             withContext(Dispatchers.Main) { //update in main ui thread
-                submitList(items)
+                submitList(items) {
+                    scrollToTop.invoke()
+                }
             }
         }
     }
@@ -281,10 +282,6 @@ sealed class DataItem {
     object LatestNewsTitle : DataItem() {
         override val id: Int? = null
     }
-
-//    data class LatestNewsItem(val newsItem: NewsItem) : DataItem() {
-//        override val id = newsItem.id
-//    }
 
     object LatestNewsItem : DataItem() {
         override val id: Int? = null
