@@ -1,17 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_blue"
+    android:orientation="vertical"
     tools:context=".ui.all.more.MoreFragment">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="56dp"
         android:gravity="center"
-        android:textSize="20sp"
+        android:text="@string/more_info"
         android:textColor="@color/white"
-        android:text="more list" />
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/llSpeaker"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:paddingHorizontal="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/speaker_introduce"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_alien" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_right_arrow" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llSponsor"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:paddingHorizontal="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/sponsor"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_planet" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_right_arrow" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llHostCommunity"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:paddingHorizontal="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/host_community"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_comet" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_right_arrow" />
+
+    </LinearLayout>
+
+</LinearLayout>

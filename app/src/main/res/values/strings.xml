@@ -20,4 +20,7 @@
     <string name="you_did_not_store_any_agenda">你目前尚未收藏任何議程</string>
     <string name="get_around">去逛逛</string>
     <string name="see_more">查看更多</string>
+    <string name="speaker_introduce">講者介紹</string>
+    <string name="more_info">更多資訊</string>
+    <string name="host_community">主辦社群</string>
 </resources>
