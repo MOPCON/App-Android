@@ -1,5 +1,6 @@
 package com.example.mopcon_android.ui.all.agenda.detail
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +8,6 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
-import androidx.viewbinding.ViewBinding
-import com.bumptech.glide.Glide
-import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentAgendaDetailBinding
 import com.example.mopcon_android.network.model.agenda.RoomData
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
@@ -21,16 +19,25 @@ import com.example.mopcon_android.util.toTimeFormat
 import com.google.android.flexbox.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() {
+class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() /*OnBackPressedListener*/ {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAgendaDetailBinding = FragmentAgendaDetailBinding::inflate
-    private val viewModel: AgendaDetailViewModel by viewModel()
-    private val args: AgendaDetailFragmentArgs by navArgs()
     private val tagAdapter by lazy { TagAdapter() }
+    private val args by lazy { arguments?.getParcelable(BUNDLE_ROOM_DATA) as RoomData? }
+
+    companion object {
+        private const val BUNDLE_ROOM_DATA = "bundle_room_data"
+        fun newInstance(roomData: RoomData) = AgendaDetailFragment().apply {
+            val bundle = Bundle().apply {
+                putParcelable(BUNDLE_ROOM_DATA, roomData)
+            }
+            arguments = bundle
+        }
+    }
 
     override fun initLayout() {
         binding.apply {
-            args.roomData.let {
+            args?.let {
                 setAvatarVisible(it.speakers.size)
 
                 when (it.speakers.size) {
@@ -115,10 +122,17 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
     }
 
     override fun initAction() {
+        binding.ivBack.setOnClickListener {
+            activity?.onBackPressed()
+            Log.e(">>>", "ivBack")
+        }
     }
 
     override fun initObserver() {
     }
 
+//    override fun onBackPressed() {
+//        activity?.supportFragmentManager?.popBackStack(, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//    }
 
 }

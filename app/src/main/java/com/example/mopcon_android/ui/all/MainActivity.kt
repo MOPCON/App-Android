@@ -1,16 +1,11 @@
 package com.example.mopcon_android.ui.all
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.ActivityMainBinding
-import com.example.mopcon_android.ui.all.home.HomeViewModel
 import com.example.mopcon_android.ui.base.BaseBindingActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
 
@@ -23,11 +18,9 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     }
 
     override fun initAction() {
-
     }
 
     override fun initObserver() {
-
     }
 
     fun setTabToAgenda() {
@@ -38,4 +31,8 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
         binding.bottomNavigation.selectedItemId = R.id.newsFragment
     }
 
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount >= 1) supportFragmentManager.popBackStack()
+        else super.onBackPressed()
+    }
 }
