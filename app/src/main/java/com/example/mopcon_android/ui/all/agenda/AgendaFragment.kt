@@ -2,8 +2,6 @@ package com.example.mopcon_android.ui.all.agenda
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentAgendaBinding
@@ -11,6 +9,7 @@ import com.example.mopcon_android.network.model.agenda.AgendaData
 import com.example.mopcon_android.ui.all.agenda.detail.AgendaDetailFragment
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.ui.extension.BottomItemDecoration
+import com.example.mopcon_android.util.addFragmentToFragment
 import com.google.android.material.tabs.TabLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,15 +27,9 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
             ItemClickListener {
 //                val action = AgendaFragmentDirections.actionAgendaFragmentToAgendaDetailFragment(it)
 //                findNavController().navigate(action)
-                addFragmentToFragment(AgendaDetailFragment.newInstance(it))
+//                addFragmentToFragment(AgendaDetailFragment.newInstance(it))
+                parentFragmentManager.addFragmentToFragment(R.id.llAgenda, AgendaDetailFragment.newInstance(it))
             })
-    }
-
-    private fun addFragmentToFragment(fragment: Fragment) {
-        val ft = childFragmentManager.beginTransaction()
-        ft.add(R.id.llAgenda, fragment, fragment.javaClass.name)
-        ft.addToBackStack(null)
-        ft.commit()
     }
 
     override fun initLayout() {
@@ -75,23 +68,12 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
     }
 
     private fun initRg() {
-        binding.rgDate.setOnCheckedChangeListener { _, id ->
-            when (id) {
-                R.id.rbDateFirst -> {
-                    binding.tvDate1.background = ContextCompat.getDrawable(binding.tvDate1.context, android.R.color.transparent)
-                    binding.tvDate2.background = ContextCompat.getDrawable(binding.tvDate2.context, R.drawable.button_capsule_dark_blue)
-                    binding.tvDate1.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.white))
-                    binding.tvDate2.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.gray))
-                    agendaAdapter.addFooterAndSubmitList(agendaList.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
-                }
-                R.id.rbDateSecond -> {
-                    binding.tvDate1.background = ContextCompat.getDrawable(binding.tvDate1.context, R.drawable.button_capsule_dark_blue)
-                    binding.tvDate2.background = ContextCompat.getDrawable(binding.tvDate2.context, android.R.color.transparent)
-                    binding.tvDate1.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.gray))
-                    binding.tvDate2.setTextColor(ContextCompat.getColor(binding.tvDate1.context, R.color.white))
-                    agendaAdapter.addFooterAndSubmitList(agendaList.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }
-                }
-            }
+        binding.rgTopBar.onFirstRbChecked = {
+            agendaAdapter.addFooterAndSubmitList(agendaList.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
+        }
+
+        binding.rgTopBar.onSecondRbChecked = {
+            agendaAdapter.addFooterAndSubmitList(agendaList.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }
         }
     }
 
@@ -102,7 +84,7 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
     override fun initObserver() {
         viewModel.agendaList.observe(viewLifecycleOwner) {
             agendaList = it
-            if (binding.rgDate.checkedRadioButtonId == R.id.rbDateFirst)
+            if (binding.rgTopBar.checkedRadioButtonId == R.id.rb1)
                 agendaAdapter.addFooterAndSubmitList(it.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
             else
                 agendaAdapter.addFooterAndSubmitList(it.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }

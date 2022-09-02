@@ -23,4 +23,7 @@
     <string name="speaker_introduce">講者介紹</string>
     <string name="more_info">更多資訊</string>
     <string name="host_community">主辦社群</string>
+    <string name="speaker">講者</string>
+    <string name="about_speaker">關於講者</string>
+    <string name="speaker_info">講者資訊</string>
 </resources>

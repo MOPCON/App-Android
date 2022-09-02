@@ -24,7 +24,6 @@ class TagAdapter : ListAdapter<Tag, TagAdapter.TagViewHolder>(DiffCallback()) {
 
         fun bind(tag: Tag) {
             binding.tvTag.text = tag.name
-//            binding.tvTag.background.setTint(Color.parseColor(tag.color.mobile))
         }
 
         companion object {

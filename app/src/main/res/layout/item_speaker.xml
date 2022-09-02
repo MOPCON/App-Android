@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
     android:background="@drawable/button_capsule_transparent_blue_stroke_radius_8"
     android:paddingHorizontal="12dp"
     android:paddingVertical="16dp"

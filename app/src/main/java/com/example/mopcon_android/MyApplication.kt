@@ -9,6 +9,7 @@ import com.example.mopcon_android.ui.all.agenda.AgendaViewModel
 import com.example.mopcon_android.ui.all.agenda.detail.AgendaDetailViewModel
 import com.example.mopcon_android.ui.all.home.HomeRepository
 import com.example.mopcon_android.ui.all.home.HomeViewModel
+import com.example.mopcon_android.ui.all.more.speaker.SpeakerViewModel
 import com.example.mopcon_android.ui.all.news.NewsRepository
 import com.example.mopcon_android.ui.all.news.NewsViewModel
 import org.koin.android.ext.koin.androidContext
@@ -51,6 +52,7 @@ class MyApplication : Application() {
         viewModel { AgendaViewModel(get()) }
         viewModel { AgendaDetailViewModel() }
         viewModel { NewsViewModel(get()) }
+        viewModel { SpeakerViewModel(get()) }
     }
 
     private val databaseModules: Module = module {

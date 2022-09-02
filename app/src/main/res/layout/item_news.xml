@@ -6,8 +6,7 @@
     android:background="@drawable/button_capsule_transparent_pink_stroke_radius_4"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:layout_gravity="center"
-    tools:layout_marginHorizontal="10dp">
+    tools:layout_gravity="center">
 
     <TextView
         android:id="@+id/tvDate"

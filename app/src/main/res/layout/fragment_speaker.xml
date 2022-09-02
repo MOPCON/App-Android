@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/dark_blue"
+    android:orientation="vertical"
+    android:id="@+id/llSpeaker"
+    tools:context=".ui.all.more.MoreFragment">
+
+    <com.example.mopcon_android.ui.all.common.TitleBar
+        android:id="@+id/titleBar"
+        app:titleText="@string/speaker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSpeaker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:itemCount="13"
+        android:layout_marginHorizontal="16dp"
+        tools:listitem="@layout/item_speaker" />
+
+</LinearLayout>
