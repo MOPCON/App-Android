@@ -1,5 +1,6 @@
 package com.example.mopcon_android.util
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
@@ -29,6 +30,7 @@ fun <T> ViewModel.request(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.e(">>>", "e = $e")
             viewModelScope.launch(onErrorDispatcher) { onError?.invoke(e) }
         }
     }

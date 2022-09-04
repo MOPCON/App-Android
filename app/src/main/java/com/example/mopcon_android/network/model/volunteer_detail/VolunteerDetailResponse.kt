@@ -1,4 +1,4 @@
-package com.example.mopcon_android.network.community
+package com.example.mopcon_android.network.model.volunteer_detail
 
 
 import com.squareup.moshi.Json
@@ -8,9 +8,9 @@ import android.os.Parcelable
 
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class CommunityResponse(
+data class VolunteerDetailResponse(
     @Json(name = "data")
-    val data: Community,
+    val `data`: VolunteerDetailData,
     @Json(name = "message")
     val message: String?,
     @Json(name = "success")

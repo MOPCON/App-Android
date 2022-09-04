@@ -9,7 +9,9 @@ import com.example.mopcon_android.ui.all.agenda.AgendaViewModel
 import com.example.mopcon_android.ui.all.agenda.detail.AgendaDetailViewModel
 import com.example.mopcon_android.ui.all.home.HomeRepository
 import com.example.mopcon_android.ui.all.home.HomeViewModel
+import com.example.mopcon_android.ui.all.more.host_community.HostCommunityViewModel
 import com.example.mopcon_android.ui.all.more.speaker.SpeakerViewModel
+import com.example.mopcon_android.ui.all.more.sponsor.SponsorViewModel
 import com.example.mopcon_android.ui.all.news.NewsRepository
 import com.example.mopcon_android.ui.all.news.NewsViewModel
 import org.koin.android.ext.koin.androidContext
@@ -17,6 +19,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import javax.net.ssl.HostnameVerifier
 
 class MyApplication : Application() {
 
@@ -53,6 +56,8 @@ class MyApplication : Application() {
         viewModel { AgendaDetailViewModel() }
         viewModel { NewsViewModel(get()) }
         viewModel { SpeakerViewModel(get()) }
+        viewModel { SponsorViewModel(get()) }
+        viewModel { HostCommunityViewModel(get()) }
     }
 
     private val databaseModules: Module = module {

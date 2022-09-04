@@ -27,7 +27,7 @@ class SpeakerFragment : BaseBindingFragment<FragmentSpeakerBinding>() {
     private val speakersAdapter by lazy {
         SpeakerAdapter(
             SpeakerItemClickListener {
-                parentFragmentManager.addFragmentToFragment(R.id.llMore, SpeakerDetailFragment.newInstance())
+                parentFragmentManager.addFragmentToFragment(R.id.llMore, SpeakerDetailFragment.newInstance(it))
             })
     }
 

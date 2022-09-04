@@ -16,7 +16,7 @@ data class RoomData(
     @Json(name = "is_keynote")
     val isKeynote: Boolean,
     @Json(name = "is_online")
-    val isOnline: Boolean,
+    val isOnline: Boolean?,
     @Json(name = "level")
     val level: String,
     @Json(name = "link_slide")

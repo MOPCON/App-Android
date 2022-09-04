@@ -5,6 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
+import com.example.mopcon_android.network.model.agenda.Tag
 
 @JsonClass(generateAdapter = true)
 @Parcelize
@@ -20,7 +21,7 @@ data class SpeakerData(
     @Json(name = "company_e")
     val companyE: String?,
     @Json(name = "ended_at")
-    val endedAt: Int?,
+    val endedAt: Long?,
     @Json(name = "expected_gain")
     val expectedGain: String?,
     @Json(name = "expected_gain_e")
@@ -30,7 +31,7 @@ data class SpeakerData(
     @Json(name = "img")
     val img: Img?,
     @Json(name = "is_keynote")
-    val isKeynote: String?,
+    val isKeynote: Boolean?,
     @Json(name = "is_online")
     val isOnline: Boolean?,
     @Json(name = "job_title")
@@ -68,13 +69,13 @@ data class SpeakerData(
     @Json(name = "sponsor_id")
     val sponsorId: Int?,
     @Json(name = "started_at")
-    val startedAt: Int?,
+    val startedAt: Long?,
     @Json(name = "summary")
     val summary: String?,
     @Json(name = "summary_e")
     val summaryE: String?,
     @Json(name = "tags")
-    val tags: List<Tag>?,
+    val tags: List<Tag>?= listOf(),
     @Json(name = "target")
     val target: String?,
     @Json(name = "target_e")

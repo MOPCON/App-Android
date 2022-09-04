@@ -5,12 +5,13 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
+import com.example.mopcon_android.ui.all.more.sponsor.SponsorAdapter
 
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class SponsorData(
     @Json(name = "data")
-    val `data`: List<SponsorDetailData>?,
+    val sponsorDetailData: List<SponsorDetailData>?,
     @Json(name = "name")
     val name: String?,
     @Json(name = "name_e")

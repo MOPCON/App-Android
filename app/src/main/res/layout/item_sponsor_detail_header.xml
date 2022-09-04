@@ -3,18 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/dark_blue"
     android:orientation="vertical"
-    android:clickable="true"
-    android:focusable="true"
+    android:paddingTop="20dp"
+    android:paddingBottom="12dp"
     tools:context=".ui.all.home.HomeFragment">
-
-    <com.example.mopcon_android.ui.common.TitleBar
-        android:id="@+id/titleBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleText="@string/sponsor_info"/>
 
     <include
         android:id="@+id/layoutSponsor"
@@ -22,7 +16,6 @@
 
     <com.example.mopcon_android.ui.common.MediaBar
         android:id="@+id/mediaBar"
-        android:paddingHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp" />
@@ -34,7 +27,16 @@
         android:layout_marginTop="8dp"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:paddingHorizontal="16dp"
         tools:text="介紹內容介紹內容，介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容，介紹內容。" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/sponsor_agenda"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

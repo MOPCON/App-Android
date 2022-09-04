@@ -10,7 +10,7 @@ import android.os.Parcelable
 @Parcelize
 data class Community(
     @Json(name = "community")
-    val community: List<CommunityData?>? = listOf(),
+    val community: List<CommunityData>? = listOf(),
     @Json(name = "participant")
-    val participant: List<Participant>? = listOf()
+    val participant: List<CommunityData>? = listOf()
 ) : Parcelable

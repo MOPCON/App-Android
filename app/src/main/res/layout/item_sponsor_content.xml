@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:orientation="vertical"
+    tools:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/ivSponsor"
+        android:layout_width="99dp"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:background="@drawable/button_capsule_white"
+        android:src="@drawable/ic_avatar_default_logo"
+        tools:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/tvSponsor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/ivIcon"
+        app:layout_constraintTop_toTopOf="@+id/ivIcon"
+        tools:text="贊助商名稱贊助商名稱贊助商名稱" />
+
+</LinearLayout>
+

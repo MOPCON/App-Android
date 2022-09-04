@@ -25,9 +25,6 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
     private val agendaAdapter by lazy {
         AgendaAdapter(
             ItemClickListener {
-//                val action = AgendaFragmentDirections.actionAgendaFragmentToAgendaDetailFragment(it)
-//                findNavController().navigate(action)
-//                addFragmentToFragment(AgendaDetailFragment.newInstance(it))
                 parentFragmentManager.addFragmentToFragment(R.id.llAgenda, AgendaDetailFragment.newInstance(it))
             })
     }

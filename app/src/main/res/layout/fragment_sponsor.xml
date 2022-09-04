@@ -3,25 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/dark_blue"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
-    tools:context=".ui.all.more.MoreFragment">
+    android:id="@+id/llSpeaker"
+    tools:context=".ui.all.more.sponsor.SponsorFragment">
 
-    <TextView
+    <com.example.mopcon_android.ui.common.TitleBar
+        android:id="@+id/titleBar"
+        app:titleText="@string/sponsors_in_2022"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center"
-        android:text="@string/news"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvNews"
+        android:id="@+id/rvSponsor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        tools:itemCount="3"
-        tools:listitem="@layout/item_news" />
+        tools:itemCount="13"
+        android:layout_marginHorizontal="16dp"
+        tools:listitem="@layout/item_sponsor_title" />
 
 </LinearLayout>

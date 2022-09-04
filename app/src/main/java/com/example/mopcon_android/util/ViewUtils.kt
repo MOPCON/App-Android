@@ -1,7 +1,11 @@
 package com.example.mopcon_android.util
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
@@ -18,6 +22,17 @@ fun TextView.setTimeFormat(timeStamp: Long?, format: String ?= MDHM_FORMAT) {
 fun ImageView.setGlideImg(imgUrl: String?) {
     Glide.with(this.context)
         .load(imgUrl)
+        .apply(
+            RequestOptions()
+                .placeholder(R.drawable.ic_avatar_default_logo)
+                .error(R.drawable.ic_avatar_default_logo)
+        )
+        .into(this)
+}
+
+fun ImageView.setGlideImg(@DrawableRes imgRes: Int?) {
+    Glide.with(this.context)
+        .load(imgRes)
         .apply(
             RequestOptions()
                 .placeholder(R.drawable.ic_avatar_default_logo)

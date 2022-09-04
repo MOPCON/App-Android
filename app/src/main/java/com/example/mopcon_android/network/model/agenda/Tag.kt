@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Tag(
     @Json(name = "color")
-    val color: Color,
+    val color: ColorData,
     @Json(name = "name")
     val name: String
 ): Parcelable

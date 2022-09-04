@@ -10,7 +10,7 @@ import android.os.Parcelable
 @Parcelize
 data class VolunteerResponse(
     @Json(name = "data")
-    val `data`: VolunteerData?,
+    val `data`: Volunteer,
     @Json(name = "message")
     val message: String?,
     @Json(name = "success")

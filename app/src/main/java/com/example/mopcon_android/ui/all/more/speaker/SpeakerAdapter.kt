@@ -30,7 +30,7 @@ class SpeakerAdapter(private val itemClickListener: SpeakerItemClickListener) : 
     class SpeakerItemViewHolder private constructor(private val binding: ItemSpeakerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private val tagAdapter by lazy { SpeakerTagAdapter() }
+        private val tagAdapter by lazy { TagAdapter() }
 
         fun bind(item: SpeakerData, itemClickListener: SpeakerItemClickListener) {
             binding.apply {

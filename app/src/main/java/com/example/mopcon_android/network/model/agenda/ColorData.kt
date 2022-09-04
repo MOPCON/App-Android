@@ -6,7 +6,7 @@ import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Color(
+data class ColorData(
     @Json(name = "mobile")
     val mobile: String,
     @Json(name = "web")

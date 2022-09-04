@@ -7,9 +7,30 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mopcon_android.databinding.*
+import com.example.mopcon_android.network.model.agenda.ColorData
 import com.example.mopcon_android.network.model.agenda.Tag
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TagAdapter : ListAdapter<Tag, TagAdapter.TagViewHolder>(DiffCallback()) {
+
+    private val adapterScope = CoroutineScope(Dispatchers.Default)
+
+    fun addFooterAndSubmitList(tagList: List<Tag>? = listOf(), isRecordable: Boolean?= true) {
+        adapterScope.launch {
+            val contentList = mutableListOf<Tag>()
+
+            if (isRecordable == false) contentList.add(Tag(ColorData("#FF7987", ""),"禁止攝影"))
+
+            tagList?.map {  contentList.add(it) }
+
+            withContext(Dispatchers.Main) { //update in main ui thread
+                submitList(contentList)
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagViewHolder {
         return TagViewHolder.from(parent)
@@ -23,6 +44,8 @@ class TagAdapter : ListAdapter<Tag, TagAdapter.TagViewHolder>(DiffCallback()) {
     class TagViewHolder private constructor(private val binding: ItemTagBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(tag: Tag) {
+            //api傳禁止攝影顯示粉色，其他顏色則按照設計稿
+            if (tag.name == "禁止攝影") binding.tvTag.background.setTint(Color.parseColor(tag.color.mobile))
             binding.tvTag.text = tag.name
         }
 

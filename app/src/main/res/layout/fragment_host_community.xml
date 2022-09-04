@@ -1,27 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llSpeaker"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_blue"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
-    tools:context=".ui.all.more.MoreFragment">
+    tools:context=".ui.all.more.sponsor.SponsorFragment">
+
+    <com.example.mopcon_android.ui.common.TitleBar
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleText="@string/community" />
+
+    <com.example.mopcon_android.ui.common.TopRadioGroupBar
+        android:id="@+id/rgTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="16dp"
+        app:firstRbText="@string/main_community"
+        app:secondRbText="@string/volunteer_organization" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCommunity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        tools:layout_height="300dp"
+        tools:itemCount="13"
+        tools:listitem="@layout/item_sponsor_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvVolunteer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/tvContent"
+        tools:itemCount="13"
+        tools:listitem="@layout/item_volunteer"
+        tools:spanCount="2" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center"
-        android:text="@string/news"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvNews"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        tools:itemCount="3"
-        tools:listitem="@layout/item_news" />
+        android:layout_height="match_parent"
+        android:text="@string/volunteer_organization" />
 
 </LinearLayout>

@@ -9,6 +9,14 @@ import android.os.Parcelable
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class VolunteerData(
-    @Json(name = "volunteer")
-    val volunteer: List<Volunteer>?
+    @Json(name = "id")
+    val id: Int,
+    @Json(name = "introduction_e")
+    val introductionE: String?,
+    @Json(name = "name")
+    val name: String?,
+    @Json(name = "name_e")
+    val nameE: String?,
+    @Json(name = "photo")
+    val photo: String?
 ) : Parcelable

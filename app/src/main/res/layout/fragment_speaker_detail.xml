@@ -8,11 +8,11 @@
     android:orientation="vertical"
     tools:context=".ui.all.home.HomeFragment">
 
-    <com.example.mopcon_android.ui.all.common.TitleBar
+    <com.example.mopcon_android.ui.common.TitleBar
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:titleText="@string/speaker_info"/>
+        app:titleText="@string/speaker_info" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,18 +25,61 @@
             android:paddingHorizontal="16dp">
 
             <include
-                layout="@layout/item_speaker_detail_header"/>
+                android:id="@+id/layoutSpeaker"
+                layout="@layout/item_agenda_detail_avatar_1" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvAgenda"
+            <TextView
+                android:id="@+id/tvSpeakerTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:itemCount="14"
-                tools:listitem="@layout/item_agenda_content"
-                tools:spanCount="3" />
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="田哲禹" />
+
+            <TextView
+                android:id="@+id/tvJobTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                tools:text="台灣區經理＠Google Cloud" />
+
+            <com.example.mopcon_android.ui.common.MediaBar
+                android:id="@+id/mediaBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/sponsor_info"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSpeakerInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="講者介紹講者介紹講者介紹講者介紹講者介紹講者介紹講者介紹講者介紹講者介紹講者介紹講者介紹講者介紹" />
+
+            <include
+                android:id="@+id/layoutAgenda"
+                layout="@layout/item_agenda_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"/>
 
         </LinearLayout>
 

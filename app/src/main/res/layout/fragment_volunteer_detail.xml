@@ -1,27 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_blue"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
-    tools:context=".ui.all.more.MoreFragment">
+    android:clickable="true"
+    android:focusable="true"
+    tools:context=".ui.all.home.HomeFragment">
+
+    <com.example.mopcon_android.ui.common.TitleBar
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleText="@string/volunteer_info"/>
+
+    <include
+        android:id="@+id/layoutSpeaker"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/item_agenda_detail_avatar_1"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center"
-        android:text="@string/news"
+        android:id="@+id/tvVolunteer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="16sp"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        tools:text="財務組" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvNews"
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        android:paddingHorizontal="16dp"
+        android:textSize="16sp"
+        tools:text="組別介紹組別介紹組別介紹，組別介紹組別介紹組別介紹組別介紹，組別介紹！" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/volunteer_member"
+        android:textColor="@color/white"
+        android:paddingHorizontal="16dp"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvMember"
+        android:paddingHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        tools:itemCount="3"
-        tools:listitem="@layout/item_news" />
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:text="Apple、Banana、小明"/>
 
 </LinearLayout>

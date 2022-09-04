@@ -1,4 +1,4 @@
-package com.example.mopcon_android.ui.all.common
+package com.example.mopcon_android.ui.common
 
 import android.content.Context
 import android.util.AttributeSet
@@ -24,6 +24,13 @@ class TitleBar @JvmOverloads constructor(
             0
         )
     }
+
+    var text : String ?= typedArray.getString(R.styleable.CustomTitleBar_titleText)
+        set(value) {
+            tvTitle.text = value
+            field = value
+        }
+
     private val tvTitle: TextView by lazy { findViewById(R.id.tvTitle) }
     private val ivBack: ImageView by lazy { findViewById(R.id.ivBack) }
 
