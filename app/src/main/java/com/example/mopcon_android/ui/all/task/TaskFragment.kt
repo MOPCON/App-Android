@@ -1,7 +1,10 @@
 package com.example.mopcon_android.ui.all.task
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.webkit.WebSettings
+import android.webkit.WebViewClient
 import com.example.mopcon_android.databinding.FragmentMoreBinding
 import com.example.mopcon_android.databinding.FragmentTaskBinding
 import com.example.mopcon_android.ui.base.BaseBindingFragment
@@ -11,10 +14,21 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTaskBinding
         get() = FragmentTaskBinding::inflate
 
+    val url = "https://www.google.com/"
+
     override fun initLayout() {
+
     }
 
     override fun initAction() {
+        binding.apply {
+//            webView.settings.javaScriptEnabled = true
+//            webView.settings.pluginState = WebSettings.PluginState.ON;
+//            setContentView(webView);
+            webView.webViewClient = WebViewClient()
+            webView.settings.javaScriptEnabled = true
+            webView.loadUrl("http://www.google.com");
+        }
     }
 
     override fun initObserver() {

@@ -1,10 +1,13 @@
 package com.example.mopcon_android.ui.all.more.sponsor
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.mopcon_android.databinding.*
 import com.example.mopcon_android.network.model.more.sponsor.SponsorData
 import com.example.mopcon_android.network.model.more.sponsor.SponsorDetailData
@@ -102,7 +105,6 @@ class SponsorAdapter(private val itemClickListener: SponsorItemClickListener) : 
     class SponsorContentViewHolder private constructor(private val binding: ItemSponsorContentBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
         fun bind(detailData: SponsorDetailData, itemClickListener: SponsorItemClickListener) {
             binding.apply {
                 ivSponsor.setGlideImg(detailData.logoPath?.mobile)
@@ -149,8 +151,7 @@ sealed class SponsorDataItem {
     }
 
     data class SponsorContent(val sponsorDetailData: SponsorDetailData) : SponsorDataItem() {
-        override val sponsorId: Int? = sponsorDetailData.sponsorId
+        override val sponsorId: Int = sponsorDetailData.sponsorId
     }
-
 
 }

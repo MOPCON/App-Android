@@ -3,6 +3,7 @@ package com.example.mopcon_android.network.service
 import com.example.mopcon_android.network.community.CommunityResponse
 import com.example.mopcon_android.network.community_detail.CommunityDetailResponse
 import com.example.mopcon_android.network.model.agenda.AgendaResponse
+import com.example.mopcon_android.network.model.agenda_detail.AgendaDetailResponse
 import com.example.mopcon_android.network.model.home.HomeBannerNewsResponse
 import com.example.mopcon_android.network.model.initial.InitialResponse
 import com.example.mopcon_android.network.model.more.speaker.SpeakerResponse
@@ -26,6 +27,11 @@ interface ApiService {
 
     @GET(Constants.MOPCON_API_URL + "api/2022/session")
     suspend fun getAgenda(): Response<AgendaResponse>
+
+    @GET(Constants.MOPCON_API_URL + "api/2022/session/{session_id}")
+    suspend fun getAgendaDetail(
+        @Path("session_id") id: Int
+    ): Response<AgendaDetailResponse>
 
     @GET(Constants.MOPCON_API_URL + "api/2022/unconf")
     suspend fun getExchange(): Response<AgendaResponse>

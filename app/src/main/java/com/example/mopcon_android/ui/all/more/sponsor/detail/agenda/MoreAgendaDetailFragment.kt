@@ -1,4 +1,4 @@
-package com.example.mopcon_android.ui.all.agenda.detail
+package com.example.mopcon_android.ui.all.more.sponsor.detail.agenda
 
 import android.os.Bundle
 import android.util.Log
@@ -7,34 +7,60 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.navArgs
+import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentAgendaDetailBinding
-import com.example.mopcon_android.network.model.agenda.RoomData
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.util.*
 import com.google.android.flexbox.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() /*OnBackPressedListener*/ {
-
+class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAgendaDetailBinding = FragmentAgendaDetailBinding::inflate
     private val tagAdapter by lazy { TagAdapter() }
-    private val args by lazy { arguments?.getParcelable(BUNDLE_ROOM_DATA) as RoomData? }
+    private val args by lazy { arguments?.getInt(BUNDLE_SESSION_ID) }
+
+    private val viewModel: MoreAgendaDetailViewModel by viewModel()
 
     companion object {
-        private const val BUNDLE_ROOM_DATA = "bundle_room_data"
-        fun newInstance(roomData: RoomData) = AgendaDetailFragment().apply {
+        private const val BUNDLE_SESSION_ID = "bundle_session_id"
+        fun newInstance(sessionId: Int) = MoreAgendaDetailFragment().apply {
             val bundle = Bundle().apply {
-                putParcelable(BUNDLE_ROOM_DATA, roomData)
+                putInt(BUNDLE_SESSION_ID, sessionId)
             }
             arguments = bundle
         }
     }
 
     override fun initLayout() {
-        binding.apply {
-            args?.let {
+        binding.apply {}
+    }
+
+    private fun setAvatarVisible(numberOfSpeaker: Int) {
+        val listOfSpeaker: List<ConstraintLayout> = listOf(
+            binding.layout1Speaker.root,
+            binding.layout2Speakers.root,
+            binding.layout3Speakers.root,
+            binding.layout4Speakers.root
+        )
+
+        listOfSpeaker.forEachIndexed { index, item ->
+            item.isVisible = (index + 1 == numberOfSpeaker)
+        }
+    }
+
+    override fun initAction() {
+        binding.ivBack.setOnClickListener {
+            activity?.onBackPressed()
+        }
+
+        viewModel.getAgendaDetail(args)
+    }
+
+    override fun initObserver() {
+
+        viewModel.agendaDetail.observe(viewLifecycleOwner) {
+            binding.apply {
                 setAvatarVisible((it.speakers ?: listOf()).size)
 
                 when (it.speakers?.size) {
@@ -80,8 +106,8 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
                     isOtherLanguage = { it.topic ?: "" }
                 )
                 tvContent.text = getDeviceLanguage(
-                    isEnglish = { if (it.summaryE.isNullOrEmpty()) it.summary else it.summaryE },
-                    isOtherLanguage = { it.summary }
+                    isEnglish = { if (it.summaryE.isNullOrEmpty()) it.summary ?: "" else it.summaryE },
+                    isOtherLanguage = { it.summary ?: "" }
                 )
 
                 if (it.sponsorInfo?.logoPath?.mobile.isNullOrEmpty()) llSponsor.visibility = View.GONE
@@ -103,33 +129,9 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
             }
         }
 
-    }
-
-    private fun setAvatarVisible(numberOfSpeaker: Int) {
-        val listOfSpeaker: List<ConstraintLayout> = listOf(
-            binding.layout1Speaker.root,
-            binding.layout2Speakers.root,
-            binding.layout3Speakers.root,
-            binding.layout4Speakers.root
-        )
-
-        listOfSpeaker.forEachIndexed { index, item ->
-            item.isVisible = (index + 1 == numberOfSpeaker)
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) loading() else hideLoading()
         }
     }
-
-    override fun initAction() {
-        binding.ivBack.setOnClickListener {
-            activity?.onBackPressed()
-            Log.e(">>>", "ivBack")
-        }
-    }
-
-    override fun initObserver() {
-    }
-
-//    override fun onBackPressed() {
-//        activity?.supportFragmentManager?.popBackStack(, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-//    }
 
 }

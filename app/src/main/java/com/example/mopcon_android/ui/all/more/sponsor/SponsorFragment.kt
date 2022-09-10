@@ -39,7 +39,6 @@ class SponsorFragment : BaseBindingFragment<FragmentSponsorBinding>() {
 
         binding.rvSponsor.apply {
             adapter = sponsorAdapter
-//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             layoutManager = GridLayoutManager(context, 2).apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
@@ -49,7 +48,6 @@ class SponsorFragment : BaseBindingFragment<FragmentSponsorBinding>() {
                             else -> 2
                         }
                     }
-
                 }
             }
             addItemDecoration(BottomItemDecoration(20))

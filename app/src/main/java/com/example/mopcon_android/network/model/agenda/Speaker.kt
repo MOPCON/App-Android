@@ -8,19 +8,19 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Speaker(
     @Json(name = "company")
-    val company: String,
+    val company: String? = null,
     @Json(name = "company_e")
-    val companyE: String ?= null,
+    val companyE: String? = null,
     @Json(name = "img")
-    val img: Img,
+    val img: Img? = null,
     @Json(name = "job_title")
-    val jobTitle: String,
+    val jobTitle: String? = null,
     @Json(name = "job_title_e")
-    val jobTitleE: String ?= null,
+    val jobTitleE: String? = null,
     @Json(name = "name")
-    val name: String,
+    val name: String? = null,
     @Json(name = "name_e")
-    val nameE: String ?= null,
+    val nameE: String? = null,
     @Json(name = "speaker_id")
-    val speakerId: Int
-): Parcelable
+    val speakerId: Int? = null
+) : Parcelable

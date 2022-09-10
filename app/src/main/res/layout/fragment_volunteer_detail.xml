@@ -18,8 +18,6 @@
 
     <include
         android:id="@+id/layoutSpeaker"
-        android:visibility="gone"
-        tools:visibility="visible"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         layout="@layout/item_agenda_detail_avatar_1"/>

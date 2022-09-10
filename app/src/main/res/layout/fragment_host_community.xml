@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/dark_blue"
     android:orientation="vertical"
+    android:focusable="true"
+    android:clickable="true"
     tools:context=".ui.all.more.sponsor.SponsorFragment">
 
     <com.example.mopcon_android.ui.common.TitleBar

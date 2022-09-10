@@ -1,6 +1,7 @@
 package com.example.mopcon_android.ui.all.more.host_community.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.mopcon_android.databinding.FragmentHostCommunityBinding
@@ -37,11 +38,10 @@ class VolunteerDetailFragment : BaseBindingFragment<FragmentVolunteerDetailBindi
     override fun initLayout() {
         binding.titleBar.backPressedListener = { activity?.onBackPressed() }
 
-        binding.apply {
-            layoutSpeaker.apply {
-                ivAvatar.setGlideImg(args?.photo)
-            }
+        binding.layoutSpeaker.ivAvatar.setGlideImg(args?.photo)
+        Log.e(">>>", "args?.photo = ${args?.photo}")
 
+        binding.apply {
             tvVolunteer.text = getDeviceLanguage(
                 isEnglish = { if (args?.nameE.isNullOrEmpty()) args?.name ?: "" else args?.nameE ?: "" },
                 isOtherLanguage = { args?.name ?: "" }

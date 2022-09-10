@@ -5,9 +5,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentSpeakerDetailBinding
 import com.example.mopcon_android.network.model.more.speaker.SpeakerData
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
+import com.example.mopcon_android.ui.all.more.sponsor.detail.agenda.MoreAgendaDetailFragment
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.util.*
 import com.google.android.flexbox.*
@@ -17,7 +19,7 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSpeakerDetailBinding
         get() = FragmentSpeakerDetailBinding::inflate
 
-    private val tagAdapter by lazy { TagAdapter()}
+    private val tagAdapter by lazy { TagAdapter() }
 
     private val args by lazy { arguments?.getParcelable(BUNDLE_SPEAKER_DATA) as SpeakerData? }
 
@@ -78,7 +80,6 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
             )
 */
 
-
             tvSpeakerInfo.text = getDeviceLanguage(
                 isEnglish = { args?.bioE ?: args?.bio ?: "" },
                 isOtherLanguage = { args?.bio ?: "" }
@@ -118,7 +119,10 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
     }
 
     override fun initAction() {
-
+        binding.layoutAgenda.root.setOnClickListener {
+            val sessionId = args?.sessionId ?: return@setOnClickListener
+            parentFragmentManager.addFragmentToFragment(R.id.llMore, MoreAgendaDetailFragment.newInstance(sessionId))
+        }
     }
 
     override fun initObserver() {

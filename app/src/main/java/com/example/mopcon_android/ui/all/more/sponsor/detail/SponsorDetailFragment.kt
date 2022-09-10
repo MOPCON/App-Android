@@ -4,18 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.*
 import com.example.mopcon_android.network.model.more.sponsor.SponsorDetailData
-import com.example.mopcon_android.ui.all.more.sponsor.SponsorViewModel
+import com.example.mopcon_android.ui.all.more.sponsor.detail.agenda.MoreAgendaDetailFragment
 import com.example.mopcon_android.ui.base.BaseBindingFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.mopcon_android.util.addFragmentToFragment
 
 class SponsorDetailFragment : BaseBindingFragment<FragmentSponsorDetailBinding>() {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSponsorDetailBinding
         get() = FragmentSponsorDetailBinding::inflate
 
-    private val sponsorDetailAdapter by lazy { SponsorDetailAdapter() }
+    private val sponsorDetailAdapter by lazy {
+        SponsorDetailAdapter(SponsorDetailItemClickListener {
+            if (it.sessionId == null) return@SponsorDetailItemClickListener
+            parentFragmentManager.addFragmentToFragment(R.id.llMore, MoreAgendaDetailFragment.newInstance(it.sessionId))
+        })
+    }
 
     private val args by lazy { arguments?.getParcelable(BUNDLE_SPONSOR_DATA) as SponsorDetailData? }
 

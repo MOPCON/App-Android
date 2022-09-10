@@ -104,17 +104,22 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener) : ListAdap
 
         fun bind(roomData: RoomData, itemClickListener: ItemClickListener) {
             binding.apply {
-                viewDisableLayout.setOnClickListener { itemClickListener.onClick(roomData) }
+//                viewDisableLayout.setOnClickListener { itemClickListener.onClick(roomData) }
+                root.setOnClickListener {
+                    itemClickListener.onClick(roomData)
+                }
                 val startTime = if (roomData.startedAt?.toString().isNullOrEmpty()) "" else "${roomData.startedAt?.toTimeFormat(HM_FORMAT)}"
                 val endTimeStr = if (roomData.endedAt?.toString().isNullOrEmpty()) "" else " - ${roomData.endedAt?.toTimeFormat(HM_FORMAT)}"
                 tvTime.text = "$startTime$endTimeStr"
                 tvContent.text = getDeviceLanguage(
-                    isEnglish = { if (roomData.topicE.isNullOrEmpty()) roomData.topic else roomData.topicE },
-                    isOtherLanguage = { roomData.topic }
+                    isEnglish = { if (roomData.topicE.isNullOrEmpty()) roomData.topic ?: "" else roomData.topicE },
+                    isOtherLanguage = { roomData.topic ?: "" }
                 )
+
+                val list = roomData.speakers ?: listOf()
                 tvSpeaker.text = getDeviceLanguage(
-                    isEnglish = { roomData.speakers.joinToString(", ") { if (it.nameE.isNullOrEmpty()) it.name else it.nameE } },
-                    isOtherLanguage = { roomData.speakers.joinToString("、") { it.name } }
+                    isEnglish = { list.joinToString(", ") { if (it.nameE.isNullOrEmpty()) it.name?:"" else it.nameE } },
+                    isOtherLanguage = { list.joinToString("、") { it.name?:"" } }
                 )
                 tvLocation.text = roomData.room
 
@@ -169,7 +174,7 @@ sealed class AgendaDataItem {
 
     data class AgendaContent(val roomData: RoomData) : AgendaDataItem() {
         override val startTime = roomData.startedAt
-        override val topic: String = roomData.topic
+        override val topic: String = roomData.topic ?: ""
     }
 
 

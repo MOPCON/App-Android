@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/dark_blue"
+    android:orientation="vertical"
     tools:context=".ui.all.more.MoreFragment">
 
-    <TextView
+    <com.example.mopcon_android.ui.common.TitleBar
+        android:id="@+id/titleBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="20sp"
         android:textColor="@color/white"
-        android:text="task list" />
+        app:isShowBackButton="false"
+        app:titleText="@string/game" />
 
-</FrameLayout>
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

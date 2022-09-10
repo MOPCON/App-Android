@@ -8,29 +8,29 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class RoomData(
     @Json(name = "community_partner")
-    val communityPartner: String,
+    val communityPartner: String? = null,
     @Json(name = "ended_at")
     val endedAt: Long? = null,
     @Json(name = "floor")
-    val floor: String,
+    val floor: String? = null,
     @Json(name = "is_keynote")
-    val isKeynote: Boolean,
+    val isKeynote: Boolean? = null,
     @Json(name = "is_online")
-    val isOnline: Boolean?,
+    val isOnline: Boolean? = null,
     @Json(name = "level")
-    val level: String,
+    val level: String? = null,
     @Json(name = "link_slide")
-    val linkSlide: String,
+    val linkSlide: String? = null,
     @Json(name = "recordable")
-    val recordable: Boolean,
+    val recordable: Boolean? = null,
     @Json(name = "room")
-    val room: String,
+    val room: String? = null,
     @Json(name = "session_id")
-    val sessionId: Int,
+    val sessionId: Int? = null,
     @Json(name = "speakers")
-    val speakers: List<Speaker>,
+    val speakers: List<Speaker>? = listOf(),
     @Json(name = "sponsor_id")
-    val sponsorId: Int,
+    val sponsorId: Int? = null,
     @Json(name = "sponsor_info")
     val sponsorInfo: SponsorInfo? = null,
     @Json(name = "started_at")
@@ -38,11 +38,11 @@ data class RoomData(
     @Json(name = "summary")
     val summary: String,
     @Json(name = "summary_e")
-    val summaryE: String ?= null,
+    val summaryE: String? = null,
     @Json(name = "tags")
-    val tags: List<Tag>,
+    val tags: List<Tag>? = listOf(),
     @Json(name = "topic")
-    val topic: String,
+    val topic: String? = null,
     @Json(name = "topic_e")
-    val topicE: String ?= null
-): Parcelable
+    val topicE: String? = null
+) : Parcelable

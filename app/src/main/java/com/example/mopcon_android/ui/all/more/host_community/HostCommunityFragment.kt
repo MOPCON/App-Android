@@ -124,7 +124,6 @@ class HostCommunityFragment : BaseBindingFragment<FragmentHostCommunityBinding>(
                     }
                 }
             }
-            addItemDecoration(BottomItemDecoration(20))
         }
     }
 

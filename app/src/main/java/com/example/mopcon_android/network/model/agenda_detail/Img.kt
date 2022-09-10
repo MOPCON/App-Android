@@ -1,4 +1,4 @@
-package com.example.mopcon_android.network.model.more.sponsor
+package com.example.mopcon_android.network.model.agenda_detail
 
 
 import com.squareup.moshi.Json
@@ -7,10 +7,9 @@ import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 
 @JsonClass(generateAdapter = true)
-@Parcelize
-data class Logo(
+data class Img(
     @Json(name = "mobile")
-    val mobile: String? = null,
+    val mobile: String?,
     @Json(name = "web")
-    val web: String? = null
-) : Parcelable
+    val web: String?
+)

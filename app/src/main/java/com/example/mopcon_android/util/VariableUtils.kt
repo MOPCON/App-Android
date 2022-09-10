@@ -25,3 +25,7 @@ fun Long.toTimeFormat(format: String ?= MDHM_FORMAT) : String {
     }
     return formattedTime
 }
+
+fun String.addUrlPrefix(): String {
+    return Constants.MOPCON_API_URL + this
+}

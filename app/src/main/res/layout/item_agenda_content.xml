@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
     android:background="@drawable/button_capsule_transparent_blue_stroke_radius_8"
     tools:layout_gravity="center">
 
@@ -56,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/ivIcon"
         tools:text="演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.example.mopcon_android.ui.extension.UntouchableRecyclerView
         android:id="@+id/rvTag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,17 +105,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvSpeaker"
         tools:text="地點" />
-    <View
-        android:id="@+id/viewDisableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@android:color/transparent"
-        tools:visibility="gone"
-        android:clickable="true"
-        android:focusable="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

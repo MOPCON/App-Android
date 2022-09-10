@@ -1,30 +1,33 @@
 package com.example.mopcon_android.ui.all.more.sponsor.detail
 
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.*
-import com.example.mopcon_android.network.model.more.sponsor.SponsorData
+import com.example.mopcon_android.network.model.more.sponsor.SpeakerInfoData
 import com.example.mopcon_android.network.model.more.sponsor.SponsorDetailData
+import com.example.mopcon_android.ui.all.agenda.TagAdapter
+import com.example.mopcon_android.util.HM_FORMAT
 import com.example.mopcon_android.util.getDeviceLanguage
 import com.example.mopcon_android.util.setGlideImg
-import com.example.mopcon_android.R
-import com.example.mopcon_android.network.model.more.sponsor.SpeakerInfoData
-import com.example.mopcon_android.ui.all.agenda.TagAdapter
-import com.example.mopcon_android.ui.all.home.DataItem
-import com.example.mopcon_android.util.HM_FORMAT
 import com.example.mopcon_android.util.toTimeFormat
 import com.google.android.flexbox.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.URL
 
 
-class SponsorDetailAdapter : ListAdapter<SponsorDataItem, RecyclerView.ViewHolder>(DiffCallback()) {
+class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClickListener) : ListAdapter<SponsorDataItem, RecyclerView.ViewHolder>(DiffCallback()) {
 
     enum class ItemType {
         SPONSOR_INFO, SPEAKER_AGENDA
@@ -81,7 +84,7 @@ class SponsorDetailAdapter : ListAdapter<SponsorDataItem, RecyclerView.ViewHolde
 
             is SponsorContentViewHolder -> {
                 val data = getItem(position) as SponsorDataItem.SpeakerAgenda
-                holder.bind(data.speakerInfoData)
+                holder.bind(data.speakerInfoData, itemClickListener)
             }
 
         }
@@ -93,6 +96,7 @@ class SponsorDetailAdapter : ListAdapter<SponsorDataItem, RecyclerView.ViewHolde
             binding.apply {
                 layoutSponsor.apply {
                     tvTitle.isVisible = hasSpeakerInfo
+                    Log.e(">>>", ".mobile = ${detailData.logoPath?.mobile}")
                     ivSponsor.setGlideImg(detailData.logoPath?.mobile)
                     tvSponsor.isVisible = !(detailData.name.isEmpty() && detailData.nameE.isNullOrEmpty())
                     tvSponsor.text = getDeviceLanguage(
@@ -126,7 +130,7 @@ class SponsorDetailAdapter : ListAdapter<SponsorDataItem, RecyclerView.ViewHolde
 
         private val tagAdapter by lazy { TagAdapter() }
 
-        fun bind(speakerInfoData: SpeakerInfoData) {
+        fun bind(speakerInfoData: SpeakerInfoData, itemClickListener: SponsorDetailItemClickListener) {
             binding.apply {
                 val startTime = if (speakerInfoData.startedAt?.toString().isNullOrEmpty()) "" else "${speakerInfoData.startedAt?.toTimeFormat(HM_FORMAT)}"
                 val endTimeStr = if (speakerInfoData.endedAt?.toString().isNullOrEmpty()) "" else " - ${speakerInfoData.endedAt?.toTimeFormat(HM_FORMAT)}"
@@ -155,17 +159,14 @@ class SponsorDetailAdapter : ListAdapter<SponsorDataItem, RecyclerView.ViewHolde
                 }
 
                 tagAdapter.submitList(speakerInfoData.tags)
+
+                root.setOnClickListener {
+                    itemClickListener.onClick(speakerInfoData)
+                }
+
             }
 
-//                ivSponsor.setGlideImg(detailData.logoPath?.mobile)
-//                tvSpeaker.text = getDeviceLanguage(
-//                    isEnglish = { if (detailData.nameE.isNullOrEmpty()) detailData.name else detailData.nameE  },
-//                    isOtherLanguage = { detailData.name }
-//                )
-//                itemView.setOnClickListener {
-//                    itemClickListener.onClick(detailData)
-//                }
-            }
+        }
 
         companion object {
             fun from(parent: ViewGroup) = SponsorContentViewHolder(ItemAgendaContentBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -186,8 +187,8 @@ class SponsorDetailAdapter : ListAdapter<SponsorDataItem, RecyclerView.ViewHolde
     }
 }
 
-class SponsorItemClickListener(val clickListener: (data: SponsorDetailData) -> Unit) {
-    fun onClick(data: SponsorDetailData) = clickListener(data)
+class SponsorDetailItemClickListener(val clickListener: (data: SpeakerInfoData) -> Unit) {
+    fun onClick(data: SpeakerInfoData) = clickListener(data)
 }
 
 
@@ -197,7 +198,7 @@ sealed class SponsorDataItem {
     abstract val speakerId: Int?
 
     data class SponsorInfo(val sponsorDetailData: SponsorDetailData) : SponsorDataItem() {
-        override val sponsorId: Int? = sponsorDetailData.sponsorId
+        override val sponsorId: Int = sponsorDetailData.sponsorId
         override val speakerId: Int? = null
     }
 
