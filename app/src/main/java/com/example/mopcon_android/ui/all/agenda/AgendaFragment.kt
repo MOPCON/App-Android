@@ -1,5 +1,6 @@
 package com.example.mopcon_android.ui.all.agenda
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,25 +23,40 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
 
     private var agendaList = listOf<AgendaData>()
 
+    private var isIconBlue = false
+
     private val agendaAdapter by lazy {
         AgendaAdapter(
             ItemClickListener {
                 parentFragmentManager.addFragmentToFragment(R.id.llAgenda, AgendaDetailFragment.newInstance(it))
+            }, FavClickListener { isChecked, data ->
+                if (isChecked) {
+                    viewModel.storeAgenda(isIconBlue, data)
+                } else {
+                    viewModel.deleteAgenda(data.sessionId)
+                }
             })
     }
 
     override fun initLayout() {
-        initRg()
-        initTab()
+        initDateRg()
+        initAgendaTab()
         initRv()
     }
 
-    private fun initTab() {
+    private fun initAgendaTab() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                //粉紅色icon：兩天主要議程, 藍色icon：交流場次
                 when (tab?.position) {
-                    0 -> viewModel.getAgenda()
-                    1 -> viewModel.getExchange()
+                    0 -> {
+                        isIconBlue = false
+                        viewModel.getAgenda(isIconBlue)
+                    }
+                    1 -> {
+                        isIconBlue = true
+                        viewModel.getExchange(true)
+                    }
                     2 -> {}
                 }
             }
@@ -64,27 +80,36 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
         }
     }
 
-    private fun initRg() {
+    private fun initDateRg() {
         binding.rgTopBar.onFirstRbChecked = {
-            agendaAdapter.addFooterAndSubmitList(agendaList.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
+            agendaAdapter.addFooterAndSubmitList(isIconBlue, agendaList.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
         }
 
         binding.rgTopBar.onSecondRbChecked = {
-            agendaAdapter.addFooterAndSubmitList(agendaList.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }
+            agendaAdapter.addFooterAndSubmitList(isIconBlue, agendaList.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }
         }
     }
 
     override fun initAction() {
-        viewModel.getAgenda()
+        viewModel.getFavSessionIdList()
+        viewModel.getAgenda(isIconBlue)
     }
 
     override fun initObserver() {
         viewModel.agendaList.observe(viewLifecycleOwner) {
-            agendaList = it
+            val isBlue = it.first
+            val list = it.second
+
+            agendaList = list
+
             if (binding.rgTopBar.checkedRadioButtonId == R.id.rb1)
-                agendaAdapter.addFooterAndSubmitList(it.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
+                agendaAdapter.addFooterAndSubmitList(isBlue, list.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
             else
-                agendaAdapter.addFooterAndSubmitList(it.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }
+                agendaAdapter.addFooterAndSubmitList(isBlue, list.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }
+        }
+
+        viewModel.favSessionIdList.observe(viewLifecycleOwner) {
+            agendaAdapter.favSessionIdList = it
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {

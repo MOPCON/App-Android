@@ -39,6 +39,7 @@
         android:text="@string/coming_soon"
         android:textColor="@color/pink"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/ivIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/ivIcon" />

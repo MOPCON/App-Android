@@ -1,8 +1,8 @@
 package com.example.mopcon_android.ui.all.more.host_community
 
 import androidx.lifecycle.*
-import com.example.mopcon_android.network.community.Community
-import com.example.mopcon_android.network.community_detail.CommunityDetailData
+import com.example.mopcon_android.network.model.community.Community
+import com.example.mopcon_android.network.model.community_detail.CommunityDetailData
 import com.example.mopcon_android.network.model.volunteer.VolunteerData
 import com.example.mopcon_android.network.model.volunteer_detail.VolunteerDetailData
 import com.example.mopcon_android.network.service.ApiService

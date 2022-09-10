@@ -121,15 +121,10 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
     override fun initAction() {
         binding.ivBack.setOnClickListener {
             activity?.onBackPressed()
-            Log.e(">>>", "ivBack")
         }
     }
 
     override fun initObserver() {
     }
-
-//    override fun onBackPressed() {
-//        activity?.supportFragmentManager?.popBackStack(, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-//    }
 
 }

@@ -10,12 +10,18 @@ import androidx.room.Query
 interface AgendaDao {
 
     @Query("SELECT * FROM agenda_table")
-    fun getAll(): List<AgendaData>
+    fun getAll(): List<AgendaFavData>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(word: AgendaData): Long
+    fun insert(agenda: AgendaFavData)
 
     @Delete
-    fun delete(word: AgendaData)
+    fun delete(agenda: AgendaFavData)
+
+    @Query("DELETE FROM agenda_table WHERE sessionId = :sessionId")
+    fun delete(sessionId: Int)
+
+    @Query("SELECT sessionId FROM agenda_table")
+    fun getAllSessionId(): List<Int>
 
 }

@@ -2,6 +2,7 @@ package com.example.mopcon_android.ui.all.home
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.mopcon_android.db.AgendaFavData
 import com.example.mopcon_android.network.model.home.Banner
 import com.example.mopcon_android.network.model.home.HomeBannerNewsData
 import com.example.mopcon_android.network.model.home.HomeBannerNewsResponse
@@ -17,6 +18,25 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
     private val _bannerAndNews = MutableLiveData<HomeBannerNewsData>()
     val bannerAndNews: LiveData<HomeBannerNewsData> = _bannerAndNews
 
+    private val _favAgendaList = MutableLiveData<List<AgendaFavData>>()
+    val favAgendaList: LiveData<List<AgendaFavData>> = _favAgendaList
+
+    val mediatorLiveData = MediatorLiveData<Pair<HomeBannerNewsData, List<AgendaFavData>>>()
+
+    init {
+        addSourceToMediatorLiveData()
+    }
+
+    private fun addSourceToMediatorLiveData() {
+
+        mediatorLiveData.addSource(bannerAndNews) {
+            //do something when bannerAndNews changed
+        }
+        mediatorLiveData.addSource(favAgendaList) {
+            //do something when favAgendaList changed
+        }
+    }
+
     fun getHomeBannerAndNews() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.postValue(true)
@@ -30,6 +50,12 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
                     _isLoading.postValue(false)
                 }
             )
+        }
+    }
+
+    fun getStoredAgenda() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _favAgendaList.postValue(repository.getStoredAgenda())
         }
     }
 

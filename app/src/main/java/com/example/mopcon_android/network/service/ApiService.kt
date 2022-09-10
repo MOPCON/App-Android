@@ -1,7 +1,7 @@
 package com.example.mopcon_android.network.service
 
-import com.example.mopcon_android.network.community.CommunityResponse
-import com.example.mopcon_android.network.community_detail.CommunityDetailResponse
+import com.example.mopcon_android.network.model.community.CommunityResponse
+import com.example.mopcon_android.network.model.community_detail.CommunityDetailResponse
 import com.example.mopcon_android.network.model.agenda.AgendaResponse
 import com.example.mopcon_android.network.model.agenda_detail.AgendaDetailResponse
 import com.example.mopcon_android.network.model.home.HomeBannerNewsResponse
@@ -16,7 +16,6 @@ import com.example.mopcon_android.util.Constants
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface ApiService {
     @GET(Constants.MOPCON_API_URL + "api/2022/home")

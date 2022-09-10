@@ -1,4 +1,4 @@
-package com.example.mopcon_android.network.community_detail
+package com.example.mopcon_android.network.model.community_detail
 
 
 import com.squareup.moshi.Json

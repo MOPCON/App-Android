@@ -47,7 +47,7 @@ class MyApplication : Application() {
     }
 
     private val repositoryModules = module {
-        single { HomeRepository(get()) }
+        single { HomeRepository(get(), get()) }
         single { AgendaRepository(get(), get()) }
         single { NewsRepository(get()) }
     }

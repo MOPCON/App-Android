@@ -1,8 +1,6 @@
 package com.example.mopcon_android.ui.all.agenda
 
 import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -18,16 +16,28 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.example.mopcon_android.R
 
 
-class AgendaAdapter(private val itemClickListener: ItemClickListener) : ListAdapter<AgendaDataItem, RecyclerView.ViewHolder>(DiffCallback()) {
+class AgendaAdapter(private val itemClickListener: ItemClickListener, private val favClickListener: FavClickListener) : ListAdapter<AgendaDataItem, RecyclerView.ViewHolder>(DiffCallback()) {
     enum class ItemType {
         AGENDA_TITLE, AGENDA_CONTENT
     }
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-    fun addFooterAndSubmitList(agendaList: List<PeriodData>? = listOf(), scrollToTop: () -> Unit) {
+    private var isIconBlue = false
+
+    //TODO: 優化
+    var favSessionIdList = listOf<Int>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    fun addFooterAndSubmitList(isIconBlue: Boolean, agendaList: List<PeriodData>? = listOf(), scrollToTop: () -> Unit) {
+        this.isIconBlue = isIconBlue
+
         adapterScope.launch {
             val contentList = mutableListOf<AgendaDataItem>()
 
@@ -76,7 +86,7 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener) : ListAdap
 
             is AgendaContentViewHolder -> {
                 val data = getItem(position) as AgendaDataItem.AgendaContent
-                holder.bind(data.roomData, itemClickListener)
+                holder.bind(isIconBlue, data.roomData, itemClickListener, favClickListener, favSessionIdList)
             }
 
         }
@@ -102,12 +112,19 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener) : ListAdap
 
         private val tagAdapter by lazy { TagAdapter() }
 
-        fun bind(roomData: RoomData, itemClickListener: ItemClickListener) {
+        fun bind(isIconBlue: Boolean, roomData: RoomData, itemClickListener: ItemClickListener, favClickListener: FavClickListener, favSessionIdList: List<Int>) {
             binding.apply {
-//                viewDisableLayout.setOnClickListener { itemClickListener.onClick(roomData) }
-                root.setOnClickListener {
-                    itemClickListener.onClick(roomData)
+                root.setOnClickListener { itemClickListener.onClick(roomData) }
+
+                val icon = if (isIconBlue) R.drawable.ic_battleship_blue else R.drawable.ic_battleship_pink
+                ivIcon.setImageResource(icon)
+
+                cbStar.isChecked = favSessionIdList.contains(roomData.sessionId)
+
+                cbStar.setOnCheckedChangeListener { _, isChecked ->
+                    favClickListener.onClick(isChecked, roomData)
                 }
+
                 val startTime = if (roomData.startedAt?.toString().isNullOrEmpty()) "" else "${roomData.startedAt?.toTimeFormat(HM_FORMAT)}"
                 val endTimeStr = if (roomData.endedAt?.toString().isNullOrEmpty()) "" else " - ${roomData.endedAt?.toTimeFormat(HM_FORMAT)}"
                 tvTime.text = "$startTime$endTimeStr"
@@ -161,6 +178,10 @@ class ItemClickListener(val clickListener: (data: RoomData) -> Unit) {
     fun onClick(data: RoomData) = clickListener(data)
 }
 
+class FavClickListener(val clickListener: (isChecked: Boolean, data: RoomData) -> Unit) {
+    fun onClick(isChecked: Boolean, data: RoomData) = clickListener(isChecked, data)
+}
+
 
 sealed class AgendaDataItem {
 
@@ -176,6 +197,5 @@ sealed class AgendaDataItem {
         override val startTime = roomData.startedAt
         override val topic: String = roomData.topic ?: ""
     }
-
 
 }

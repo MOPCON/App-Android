@@ -3,16 +3,9 @@ package com.example.mopcon_android.ui.all.more.host_community.detail
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.example.mopcon_android.databinding.FragmentHostCommunityBinding
 import com.example.mopcon_android.databinding.FragmentHostCommunityDetailBinding
-import com.example.mopcon_android.databinding.FragmentMoreBinding
-import com.example.mopcon_android.network.community.CommunityData
-import com.example.mopcon_android.network.model.agenda.RoomData
-import com.example.mopcon_android.network.model.more.sponsor.SponsorDetailData
-import com.example.mopcon_android.ui.all.agenda.detail.AgendaDetailFragment
+import com.example.mopcon_android.network.model.community.CommunityData
 import com.example.mopcon_android.ui.all.more.host_community.HostCommunityViewModel
-import com.example.mopcon_android.ui.all.more.sponsor.SponsorFragment
-import com.example.mopcon_android.ui.all.more.sponsor.detail.SponsorDetailFragment
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.util.getDeviceLanguage
 import com.example.mopcon_android.util.setGlideImg

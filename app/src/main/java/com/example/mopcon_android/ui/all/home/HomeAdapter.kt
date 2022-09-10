@@ -12,22 +12,27 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.*
+import com.example.mopcon_android.db.AgendaFavData
+import com.example.mopcon_android.db.DataConverter
 import com.example.mopcon_android.network.model.home.Banner
 import com.example.mopcon_android.network.model.home.NewsItem
+import com.example.mopcon_android.ui.all.agenda.TagAdapter
 import com.example.mopcon_android.ui.extension.RightItemDecoration
+import com.example.mopcon_android.util.HM_FORMAT
+import com.example.mopcon_android.util.getDeviceLanguage
+import com.example.mopcon_android.util.toTimeFormat
+import com.google.android.flexbox.*
 import com.stx.xhb.androidx.transformers.Transformer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
-data class Fav(val id: Int, val test: String) //TODO: rewrite
-
 class HomeAdapter(
     private val bannerClickListener: BannerClickListener,
     private val newsMoreClickListener: NewsMoreClickListener,
     private val itemClickListener: NewsItemClickListener,
+    private val favItemClickListener: FavClickListener,
     private val noFavClickListener: NoFavClickListener
 ) : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback()) {
     enum class ItemType {
@@ -39,7 +44,7 @@ class HomeAdapter(
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-    fun addFooterAndSubmitList(bannerList: List<Banner>, newsList: List<NewsItem>, favList: List<Fav>?, scrollToTop: () -> Unit) {
+    fun addFooterAndSubmitList(bannerList: List<Banner>, newsList: List<NewsItem>, favList: List<AgendaFavData>?, scrollToTop: () -> Unit) {
         this.bannerList = bannerList
         this.newsList = newsList
         adapterScope.launch {
@@ -95,7 +100,7 @@ class HomeAdapter(
 
             is FavItemViewHolder -> {
                 val data = getItem(position) as DataItem.FavItem
-                holder.bind(data.favItem)
+                holder.bind(data.favItem, favItemClickListener)
             }
 
             is NoFavItemViewHolder -> {
@@ -150,8 +155,51 @@ class HomeAdapter(
     class FavItemViewHolder private constructor(private val binding: ItemHomeAgendaBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Fav) {
-            binding.tvContent.text = item.test
+        private val tagAdapter by lazy { TagAdapter() }
+
+        fun bind(data: AgendaFavData, favItemClickListener: FavClickListener) {
+            binding.apply {
+
+                root.setOnClickListener {
+                    data.sessionId ?: return@setOnClickListener
+                    favItemClickListener.onClick(data.sessionId)
+                }
+
+                val icon = if (data.isBlue) R.drawable.ic_battleship_blue else R.drawable.ic_battleship_pink
+                ivIcon.setImageResource(icon)
+
+                //TODO : do we need star in HomePage fav items?
+//                cbStar.setOnCheckedChangeListener { _, isChecked ->
+//                    favClickListener.onClick(isChecked, data)
+//                }
+
+                tvTime.text = data.time
+                tvContent.text = getDeviceLanguage(
+                    isEnglish = { data.topicE },
+                    isOtherLanguage = { data.topic }
+                )
+
+                tvSpeaker.text = getDeviceLanguage(
+                    isEnglish = { data.namesE },
+                    isOtherLanguage = { data.names }
+                )
+
+                tvLocation.text = data.location
+
+                rvTag.apply {
+                    adapter = tagAdapter
+                    val flexboxLayoutManager = FlexboxLayoutManager(this.context).apply {
+                        flexWrap = FlexWrap.WRAP
+                        flexDirection = FlexDirection.ROW
+                        alignItems = AlignItems.STRETCH
+                        justifyContent = JustifyContent.FLEX_START
+                    }
+                    layoutManager = flexboxLayoutManager
+                }
+
+                val tagList = DataConverter.toTagList(data.tags)
+                tagAdapter.submitList(tagList)
+            }
         }
 
         companion object {
@@ -266,10 +314,13 @@ class NewsItemClickListener(val clickListener: (link: String) -> Unit) {
     fun onClick(link: String) = clickListener(link)
 }
 
+class FavClickListener(val clickListener: (sessionId: Int) -> Unit) {
+    fun onClick(sessionId: Int) = clickListener(sessionId)
+}
+
 class NoFavClickListener(val clickListener: () -> Unit) {
     fun onClick() = clickListener()
 }
-
 
 sealed class DataItem {
 
@@ -291,8 +342,8 @@ sealed class DataItem {
         override val id: Int? = null
     }
 
-    data class FavItem(val favItem: Fav) : DataItem() {
-        override val id = favItem.id
+    data class FavItem(val favItem: AgendaFavData) : DataItem() {
+        override val id = favItem.sessionId
     }
 
     object NoFavItem : DataItem() {

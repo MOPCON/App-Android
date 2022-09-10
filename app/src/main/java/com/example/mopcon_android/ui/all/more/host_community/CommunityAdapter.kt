@@ -10,7 +10,7 @@ import com.example.mopcon_android.databinding.*
 import com.example.mopcon_android.util.getDeviceLanguage
 import com.example.mopcon_android.util.setGlideImg
 import com.example.mopcon_android.R
-import com.example.mopcon_android.network.community.CommunityData
+import com.example.mopcon_android.network.model.community.CommunityData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

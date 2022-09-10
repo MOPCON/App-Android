@@ -4,11 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.example.mopcon_android.databinding.FragmentHostCommunityBinding
-import com.example.mopcon_android.databinding.FragmentHostCommunityDetailBinding
-import com.example.mopcon_android.databinding.FragmentMoreBinding
 import com.example.mopcon_android.databinding.FragmentVolunteerDetailBinding
-import com.example.mopcon_android.network.community.CommunityData
 import com.example.mopcon_android.network.model.volunteer.VolunteerData
 import com.example.mopcon_android.ui.all.more.host_community.HostCommunityViewModel
 import com.example.mopcon_android.ui.base.BaseBindingFragment
