@@ -33,7 +33,7 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
             }, NewsItemClickListener {
                 context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
             }, FavClickListener {
-                parentFragmentManager.addFragmentToFragment(R.id.llHome, MoreAgendaDetailFragment.newInstance(false, it))
+                parentFragmentManager.addFragmentToFragment(R.id.llHome, MoreAgendaDetailFragment.newInstance(it))
             }, NoFavClickListener {
                 (activity as MainActivity).setTabToAgenda()
             })

@@ -26,8 +26,6 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-    private var isIconBlue = false
-
     //TODO: 優化
     var favSessionIdList = listOf<Int>()
         set(value) {
@@ -35,8 +33,7 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
             notifyDataSetChanged()
         }
 
-    fun addFooterAndSubmitList(isIconBlue: Boolean, agendaList: List<PeriodData>? = listOf(), scrollToTop: () -> Unit) {
-        this.isIconBlue = isIconBlue
+    fun addFooterAndSubmitList(agendaList: List<PeriodData>? = listOf(), scrollToTop: () -> Unit) {
 
         adapterScope.launch {
             val contentList = mutableListOf<AgendaDataItem>()
@@ -86,7 +83,7 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
 
             is AgendaContentViewHolder -> {
                 val data = getItem(position) as AgendaDataItem.AgendaContent
-                holder.bind(isIconBlue, data.roomData, itemClickListener, favClickListener, favSessionIdList)
+                holder.bind(data.roomData, itemClickListener, favClickListener, favSessionIdList)
             }
 
         }
@@ -112,12 +109,9 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
 
         private val tagAdapter by lazy { TagAdapter() }
 
-        fun bind(isIconBlue: Boolean, roomData: RoomData, itemClickListener: ItemClickListener, favClickListener: FavClickListener, favSessionIdList: List<Int>) {
+        fun bind(roomData: RoomData, itemClickListener: ItemClickListener, favClickListener: FavClickListener, favSessionIdList: List<Int>) {
             binding.apply {
                 root.setOnClickListener { itemClickListener.onClick(roomData) }
-
-                val icon = if (isIconBlue) R.drawable.ic_battleship_blue else R.drawable.ic_battleship_pink
-                ivIcon.setImageResource(icon)
 
                 cbStar.isChecked = favSessionIdList.contains(roomData.sessionId)
 

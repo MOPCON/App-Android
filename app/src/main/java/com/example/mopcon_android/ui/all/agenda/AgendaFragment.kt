@@ -22,15 +22,13 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
 
     private var agendaList = listOf<AgendaData>()
 
-    private var isMainConf = false
-
     private val agendaAdapter by lazy {
         AgendaAdapter(
             ItemClickListener {
                 parentFragmentManager.addFragmentToFragment(R.id.llAgenda, AgendaDetailFragment.newInstance(it))
             }, FavClickListener { isChecked, data ->
                 if (isChecked) {
-                    viewModel.storeAgenda(isMainConf, data)
+                    viewModel.storeAgenda(data)
                 } else {
                     viewModel.deleteAgenda(data.sessionId)
                 }
@@ -49,12 +47,10 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
                 //粉紅色icon：兩天主要議程, 藍色icon：交流場次
                 when (tab?.position) {
                     0 -> {
-                        isMainConf = true
-                        viewModel.getAgenda(isMainConf)
+                        viewModel.getAgenda()
                     }
                     1 -> {
-                        isMainConf = false
-                        viewModel.getExchange(isMainConf)
+                        viewModel.getExchange()
                     }
                     2 -> {}
                 }
@@ -81,30 +77,27 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
 
     private fun initDateRg() {
         binding.rgTopBar.onFirstRbChecked = {
-            agendaAdapter.addFooterAndSubmitList(isMainConf, agendaList.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
+            agendaAdapter.addFooterAndSubmitList(agendaList.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
         }
 
         binding.rgTopBar.onSecondRbChecked = {
-            agendaAdapter.addFooterAndSubmitList(isMainConf, agendaList.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }
+            agendaAdapter.addFooterAndSubmitList(agendaList.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }
         }
     }
 
     override fun initAction() {
         viewModel.getFavSessionIdList()
-        viewModel.getAgenda(isMainConf)
+        viewModel.getAgenda()
     }
 
     override fun initObserver() {
         viewModel.agendaList.observe(viewLifecycleOwner) {
-            val isMainConf = it.first
-            val list = it.second
-
-            agendaList = list
+            agendaList = it
 
             if (binding.rgTopBar.checkedRadioButtonId == R.id.rb1)
-                agendaAdapter.addFooterAndSubmitList(isMainConf, list.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
+                agendaAdapter.addFooterAndSubmitList(it.firstOrNull()?.periodData) { binding.rvAgenda.scrollToPosition(0) }
             else
-                agendaAdapter.addFooterAndSubmitList(isMainConf, list.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }
+                agendaAdapter.addFooterAndSubmitList(it.getOrNull(1)?.periodData) { binding.rvAgenda.scrollToPosition(0) }
         }
 
         viewModel.favSessionIdList.observe(viewLifecycleOwner) {

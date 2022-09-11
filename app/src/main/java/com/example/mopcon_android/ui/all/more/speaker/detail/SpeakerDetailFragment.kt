@@ -119,7 +119,7 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
     override fun initAction() {
         binding.layoutAgenda.root.setOnClickListener {
             val sessionId = args?.sessionId ?: return@setOnClickListener
-            parentFragmentManager.addFragmentToFragment(R.id.llMore, MoreAgendaDetailFragment.newInstance(false, sessionId))
+            parentFragmentManager.addFragmentToFragment(R.id.llMore, MoreAgendaDetailFragment.newInstance(sessionId))
         }
     }
 

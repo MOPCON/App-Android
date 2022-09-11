@@ -48,7 +48,7 @@ class MoreAgendaDetailViewModel(private val apiService: ApiService, private val 
         }
     }
 
-    fun storeAgenda(isMainSession: Boolean) {
+    fun storeAgenda() {
         viewModelScope.launch(Dispatchers.IO) {
             val data = agendaDetail.value ?: return@launch
             val startTime = if (data.startedAt?.toString().isNullOrEmpty()) "" else "${data.startedAt?.toTimeFormat(HM_FORMAT)}"
@@ -56,7 +56,6 @@ class MoreAgendaDetailViewModel(private val apiService: ApiService, private val 
             repository.storeAgenda(
                 AgendaFavData(
                     sessionId = data.sessionId,
-                    isMainSession = isMainSession,
                     time = "$startTime$endTimeStr",
                     topic = data.topic ?: "",
                     topicE = data.topicE ?: "",

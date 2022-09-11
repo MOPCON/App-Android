@@ -19,13 +19,13 @@ class AgendaViewModel(private val repository: AgendaRepository) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _agendaList = MutableLiveData<Pair<Boolean, List<AgendaData>>>()
-    val agendaList: LiveData<Pair<Boolean, List<AgendaData>>> = _agendaList
+    private val _agendaList = MutableLiveData<List<AgendaData>>()
+    val agendaList: LiveData<List<AgendaData>> = _agendaList
 
     private val _favSessionIdList = MutableLiveData<List<Int>>()
     val favSessionIdList: LiveData<List<Int>> = _favSessionIdList
 
-    fun getAgenda(isMainConf: Boolean) {
+    fun getAgenda() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.postValue(true)
 
@@ -35,7 +35,7 @@ class AgendaViewModel(private val repository: AgendaRepository) : ViewModel() {
                 },
                 onSuccess = {
                     _isLoading.postValue(false)
-                    _agendaList.value = Pair(isMainConf, it.body()?.data ?: listOf())
+                    _agendaList.value = it.body()?.data ?: listOf()
                 },
                 onError = {
                     Timber.e("onError, $it")
@@ -45,14 +45,14 @@ class AgendaViewModel(private val repository: AgendaRepository) : ViewModel() {
         }
     }
 
-    fun getExchange(isMainConf: Boolean) {
+    fun getExchange() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.postValue(true)
             request(
                 request = { repository.getExchange() },
                 onSuccess = {
                     _isLoading.postValue(false)
-                    _agendaList.value = Pair(isMainConf, it.body()?.data ?: listOf())
+                    _agendaList.value = it.body()?.data ?: listOf()
                 },
                 onError = {
                     Timber.e("onError, $it")
@@ -62,14 +62,13 @@ class AgendaViewModel(private val repository: AgendaRepository) : ViewModel() {
         }
     }
 
-    fun storeAgenda(isMainConf: Boolean, data: RoomData) {
+    fun storeAgenda(data: RoomData) {
         viewModelScope.launch(Dispatchers.IO) {
             val startTime = if (data.startedAt?.toString().isNullOrEmpty()) "" else "${data.startedAt?.toTimeFormat(HM_FORMAT)}"
             val endTimeStr = if (data.endedAt?.toString().isNullOrEmpty()) "" else " - ${data.endedAt?.toTimeFormat(HM_FORMAT)}"
             repository.storeAgenda(
                 AgendaFavData(
                     sessionId = data.sessionId,
-                    isMainSession = isMainConf,
                     time = "$startTime$endTimeStr",
                     topic = data.topic ?: "",
                     topicE = data.topicE ?: "",

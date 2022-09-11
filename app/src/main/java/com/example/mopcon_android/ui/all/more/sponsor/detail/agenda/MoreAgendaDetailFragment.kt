@@ -16,17 +16,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAgendaDetailBinding = FragmentAgendaDetailBinding::inflate
     private val tagAdapter by lazy { TagAdapter() }
-    private val argsIsConf by lazy { arguments?.getBoolean(BUNDLE_IS_CONF) }
     private val argsSessionId by lazy { arguments?.getInt(BUNDLE_SESSION_ID) }
 
     private val viewModel: MoreAgendaDetailViewModel by viewModel()
 
     companion object {
-        private const val BUNDLE_IS_CONF = "bundle_is_conf"
         private const val BUNDLE_SESSION_ID = "bundle_session_id"
-        fun newInstance(isConf: Boolean, sessionId: Int) = MoreAgendaDetailFragment().apply {
+        fun newInstance(sessionId: Int) = MoreAgendaDetailFragment().apply {
             val bundle = Bundle().apply {
-                putBoolean(BUNDLE_IS_CONF, isConf)
                 putInt(BUNDLE_SESSION_ID, sessionId)
             }
             arguments = bundle
@@ -56,7 +53,7 @@ class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding
         }
 
         binding.cbStar.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) viewModel.storeAgenda(argsIsConf == true) else viewModel.deleteAgenda(argsSessionId)
+            if (isChecked) viewModel.storeAgenda() else viewModel.deleteAgenda(argsSessionId)
         }
 
         viewModel.getFavSessionIdList()
