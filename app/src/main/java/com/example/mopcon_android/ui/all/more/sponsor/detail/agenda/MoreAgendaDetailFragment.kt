@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.example.mopcon_android.databinding.FragmentAgendaDetailBinding
+import com.example.mopcon_android.network.model.agenda.RoomData
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.util.*
@@ -19,6 +20,8 @@ class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding
     private val argsSessionId by lazy { arguments?.getInt(BUNDLE_SESSION_ID) }
 
     private val viewModel: MoreAgendaDetailViewModel by viewModel()
+
+    var data: RoomData? = null
 
     companion object {
         private const val BUNDLE_SESSION_ID = "bundle_session_id"
@@ -53,7 +56,8 @@ class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding
         }
 
         binding.cbStar.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) viewModel.storeAgenda() else viewModel.deleteAgenda(argsSessionId)
+            val data = data ?: return@setOnCheckedChangeListener
+            if (isChecked) viewModel.storeAgenda(data) else viewModel.deleteAgenda(argsSessionId)
         }
 
         viewModel.getFavSessionIdList()
@@ -66,6 +70,7 @@ class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding
         }
 
         viewModel.agendaDetail.observe(viewLifecycleOwner) {
+            data = it
             binding.apply {
                 setAvatarVisible((it.speakers ?: listOf()).size)
 

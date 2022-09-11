@@ -50,10 +50,10 @@ class MyApplication : Application() {
     }
 
     private val viewModelModules = module {
-        viewModel { HomeViewModel(get()) }
+        viewModel { HomeViewModel(get(), get()) }
         viewModel { AgendaViewModel(get()) }
         viewModel { NewsViewModel(get()) }
-        viewModel { SpeakerViewModel(get()) }
+        viewModel { SpeakerViewModel(get(), get()) }
         viewModel { SponsorViewModel(get()) }
         viewModel { HostCommunityViewModel(get()) }
         viewModel { MoreAgendaDetailViewModel(get(), get()) }

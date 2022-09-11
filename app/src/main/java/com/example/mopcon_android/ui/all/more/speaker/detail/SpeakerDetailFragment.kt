@@ -7,10 +7,12 @@ import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentSpeakerDetailBinding
 import com.example.mopcon_android.network.model.more.speaker.SpeakerData
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
+import com.example.mopcon_android.ui.all.more.speaker.SpeakerViewModel
 import com.example.mopcon_android.ui.all.more.sponsor.detail.agenda.MoreAgendaDetailFragment
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.util.*
 import com.google.android.flexbox.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>() {
 
@@ -18,6 +20,8 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
         get() = FragmentSpeakerDetailBinding::inflate
 
     private val tagAdapter by lazy { TagAdapter() }
+
+    private val viewModel: SpeakerViewModel by viewModel()
 
     private val args by lazy { arguments?.getParcelable(BUNDLE_SPEAKER_DATA) as SpeakerData? }
 
@@ -121,10 +125,13 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
             val sessionId = args?.sessionId ?: return@setOnClickListener
             parentFragmentManager.addFragmentToFragment(R.id.llMore, MoreAgendaDetailFragment.newInstance(sessionId))
         }
+        viewModel.getFavSessionIdList()
     }
 
     override fun initObserver() {
-
+        viewModel.favSessionIdList.observe(viewLifecycleOwner) {
+            binding.layoutAgenda.cbStar.isChecked = it.contains(args?.sessionId)
+        }
     }
 
 

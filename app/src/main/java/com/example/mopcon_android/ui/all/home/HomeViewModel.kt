@@ -7,11 +7,14 @@ import com.example.mopcon_android.network.model.home.Banner
 import com.example.mopcon_android.network.model.home.HomeBannerNewsData
 import com.example.mopcon_android.network.model.home.HomeBannerNewsResponse
 import com.example.mopcon_android.network.model.home.NewsItem
+import com.example.mopcon_android.network.service.ApiService
+import com.example.mopcon_android.repository.AgendaRepository
+import com.example.mopcon_android.ui.base.BaseViewModel
 import com.example.mopcon_android.util.request
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
+class HomeViewModel(private val apiService: ApiService, repository: AgendaRepository) : BaseViewModel(repository) {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -41,7 +44,7 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.postValue(true)
             request(
-                request = { repository.getHomeBannerAndNews() },
+                request = { apiService.getHomeBannerAndNews() },
                 onSuccess = {
                     _isLoading.postValue(false)
                     _bannerAndNews.value = it.body()?.data

@@ -38,7 +38,6 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
     override fun initLayout() {
         binding.apply {
             args?.let {
-                cbStar.isChecked = viewModel.favSessionIdList.value?.contains(args?.sessionId) == true
                 setAvatarVisible((it.speakers ?: listOf()).size)
 
                 when (it.speakers?.size) {
@@ -126,9 +125,14 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
         binding.ivBack.setOnClickListener {
             activity?.onBackPressed()
         }
+
+        viewModel.getFavSessionIdList()
     }
 
     override fun initObserver() {
+        viewModel.favSessionIdList.observe(viewLifecycleOwner) {
+            binding.cbStar.isChecked = it.contains(args?.sessionId)
+        }
     }
 
 }

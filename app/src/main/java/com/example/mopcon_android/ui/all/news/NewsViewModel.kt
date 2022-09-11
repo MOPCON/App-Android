@@ -2,11 +2,12 @@ package com.example.mopcon_android.ui.all.news
 
 import androidx.lifecycle.*
 import com.example.mopcon_android.network.model.news.NewsData
+import com.example.mopcon_android.network.service.ApiService
 import com.example.mopcon_android.util.request
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class NewsViewModel(private val repository: NewsRepository) : ViewModel() {
+class NewsViewModel(private val apiService: ApiService) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -18,7 +19,7 @@ class NewsViewModel(private val repository: NewsRepository) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.postValue(true)
             request(
-                request = { repository.getNews() },
+                request = { apiService.getNews() },
                 onSuccess = {
                     _isLoading.postValue(false)
                     _news.postValue(it.body()?.newsData ?: listOf())
