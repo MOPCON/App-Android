@@ -12,7 +12,6 @@ import com.example.mopcon_android.db.AgendaFavData
 import com.example.mopcon_android.ui.all.MainActivity
 import com.example.mopcon_android.ui.all.more.sponsor.detail.agenda.MoreAgendaDetailFragment
 import com.example.mopcon_android.ui.base.BaseBindingFragment
-import com.example.mopcon_android.ui.extension.BottomItemDecoration
 import com.example.mopcon_android.util.addFragmentToFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,7 +33,7 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
             }, NewsItemClickListener {
                 context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
             }, FavClickListener {
-                parentFragmentManager.addFragmentToFragment(R.id.llHome, MoreAgendaDetailFragment.newInstance(it))
+                parentFragmentManager.addFragmentToFragment(R.id.llHome, MoreAgendaDetailFragment.newInstance(false, it))
             }, NoFavClickListener {
                 (activity as MainActivity).setTabToAgenda()
             })
@@ -44,7 +43,7 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>() {
         binding.rvHome.apply {
             adapter = homeAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            addItemDecoration(BottomItemDecoration(20))
+//            addItemDecoration(BottomItemDecoration(20))
         }
     }
 

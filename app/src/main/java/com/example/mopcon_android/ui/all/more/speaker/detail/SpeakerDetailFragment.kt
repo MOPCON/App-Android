@@ -1,7 +1,5 @@
 package com.example.mopcon_android.ui.all.more.speaker.detail
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -121,7 +119,7 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
     override fun initAction() {
         binding.layoutAgenda.root.setOnClickListener {
             val sessionId = args?.sessionId ?: return@setOnClickListener
-            parentFragmentManager.addFragmentToFragment(R.id.llMore, MoreAgendaDetailFragment.newInstance(sessionId))
+            parentFragmentManager.addFragmentToFragment(R.id.llMore, MoreAgendaDetailFragment.newInstance(false, sessionId))
         }
     }
 

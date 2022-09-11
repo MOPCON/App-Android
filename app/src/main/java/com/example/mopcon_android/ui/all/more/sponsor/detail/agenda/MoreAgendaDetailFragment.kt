@@ -1,13 +1,11 @@
 package com.example.mopcon_android.ui.all.more.sponsor.detail.agenda
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentAgendaDetailBinding
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
 import com.example.mopcon_android.ui.base.BaseBindingFragment
@@ -18,14 +16,17 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAgendaDetailBinding = FragmentAgendaDetailBinding::inflate
     private val tagAdapter by lazy { TagAdapter() }
-    private val args by lazy { arguments?.getInt(BUNDLE_SESSION_ID) }
+    private val argsIsConf by lazy { arguments?.getBoolean(BUNDLE_IS_CONF) }
+    private val argsSessionId by lazy { arguments?.getInt(BUNDLE_SESSION_ID) }
 
     private val viewModel: MoreAgendaDetailViewModel by viewModel()
 
     companion object {
+        private const val BUNDLE_IS_CONF = "bundle_is_conf"
         private const val BUNDLE_SESSION_ID = "bundle_session_id"
-        fun newInstance(sessionId: Int) = MoreAgendaDetailFragment().apply {
+        fun newInstance(isConf: Boolean, sessionId: Int) = MoreAgendaDetailFragment().apply {
             val bundle = Bundle().apply {
+                putBoolean(BUNDLE_IS_CONF, isConf)
                 putInt(BUNDLE_SESSION_ID, sessionId)
             }
             arguments = bundle
@@ -54,10 +55,18 @@ class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding
             activity?.onBackPressed()
         }
 
-        viewModel.getAgendaDetail(args)
+        binding.cbStar.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) viewModel.storeAgenda(argsIsConf == true) else viewModel.deleteAgenda(argsSessionId)
+        }
+
+        viewModel.getFavSessionIdList()
+        viewModel.getAgendaDetail(argsSessionId)
     }
 
     override fun initObserver() {
+        viewModel.favSessionIdList.observe(viewLifecycleOwner) {
+            binding.cbStar.isChecked = it.contains(argsSessionId)
+        }
 
         viewModel.agendaDetail.observe(viewLifecycleOwner) {
             binding.apply {

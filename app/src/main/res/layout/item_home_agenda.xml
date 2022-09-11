@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/button_capsule_transparent_blue_stroke_radius_8"
     android:padding="10dp"
+    android:layout_marginBottom="12dp"
     tools:layout_gravity="center">
 
     <ImageView

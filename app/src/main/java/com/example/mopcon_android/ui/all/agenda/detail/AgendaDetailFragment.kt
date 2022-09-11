@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.example.mopcon_android.databinding.FragmentAgendaDetailBinding
 import com.example.mopcon_android.network.model.agenda.RoomData
+import com.example.mopcon_android.ui.all.agenda.AgendaViewModel
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.util.*
@@ -20,6 +21,8 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAgendaDetailBinding = FragmentAgendaDetailBinding::inflate
     private val tagAdapter by lazy { TagAdapter() }
+    private val viewModel: AgendaViewModel by viewModel()
+
     private val args by lazy { arguments?.getParcelable(BUNDLE_ROOM_DATA) as RoomData? }
 
     companion object {
@@ -35,6 +38,7 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
     override fun initLayout() {
         binding.apply {
             args?.let {
+                cbStar.isChecked = viewModel.favSessionIdList.value?.contains(args?.sessionId) == true
                 setAvatarVisible((it.speakers ?: listOf()).size)
 
                 when (it.speakers?.size) {

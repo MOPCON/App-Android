@@ -165,7 +165,7 @@ class HomeAdapter(
                     favItemClickListener.onClick(data.sessionId)
                 }
 
-                val icon = if (data.isBlue) R.drawable.ic_battleship_blue else R.drawable.ic_battleship_pink
+                val icon = if (data.isMainSession) R.drawable.ic_battleship_pink else R.drawable.ic_battleship_blue
                 ivIcon.setImageResource(icon)
 
                 //TODO : do we need star in HomePage fav items?

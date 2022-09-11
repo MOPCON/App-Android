@@ -31,6 +31,7 @@
             android:textSize="20sp" />
 
         <CheckBox
+            android:id="@+id/cbStar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:button="@drawable/star_checkbox_selector"

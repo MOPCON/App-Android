@@ -19,7 +19,7 @@ class SponsorDetailFragment : BaseBindingFragment<FragmentSponsorDetailBinding>(
     private val sponsorDetailAdapter by lazy {
         SponsorDetailAdapter(SponsorDetailItemClickListener {
             if (it.sessionId == null) return@SponsorDetailItemClickListener
-            parentFragmentManager.addFragmentToFragment(R.id.llMore, MoreAgendaDetailFragment.newInstance(it.sessionId))
+            parentFragmentManager.addFragmentToFragment(R.id.llMore, MoreAgendaDetailFragment.newInstance(false, it.sessionId))
         })
     }
 
