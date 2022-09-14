@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="@id/ivAvatar"
         app:layout_constraintTop_toTopOf="@id/ivAvatar" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivAvatar"
         android:layout_width="100dp"
         android:layout_height="100dp"

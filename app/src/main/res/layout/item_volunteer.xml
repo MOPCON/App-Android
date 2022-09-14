@@ -9,7 +9,7 @@
     android:paddingBottom="20dp"
     android:orientation="vertical">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivAvatar"
         android:layout_width="120dp"
         android:layout_height="120dp"

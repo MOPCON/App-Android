@@ -18,7 +18,7 @@
         android:layout_marginTop="3dp"
         android:src="@drawable/ic_avatar_light_blue_circle" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivAvatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
