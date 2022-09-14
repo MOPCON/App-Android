@@ -3,11 +3,13 @@ package com.example.mopcon_android.ui.all.more.sponsor
 import androidx.lifecycle.*
 import com.example.mopcon_android.network.model.more.sponsor.SponsorData
 import com.example.mopcon_android.network.service.ApiService
+import com.example.mopcon_android.repository.AgendaRepository
+import com.example.mopcon_android.ui.base.BaseViewModel
 import com.example.mopcon_android.util.request
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SponsorViewModel(private val apiService: ApiService) : ViewModel() {
+class SponsorViewModel(private val apiService: ApiService, repository: AgendaRepository) : BaseViewModel(repository) {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading

@@ -21,6 +21,9 @@ abstract class BaseViewModel(
     private val _favSessionIdList = MutableLiveData<List<Int>>()
     val favSessionIdList: LiveData<List<Int>> = _favSessionIdList
 
+    private val _favAgendaList = MutableLiveData<List<AgendaFavData>>()
+    val favAgendaList: LiveData<List<AgendaFavData>> = _favAgendaList
+
     fun storeAgenda(data: RoomData) {
         viewModelScope.launch(Dispatchers.IO) {
             val startTime = if (data.startedAt?.toString().isNullOrEmpty()) "" else "${data.startedAt?.toTimeFormat(HM_FORMAT)}"
@@ -28,15 +31,22 @@ abstract class BaseViewModel(
             repository.storeAgenda(
                 AgendaFavData(
                     sessionId = data.sessionId,
+                    startAt = data.startedAt ?: 0,
                     time = "$startTime$endTimeStr",
                     topic = data.topic ?: "",
                     topicE = data.topicE ?: "",
                     names = (data.speakers ?: listOf()).joinToString("｜") { speaker -> if (speaker.nameE.isNullOrEmpty()) speaker.name ?: "" else speaker.nameE },
-                    namesE = (data.speakers ?: listOf()).joinToString("｜") { speaker -> speaker.name ?: "" },
+                    namesE = (data.speakers ?: listOf()).joinToString("｜") { speaker -> speaker.nameE ?: speaker.name ?: ""},
                     location = data.room ?: "",
                     tags = DataConverter.fromTagList(data.tags)
                 )
             )
+        }
+    }
+
+    fun storeAgenda(data: AgendaFavData) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.storeAgenda(data)
         }
     }
 
@@ -50,6 +60,12 @@ abstract class BaseViewModel(
     fun getFavSessionIdList() {
         viewModelScope.launch(Dispatchers.IO) {
             _favSessionIdList.postValue(repository.getFavSessionIdList())
+        }
+    }
+
+    fun getStoredAgenda() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _favAgendaList.postValue(repository.getStoredAgenda())
         }
     }
 

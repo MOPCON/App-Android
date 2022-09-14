@@ -87,7 +87,7 @@ class HostCommunityFragment : BaseBindingFragment<FragmentHostCommunityBinding>(
 
             rgTopBar.onSecondRbChecked = {
                 viewModel.getVolunteer()
-                titleBar.text = getString(R.string.volunteer_organization)
+                titleBar.text = getString(R.string.main_organization)
                 rvCommunity.isVisible = false
                 rvVolunteer.isVisible = true
             }

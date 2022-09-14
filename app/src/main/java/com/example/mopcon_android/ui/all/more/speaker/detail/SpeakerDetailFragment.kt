@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentSpeakerDetailBinding
+import com.example.mopcon_android.db.AgendaFavData
+import com.example.mopcon_android.db.DataConverter
+import com.example.mopcon_android.network.model.agenda.RoomData
 import com.example.mopcon_android.network.model.more.speaker.SpeakerData
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
 import com.example.mopcon_android.ui.all.more.speaker.SpeakerViewModel
@@ -125,6 +128,30 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
             val sessionId = args?.sessionId ?: return@setOnClickListener
             parentFragmentManager.addFragmentToFragment(R.id.llMore, MoreAgendaDetailFragment.newInstance(sessionId))
         }
+
+        binding.layoutAgenda.cbStar.setOnCheckedChangeListener { _, isChecked ->
+            args?.let { data ->
+                val startTime = if (data.startedAt?.toString().isNullOrEmpty()) "" else "${data.startedAt?.toTimeFormat(HM_FORMAT)}"
+                val endTimeStr = if (data.endedAt?.toString().isNullOrEmpty()) "" else " - ${data.endedAt?.toTimeFormat(HM_FORMAT)}"
+
+                if (isChecked) viewModel.storeAgenda(
+                    AgendaFavData(
+                        sessionId = data.sessionId,
+                        startAt = data.startedAt ?: 0,
+                        time = "$startTime$endTimeStr",
+                        topic = data.topic ?: "",
+                        topicE = data.topicE ?: "",
+                        names = if (data.nameE.isNullOrEmpty()) data.name else data.nameE,
+                        namesE = data.nameE ?: data.name,
+                        location = data.room ?: "",
+                        tags = DataConverter.fromTagList(data.tags)
+                    )
+                ) else {
+                    viewModel.deleteAgenda(args?.sessionId)
+                }
+            }
+        }
+
         viewModel.getFavSessionIdList()
     }
 

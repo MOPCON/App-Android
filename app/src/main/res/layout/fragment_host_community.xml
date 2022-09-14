@@ -22,8 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="16dp"
-        app:firstRbText="@string/main_community"
-        app:secondRbText="@string/volunteer_organization" />
+        app:firstRbText="@string/participant_community"
+        app:secondRbText="@string/main_organization" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCommunity"

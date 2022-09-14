@@ -18,6 +18,9 @@ class MoreAgendaDetailViewModel(private val apiService: ApiService, repository: 
     private val _agendaDetail = MutableLiveData<RoomData>()
     val agendaDetail: LiveData<RoomData> = _agendaDetail
 
+    private val _exchangeDetail = MutableLiveData<RoomData>()
+    val exchangeDetail: LiveData<RoomData> = _exchangeDetail
+
     fun getAgendaDetail(sessionId: Int?) {
         sessionId ?: return
         viewModelScope.launch(Dispatchers.IO) {
@@ -37,4 +40,23 @@ class MoreAgendaDetailViewModel(private val apiService: ApiService, repository: 
             )
         }
     }
+
+    fun getExchangeDetail(sessionId: Int?) {
+        sessionId ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.postValue(true)
+            request(
+                request = { apiService.getExchangeDetail(sessionId) },
+                onSuccess = {
+                    _isLoading.postValue(false)
+                    _exchangeDetail.value = it.body()?.data?.firstOrNull()
+                },
+                onError = {
+                    Timber.e("onError, $it")
+                    _isLoading.postValue(false)
+                }
+            )
+        }
+    }
+
 }

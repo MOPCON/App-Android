@@ -6,13 +6,11 @@ import com.example.mopcon_android.network.ApiServiceModule
 import com.example.mopcon_android.network.OkHttpClientProvider
 import com.example.mopcon_android.repository.AgendaRepository
 import com.example.mopcon_android.ui.all.agenda.AgendaViewModel
-import com.example.mopcon_android.ui.all.home.HomeRepository
 import com.example.mopcon_android.ui.all.home.HomeViewModel
 import com.example.mopcon_android.ui.all.more.host_community.HostCommunityViewModel
 import com.example.mopcon_android.ui.all.more.speaker.SpeakerViewModel
 import com.example.mopcon_android.ui.all.more.sponsor.SponsorViewModel
 import com.example.mopcon_android.ui.all.more.sponsor.detail.agenda.MoreAgendaDetailViewModel
-import com.example.mopcon_android.ui.all.news.NewsRepository
 import com.example.mopcon_android.ui.all.news.NewsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -44,9 +42,7 @@ class MyApplication : Application() {
     }
 
     private val repositoryModules = module {
-        single { HomeRepository(get(), get()) }
         single { AgendaRepository(get(), get()) }
-        single { NewsRepository(get()) }
     }
 
     private val viewModelModules = module {
@@ -54,7 +50,7 @@ class MyApplication : Application() {
         viewModel { AgendaViewModel(get()) }
         viewModel { NewsViewModel(get()) }
         viewModel { SpeakerViewModel(get(), get()) }
-        viewModel { SponsorViewModel(get()) }
+        viewModel { SponsorViewModel(get(), get()) }
         viewModel { HostCommunityViewModel(get()) }
         viewModel { MoreAgendaDetailViewModel(get(), get()) }
     }

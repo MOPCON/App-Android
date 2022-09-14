@@ -2,10 +2,13 @@ package com.example.mopcon_android.util
 
 import android.content.res.Resources
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
+const val MD_FORMAT = "MM/dd"
 const val MDHM_FORMAT = "MM/dd(E) HH:mm"
 const val HM_FORMAT = "hh:mm"
 

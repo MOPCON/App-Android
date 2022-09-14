@@ -7,7 +7,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "agenda_table")
 data class AgendaFavData(
     @PrimaryKey(autoGenerate = false)
-    val sessionId: Int? = null,
+    val sessionId: Int,
+
+    @ColumnInfo(name = "start_at")
+    val startAt: Long,
 
     @ColumnInfo(name = "time")
     val time: String,

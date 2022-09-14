@@ -21,7 +21,7 @@ data class SpeakerInfoData(
     @Json(name = "room")
     val room: String?,
     @Json(name = "session_id")
-    val sessionId: Int?,
+    val sessionId: Int,
     @Json(name = "speaker_id")
     val speakerId: Int?,
     @Json(name = "started_at")

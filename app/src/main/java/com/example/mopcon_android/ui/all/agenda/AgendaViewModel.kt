@@ -1,6 +1,7 @@
 package com.example.mopcon_android.ui.all.agenda
 
 import androidx.lifecycle.*
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mopcon_android.network.model.agenda.AgendaData
 import com.example.mopcon_android.repository.AgendaRepository
 import com.example.mopcon_android.ui.base.BaseViewModel
@@ -16,6 +17,9 @@ class AgendaViewModel(repository: AgendaRepository) : BaseViewModel(repository) 
 
     private val _agendaList = MutableLiveData<List<AgendaData>>()
     val agendaList: LiveData<List<AgendaData>> = _agendaList
+
+    private val _exchangeList = MutableLiveData<List<AgendaData>>()
+    val exchangeList: LiveData<List<AgendaData>> = _exchangeList
 
     fun getAgenda() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -44,7 +48,7 @@ class AgendaViewModel(repository: AgendaRepository) : BaseViewModel(repository) 
                 request = { repository.getExchange() },
                 onSuccess = {
                     _isLoading.postValue(false)
-                    _agendaList.value = it.body()?.data ?: listOf()
+                    _exchangeList.value = it.body()?.data ?: listOf()
                 },
                 onError = {
                     Timber.e("onError, $it")

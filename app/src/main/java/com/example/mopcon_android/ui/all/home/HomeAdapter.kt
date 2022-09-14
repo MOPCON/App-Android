@@ -1,5 +1,6 @@
 package com.example.mopcon_android.ui.all.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -18,9 +19,7 @@ import com.example.mopcon_android.network.model.home.Banner
 import com.example.mopcon_android.network.model.home.NewsItem
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
 import com.example.mopcon_android.ui.extension.RightItemDecoration
-import com.example.mopcon_android.util.HM_FORMAT
 import com.example.mopcon_android.util.getDeviceLanguage
-import com.example.mopcon_android.util.toTimeFormat
 import com.google.android.flexbox.*
 import com.stx.xhb.androidx.transformers.Transformer
 import kotlinx.coroutines.CoroutineScope
@@ -32,8 +31,9 @@ class HomeAdapter(
     private val bannerClickListener: BannerClickListener,
     private val newsMoreClickListener: NewsMoreClickListener,
     private val itemClickListener: NewsItemClickListener,
-    private val favItemClickListener: FavClickListener,
-    private val noFavClickListener: NoFavClickListener
+    private val favItemClickListener: FavItemClickListener,
+    private val addToFavClickListener: AddToFavClickListener,
+    private val noFavClickListener: NoFavClickListener,
 ) : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback()) {
     enum class ItemType {
         BANNER, NEWS_TITLE, NEWS_ITEM, FAV_TITLE, FAV_ITEM, NO_FAV_ITEM
@@ -41,12 +41,20 @@ class HomeAdapter(
 
     private var bannerList = listOf<Banner>()
     private var newsList = listOf<NewsItem>()
+    private var favList = listOf<AgendaFavData>()
+
+//    var favSessionIdList = listOf<Int>()
+//        set(value) {
+//            field = value
+//            notifyDataSetChanged()
+//        }
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
-    fun addFooterAndSubmitList(bannerList: List<Banner>, newsList: List<NewsItem>, favList: List<AgendaFavData>?, scrollToTop: () -> Unit) {
-        this.bannerList = bannerList
-        this.newsList = newsList
+    fun addFooterAndSubmitList(bannerList: List<Banner>? = listOf(), newsList: List<NewsItem>? = listOf(), favList: List<AgendaFavData>? = listOf(), scrollToTop: () -> Unit) {
+        this.bannerList = bannerList ?: listOf()
+        this.newsList = newsList ?: listOf()
+        this.favList = favList ?: listOf()
         adapterScope.launch {
             val items: List<DataItem> = listOf(DataItem.Banner) +
                     when {
@@ -63,6 +71,25 @@ class HomeAdapter(
                 submitList(items) {
                     scrollToTop.invoke()
                 }
+            }
+        }
+    }
+
+    fun addFooterAndSubmitList(favList: List<AgendaFavData>? = listOf()) {
+        adapterScope.launch {
+            val items: List<DataItem> = listOf(DataItem.Banner) +
+                    when {
+                        newsList.isNullOrEmpty() -> listOf()
+                        else -> listOf(DataItem.LatestNewsTitle) + listOf(DataItem.LatestNewsItem)
+                    } +
+                    listOf(DataItem.FavTitle) +
+                    when {
+                        favList.isNullOrEmpty() -> listOf(DataItem.NoFavItem)
+                        else -> favList.map { DataItem.FavItem(it) }
+                    }
+
+            withContext(Dispatchers.Main) { //update in main ui thread
+                submitList(items)
             }
         }
     }
@@ -100,7 +127,7 @@ class HomeAdapter(
 
             is FavItemViewHolder -> {
                 val data = getItem(position) as DataItem.FavItem
-                holder.bind(data.favItem, favItemClickListener)
+                holder.bind(data.favItem, favItemClickListener, addToFavClickListener)
             }
 
             is NoFavItemViewHolder -> {
@@ -152,22 +179,23 @@ class HomeAdapter(
 
     }
 
-    class FavItemViewHolder private constructor(private val binding: ItemHomeAgendaBinding) :
+    class FavItemViewHolder private constructor(private val binding: ItemHomeAgendaBinding) : // 原 ItemHomeAgendaBinding, 可刪
         RecyclerView.ViewHolder(binding.root) {
 
         private val tagAdapter by lazy { TagAdapter() }
 
-        fun bind(data: AgendaFavData, favItemClickListener: FavClickListener) {
+        fun bind(data: AgendaFavData, favItemClickListener: FavItemClickListener, addToFavClickListener: AddToFavClickListener) {
             binding.apply {
 
                 root.setOnClickListener {
                     data.sessionId ?: return@setOnClickListener
-                    favItemClickListener.onClick(data.sessionId)
+                    favItemClickListener.onClick(data)
                 }
-
                 //TODO : do we need star in HomePage fav items?
+//                cbStar.isChecked = favSessionIdList.contains(data.sessionId)
 //                cbStar.setOnCheckedChangeListener { _, isChecked ->
-//                    favClickListener.onClick(isChecked, data)
+//                    cbStar.isChecked = isChecked
+//                    if (position >= 0) addToFavClickListener.onClick(isChecked, bindingAdapterPosition , data)
 //                }
 
                 tvTime.text = data.time
@@ -275,7 +303,6 @@ class HomeAdapter(
                 rvNews.apply {
                     adapter = newsAdapter
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    addItemDecoration(RightItemDecoration(8))
                 }
                 newsAdapter.submitList(newsList)
             }
@@ -311,8 +338,12 @@ class NewsItemClickListener(val clickListener: (link: String) -> Unit) {
     fun onClick(link: String) = clickListener(link)
 }
 
-class FavClickListener(val clickListener: (sessionId: Int) -> Unit) {
-    fun onClick(sessionId: Int) = clickListener(sessionId)
+class FavItemClickListener(val clickListener: (agendaFavData: AgendaFavData) -> Unit) {
+    fun onClick(agendaFavData: AgendaFavData) = clickListener(agendaFavData)
+}
+
+class AddToFavClickListener(val clickListener: (isChecked: Boolean, position: Int, agendaFavData: AgendaFavData) -> Unit) {
+    fun onClick(isChecked: Boolean, position: Int, agendaFavData: AgendaFavData) = clickListener(isChecked, position, agendaFavData)
 }
 
 class NoFavClickListener(val clickListener: () -> Unit) {

@@ -101,8 +101,7 @@ class CommunityAdapter(
 
         fun bind() {
             binding.apply {
-                Log.e(">>>", "${itemView.context.getString(R.string.main_community)}")
-                tvSponsorTitle.text = itemView.context.getString(R.string.main_community)
+                tvSponsorTitle.text = itemView.context.getString(R.string.participant_community)
                 ivIcon.setGlideImg(R.drawable.img_community01)
             }
         }

@@ -40,6 +40,11 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
             args?.let {
                 setAvatarVisible((it.speakers ?: listOf()).size)
 
+                cbStar.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) viewModel.storeAgenda(it)
+                    else viewModel.deleteAgenda(it.sessionId)
+                }
+
                 when (it.speakers?.size) {
                     1 -> {
                         layout1Speaker.ivAvatar.setGlideImg(it.speakers.firstOrNull()?.img?.mobile?.addUrlPrefix())

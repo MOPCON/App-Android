@@ -26,7 +26,7 @@ data class RoomData(
     @Json(name = "room")
     val room: String? = null,
     @Json(name = "session_id")
-    val sessionId: Int? = null,
+    val sessionId: Int,
     @Json(name = "speakers")
     val speakers: List<Speaker>? = listOf(),
     @Json(name = "sponsor_id")

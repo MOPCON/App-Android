@@ -1,6 +1,5 @@
 package com.example.mopcon_android.ui.all.more.sponsor.detail
 
-import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,9 +7,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.*
 import com.example.mopcon_android.network.model.more.sponsor.SpeakerInfoData
 import com.example.mopcon_android.network.model.more.sponsor.SponsorDetailData
@@ -24,10 +20,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.URL
 
 
-class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClickListener) : ListAdapter<SponsorDataItem, RecyclerView.ViewHolder>(DiffCallback()) {
+class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClickListener, private val favClickListener: FavClickListener) : ListAdapter<SponsorDataItem, RecyclerView.ViewHolder>(DiffCallback()) {
 
     enum class ItemType {
         SPONSOR_INFO, SPEAKER_AGENDA
@@ -37,9 +32,11 @@ class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClick
 
     private var hasSpeakerInfo: Boolean = false
 
-    fun addFooterAndSubmitList(sponsorDetailData: SponsorDetailData?) {
-        adapterScope.launch {
+    private var storedList = listOf<Int>()
 
+    fun addFooterAndSubmitList(storedList: List<Int>, sponsorDetailData: SponsorDetailData?) {
+        this.storedList = storedList
+        adapterScope.launch {
             if (sponsorDetailData == null) return@launch
 
             hasSpeakerInfo = sponsorDetailData.speakerInformation?.isNullOrEmpty() == false
@@ -84,7 +81,7 @@ class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClick
 
             is SponsorContentViewHolder -> {
                 val data = getItem(position) as SponsorDataItem.SpeakerAgenda
-                holder.bind(data.speakerInfoData, itemClickListener)
+                holder.bind(storedList, data.speakerInfoData, itemClickListener, favClickListener)
             }
 
         }
@@ -130,8 +127,13 @@ class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClick
 
         private val tagAdapter by lazy { TagAdapter() }
 
-        fun bind(speakerInfoData: SpeakerInfoData, itemClickListener: SponsorDetailItemClickListener) {
+        fun bind(storedList: List<Int>, speakerInfoData: SpeakerInfoData, itemClickListener: SponsorDetailItemClickListener, favClickListener: FavClickListener) {
             binding.apply {
+                cbStar.setOnCheckedChangeListener { _, isChecked ->
+                    favClickListener.onClick(isChecked, speakerInfoData)
+                }
+                cbStar.isChecked = storedList.contains(speakerInfoData.sessionId)
+
                 val startTime = if (speakerInfoData.startedAt?.toString().isNullOrEmpty()) "" else "${speakerInfoData.startedAt?.toTimeFormat(HM_FORMAT)}"
                 val endTimeStr = if (speakerInfoData.endedAt?.toString().isNullOrEmpty()) "" else " - ${speakerInfoData.endedAt?.toTimeFormat(HM_FORMAT)}"
                 tvTime.text = "$startTime$endTimeStr"
@@ -191,6 +193,9 @@ class SponsorDetailItemClickListener(val clickListener: (data: SpeakerInfoData) 
     fun onClick(data: SpeakerInfoData) = clickListener(data)
 }
 
+class FavClickListener(val clickListener: (isChecked: Boolean, data: SpeakerInfoData) -> Unit) {
+    fun onClick(isChecked: Boolean, data: SpeakerInfoData) = clickListener(isChecked, data)
+}
 
 sealed class SponsorDataItem {
 
