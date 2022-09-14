@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvSpeaker"
         tools:text="Android Developer " />
 
-    <com.example.mopcon_android.ui.extension.UntouchableRecyclerView
+    <org.mopcon.android.ui.extension.UntouchableRecyclerView
         android:id="@+id/rvTag"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

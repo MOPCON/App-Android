@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".ui.all.home.HomeFragment">
 
-    <com.example.mopcon_android.ui.common.TitleBar
+    <org.mopcon.android.ui.common.TitleBar
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 android:textSize="14sp"
                 tools:text="台灣區經理＠Google Cloud" />
 
-            <com.example.mopcon_android.ui.common.MediaBar
+            <org.mopcon.android.ui.common.MediaBar
                 android:id="@+id/mediaBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

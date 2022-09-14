@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@id/ivIcon"
         tools:text="演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容演講內容" />
 
-    <com.example.mopcon_android.ui.extension.UntouchableRecyclerView
+    <org.mopcon.android.ui.extension.UntouchableRecyclerView
         android:id="@+id/rvTag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

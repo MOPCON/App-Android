@@ -14,7 +14,7 @@
         android:id="@+id/layoutSponsor"
         layout="@layout/item_sponsor_content" />
 
-    <com.example.mopcon_android.ui.common.MediaBar
+    <org.mopcon.android.ui.common.MediaBar
         android:id="@+id/mediaBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -46,7 +46,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:297145122412:android:58184e176e6e8e46",
         "android_client_info": {
-          "package_name": "com.mopcon_android_app_2018"
+          "package_name": "org.mopcon.android"
         }
       },
       "oauth_client": [

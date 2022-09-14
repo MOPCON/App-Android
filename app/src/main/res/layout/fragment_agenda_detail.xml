@@ -138,7 +138,7 @@
                 android:textStyle="bold"
                 tools:text="如何寫出有效率、好讀、好維護的 Java/Android 程式" />
 
-            <com.example.mopcon_android.ui.extension.UntouchableRecyclerView
+            <org.mopcon.android.ui.extension.UntouchableRecyclerView
                 android:id="@+id/rvTag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
