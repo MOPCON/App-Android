@@ -7,7 +7,6 @@ import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentSpeakerDetailBinding
 import com.example.mopcon_android.db.AgendaFavData
 import com.example.mopcon_android.db.DataConverter
-import com.example.mopcon_android.network.model.agenda.RoomData
 import com.example.mopcon_android.network.model.more.speaker.SpeakerData
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
 import com.example.mopcon_android.ui.all.more.speaker.SpeakerViewModel

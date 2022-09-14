@@ -1,8 +1,5 @@
 package com.example.mopcon_android.util
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes

@@ -1,11 +1,8 @@
 package com.example.mopcon_android.ui.all.task
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.webkit.WebSettings
 import android.webkit.WebViewClient
-import com.example.mopcon_android.databinding.FragmentMoreBinding
 import com.example.mopcon_android.databinding.FragmentTaskBinding
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 

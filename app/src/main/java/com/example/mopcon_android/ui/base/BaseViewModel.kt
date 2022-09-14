@@ -1,6 +1,5 @@
 package com.example.mopcon_android.ui.base
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

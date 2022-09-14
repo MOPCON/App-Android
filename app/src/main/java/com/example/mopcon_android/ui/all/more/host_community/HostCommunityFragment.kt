@@ -1,18 +1,13 @@
 package com.example.mopcon_android.ui.all.more.host_community
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentHostCommunityBinding
 import com.example.mopcon_android.ui.all.more.host_community.detail.HostCommunityDetailFragment
 import com.example.mopcon_android.ui.all.more.host_community.detail.VolunteerDetailFragment
-import com.example.mopcon_android.ui.all.more.sponsor.SponsorAdapter
-import com.example.mopcon_android.ui.all.more.sponsor.SponsorFragment
-import com.example.mopcon_android.ui.all.more.sponsor.detail.SponsorDetailFragment
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.ui.extension.BottomItemDecoration
 import com.example.mopcon_android.util.addFragmentToFragment

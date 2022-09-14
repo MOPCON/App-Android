@@ -1,7 +1,6 @@
 package com.example.mopcon_android.ui.all.home
 
 import androidx.lifecycle.*
-import com.example.mopcon_android.db.AgendaFavData
 import com.example.mopcon_android.network.model.home.HomeBannerNewsData
 import com.example.mopcon_android.network.service.ApiService
 import com.example.mopcon_android.repository.AgendaRepository

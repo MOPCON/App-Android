@@ -2,7 +2,6 @@ package com.example.mopcon_android.ui.all.home
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast

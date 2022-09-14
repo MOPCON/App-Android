@@ -1,6 +1,5 @@
 package com.example.mopcon_android.ui.all.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -18,7 +17,6 @@ import com.example.mopcon_android.db.DataConverter
 import com.example.mopcon_android.network.model.home.Banner
 import com.example.mopcon_android.network.model.home.NewsItem
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
-import com.example.mopcon_android.ui.extension.RightItemDecoration
 import com.example.mopcon_android.util.getDeviceLanguage
 import com.google.android.flexbox.*
 import com.stx.xhb.androidx.transformers.Transformer

@@ -1,9 +1,6 @@
 package com.example.mopcon_android.util
 
 import android.content.res.Resources
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*

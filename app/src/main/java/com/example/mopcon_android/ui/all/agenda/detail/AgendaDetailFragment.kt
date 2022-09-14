@@ -1,13 +1,11 @@
 package com.example.mopcon_android.ui.all.agenda.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.navArgs
 import com.example.mopcon_android.databinding.FragmentAgendaDetailBinding
 import com.example.mopcon_android.network.model.agenda.RoomData
 import com.example.mopcon_android.ui.all.agenda.AgendaViewModel

@@ -3,10 +3,8 @@ package com.example.mopcon_android.ui.all.more.sponsor
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentSponsorBinding
-import com.example.mopcon_android.ui.all.more.speaker.SpeakerFragment
 import com.example.mopcon_android.ui.all.more.sponsor.detail.SponsorDetailFragment
 import com.example.mopcon_android.ui.base.BaseBindingFragment
 import com.example.mopcon_android.ui.extension.BottomItemDecoration

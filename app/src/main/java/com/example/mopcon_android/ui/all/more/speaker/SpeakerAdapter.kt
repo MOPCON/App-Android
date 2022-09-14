@@ -7,12 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mopcon_android.databinding.*
 import com.example.mopcon_android.network.model.more.speaker.SpeakerData
-import com.example.mopcon_android.network.model.news.NewsData
 import com.example.mopcon_android.ui.all.agenda.TagAdapter
 import com.example.mopcon_android.util.Constants
 import com.example.mopcon_android.util.getDeviceLanguage
 import com.example.mopcon_android.util.setGlideImg
-import com.example.mopcon_android.util.setTimeFormat
 import com.google.android.flexbox.*
 
 

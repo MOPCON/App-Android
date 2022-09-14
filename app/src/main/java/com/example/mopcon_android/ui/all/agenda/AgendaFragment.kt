@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mopcon_android.R
 import com.example.mopcon_android.databinding.FragmentAgendaBinding
-import com.example.mopcon_android.network.model.agenda.AgendaData
 import com.example.mopcon_android.ui.all.agenda.detail.AgendaDetailFragment
 import com.example.mopcon_android.ui.all.home.NoFavClickListener
 import com.example.mopcon_android.ui.all.more.sponsor.detail.agenda.MoreAgendaDetailFragment
@@ -116,7 +115,7 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>(), OnBackPress
             agendaAdapter.addFooterAndSubmitList(isShowStar, agendaList?.firstOrNull()?.periodData/*, viewModel.favIdList*/) { binding.rvAgenda.scrollToPosition(0) }
 
             val favAgendaList = viewModel.favAgendaList.value
-            agendaFavAdapter.addFooterAndSubmitList(favAgendaList?.filter { data -> data.startAt.toTimeFormat(MD_FORMAT) == FIRST_DATE}) {
+            agendaFavAdapter.addFooterAndSubmitList(favAgendaList?.filter { data -> data.startAt.toTimeFormat(MD_FORMAT) == FIRST_DATE }) {
                 binding.rvAgenda.scrollToPosition(0)
             }
         }
@@ -127,7 +126,7 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>(), OnBackPress
             agendaAdapter.addFooterAndSubmitList(isShowStar, agendaList?.getOrNull(1)?.periodData/*, viewModel.favIdList*/) { binding.rvAgenda.scrollToPosition(0) }
 
             val favAgendaList = viewModel.favAgendaList.value
-            agendaFavAdapter.addFooterAndSubmitList(favAgendaList?.filter { data -> data.startAt.toTimeFormat(MD_FORMAT) == SECOND_DATE}) {
+            agendaFavAdapter.addFooterAndSubmitList(favAgendaList?.filter { data -> data.startAt.toTimeFormat(MD_FORMAT) == SECOND_DATE }) {
                 binding.rvAgenda.scrollToPosition(0)
             }
         }
@@ -162,11 +161,11 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>(), OnBackPress
 
         viewModel.favAgendaList.observe(viewLifecycleOwner) {
             if (binding.rgTopBar.checkedRadioButtonId == R.id.rb1)
-                agendaFavAdapter.addFooterAndSubmitList(it.filter { data -> data.startAt.toTimeFormat(MD_FORMAT) == FIRST_DATE}) {
+                agendaFavAdapter.addFooterAndSubmitList(it.filter { data -> data.startAt.toTimeFormat(MD_FORMAT) == FIRST_DATE }) {
                     binding.rvAgenda.scrollToPosition(0)
                 }
             else
-                agendaFavAdapter.addFooterAndSubmitList(it.filter { data -> data.startAt.toTimeFormat(MD_FORMAT) == SECOND_DATE}) {
+                agendaFavAdapter.addFooterAndSubmitList(it.filter { data -> data.startAt.toTimeFormat(MD_FORMAT) == SECOND_DATE }) {
                     binding.rvAgenda.scrollToPosition(0)
                 }
         }
