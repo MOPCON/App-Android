@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:297145122412:android:e48af7f2b5e0f275dde249",
         "android_client_info": {
-          "package_name": "com.example.myapplication"
+          "package_name": "org.mopcon.android"
         }
       },
       "oauth_client": [
