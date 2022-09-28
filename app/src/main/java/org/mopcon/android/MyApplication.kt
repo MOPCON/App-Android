@@ -17,6 +17,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import org.mopcon.android.ui.all.SplashViewModel
 
 class MyApplication : Application() {
 
@@ -26,7 +27,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        org.mopcon.android.MyApplication.Companion.application = this
+        application = this
 
         startKoin {
             androidContext(this@MyApplication)
@@ -46,6 +47,7 @@ class MyApplication : Application() {
     }
 
     private val viewModelModules = module {
+        viewModel { SplashViewModel(get()) }
         viewModel { HomeViewModel(get(), get()) }
         viewModel { AgendaViewModel(get()) }
         viewModel { NewsViewModel(get()) }

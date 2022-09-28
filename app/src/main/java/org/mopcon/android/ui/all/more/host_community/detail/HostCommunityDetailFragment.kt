@@ -39,7 +39,7 @@ class HostCommunityDetailFragment : BaseBindingFragment<FragmentHostCommunityDet
                 isOtherLanguage = { args?.name ?: "" }
             )
 
-            ivSponsor.setGlideImg(args?.photo)
+            ivSponsor.setGlideImg(args?.photo?.mobile)
         }
 
     }

@@ -16,5 +16,5 @@ data class CommunityData(
     @Json(name = "nameE")
     val nameE: String?,
     @Json(name = "photo")
-    val photo: String?,
+    val photo: Photo?,
 ) : Parcelable

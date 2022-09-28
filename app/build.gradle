@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
+    ext.kotlin_version = '1.7.1'
     compileSdk 32
-
     defaultConfig {
         applicationId 'org.mopcon.android'
-        minSdk 21
+        minSdk 30
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -42,7 +42,7 @@ android {
 ext {
     version_retrofit = "2.9.0"
     koin_version = "3.2.0"
-    room_version = "2.4.3"
+    room_version = "2.4.0"
     lifecycle_version = "2.2.0"
     version_navigation = "1.0.0"
 }
@@ -90,7 +90,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.databinding:databinding-common:7.2.2'
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.8'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.0.8'
     kapt "androidx.room:room-compiler:$room_version"
 
@@ -120,6 +120,8 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-inappmessaging-display-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation 'androidx.webkit:webkit:1.5.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

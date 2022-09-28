@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">mopcon_android</string>
+    <string name="app_name">MOPCON</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">首頁</string>
@@ -39,4 +39,5 @@
     <string name="volunteer_info">志工資訊</string>
     <string name="volunteer_member">志工成員</string>
     <string name="game">大地遊戲</string>
+    <string name="no_news">暫無消息</string>
 </resources>

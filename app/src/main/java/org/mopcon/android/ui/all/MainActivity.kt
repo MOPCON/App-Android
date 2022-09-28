@@ -19,25 +19,6 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityMainBinding
         get() = ActivityMainBinding::inflate
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(MainActivity::class.simpleName, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-
-            // Log and toast
-            Log.e(">>>", "token = $token")
-            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
-        })
-
-    }
-
     override fun initLayout() {
         val navController = Navigation.findNavController(this, R.id.mainContainer)
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)

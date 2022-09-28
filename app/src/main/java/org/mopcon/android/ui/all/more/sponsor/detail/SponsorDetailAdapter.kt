@@ -11,15 +11,12 @@ import org.mopcon.android.databinding.*
 import org.mopcon.android.network.model.more.sponsor.SpeakerInfoData
 import org.mopcon.android.network.model.more.sponsor.SponsorDetailData
 import org.mopcon.android.ui.all.agenda.TagAdapter
-import org.mopcon.android.util.HM_FORMAT
-import org.mopcon.android.util.getDeviceLanguage
-import org.mopcon.android.util.toTimeFormat
 import com.google.android.flexbox.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.mopcon.android.util.setGlideImg
+import org.mopcon.android.util.*
 
 
 class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClickListener, private val favClickListener: FavClickListener) : ListAdapter<SponsorDataItem, RecyclerView.ViewHolder>(DiffCallback()) {
@@ -134,7 +131,7 @@ class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClick
                 }
                 cbStar.isChecked = storedList.contains(speakerInfoData.sessionId)
 
-                val startTime = if (speakerInfoData.startedAt?.toString().isNullOrEmpty()) "" else "${speakerInfoData.startedAt?.toTimeFormat(HM_FORMAT)}"
+                val startTime = if (speakerInfoData.startedAt?.toString().isNullOrEmpty()) "" else "${speakerInfoData.startedAt?.toTimeFormat(MD_FORMAT)} ${speakerInfoData.startedAt?.toTimeFormat(HM_FORMAT)}"
                 val endTimeStr = if (speakerInfoData.endedAt?.toString().isNullOrEmpty()) "" else " - ${speakerInfoData.endedAt?.toTimeFormat(HM_FORMAT)}"
                 tvTime.text = "$startTime$endTimeStr"
                 tvContent.text = getDeviceLanguage(

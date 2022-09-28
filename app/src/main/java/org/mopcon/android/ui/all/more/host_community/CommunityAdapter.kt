@@ -131,8 +131,8 @@ class CommunityAdapter(
 
         fun bind(communityData: CommunityData, itemClickListener: CommunityItemClickListener) {
             binding.apply {
-                Log.e(">>>", "communityData.photo = ${communityData.photo}")
-                ivSponsor.setGlideImg(communityData.photo)
+//                Log.e(">>>", "communityData.photo = ${communityData.photo}")
+                ivSponsor.setGlideImg(communityData.photo?.mobile)
                 tvSponsor.text = getDeviceLanguage(
                     isEnglish = { if (communityData.nameE.isNullOrEmpty()) communityData.name else communityData.nameE },
                     isOtherLanguage = { communityData.name }

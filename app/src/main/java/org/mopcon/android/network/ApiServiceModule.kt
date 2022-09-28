@@ -19,7 +19,7 @@ class ApiServiceModule(private val okHttpClient: OkHttpClient) {
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .baseUrl(Constants.MOPCON_API_URL)
+        .baseUrl(Constants.getApiUrl())
         .client(okHttpClient)
         .build()
 

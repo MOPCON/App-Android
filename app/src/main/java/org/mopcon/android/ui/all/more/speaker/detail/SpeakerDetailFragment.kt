@@ -41,7 +41,7 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
         binding.apply {
             titleBar.backPressedListener = { activity?.onBackPressed() }
 
-            layoutSpeaker.ivAvatar.setGlideImg("${Constants.MOPCON_API_URL}${args?.img?.mobile}")
+            layoutSpeaker.ivAvatar.setGlideImg("${Constants.getApiUrl()}${args?.img?.mobile}")
 
             tvSpeakerTitle.text = getDeviceLanguage(
                 isEnglish = { args?.nameE ?: args?.name ?: "" },
@@ -90,7 +90,7 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
             )
 
             layoutAgenda.apply {
-                val startTime = if (args?.startedAt?.toString().isNullOrEmpty()) "" else "${args?.startedAt?.toTimeFormat(HM_FORMAT)}"
+                val startTime = if (args?.startedAt?.toString().isNullOrEmpty()) "" else "${args?.startedAt?.toTimeFormat(MD_FORMAT)} ${args?.startedAt?.toTimeFormat(HM_FORMAT)}"
                 val endTimeStr = if (args?.endedAt?.toString().isNullOrEmpty()) "" else " - ${args?.endedAt?.toTimeFormat(HM_FORMAT)}"
                 tvTime.text = "$startTime$endTimeStr"
 

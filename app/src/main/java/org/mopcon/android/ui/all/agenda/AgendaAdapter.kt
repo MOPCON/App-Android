@@ -2,6 +2,7 @@ package org.mopcon.android.ui.all.agenda
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.mopcon.android.util.setGlideImg
 
 
 class AgendaAdapter(private val itemClickListener: ItemClickListener, private val favClickListener: FavClickListener) : ListAdapter<AgendaDataItem, RecyclerView.ViewHolder>(DiffCallback()) {
@@ -32,11 +34,10 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
             notifyDataSetChanged()
         }
 
-    var isShowStar = false
+    var isMainAgenda = false
 
     fun addFooterAndSubmitList(isShowStar: Boolean, agendaList: List<PeriodData>? = listOf(), /*favSessionIdList: List<Int> ?= listOf(), */scrollToTop: () -> Unit) {
-//        this.favSessionIdList = favSessionIdList ?: listOf()
-        this.isShowStar = isShowStar
+        this.isMainAgenda = isShowStar
         adapterScope.launch {
             val contentList = mutableListOf<AgendaDataItem>()
 
@@ -85,7 +86,7 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
 
             is AgendaContentViewHolder -> {
                 val data = getItem(position) as AgendaDataItem.AgendaContent
-                holder.bind(isShowStar, data.roomData, itemClickListener, favClickListener, favSessionIdList)
+                holder.bind(isMainAgenda, data.roomData, itemClickListener, favClickListener, favSessionIdList)
             }
 
         }
@@ -111,11 +112,23 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
 
         private val tagAdapter by lazy { TagAdapter() }
 
-        fun bind(isShowStar: Boolean, roomData: RoomData, itemClickListener: ItemClickListener, favClickListener: FavClickListener, favSessionIdList: List<Int>) {
+        fun bind(isMainAgenda: Boolean, roomData: RoomData, itemClickListener: ItemClickListener, favClickListener: FavClickListener, favSessionIdList: List<Int>) {
             binding.apply {
                 root.setOnClickListener { itemClickListener.onClick(roomData) }
 
-//                cbStar.isVisible = isShowStar
+                if (isMainAgenda) ivIcon.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        ivIcon.context,
+                        org.mopcon.android.R.drawable.ic_battleship_pink
+                    )
+                )
+
+                else ivIcon.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        ivIcon.context,
+                        org.mopcon.android.R.drawable.ic_battleship_blue
+                    )
+                )
 
                 cbStar.isChecked = favSessionIdList.contains(roomData.sessionId)
 
@@ -133,8 +146,8 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
 
                 val list = roomData.speakers ?: listOf()
                 tvSpeaker.text = getDeviceLanguage(
-                    isEnglish = { list.joinToString(", ") { if (it.nameE.isNullOrEmpty()) it.name?:"" else it.nameE } },
-                    isOtherLanguage = { list.joinToString("、") { it.name?:"" } }
+                    isEnglish = { list.joinToString(", ") { if (it.nameE.isNullOrEmpty()) it.name ?: "" else it.nameE } },
+                    isOtherLanguage = { list.joinToString("、") { it.name ?: "" } }
                 )
                 tvLocation.text = roomData.room
 

@@ -32,7 +32,7 @@ class SpeakerAdapter(private val itemClickListener: SpeakerItemClickListener) : 
 
         fun bind(item: SpeakerData, itemClickListener: SpeakerItemClickListener) {
             binding.apply {
-                ivIcon.setGlideImg("${Constants.MOPCON_API_URL}${item.img?.mobile}")
+                ivIcon.setGlideImg("${Constants.getApiUrl()}${item.img?.mobile}")
                 tvSpeaker.text = item.name
 
                 tvSpeaker.text = getDeviceLanguage(

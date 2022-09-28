@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class InitialResponse(
     @Json(name = "data")
-    val `data`: InitialData?,
+    val initialData: InitialData,
     @Json(name = "message")
     val message: String?,
     @Json(name = "success")

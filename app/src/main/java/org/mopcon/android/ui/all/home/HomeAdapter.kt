@@ -3,6 +3,7 @@ package org.mopcon.android.ui.all.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -34,7 +35,7 @@ class HomeAdapter(
     private val noFavClickListener: NoFavClickListener,
 ) : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback()) {
     enum class ItemType {
-        BANNER, NEWS_TITLE, NEWS_ITEM, FAV_TITLE, FAV_ITEM, NO_FAV_ITEM
+        BANNER, NEWS_TITLE, NEWS_ITEM, NO_NEWS_TITLE, NO_NEWS_ITEM, FAV_TITLE, FAV_ITEM, NO_FAV_ITEM
     }
 
     private var bannerList = listOf<Banner>()
@@ -56,7 +57,7 @@ class HomeAdapter(
         adapterScope.launch {
             val items: List<DataItem> = listOf(DataItem.Banner) +
                     when {
-                        newsList.isNullOrEmpty() -> listOf()
+                        newsList.isNullOrEmpty() -> listOf(DataItem.NoNewsTitle) + listOf(DataItem.NoNewsItem)
                         else -> listOf(DataItem.LatestNewsTitle) + listOf(DataItem.LatestNewsItem)
                     } +
                     listOf(DataItem.FavTitle) +
@@ -97,6 +98,8 @@ class HomeAdapter(
             ItemType.BANNER.ordinal -> BannerViewHolder.from(parent)
             ItemType.NEWS_TITLE.ordinal -> NewsTitleViewHolder.from(parent)
             ItemType.NEWS_ITEM.ordinal -> NewsItemViewHolder.from(parent)
+            ItemType.NO_NEWS_TITLE.ordinal -> NoNewsTitleViewHolder.from(parent)
+            ItemType.NO_NEWS_ITEM.ordinal -> NoNewsItemViewHolder.from(parent)
             ItemType.FAV_TITLE.ordinal -> FavTitleViewHolder.from(parent)
             ItemType.FAV_ITEM.ordinal -> FavItemViewHolder.from(parent)
             ItemType.NO_FAV_ITEM.ordinal -> NoFavItemViewHolder.from(parent)
@@ -113,6 +116,14 @@ class HomeAdapter(
 
             is NewsTitleViewHolder -> {
                 holder.bind(holder.itemView.context.getString(R.string.latest_news), newsMoreClickListener)
+            }
+
+            is NoNewsTitleViewHolder -> {
+                holder.bind(holder.itemView.context.getString(R.string.latest_news))
+            }
+
+            is NoNewsItemViewHolder -> {
+                holder.bind()
             }
 
             is NewsItemViewHolder -> {
@@ -140,6 +151,8 @@ class HomeAdapter(
             is DataItem.Banner -> ItemType.BANNER.ordinal
             is DataItem.LatestNewsTitle -> ItemType.NEWS_TITLE.ordinal
             is DataItem.LatestNewsItem -> ItemType.NEWS_ITEM.ordinal
+            is DataItem.NoNewsTitle -> ItemType.NO_NEWS_TITLE.ordinal
+            is DataItem.NoNewsItem -> ItemType.NO_NEWS_ITEM.ordinal
             is DataItem.FavTitle -> ItemType.FAV_TITLE.ordinal
             is DataItem.FavItem -> ItemType.FAV_ITEM.ordinal
             is DataItem.NoFavItem -> ItemType.NO_FAV_ITEM.ordinal
@@ -162,6 +175,27 @@ class HomeAdapter(
             fun from(parent: ViewGroup) = NewsTitleViewHolder(ItemHomeNewsTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
 
+    }
+
+    class NoNewsTitleViewHolder private constructor(private val binding: ItemHomeNewsTitleBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(title: String) {
+            binding.tvTitle.text = title
+            binding.tvMore.isVisible = false
+        }
+
+        companion object {
+            fun from(parent: ViewGroup) = NoNewsTitleViewHolder(ItemHomeNewsTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        }
+    }
+
+    class NoNewsItemViewHolder private constructor(private val binding: ItemHomeNewsItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind() {}
+
+        companion object {
+            fun from(parent: ViewGroup) = NoNewsItemViewHolder(ItemHomeNewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        }
     }
 
     class FavTitleViewHolder private constructor(private val binding: ItemHomeFavTitleBinding) :
@@ -353,6 +387,14 @@ sealed class DataItem {
     abstract val id: Int?
 
     object Banner : DataItem() {
+        override val id: Int? = null
+    }
+
+    object NoNewsTitle : DataItem() {
+        override val id: Int? = null
+    }
+
+    object NoNewsItem : DataItem() {
         override val id: Int? = null
     }
 

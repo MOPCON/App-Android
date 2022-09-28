@@ -19,54 +19,54 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ApiService {
-    @GET(Constants.MOPCON_API_URL + "api/2022/home")
+    @GET("/api/2022/home")
     suspend fun getHomeBannerAndNews(): Response<HomeBannerNewsResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/news")
+    @GET("api/2022/news")
     suspend fun getNews(): Response<NewsResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/session")
+    @GET("api/2022/session")
     suspend fun getAgenda(): Response<AgendaResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/session/{session_id}")
+    @GET("api/2022/session/{session_id}")
     suspend fun getAgendaDetail(
         @Path("session_id") id: Int
     ): Response<AgendaDetailResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/unconf/{session_id}")
+    @GET("api/2022/unconf/{session_id}")
     suspend fun getExchangeDetail(
         @Path("session_id") id: Int
     ): Response<ExchangeDetailResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/unconf")
+    @GET("api/2022/unconf")
     suspend fun getExchange(): Response<AgendaResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/speaker")
+    @GET("api/2022/speaker")
     suspend fun getSpeaker(): Response<SpeakerResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/sponsor")
+    @GET("api/2022/sponsor")
     suspend fun getSponsor(): Response<SponsorResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/sponsor/{sponsor_id}")
+    @GET("api/2022/sponsor/{sponsor_id}")
     suspend fun getSponsorDetail(
         @Path("sponsor_id") id: Int
     ): Response<SponsorDetailData>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/initial")
+    @GET("api/2022/initial")
     suspend fun getInitial(): Response<InitialResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/volunteer")
+    @GET("api/2022/volunteer")
     suspend fun getVolunteer(): Response<VolunteerResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/volunteer/{id}")
+    @GET("api/2022/volunteer/{id}")
     suspend fun getVolunteerDetail(
         @Path("id") id: Int
     ): Response<VolunteerDetailResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/community")
+    @GET("api/2022/community")
     suspend fun getCommunity(): Response<CommunityResponse>
 
-    @GET(Constants.MOPCON_API_URL + "api/2022/community/participant/{id}")
+    @GET("api/2022/community/participant/{id}")
     suspend fun getCommunityDetail(
         @Path("id") id: Int
     ): Response<CommunityDetailResponse>

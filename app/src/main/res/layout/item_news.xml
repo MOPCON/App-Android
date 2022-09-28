@@ -34,8 +34,6 @@
         android:layout_marginTop="10dp"
         android:textSize="16sp"
         android:textColor="@color/white"
-        android:ellipsize="end"
-        android:maxLines="2"
         tools:text="下午茶時間到了！有好多點心跟飲料，不要錯過唷！下午茶時間到了！有好多點心跟飲料，不要錯過唷！下午茶時間到了！有好多點心跟飲料，不要錯過唷！" />
 
 </LinearLayout>

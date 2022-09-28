@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
+    android:layout_marginBottom="12dp"
     android:background="@drawable/button_capsule_transparent_blue_stroke_radius_8"
     tools:layout_gravity="center">
 
