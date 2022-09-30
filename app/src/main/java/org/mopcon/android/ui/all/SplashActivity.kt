@@ -2,6 +2,7 @@ package org.mopcon.android.ui.all
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.mopcon.android.databinding.ActivitySplashBinding
@@ -25,7 +26,8 @@ class SplashActivity : BaseBindingActivity<ActivitySplashBinding>() {
     override fun initObserver() {
         viewModel.initial.observe(this) {
             it?.apiServer?.mopcon?.let { url -> Constants.setApiUrl(url) }
-            it?.apiServer?.game?.let { url -> Constants.setGameUrl(url) }
+            it?.apiServer?.game?.let { url -> Constants.setGameUrl(url)
+            Log.e(">>>", "url = $url")}
             Constants.isGameEnable = it?.enableGame ?: true
             openMainActivity()
         }

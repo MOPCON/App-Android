@@ -8,7 +8,7 @@ object Constants {
 
     private var MOPCON_GAME_API_URL = "https://game.mopcon.org/"
     fun setGameUrl(url: String) { MOPCON_GAME_API_URL = url }
-    fun setGameUrl(): String = MOPCON_GAME_API_URL
+    fun getGameUrl(): String = MOPCON_GAME_API_URL
 
     var isGameEnable = true
 
