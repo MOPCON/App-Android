@@ -1,6 +1,7 @@
 package org.mopcon.android.util
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.mopcon.android.MyApplication
+import org.mopcon.android.R
 import retrofit2.Response
 import timber.log.Timber
 
@@ -27,12 +30,14 @@ fun <T> ViewModel.request(
                 } else {
                     Timber.e("load api failed : $data")
                     //TODO: do we need to deal with api return html error ?
+                    viewModelScope.launch(Dispatchers.Main) { Toast.makeText(MyApplication.application, R.string.error_message, Toast.LENGTH_SHORT).show() }
                     onError?.invoke(Exception())
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(">>>", "e = $e")
+            viewModelScope.launch(Dispatchers.Main) { Toast.makeText(MyApplication.application, R.string.error_message, Toast.LENGTH_SHORT).show() }
             viewModelScope.launch(onErrorDispatcher) { onError?.invoke(e) }
         }
     }

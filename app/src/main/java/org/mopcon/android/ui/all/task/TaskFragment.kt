@@ -3,8 +3,13 @@ package org.mopcon.android.ui.all.task
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +21,17 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import org.json.JSONObject
+import io.github.g00fy2.quickie.QRResult
+import io.github.g00fy2.quickie.ScanQRCode
+import org.mopcon.android.R
 import org.mopcon.android.databinding.FragmentTaskBinding
 import org.mopcon.android.ui.base.BaseBindingFragment
+import org.mopcon.android.util.BitmapUtil
+import org.mopcon.android.util.Constants
+import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 
 
@@ -26,15 +39,33 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTaskBinding
         get() = FragmentTaskBinding::inflate
+    companion object {
+        private const val SPF_UUID = "UUID"
+        private const val SPF_DATA = "DATA"
+    }
+    private val PERMISSION_LIST = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val PERMISSION_REQUEST_CODE = 10
+    private val WRITE_EXTERNAL_STORAGE_CODE = 11
 
-    private val CAMERA_PERMISSION = arrayOf<String>(Manifest.permission.CAMERA)
-    private val CAMERA_REQUEST_CODE = 10
+    private val scanQrCodeLauncher = registerForActivityResult(ScanQRCode()) { result : QRResult ->
+        when (result) {
+            is QRResult.QRSuccess -> {
+                val qrCodeUrl = result.content.rawValue
+                Log.e(">>>", "qrCodeUrl = $qrCodeUrl")
+                callFunction { binding.webView.evaluateJavascript("onQRCodeScaned(('{\"data\": \"${qrCodeUrl}\"}'))", null) }
+            }
+            QRResult.QRUserCanceled -> {}
+            QRResult.QRMissingPermission -> requestPermission()
+            is QRResult.QRError -> Timber.e("${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}")
+        }
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (!hasCameraPermission()) {
             requestPermission();
         }
-        Log.e(">>>", "uuid = ${UUID.randomUUID()}")
-//        Log.e(">>>", "device id = ${Settings.Secure.getString(context?.contentResolver, Settings.Secure.ANDROID_ID)}")
+        Log.e(">>>", "uuid = ${getIdentity()}")
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -45,12 +76,7 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebViewSetting() {
-
         binding.apply {
-//            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.getGameUrl()))
-//            startActivity(browserIntent)
-
-
             val webSettings = webView.settings
             webSettings.javaScriptEnabled = true
             webSettings.loadWithOverviewMode = true
@@ -67,101 +93,51 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
                 }
             }
 
-//            webView.loadUrl(Constants.getGameUrl())
-            webView.loadUrl("https://game.mopcon.org/#/test")
+            webView.loadUrl(Constants.getGameUrl())
+//            webView.loadUrl("https://game.mopcon.org/#/test")
 
             //java 調用 js function
-            webView.addJavascriptInterface(JSInterface(context) {
-                webView.post {
-//                    try {
-                        //java 傳參數給 js
-                        webView.evaluateJavascript("getDeviceIDResponse(\"${UUID.randomUUID()}\")") { value ->
-                            Log.e(">>>", "getDeviceIDResponse = $value") //UUID.randomUUID()
-                        }
-//                    } catch (e: Exception) {
-//                        Log.e(">>>", "e = $e")
-//                    }
+            webView.addJavascriptInterface(JSInterface(context,
+                { //sendDeviceId
+                    callFunction { webView.evaluateJavascript("getDeviceIDResponse(\"${getIdentity()}\")", null) }
+                }, { //loadPreferenceResponse(string)
+                    callFunction { webView.evaluateJavascript("loadPreferenceResponse(${getStoredValue()})", null) }
+                }, { //onQRCodeScaned(string data)
+                    if (!hasCameraPermission()) requestPermission()
+                    else scanQrCodeLauncher.launch(null)
+                }, { data -> //share
+                    val uri = BitmapUtil.stringToBitmap(data)?.let { getImageUri(it) }
+                    val shareIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_STREAM, uri)
+                        type = "image/png"
+                    }
+                    startActivity(Intent.createChooser(shareIntent, resources.getText(R.string.share_to)))
+                }, { data -> //storeImage
+                    if (!hasStorePermission()) requestPermission()
+                    else BitmapUtil.stringToBitmap(data)?.let { storeBitmapToStorage(it) }
                 }
-            }, "nativeApp")
-//            webView.addJavascriptInterface(JSInterface(), "getDeviceID()")
-//            webView.addJavascriptInterface(JSInterface(), "window.nativeApp")
-//            webView.addJavascriptInterface(JSInterface(), "nativeApp.getDeviceID()")
-
-//            webView.addJavascriptInterface(JSInterface(context), "window.nativeApp.getDeviceID()")
-//            webView.addJavascriptInterface(JSInterface(context), "window.loadPreference()")
-//            webView.addJavascriptInterface(JSInterface(context), "window.storePreference()")
-//            webView.addJavascriptInterface(JSInterface(context), "window.scanQRCode()")
-//            webView.addJavascriptInterface(JSInterface(context), "window.socialShare()")
-//            webView.addJavascriptInterface(JSInterface(context), "window.saveImage()")
-//            webView.loadData("data", "text/html", null);
-//            webView.addJavascriptInterface(JSInterface(), "nativeApp")
-//            webView.loadUrl("http://www.google.com")
-
-//            webView.evaluateJavascript("getDeviceIDResponse(${UUID.randomUUID()})") { value ->
-//                Log.e(">>>", "getDeviceIDResponse = $value")
-//            }
-
-//            webView.evaluateJavascript("javascript:scanQRCode()") { value ->
-//                Log.e(">>>", "call scanQRCode = $value")
-//            }
-
-//            val str = "xxx"
-//            webView.loadUrl(Constants.getGameUrl(), "javascript:xxx('$str')")
-//            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+            ),"nativeApp")
         }
     }
 
+    fun getImageUri(bitmap: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(context?.contentResolver, bitmap, "Title", null)
+        return Uri.parse(path)
+    }
 
-
-
-    internal class JSInterface(val context: Context?,
-                               private val getDeviceSucceed: () -> Unit) {
-        @JavascriptInterface
-        fun getDeviceID() {
-            Log.e(">>>JSInterface", "getDeviceID")
-            Toast.makeText(context, "getDeviceID", Toast.LENGTH_SHORT).show()
-            getDeviceSucceed.invoke()
-        }
-
-        @JavascriptInterface
-        fun loadPreference() {
-            Log.e(">>>JSInterface", "loadPreference")
-            Toast.makeText(context, "loadPreference", Toast.LENGTH_SHORT).show()
-        }
-
-        @JavascriptInterface
-        fun storePreference(data: String) {
+    //java 傳參數給 js
+    private fun callFunction(callJsFun: () -> Unit) {
+        binding.webView.post {
             try {
-                val jsonResponse = JSONObject(data) //Convert from string to object, can also use JSONArray
-                Log.e(">>>JSInterface", "storePreference, ${jsonResponse.toString()}")
-                Toast.makeText(context, "storePreference, $jsonResponse", Toast.LENGTH_SHORT).show()
+                callJsFun.invoke()
             } catch (e: Exception) {
-                Log.e(">>>JSInterface", "e = $e")
+                Timber.e("e = $e")
             }
         }
-
-        @JavascriptInterface
-        fun scanQRCode() {
-            Log.e(">>>JSInterface", "scanQRCode")
-            Toast.makeText(context, "scanQRCode", Toast.LENGTH_SHORT).show()
-        }
-
-        @JavascriptInterface
-        fun socialShare(data: String) {
-            Log.e(">>>JSInterface", "socialShare, $data")
-            Toast.makeText(context, "socialShare, $data", Toast.LENGTH_SHORT).show()
-        }
-
-        @JavascriptInterface
-        fun saveImage(data: String) {
-            Log.e(">>>JSInterface", "saveImage, $data")
-            //image
-
-            Toast.makeText(context, "saveImage, $data", Toast.LENGTH_SHORT).show()
-        }
-
     }
-
 
     override fun initAction() {
     }
@@ -177,12 +153,129 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    private fun hasStorePermission(): Boolean {
+        val activity = activity ?: return false
+        return ContextCompat.checkSelfPermission(
+            activity,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
     private fun requestPermission() {
         val activity = activity ?: return
         ActivityCompat.requestPermissions(
             activity,
-            CAMERA_PERMISSION,
-            CAMERA_REQUEST_CODE
+            PERMISSION_LIST,
+            PERMISSION_REQUEST_CODE,
         )
     }
+
+    private fun getIdentity(): String {
+        val preference = context?.getSharedPreferences(SPF_UUID, 0)
+        var identity = preference?.getString("identity", null)
+        if (identity == null) {
+            identity = UUID.randomUUID().toString()
+            preference?.edit()?.putString("identity", identity)?.apply()
+        }
+        return identity
+    }
+
+    private fun getStoredValue(): String? {
+        val preference = context?.getSharedPreferences(SPF_DATA, 0)
+        return preference?.getString("data", null)
+    }
+
+    private fun storeBitmapToStorage(bitmap: Bitmap) {
+        val filename = "succeed.png"
+        var file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "mopcon")
+        if (!file.exists() && !file.mkdir()) {
+            Log.e(">>>", " DIRECTORY_PICTURES mkdir() fail")
+            file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "mopcon")
+            if (!file.exists() && !file.mkdir()) Log.e(">>>", " DIRECTORY_DCIM  mkdir() fail")
+        }
+
+        val mediaFile = File(file.path + File.separator + filename)
+
+        try {
+            val out = FileOutputStream(mediaFile)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
+            out.flush()
+            out.close()
+            Toast.makeText(context, R.string.storeImageSucceed, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e(">>>", "e = $e")
+            e.printStackTrace()
+        }
+    }
+
+    private fun getExtermalStoragePrivateDir(folder: String): File {
+        val file = File(context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES), folder)
+        if (!file.mkdirs()) {
+            Log.e("", "Directory not created or exist")
+        }
+        return file
+    }
+
+    internal class JSInterface(
+        val context: Context?,
+        private val getDeviceSucceed: () -> Unit,
+        private val loadPreferenceSucceed: () -> Unit,
+        private val qrcodeScanned: () -> Unit,
+        private val shareSucceed: (String) -> Unit,
+        private val saveImageSucceed: (String) -> Unit,
+    ) {
+        @JavascriptInterface
+        fun getDeviceID() {
+            Log.e(">>>JSInterface", "getDeviceID")
+            getDeviceSucceed.invoke()
+        }
+
+        @JavascriptInterface
+        fun loadPreference() {
+            Log.e(">>>JSInterface", "loadPreference")
+            loadPreferenceSucceed.invoke()
+        }
+
+        @JavascriptInterface
+        fun storePreference(data: String) {
+            Log.e(">>>JSInterface", "storePreference")
+            try {
+//                val jsonResponse = JSONObject(data) //Convert from string to object, can also use JSONArray
+
+                Log.e(">>>JSInterface", "storePreference, $data")
+                storeValue(data)
+            } catch (e: Exception) {
+                Log.e(">>>JSInterface", "e = $e")
+            }
+        }
+
+        @JavascriptInterface
+        fun scanQRCode() {
+            Log.e(">>>JSInterface", "scanQRCode")
+            qrcodeScanned.invoke()
+        }
+
+        @JavascriptInterface
+        fun socialShare(data: String) {
+            Log.e(">>>JSInterface", "socialShare") //, $data
+            shareSucceed.invoke(data)
+        }
+
+        @JavascriptInterface
+        fun saveImage(data: String) {
+            Log.e(">>>JSInterface", "saveImage") //, $data
+            saveImageSucceed.invoke(data)
+        }
+
+        private fun storeValue(data: String): String {
+            val preference = context?.getSharedPreferences(SPF_DATA, 0)
+            var spfData = preference?.getString("data", null)
+            if (spfData == null) {
+                spfData = data
+                preference?.edit()?.putString("data", spfData)?.apply()
+            }
+            return spfData
+        }
+    }
+
 }

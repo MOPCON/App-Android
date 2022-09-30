@@ -1,10 +1,16 @@
 package org.mopcon.android
 
 import android.app.Application
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.context.startKoin
+import org.koin.core.module.Module
+import org.koin.dsl.module
 import org.mopcon.android.db.AppDatabase
 import org.mopcon.android.network.ApiServiceModule
 import org.mopcon.android.network.OkHttpClientProvider
 import org.mopcon.android.repository.AgendaRepository
+import org.mopcon.android.ui.all.SplashViewModel
 import org.mopcon.android.ui.all.agenda.AgendaViewModel
 import org.mopcon.android.ui.all.home.HomeViewModel
 import org.mopcon.android.ui.all.more.host_community.HostCommunityViewModel
@@ -12,12 +18,6 @@ import org.mopcon.android.ui.all.more.speaker.SpeakerViewModel
 import org.mopcon.android.ui.all.more.sponsor.SponsorViewModel
 import org.mopcon.android.ui.all.more.sponsor.detail.agenda.MoreAgendaDetailViewModel
 import org.mopcon.android.ui.all.news.NewsViewModel
-import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.context.startKoin
-import org.koin.core.module.Module
-import org.koin.dsl.module
-import org.mopcon.android.ui.all.SplashViewModel
 
 class MyApplication : Application() {
 
