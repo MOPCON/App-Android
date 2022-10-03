@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="org.mopcon.android.ui.all.home.HomeFragment"
+        android:name="org.mopcon.session.app.ui.all.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/agendaFragment"
-        android:name="org.mopcon.android.ui.all.agenda.AgendaFragment"
+        android:name="org.mopcon.session.app.ui.all.agenda.AgendaFragment"
         android:label="AgendaFragment"
         tools:layout="@layout/fragment_agenda">
         <action
@@ -21,19 +21,19 @@
             app:destination="@id/agendaDetailFragment">
             <argument
                 android:name="roomData"
-                app:argType="org.mopcon.android.network.model.agenda.RoomData" />
+                app:argType="org.mopcon.session.app.network.model.agenda.RoomData" />
         </action>
     </fragment>
 
     <fragment
         android:id="@+id/taskFragment"
-        android:name="org.mopcon.android.ui.all.task.TaskFragment"
+        android:name="org.mopcon.session.app.ui.all.task.TaskFragment"
         android:label="TaskFragment"
         tools:layout="@layout/fragment_task" />
 
     <fragment
         android:id="@+id/moreFragment"
-        android:name="org.mopcon.android.ui.all.more.MoreFragment"
+        android:name="org.mopcon.session.app.ui.all.more.MoreFragment"
         android:label="MoreFragment"
         tools:layout="@layout/fragment_more">
         <action
@@ -49,22 +49,22 @@
 
     <fragment
         android:id="@+id/agendaDetailFragment"
-        android:name="org.mopcon.android.ui.all.agenda.detail.AgendaDetailFragment"
+        android:name="org.mopcon.session.app.ui.all.agenda.detail.AgendaDetailFragment"
         android:label="AgendaDetailFragment"
         tools:layout="@layout/fragment_agenda_detail">
         <argument
             android:name="roomData"
-            app:argType="org.mopcon.android.network.model.agenda.RoomData" />
+            app:argType="org.mopcon.session.app.network.model.agenda.RoomData" />
     </fragment>
 
     <fragment
         android:id="@+id/newsFragment"
-        android:name="org.mopcon.android.ui.all.news.NewsFragment"
+        android:name="org.mopcon.session.app.ui.all.news.NewsFragment"
         android:label="NewsFragment"
         tools:layout="@layout/fragment_news" />
     <fragment
         android:id="@+id/speakerFragment"
-        android:name="org.mopcon.android.ui.all.more.speaker.SpeakerFragment"
+        android:name="org.mopcon.session.app.ui.all.more.speaker.SpeakerFragment"
         android:label="SpeakerFragment"
         tools:layout="@layout/fragment_speaker">
         <action
@@ -74,13 +74,13 @@
 
     <fragment
         android:id="@+id/speakerDetailFragment"
-        android:name="org.mopcon.android.ui.all.more.speaker.detail.SpeakerDetailFragment"
+        android:name="org.mopcon.session.app.ui.all.more.speaker.detail.SpeakerDetailFragment"
         android:label="SpeakerDetailFragment"
         tools:layout="@layout/fragment_speaker_detail"/>
 
     <fragment
         android:id="@+id/sponsorFragment"
-        android:name="org.mopcon.android.ui.all.more.sponsor.SponsorFragment"
+        android:name="org.mopcon.session.app.ui.all.more.sponsor.SponsorFragment"
         android:label="SponsorFragment"
         tools:layout="@layout/fragment_sponsor">
         <action
@@ -90,13 +90,13 @@
 
     <fragment
         android:id="@+id/sponsorDetailFragment"
-        android:name="org.mopcon.android.ui.all.more.sponsor.detail.SponsorDetailFragment"
+        android:name="org.mopcon.session.app.ui.all.more.sponsor.detail.SponsorDetailFragment"
         android:label="SponsorDetailFragment"
         tools:layout="@layout/fragment_sponsor_detail"/>
 
     <fragment
         android:id="@+id/hostCommunityFragment"
-        android:name="org.mopcon.android.ui.all.more.host_community.HostCommunityFragment"
+        android:name="org.mopcon.session.app.ui.all.more.host_community.HostCommunityFragment"
         android:label="HostCommunityFragment"
         tools:layout="@layout/fragment_host_community">
         <action
@@ -106,7 +106,7 @@
 
     <fragment
         android:id="@+id/hostCommunityDetailFragment"
-        android:name="org.mopcon.android.ui.all.more.host_community.detail.HostCommunityDetailFragment"
+        android:name="org.mopcon.session.app.ui.all.more.host_community.detail.HostCommunityDetailFragment"
         android:label="HostCommunityDetailFragment"
         tools:layout="@layout/fragment_host_community_detail"/>
 

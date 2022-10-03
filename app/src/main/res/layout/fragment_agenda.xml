@@ -24,7 +24,7 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <org.mopcon.android.ui.common.TopRadioGroupBar
+        <org.mopcon.session.app.ui.common.TopRadioGroupBar
             android:id="@+id/rgTopBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -9,7 +9,7 @@
     android:id="@+id/llSpeaker"
     tools:context=".ui.all.more.sponsor.SponsorFragment">
 
-    <org.mopcon.android.ui.common.TitleBar
+    <org.mopcon.session.app.ui.common.TitleBar
         android:id="@+id/titleBar"
         app:titleText="@string/sponsors_in_2022"
         android:layout_width="match_parent"

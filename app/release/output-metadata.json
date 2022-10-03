@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "org.mopcon.android",
+  "applicationId": "org.mopcon.session.app",
   "variantName": "release",
   "elements": [
     {

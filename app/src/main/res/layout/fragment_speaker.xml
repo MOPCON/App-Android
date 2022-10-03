@@ -9,7 +9,7 @@
     android:id="@+id/llSpeaker"
     tools:context=".ui.all.more.MoreFragment">
 
-    <org.mopcon.android.ui.common.TitleBar
+    <org.mopcon.session.app.ui.common.TitleBar
         android:id="@+id/titleBar"
         app:titleText="@string/speaker"
         android:layout_width="match_parent"
