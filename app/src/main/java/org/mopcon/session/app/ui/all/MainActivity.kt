@@ -11,6 +11,7 @@ import org.mopcon.session.app.ui.base.BaseBindingActivity
 import org.mopcon.session.app.ui.extension.OnBackPressedListener
 import org.mopcon.session.app.R
 import org.mopcon.session.app.databinding.ActivityMainBinding
+import org.mopcon.session.app.ui.all.more.sponsor.detail.agenda.MoreAgendaDetailFragment
 
 
 class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
@@ -21,7 +22,9 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     override fun initLayout() {
         val navController = Navigation.findNavController(this, R.id.mainContainer)
         NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
-//        getFcmToken()
+        binding.bottomNavigation.setOnItemReselectedListener { item ->
+            if (item.itemId != binding.bottomNavigation.selectedItemId) NavigationUI.onNavDestinationSelected(item, navController)
+        }
     }
 
     private fun getFcmToken() {
@@ -54,8 +57,8 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     }
 
     override fun onBackPressed() {
-        val fragment = this.supportFragmentManager.findFragmentById(R.id.mainContainer)?.childFragmentManager?.fragments?.get(0)
-        (fragment as? OnBackPressedListener)?.onBackPressed()
+//        val fragment = this.supportFragmentManager.findFragmentById(R.id.mainContainer)?.childFragmentManager?.fragments?.get(0)
+//        (fragment as? OnBackPressedListener)?.onBackPressed()
 
         if (supportFragmentManager.backStackEntryCount >= 1) supportFragmentManager.popBackStack()
         else super.onBackPressed()

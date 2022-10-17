@@ -29,10 +29,7 @@ class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClick
 
     private var hasSpeakerInfo: Boolean = false
 
-    private var storedList = listOf<Int>()
-
     fun addFooterAndSubmitList(storedList: List<Int>, sponsorDetailData: SponsorDetailData?) {
-        this.storedList = storedList
         adapterScope.launch {
             if (sponsorDetailData == null) return@launch
 
@@ -42,6 +39,7 @@ class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClick
             contentList.add(SponsorDataItem.SponsorInfo(sponsorDetailData))
 
             sponsorDetailData.speakerInformation?.map {
+                it.isChecked = storedList.contains(it.sessionId)
                 contentList.add(SponsorDataItem.SpeakerAgenda(it))
             }
 
@@ -78,7 +76,7 @@ class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClick
 
             is SponsorContentViewHolder -> {
                 val data = getItem(position) as SponsorDataItem.SpeakerAgenda
-                holder.bind(storedList, data.speakerInfoData, itemClickListener, favClickListener)
+                holder.bind(data.speakerInfoData, itemClickListener, favClickListener)
             }
 
         }
@@ -124,12 +122,14 @@ class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClick
 
         private val tagAdapter by lazy { TagAdapter() }
 
-        fun bind(storedList: List<Int>, speakerInfoData: SpeakerInfoData, itemClickListener: SponsorDetailItemClickListener, favClickListener: FavClickListener) {
+        fun bind(speakerInfoData: SpeakerInfoData, itemClickListener: SponsorDetailItemClickListener, favClickListener: FavClickListener) {
             binding.apply {
-                cbStar.setOnCheckedChangeListener { _, isChecked ->
-                    favClickListener.onClick(isChecked, speakerInfoData)
+
+                cbStar.isChecked = speakerInfoData.isChecked
+
+                cbStar.setOnClickListener {
+                    favClickListener.onClick(cbStar.isChecked, speakerInfoData)
                 }
-                cbStar.isChecked = storedList.contains(speakerInfoData.sessionId)
 
                 val startTime = if (speakerInfoData.startedAt?.toString().isNullOrEmpty()) "" else "${speakerInfoData.startedAt?.toTimeFormat(MD_FORMAT)} ${speakerInfoData.startedAt?.toTimeFormat(HM_FORMAT)}"
                 val endTimeStr = if (speakerInfoData.endedAt?.toString().isNullOrEmpty()) "" else " - ${speakerInfoData.endedAt?.toTimeFormat(HM_FORMAT)}"
@@ -176,11 +176,11 @@ class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClick
 
     class DiffCallback : DiffUtil.ItemCallback<SponsorDataItem>() {
         override fun areItemsTheSame(oldItem: SponsorDataItem, newItem: SponsorDataItem): Boolean {
-            return (oldItem.sponsorId == newItem.sponsorId) && (oldItem.speakerId == newItem.speakerId)
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: SponsorDataItem, newItem: SponsorDataItem): Boolean {
-            return oldItem == newItem
+            return (oldItem.isChecked == newItem.isChecked) && (oldItem.sponsorId == newItem.sponsorId) && (oldItem.speakerId == newItem.speakerId)
         }
 
     }
@@ -198,15 +198,18 @@ sealed class SponsorDataItem {
 
     abstract val sponsorId: Int?
     abstract val speakerId: Int?
+    abstract val isChecked: Boolean?
 
     data class SponsorInfo(val sponsorDetailData: SponsorDetailData) : SponsorDataItem() {
         override val sponsorId: Int = sponsorDetailData.sponsorId
         override val speakerId: Int? = null
+        override val isChecked: Boolean? = null
     }
 
     data class SpeakerAgenda(val speakerInfoData: SpeakerInfoData) : SponsorDataItem() {
         override val sponsorId: Int? = null
         override val speakerId: Int? = speakerInfoData.speakerId
+        override val isChecked = speakerInfoData.isChecked
     }
 
 

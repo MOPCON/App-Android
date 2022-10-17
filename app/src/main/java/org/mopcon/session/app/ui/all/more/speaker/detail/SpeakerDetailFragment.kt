@@ -1,8 +1,11 @@
 package org.mopcon.session.app.ui.all.more.speaker.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import org.mopcon.session.app.databinding.FragmentSpeakerDetailBinding
 import org.mopcon.session.app.db.AgendaFavData
 import org.mopcon.session.app.db.DataConverter
@@ -14,6 +17,7 @@ import org.mopcon.session.app.ui.base.BaseBindingFragment
 import com.google.android.flexbox.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.mopcon.session.app.R
+import org.mopcon.session.app.ui.extension.OnBackPressedListener
 import org.mopcon.session.app.util.*
 import org.mopcon.session.app.util.Constants.MOPCON_API_URL
 
@@ -35,6 +39,25 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
                 putParcelable(BUNDLE_SPEAKER_DATA, speakerData)
             }
             arguments = bundle
+        }
+    }
+
+    private val mBackPressedCallback: OnBackPressedCallback by lazy {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.updateFavSessionIdList()
+                viewModel.updateFavList()
+                isEnabled = false
+                requireActivity().onBackPressed()
+                isEnabled = true
+            }
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return super.onCreateView(inflater, container, savedInstanceState).apply {
+            viewModel.updateFavSessionIdList()
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, mBackPressedCallback)
         }
     }
 
@@ -152,7 +175,7 @@ class SpeakerDetailFragment : BaseBindingFragment<FragmentSpeakerDetailBinding>(
             }
         }
 
-        viewModel.getFavSessionIdList()
+        viewModel.updateFavSessionIdList()
     }
 
     override fun initObserver() {

@@ -10,30 +10,43 @@
 
     <TextView
         android:id="@+id/tvTime"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toStartOf="@+id/tvTitle"
         app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="9:00-9:15" />
+        android:layout_marginEnd="4dp"
+        tools:text="12:30 - 01:20" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="tvTime" />
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawablePadding="4dp"
-        android:gravity="center"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:layout_marginStart="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvTime"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="7"
+        app:layout_constraintStart_toEndOf="@id/tvTime"
         app:layout_constraintTop_toTopOf="@+id/tvTime"
-        tools:text="開幕 Opening" />
+        android:textAlignment="viewEnd"
+        tools:text="午餐 Lunch (12:40 R1 Sponsor talk 同步進行！)" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

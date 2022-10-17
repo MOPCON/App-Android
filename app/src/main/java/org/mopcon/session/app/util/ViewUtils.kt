@@ -44,3 +44,9 @@ fun FragmentManager.addFragmentToFragment(@IdRes containerViewId: Int, fragment:
     ft.addToBackStack(null)
     ft.commit()
 }
+
+fun FragmentManager.replaceFragmentToFragment(@IdRes containerViewId: Int, fragment: Fragment) {
+    val ft = this.beginTransaction()
+    ft.replace(containerViewId, fragment, fragment.javaClass.name)
+    ft.commit()
+}

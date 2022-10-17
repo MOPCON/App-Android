@@ -1,11 +1,13 @@
 package org.mopcon.session.app.ui.all.task
 
 import android.Manifest
+import android.R.attr.bitmap
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -23,31 +25,33 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import io.github.g00fy2.quickie.QRResult
 import io.github.g00fy2.quickie.ScanQRCode
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.mopcon.session.app.R
 import org.mopcon.session.app.databinding.FragmentTaskBinding
 import org.mopcon.session.app.ui.base.BaseBindingFragment
 import org.mopcon.session.app.util.BitmapUtil
 import org.mopcon.session.app.util.Constants
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
+import java.io.*
 import java.util.*
 
 
 class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
-
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTaskBinding
         get() = FragmentTaskBinding::inflate
+
+    private val viewModel: TaskViewModel by viewModel()
+
     companion object {
         private const val SPF_UUID = "UUID"
         private const val SPF_DATA = "DATA"
     }
-    private val PERMISSION_LIST = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+    private val PERMISSION_LIST = arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private val PERMISSION_REQUEST_CODE = 10
     private val WRITE_EXTERNAL_STORAGE_CODE = 11
 
-    private val scanQrCodeLauncher = registerForActivityResult(ScanQRCode()) { result : QRResult ->
+    private val scanQrCodeLauncher = registerForActivityResult(ScanQRCode()) { result: QRResult ->
         when (result) {
             is QRResult.QRSuccess -> {
                 val qrCodeUrl = result.content.rawValue
@@ -114,7 +118,7 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
                     if (!hasStorePermission()) requestPermission()
                     else BitmapUtil.stringToBitmap(data)?.let { storeBitmapToStorage(it) }
                 }
-            ),"nativeApp")
+            ), "nativeApp")
         }
     }
 
@@ -140,6 +144,11 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
     }
 
     override fun initObserver() {
+        viewModel.storedImage.observe(viewLifecycleOwner) {
+            if (it.first) Toast.makeText(context, "儲存圖片成功", Toast.LENGTH_SHORT).show() //R.string.storeImageSucceed
+            else Toast.makeText(context, "儲存圖片失敗，請再試一次", Toast.LENGTH_SHORT).show()
+            MediaScannerConnection.scanFile(context, arrayOf(it.second), arrayOf("image/jpeg"), null);
+        }
     }
 
     private fun hasCameraPermission(): Boolean {
@@ -183,28 +192,73 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
     }
 
     private fun storeBitmapToStorage(bitmap: Bitmap) {
-        val filename = "succeed.png"
-        var file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "mopcon")
-        if (!file.exists() && !file.mkdir()) {
-            Log.e(">>>", " DIRECTORY_PICTURES mkdir() fail")
-            file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "mopcon")
-            if (!file.exists() && !file.mkdir()) Log.e(">>>", " DIRECTORY_DCIM  mkdir() fail")
-        }
-
-        val mediaFile = File(file.path + File.separator + filename)
-
-        try {
-            val out = FileOutputStream(mediaFile)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
-            out.flush()
-            out.close()
-            Toast.makeText(context, R.string.storeImageSucceed, Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            Timber.e(">>> e = $e")
-            e.printStackTrace()
-        }
+        viewModel.storeImageToStorage(bitmap)
+//        val newfile = savebitmap(bitmap)
+//        newfile?.createNewFile()
+//        val file = File(Environment.getExternalStorageDirectory().toString() + File.separator + "mopcon_succeed.jpg")
+//        file.createNewFile()
+//        savebitmap(bitmap)
     }
 
+    @Throws(IOException::class)
+    fun savebitmap(bmp: Bitmap) {
+        /*
+        val bytes = ByteArrayOutputStream()
+        bmp.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+        val f = File(
+            Environment.getExternalStorageDirectory()
+                .toString() + File.separator + "mopcon_succeed.jpg"
+        )
+        f.createNewFile()
+        val fo = FileOutputStream(f)
+        fo.write(bytes.toByteArray())
+        fo.close()
+*/
+
+        //
+        val filename = "succeed.png"
+        val sd = Environment.getExternalStorageDirectory()
+//        val dest = File(sd, filename)
+        val dest = File(
+            Environment.getExternalStorageDirectory().toString()
+                    + File.separator + "mopcon_succeed.jpg"
+        )
+
+        Log.e(">>>", "dest = $dest")
+
+        try {
+            val out = FileOutputStream(dest)
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out)
+            out.flush()
+            out.close()
+            Log.e(">>>", "okok")
+        } catch (e: FileNotFoundException) {
+            Log.e(">>>", "FileNotFoundException = $e")
+            e.printStackTrace()
+        } catch (e: java.lang.Exception) {
+            Log.e(">>>", "e = $e")
+            e.printStackTrace()
+        }
+
+    }
+
+    /*
+        private fun storeBitmap(bitmap: Bitmap, file: File){
+            requireContext().getUriForFile(file)?.run {
+                requireContext().contentResolver.openOutputStream(this)?.run {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, this)
+                    close()
+                }
+            }
+        }
+        fun Context.getUriForFile(file: File): Uri? {
+            return FileProvider.getUriForFile(
+                this,
+                "$packageName.fileprovider",
+                file
+            )
+        }
+        */
     internal class JSInterface(
         val context: Context?,
         private val getDeviceSucceed: () -> Unit,

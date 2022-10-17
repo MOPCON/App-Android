@@ -13,10 +13,11 @@ import org.mopcon.session.app.ui.all.agenda.TagAdapter
 import org.mopcon.session.app.ui.base.BaseBindingFragment
 import com.google.android.flexbox.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.mopcon.session.app.databinding.FragmentUnConfDetailBinding
 import org.mopcon.session.app.util.*
 
-class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() /*OnBackPressedListener*/ {
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAgendaDetailBinding = FragmentAgendaDetailBinding::inflate
+class UnConfDetailFragment : BaseBindingFragment<FragmentUnConfDetailBinding>() /*OnBackPressedListener*/ {
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentUnConfDetailBinding = FragmentUnConfDetailBinding::inflate
     private val tagAdapter by lazy { TagAdapter() }
     private val viewModel: AgendaViewModel by viewModel()
 
@@ -24,7 +25,7 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
 
     companion object {
         private const val BUNDLE_ROOM_DATA = "bundle_room_data"
-        fun newInstance(roomData: RoomData) = AgendaDetailFragment().apply {
+        fun newInstance(roomData: RoomData) = UnConfDetailFragment().apply {
             val bundle = Bundle().apply {
                 putParcelable(BUNDLE_ROOM_DATA, roomData)
             }
@@ -36,11 +37,6 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
         binding.apply {
             args?.let {
                 setAvatarVisible((it.speakers ?: listOf()).size)
-
-                cbStar.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked) viewModel.storeAgenda(it)
-                    else viewModel.deleteAgenda(it.sessionId)
-                }
 
                 when (it.speakers?.size) {
                     1 -> {
@@ -132,9 +128,6 @@ class AgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding>() 
     }
 
     override fun initObserver() {
-        viewModel.favSessionIdList.observe(viewLifecycleOwner) {
-            binding.cbStar.isChecked = it.contains(args?.sessionId)
-        }
     }
 
 }

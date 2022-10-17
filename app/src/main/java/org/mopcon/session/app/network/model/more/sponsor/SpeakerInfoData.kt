@@ -32,4 +32,6 @@ data class SpeakerInfoData(
     val topicName: String,
     @Json(name = "topic_name_e")
     val topicNameE: String?
-) : Parcelable
+) : Parcelable {
+    var isChecked = false
+}

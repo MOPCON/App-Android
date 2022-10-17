@@ -18,6 +18,7 @@ import org.mopcon.session.app.ui.all.more.speaker.SpeakerViewModel
 import org.mopcon.session.app.ui.all.more.sponsor.SponsorViewModel
 import org.mopcon.session.app.ui.all.more.sponsor.detail.agenda.MoreAgendaDetailViewModel
 import org.mopcon.session.app.ui.all.news.NewsViewModel
+import org.mopcon.session.app.ui.all.task.TaskViewModel
 
 class MyApplication : Application() {
 
@@ -55,6 +56,7 @@ class MyApplication : Application() {
         viewModel { SponsorViewModel(get(), get()) }
         viewModel { HostCommunityViewModel(get()) }
         viewModel { MoreAgendaDetailViewModel(get(), get()) }
+        viewModel { TaskViewModel() }
     }
 
     private val databaseModules: Module = module {

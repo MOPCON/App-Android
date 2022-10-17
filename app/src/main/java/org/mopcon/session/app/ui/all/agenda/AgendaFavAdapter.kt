@@ -2,6 +2,7 @@ package org.mopcon.session.app.ui.all.agenda
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -96,16 +97,18 @@ class AgendaFavAdapter(
         fun bind(data: AgendaFavData, itemClickListener: FavItemClickListener, favItemClickListener: AddFavItemClickListener) {
             binding.apply {
 
+                cbStar.isVisible = true
+
                 root.setOnClickListener {
                     data.sessionId ?: return@setOnClickListener
                     itemClickListener.onClick(data)
                 }
 
-                //TODO : do we need star in HomePage fav items?
 //                cbStar.isChecked = favSessionIdList.contains(data.sessionId)
-                cbStar.setOnCheckedChangeListener { _, isChecked ->
-                    cbStar.isChecked = isChecked
-                    if (position >= 0) favItemClickListener.onClick(isChecked, data)
+                cbStar.isChecked = true
+
+                cbStar.setOnClickListener {
+                    if (bindingAdapterPosition >= 0) favItemClickListener.onClick(cbStar.isChecked, data)
                 }
 
                 tvTime.text = data.time

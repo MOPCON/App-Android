@@ -45,4 +45,6 @@ data class RoomData(
     val topic: String? = null,
     @Json(name = "topic_e")
     val topicE: String? = null
-) : Parcelable
+) : Parcelable {
+    var isChecked = false
+}

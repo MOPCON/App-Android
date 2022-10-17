@@ -41,6 +41,7 @@
     <string name="game">大地遊戲</string>
     <string name="no_news">暫無消息</string>
     <string name="storeImageSucceed">儲存圖片成功</string>
+    <string name="storeImageFailed">儲存圖片失敗，請再試一次</string>
     <string name="share_to">分享到</string>
     <string name="error_message">「太空船乖乖被吃掉了！請等待M孃來補貨。」</string>
 </resources>

@@ -2,9 +2,12 @@ package org.mopcon.session.app.ui.all.home
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.mopcon.session.app.R
 import org.mopcon.session.app.databinding.FragmentHomeBinding
@@ -49,8 +52,6 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(), OnBackPressedLi
     }
 
     override fun initAction() {
-        viewModel.getHomeBannerAndNews()
-        viewModel.getStoredAgenda()
     }
 
     override fun initObserver() {
@@ -68,7 +69,7 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(), OnBackPressedLi
         viewModel.combiner.observe(viewLifecycleOwner) {
             val bannerAndNews = it.first
             val favAgendaList = it.second
-            homeAdapter.addFooterAndSubmitList(bannerAndNews?.banner, bannerAndNews?.news, favAgendaList) { binding.rvHome.scrollToPosition(0) }
+            homeAdapter.addFooterAndSubmitList(bannerAndNews?.banner, bannerAndNews?.news, favAgendaList) {}
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
@@ -77,7 +78,26 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(), OnBackPressedLi
     }
 
     override fun onBackPressed() {
-        viewModel.getStoredAgenda()
+//        viewModel.getStoredAgenda()
+    }
+
+    private val mBackPressedCallback: OnBackPressedCallback by lazy {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                viewModel.getStoredAgenda()
+                isEnabled = false
+                requireActivity().onBackPressed()
+                isEnabled = true
+            }
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return super.onCreateView(inflater, container, savedInstanceState).apply {
+            viewModel.getHomeBannerAndNews()
+            viewModel.getStoredAgenda()
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, mBackPressedCallback)
+        }
     }
 
 }

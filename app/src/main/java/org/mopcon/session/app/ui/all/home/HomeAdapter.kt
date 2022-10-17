@@ -25,6 +25,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.mopcon.session.app.R
 import org.mopcon.session.app.databinding.*
+import org.mopcon.session.app.util.MD_FORMAT
+import org.mopcon.session.app.util.toTimeFormat
 
 class HomeAdapter(
     private val bannerClickListener: BannerClickListener,
@@ -229,8 +231,8 @@ class HomeAdapter(
 //                    cbStar.isChecked = isChecked
 //                    if (position >= 0) addToFavClickListener.onClick(isChecked, bindingAdapterPosition , data)
 //                }
-
-                tvTime.text = data.time
+                val startDate = if (data.startAt.toString().isEmpty()) "" else "${data.startAt.toTimeFormat(MD_FORMAT)}"
+                tvTime.text = "$startDate ${data.time}"
                 tvContent.text = getDeviceLanguage(
                     isEnglish = { data.topicE },
                     isOtherLanguage = { data.topic }

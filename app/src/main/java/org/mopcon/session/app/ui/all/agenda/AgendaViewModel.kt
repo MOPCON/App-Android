@@ -6,6 +6,7 @@ import org.mopcon.session.app.repository.AgendaRepository
 import org.mopcon.session.app.ui.base.BaseViewModel
 import org.mopcon.session.app.util.request
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -14,8 +15,8 @@ class AgendaViewModel(repository: AgendaRepository) : BaseViewModel(repository) 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _agendaList = MutableLiveData<List<AgendaData>>()
-    val agendaList: LiveData<List<AgendaData>> = _agendaList
+    private val _agendaList = MutableLiveData<Pair<List<AgendaData>, List<Int>>>()
+    val agendaList: LiveData<Pair<List<AgendaData>, List<Int>>> = _agendaList
 
     private val _exchangeList = MutableLiveData<List<AgendaData>>()
     val exchangeList: LiveData<List<AgendaData>> = _exchangeList
@@ -23,14 +24,14 @@ class AgendaViewModel(repository: AgendaRepository) : BaseViewModel(repository) 
     fun getAgenda() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.postValue(true)
-
+            val favSessionList = getFavSessionIdList()
             request(
                 request = {
                     repository.getAgenda()
                 },
                 onSuccess = {
                     _isLoading.postValue(false)
-                    _agendaList.value = it.body()?.data ?: listOf()
+                    _agendaList.value = Pair((it.body()?.data ?: listOf()), favSessionList)
                 },
                 onError = {
                     Timber.e("onError, $it")

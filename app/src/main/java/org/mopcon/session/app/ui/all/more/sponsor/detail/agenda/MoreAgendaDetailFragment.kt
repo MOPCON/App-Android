@@ -29,28 +29,9 @@ class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding
             val bundle = Bundle().apply {
                 putInt(BUNDLE_SESSION_ID, sessionId)
             }
-            Log.e(">>>", "sessionId = $sessionId")
             arguments = bundle
         }
     }
-/*
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setUpOnBackPressed()
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-    private fun setUpOnBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (isEnabled) {
-                    isEnabled = false
-                    Log.e(">>>", "onBackPressed 2")
-                    requireActivity().onBackPressed()
-                }
-            }
-        })
-    }
-*/
 
     override fun initLayout() {
         binding.apply {}
@@ -70,6 +51,8 @@ class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding
     }
 
     override fun initAction() {
+        viewModel.updateFavSessionIdList()
+
         binding.ivBack.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -82,9 +65,6 @@ class MoreAgendaDetailFragment : BaseBindingFragment<FragmentAgendaDetailBinding
                 viewModel.deleteAgenda(argsSessionId)
             }
         }
-
-        viewModel.getFavSessionIdList()
-
         if (isSession()) viewModel.getAgendaDetail(argsSessionId)
         else viewModel.getExchangeDetail(argsSessionId)
     }

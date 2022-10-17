@@ -21,15 +21,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class AgendaAdapter(private val itemClickListener: ItemClickListener, private val favClickListener: FavClickListener) : ListAdapter<AgendaDataItem, RecyclerView.ViewHolder>(DiffCallback()) {
+class UnConfAdapter(private val itemClickListener: ItemClickListener, private val favClickListener: FavClickListener) : ListAdapter<AgendaDataItem, RecyclerView.ViewHolder>(DiffCallback()) {
     enum class ItemType {
         AGENDA_TITLE, AGENDA_CONTENT
     }
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
-    var mContentList = mutableListOf<AgendaDataItem>()
+    private var favSessionIdList = listOf<Int>()
 
-    fun addFooterAndSubmitList(agendaList: List<PeriodData>? = listOf(), favSessionIdList: List<Int>? = listOf(), scrollToTop: () -> Unit) {
+    fun addFooterAndSubmitList(agendaList: List<PeriodData>? = listOf(), favSessionIdList: List<Int> = listOf(), scrollToTop: () -> Unit) {
+        this.favSessionIdList = favSessionIdList
         adapterScope.launch {
             val contentList = mutableListOf<AgendaDataItem>()
 
@@ -37,18 +38,11 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
                 if (it.room?.isNullOrEmpty() == true) {
                     contentList.add(AgendaDataItem.AgendaTitle(it))
                 } else {
-
-                    it.room.forEach { roomData ->
-                        roomData.isChecked = favSessionIdList?.contains(roomData.sessionId) == true
-                    }
-
                     it.room.map { room ->
                         contentList.add(AgendaDataItem.AgendaContent(room))
                     }
                 }
             }
-
-            mContentList = contentList
 
             withContext(Dispatchers.Main) { //update in main ui thread
                 submitList(contentList) {
@@ -56,11 +50,6 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
                 }
             }
         }
-    }
-
-    override fun getItemId(position: Int): Long {
-        return mContentList.getOrNull(position)?.sessionId?.toLong() ?: 0
-//        return super.getItemId(position)
     }
 
 
@@ -90,7 +79,7 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
 
             is AgendaContentViewHolder -> {
                 val data = getItem(position) as AgendaDataItem.AgendaContent
-                holder.bind(data.roomData, itemClickListener, favClickListener)
+                holder.bind(data.roomData, itemClickListener, favClickListener, favSessionIdList)
             }
 
         }
@@ -116,25 +105,23 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
 
         private val tagAdapter by lazy { TagAdapter() }
 
-        fun bind(roomData: RoomData, itemClickListener: ItemClickListener, favClickListener: FavClickListener) {
+        fun bind(roomData: RoomData, itemClickListener: ItemClickListener, favClickListener: FavClickListener, favSessionIdList: List<Int>) {
             binding.apply {
                 root.setOnClickListener { itemClickListener.onClick(roomData) }
 
-                cbStar.isVisible = true
+                cbStar.isVisible = false
 
                 ivIcon.setImageDrawable(
                     ContextCompat.getDrawable(
                         ivIcon.context,
-                        org.mopcon.session.app.R.drawable.ic_battleship_pink
+                        org.mopcon.session.app.R.drawable.ic_battleship_blue
                     )
                 )
 
-                cbStar.isChecked = roomData.isChecked
+                cbStar.isChecked = favSessionIdList.contains(roomData.sessionId)
 
-                cbStar.setOnClickListener {
-                    roomData.isChecked = cbStar.isChecked
-                    Log.e(">>>", "isChecked = ${cbStar.isChecked}")
-                    favClickListener.onClick(cbStar.isChecked, roomData)
+                cbStar.setOnCheckedChangeListener { _, isChecked ->
+                    favClickListener.onClick(isChecked, roomData)
                 }
 
                 val startTime = if (roomData.startedAt?.toString().isNullOrEmpty()) "" else "${roomData.startedAt?.toTimeFormat(HM_FORMAT)}"
@@ -176,40 +163,12 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
 
     class DiffCallback : DiffUtil.ItemCallback<AgendaDataItem>() {
         override fun areItemsTheSame(oldItem: AgendaDataItem, newItem: AgendaDataItem): Boolean {
-            return oldItem == newItem
-        }
-
-        override fun areContentsTheSame(oldItem: AgendaDataItem, newItem: AgendaDataItem): Boolean {
             return (oldItem.sessionId == newItem.sessionId) && (oldItem.isChecked == newItem.isChecked)
         }
 
+        override fun areContentsTheSame(oldItem: AgendaDataItem, newItem: AgendaDataItem): Boolean {
+            return oldItem == newItem
+        }
+
     }
-}
-
-class ItemClickListener(val clickListener: (data: RoomData) -> Unit) {
-    fun onClick(data: RoomData) = clickListener(data)
-}
-
-class FavClickListener(val clickListener: (isChecked: Boolean, data: RoomData) -> Unit) {
-    fun onClick(isChecked: Boolean, data: RoomData) = clickListener(isChecked, data)
-}
-
-sealed class AgendaDataItem {
-
-    abstract val sessionId: Int?
-    abstract val startTime: Long?
-    abstract val isChecked: Boolean?
-
-    data class AgendaTitle(val agendaData: PeriodData) : AgendaDataItem() {
-        override val sessionId: Int? = null
-        override val startTime = agendaData.startedAt
-        override val isChecked = false
-    }
-
-    data class AgendaContent(val roomData: RoomData) : AgendaDataItem() {
-        override val sessionId = roomData.sessionId
-        override val startTime = roomData.startedAt
-        override val isChecked = roomData.isChecked
-    }
-
 }
