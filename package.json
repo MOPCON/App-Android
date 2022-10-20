@@ -36,7 +36,7 @@
     "react-native-permissions": "^2.1.5",
     "react-native-push-notification": "^6.1.1",
     "react-native-qrcode-scanner": "^1.4.1",
-    "react-native-reanimated": "^1.9.0",
+    "react-native-reanimated": "^2.10.0",
     "react-native-safe-area-context": "^3.0.3",
     "react-native-screens": "^2.8.0",
     "react-native-snap-carousel": "^3.9.1",
