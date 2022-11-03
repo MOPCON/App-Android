@@ -88,7 +88,6 @@ class SponsorDetailAdapter(private val itemClickListener: SponsorDetailItemClick
             binding.apply {
                 layoutSponsor.apply {
                     tvTitle.isVisible = hasSpeakerInfo
-                    Log.e(">>>", ".mobile = ${detailData.logoPath?.mobile}")
                     ivSponsor.setGlideImg(detailData.logoPath?.mobile)
                     tvSponsor.isVisible = !(detailData.name.isEmpty() && detailData.nameE.isNullOrEmpty())
                     tvSponsor.text = getDeviceLanguage(

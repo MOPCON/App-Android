@@ -24,40 +24,29 @@ class TaskViewModel : ViewModel() {
             val filename = "succeed.png"
             var file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "mopcon")
             if (!file.exists() || !file.mkdir()) {
-                Log.e(">>>", " DIRECTORY_PICTURES mkdir() fail")
                 file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "mopcon")
-//                file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "mopcon")
                 if (!file.exists() && !file.mkdir()) {
-                    Log.e(">>>", " DIRECTORY_DCIM  mkdir() fail")
+                    Timber.e(" DIRECTORY_DCIM  mkdir() fail")
                 }
             }
 //            file.createNewFile()
             val mediaFile = File(file.path + File.separator + filename)
-            Log.e(">>>", "file.path + File.separator + filename = ${file.path + File.separator + filename}")
+            Timber.d("file.path + File.separator + filename = ${file.path + File.separator + filename}")
             try {
                 val out = FileOutputStream(mediaFile)
                 bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
                 out.write(ByteArrayOutputStream().toByteArray());
                 out.flush()
                 out.close()
-                Log.e(">>>", "success")
+                Timber.d("storeImageToStorage succeed")
                 _storedImage.postValue(Pair(true, mediaFile.path))
-//            Toast.makeText(context, R.string.storeImageSucceed, Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 _storedImage.postValue(Pair(false, mediaFile.path))
-                Log.e(">>>", "failed")
-//            Toast.makeText(context,"請幫我debug!\nprint error: $e", Toast.LENGTH_SHORT).show()
-                Timber.e(">>> e = $e")
-                Log.e(">>>", "e = $e")
+                Timber.e("storeImageToStorage e = $e")
                 e.printStackTrace()
             }
         }
 
     }
 
-    private fun scanner(context: Context, path: String) {
-        MediaScannerConnection.scanFile(
-            context, arrayOf(path), null
-        ) { path, uri -> Log.e(">>>", "Finished scanning $path") }
-    }
 }

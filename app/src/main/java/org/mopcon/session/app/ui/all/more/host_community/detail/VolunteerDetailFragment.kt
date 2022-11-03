@@ -35,7 +35,6 @@ class VolunteerDetailFragment : BaseBindingFragment<FragmentVolunteerDetailBindi
         binding.titleBar.backPressedListener = { activity?.onBackPressed() }
 
         binding.layoutSpeaker.ivAvatar.setGlideImg(args?.photo)
-        Log.e(">>>", "args?.photo = ${args?.photo}")
 
         binding.apply {
             tvVolunteer.text = getDeviceLanguage(

@@ -89,7 +89,7 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
 
             webView.webChromeClient = object : WebChromeClient() {
                 override fun onConsoleMessage(message: ConsoleMessage): Boolean {
-                    Log.e(">>>", "${message.message()} -- From line ${message.lineNumber()} of ${message.sourceId()}")
+                    Timber.d("${message.message()} -- From line ${message.lineNumber()} of ${message.sourceId()}")
                     return true
                 }
             }
@@ -200,65 +200,6 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
 //        savebitmap(bitmap)
     }
 
-    @Throws(IOException::class)
-    fun savebitmap(bmp: Bitmap) {
-        /*
-        val bytes = ByteArrayOutputStream()
-        bmp.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-        val f = File(
-            Environment.getExternalStorageDirectory()
-                .toString() + File.separator + "mopcon_succeed.jpg"
-        )
-        f.createNewFile()
-        val fo = FileOutputStream(f)
-        fo.write(bytes.toByteArray())
-        fo.close()
-*/
-
-        //
-        val filename = "succeed.png"
-        val sd = Environment.getExternalStorageDirectory()
-//        val dest = File(sd, filename)
-        val dest = File(
-            Environment.getExternalStorageDirectory().toString()
-                    + File.separator + "mopcon_succeed.jpg"
-        )
-
-        Log.e(">>>", "dest = $dest")
-
-        try {
-            val out = FileOutputStream(dest)
-            bmp.compress(Bitmap.CompressFormat.PNG, 90, out)
-            out.flush()
-            out.close()
-            Log.e(">>>", "okok")
-        } catch (e: FileNotFoundException) {
-            Log.e(">>>", "FileNotFoundException = $e")
-            e.printStackTrace()
-        } catch (e: java.lang.Exception) {
-            Log.e(">>>", "e = $e")
-            e.printStackTrace()
-        }
-
-    }
-
-    /*
-        private fun storeBitmap(bitmap: Bitmap, file: File){
-            requireContext().getUriForFile(file)?.run {
-                requireContext().contentResolver.openOutputStream(this)?.run {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, this)
-                    close()
-                }
-            }
-        }
-        fun Context.getUriForFile(file: File): Uri? {
-            return FileProvider.getUriForFile(
-                this,
-                "$packageName.fileprovider",
-                file
-            )
-        }
-        */
     internal class JSInterface(
         val context: Context?,
         private val getDeviceSucceed: () -> Unit,
@@ -282,7 +223,7 @@ class TaskFragment : BaseBindingFragment<FragmentTaskBinding>() {
             try {
                 storeValue(data)
             } catch (e: Exception) {
-                Timber.e(">>>JSInterface e = $e")
+                Timber.e("storePreference e = $e")
             }
         }
 

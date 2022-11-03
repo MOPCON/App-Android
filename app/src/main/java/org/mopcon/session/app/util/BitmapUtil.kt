@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.util.Log
+import timber.log.Timber
 
 object BitmapUtil {
 
@@ -14,7 +15,7 @@ object BitmapUtil {
             val bitmapArray: ByteArray = Base64.decode(data, Base64.DEFAULT)
             bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.size)
         } catch (e: Exception) {
-            Log.e(">>>", "e = $e")
+            Timber.e("stringToBitmap e = $e")
             e.printStackTrace()
         }
 

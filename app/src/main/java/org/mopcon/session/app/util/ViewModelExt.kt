@@ -36,7 +36,7 @@ fun <T> ViewModel.request(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e(">>>", "e = $e")
+            Timber.e("api exception : $e")
             viewModelScope.launch(Dispatchers.Main) { Toast.makeText(MyApplication.application, R.string.error_message, Toast.LENGTH_SHORT).show() }
             viewModelScope.launch(onErrorDispatcher) { onError?.invoke(e) }
         }

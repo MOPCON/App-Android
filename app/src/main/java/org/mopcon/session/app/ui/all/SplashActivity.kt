@@ -26,8 +26,7 @@ class SplashActivity : BaseBindingActivity<ActivitySplashBinding>() {
     override fun initObserver() {
         viewModel.initial.observe(this) {
 //            it?.apiServer?.mopcon?.let { url -> Constants.setApiUrl(url) } //又不要這個了==
-            it?.apiServer?.game?.let { url -> Constants.setGameUrl(url)
-            Log.e(">>>", "url = $url")}
+            it?.apiServer?.game?.let { url -> Constants.setGameUrl(url) }
             Constants.isGameEnable = it?.enableGame ?: true
             openMainActivity()
         }

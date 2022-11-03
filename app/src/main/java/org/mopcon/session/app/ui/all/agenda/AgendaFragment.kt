@@ -202,8 +202,6 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
             val agendaList = it.first
             val favSessionIdList = it.second
 
-            Log.e(">>>", "favSessionList = $favSessionIdList")
-
             if (binding.rgTopBar.checkedRadioButtonId == R.id.rb1)
                 agendaAdapter.addFooterAndSubmitList(agendaList.firstOrNull()?.periodData, favSessionIdList) { binding.rvAgenda.scrollToPosition(0) }
             else
@@ -218,7 +216,6 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
         }
 
         viewModel.favAgendaList.observe(viewLifecycleOwner) {
-            Log.e(">>>", "123 observe favAgendaList topics = ${it.map { item -> item.topic }}")
             if (binding.rgTopBar.checkedRadioButtonId == R.id.rb1) { // day 1
                 agendaFavAdapter.addFooterAndSubmitList(it.filter { data -> data.startAt.toTimeFormat(MD_FORMAT) == FIRST_DATE }) {}
             } else { // day 2
@@ -227,7 +224,6 @@ class AgendaFragment : BaseBindingFragment<FragmentAgendaBinding>() {
         }
 
         viewModel.favSessionIdList.observe(viewLifecycleOwner) {
-            Log.e(">>>", "123 favSessionIdList observe = $it")
             if (binding.rgTopBar.checkedRadioButtonId == R.id.rb1) {
                 when (binding.tabLayout.selectedTabPosition) {
                     PAGE_MAIN -> agendaAdapter.addFooterAndSubmitList(viewModel.agendaList.value?.first?.firstOrNull()?.periodData, it) {}

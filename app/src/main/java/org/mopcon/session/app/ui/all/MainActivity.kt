@@ -12,6 +12,7 @@ import org.mopcon.session.app.ui.extension.OnBackPressedListener
 import org.mopcon.session.app.R
 import org.mopcon.session.app.databinding.ActivityMainBinding
 import org.mopcon.session.app.ui.all.more.sponsor.detail.agenda.MoreAgendaDetailFragment
+import timber.log.Timber
 
 
 class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
@@ -30,15 +31,13 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
     private fun getFcmToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.e(">>>", "Fetching FCM registration token failed", task.exception)
+                Timber.d("Fetching FCM registration token failed  ${task.exception}")
                 return@OnCompleteListener
             }
 
             // Get new FCM registration token
             val token = task.result
-
-            // Log and toast
-            Log.e(">>>", "token = $token")
+            Timber.d("token = $token")
         })
     }
 

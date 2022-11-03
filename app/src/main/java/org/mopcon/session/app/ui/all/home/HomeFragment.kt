@@ -55,17 +55,6 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(), OnBackPressedLi
     }
 
     override fun initObserver() {
-
-//        viewModel.bannerAndNews.observe(viewLifecycleOwner) {
-//            homeAdapter.addFooterAndSubmitList(it.banner, it.news) { binding.rvHome.scrollToPosition(0) }
-//        }
-
-//        viewModel.favAgendaList.observe(viewLifecycleOwner) {
-//            Log.e(">>>", "Home favAgendaList = ${it.map { data -> data.sessionId }}")
-//            val bannerNewsData = viewModel.bannerAndNews.value
-//            homeAdapter.addFooterAndSubmitList(bannerNewsData?.banner, bannerNewsData?.news, it) { binding.rvHome.scrollToPosition(0) }
-//        }
-
         viewModel.combiner.observe(viewLifecycleOwner) {
             val bannerAndNews = it.first
             val favAgendaList = it.second

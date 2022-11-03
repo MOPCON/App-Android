@@ -51,7 +51,6 @@ abstract class BaseViewModel(
             repository.storeAgenda(data).also {
                 _favSessionIdList.postValue(repository.getFavSessionIdList())
                 _favAgendaList.postValue(repository.getStoredAgenda())
-                Log.e(">>>", "storeAgenda favAgendaList = ${repository.getStoredAgenda().map { it.topic }}")
             }
         }
     }
@@ -62,7 +61,6 @@ abstract class BaseViewModel(
             repository.deleteAgenda(sessionId).also {
                 _favSessionIdList.postValue(repository.getFavSessionIdList())
                 _favAgendaList.postValue(repository.getStoredAgenda())
-                Log.e(">>>", "deleteAgenda favAgendaList = ${repository.getStoredAgenda().map { it.topic }}")
             }
         }
     }

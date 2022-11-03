@@ -133,7 +133,6 @@ class AgendaAdapter(private val itemClickListener: ItemClickListener, private va
 
                 cbStar.setOnClickListener {
                     roomData.isChecked = cbStar.isChecked
-                    Log.e(">>>", "isChecked = ${cbStar.isChecked}")
                     favClickListener.onClick(cbStar.isChecked, roomData)
                 }
 
