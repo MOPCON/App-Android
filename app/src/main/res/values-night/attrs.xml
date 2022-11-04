@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CustomTitleBar">
+        <attr name="titleText" format="string" localization="suggested"/>
+        <attr name="isShowBackButton" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomRadioGroupBar">
+        <attr name="firstRbText" format="string" />
+        <attr name="secondRbText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomTabLayout">
+        <attr name="firstTabText" format="string" />
+        <attr name="secondTabText" format="string" />
+    </declare-styleable>
+</resources>

@@ -1,27 +1,12 @@
 # App-Android
-MOPCON App for Android build by react-native 0.59.8
-
-[![Build Status](https://travis-ci.org/MOPCON/App-Android.svg?branch=master)](https://travis-ci.org/MOPCON/App-Android)
-
+MOPCON App for Android 2022
 
 ### Install Command and Develop Tool
-this project develop with react-native, so before getting start, we should install below command and tool.
-
-* nodejs recommend v10 LTS version
-* jdk8
 * android-studio recommend v3.4.1
 
 ### Environment Variable
 
 before getting start, please set env variable to develop machine
-
-```bash
-export MOPCON_API_URL="https://mopconXXXXXXXX.com/"
-export keystore_password="xxx"
-export keystore_alias="xxx"
-export keystore_alias_password="xxx"
-export MOPCON_DES_KEY="xxx"
-```
 
 ### Security Files
 the security files was encrypted into `secrets.tar.enc` use follow command to decrypt it.

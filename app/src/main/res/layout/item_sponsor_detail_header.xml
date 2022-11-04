@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_blue"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:paddingBottom="12dp"
+    tools:context=".ui.all.home.HomeFragment">
+
+    <include
+        android:id="@+id/layoutSponsor"
+        layout="@layout/item_sponsor_content" />
+
+    <org.mopcon.session.app.ui.common.MediaBar
+        android:id="@+id/mediaBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:text="介紹內容介紹內容，介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容介紹內容，介紹內容。" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/sponsor_agenda"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
